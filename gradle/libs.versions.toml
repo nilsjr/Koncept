@@ -1,0 +1,77 @@
+[versions]
+kotlin = "1.6.10"
+coroutines = "1.6.0"
+compose = "1.2.0-alpha01"
+composeCompiler = "1.2.0-alpha01"
+room = "2.4.1"
+moshi = "1.13.0"
+hilt = "2.40.5"
+lifecycle = "2.4.0"
+accompanist = "0.22.0-rc"
+retrofit = "2.9.0"
+okHttp = "4.9.3"
+junit = "5.8.2"
+mockito = "4.2.0"
+mockitoKotlin = "4.0.0"
+
+[libraries]
+# android
+core = { module = "androidx.core:core-ktx", version = "1.8.0-alpha02" }
+desugar = { module = "com.android.tools:desugar_jdk_libs", version = "1.1.5" }
+coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+startup = "androidx.startup:startup-runtime:1.1.0"
+# lifecycle
+lifecycleRuntime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+viewModelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+# room
+room = { module = "androidx.room:room-ktx", version.ref = "room" }
+roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+#moshi
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshiCompiler = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+# hilt
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hiltNavigation = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0-rc01" }
+# compose
+composeActivity = "androidx.activity:activity-compose:1.4.0"
+composeUi = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+composeFoundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+composeUiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+composeUiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+composeMaterial = { module = "androidx.compose.material:material", version.ref = "compose" }
+composeMaterialIcons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+composeMaterial3 = { module = "androidx.compose.material3:material3", version = "1.0.0-alpha03" }
+composeNavigation = { module = "androidx.navigation:navigation-compose", version = "2.4.0-rc01" }
+constraintCompose = { module = "androidx.constraintlayout:constraintlayout-compose", version = "1.0.0" }
+# accompanist
+accompanistSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanistInsets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
+accompanistNavAnim = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+accompanistNavMaterial = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "accompanist" }
+# retrofit
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofitMoshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+# okhttp
+okHttpBom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttp" }
+okHttp = { module = "com.squareup.okhttp3:okhttp" }
+okHttpInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
+okHttpMock = { module = "com.squareup.okhttp3:mockwebserver" }
+# utils
+timber = "com.jakewharton.timber:timber:5.0.1"
+lottie = "com.airbnb.android:lottie-compose:4.2.2"
+arrowKt = "io.arrow-kt:arrow-core:1.0.1"
+javax = "javax.inject:javax.inject:1"
+
+# testing
+junitApi = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junitEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockitoJupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+mockitoKotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+turbine = "app.cash.turbine:turbine:0.7.0"
+coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+[bundles]
+common = ["javax", "arrowKt"]

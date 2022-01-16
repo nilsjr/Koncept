@@ -1,0 +1,33 @@
+build:
+  maxIssues: 5
+  weights:
+    formatting: 6 # maxIssues + 1 so formatting issues will always fail
+
+formatting:
+  ImportOrdering:
+    active: true
+  Indentation:
+    active: false
+  FinalNewline:
+    insertFinalNewLine: false
+  ParameterListWrapping:
+    indentSize: 4
+
+performance:
+  SpreadOperator:
+    active: false
+
+style:
+  MagicNumber:
+    active: false
+  NewLineAtEndOfFile:
+    active: false
+
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - 'Composable'
+
+complexity:
+  LongMethod:
+    threshold: 80
