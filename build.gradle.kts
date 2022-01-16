@@ -49,7 +49,7 @@ subprojects {
         }
     }
 
-    configureDetekt("src/main/kotlin")
+    configureDetekt("src/main/kotlin", "src/test/kotlin")
 }
 
 tasks.register<Delete>("clean") {

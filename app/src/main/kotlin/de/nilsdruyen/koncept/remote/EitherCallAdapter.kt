@@ -23,6 +23,7 @@ private class EitherCallAdapter<R>(
     override fun responseType(): Type = responseType
 }
 
+@Suppress("ReturnCount")
 private class EitherCall<R>(
     private val delegate: Call<R>,
     private val successType: Type
@@ -87,6 +88,7 @@ private class EitherCall<R>(
     override fun timeout(): Timeout = delegate.timeout()
 }
 
+@Suppress("ReturnCount")
 internal class EitherCallAdapterFactory : CallAdapter.Factory() {
 
     override fun get(

@@ -2,8 +2,8 @@
 
 This is an sample project to experiment with architectures, modules structures, frameworks etc.
 
-# Idea
-Consuming following api: ![The Dog Api](https://docs.thedogapi.com/)
+# Ideas
+Consuming following api: [The Dog Api](https://docs.thedogapi.com/)
 
 ## General thoughts
 
@@ -15,7 +15,7 @@ Consuming following api: ![The Dog Api](https://docs.thedogapi.com/)
 ## Android Jetpack
 
 Try all the android
-stuff: ![Jetpack Libraries](https://developer.android.com/jetpack/androidx/explorer)
+stuff: [Jetpack Libraries](https://developer.android.com/jetpack/androidx/explorer)
 
 Here what is interesting:
 
@@ -34,7 +34,7 @@ Here what is interesting:
 - all compose
 - compose navigation
 
-# modules
+## modules
 
 - app
 - feature
@@ -48,3 +48,8 @@ Here what is interesting:
 - common-android
 - common-remote
 - common-cache etc.
+
+## Test setup
+Junit5 based mockito tests with coroutines & turbine for flow testing
+
+# tbd.

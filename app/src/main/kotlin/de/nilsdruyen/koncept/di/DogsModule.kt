@@ -4,9 +4,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import de.nilsdruyen.koncept.data.DogsRepositoryImpl
-import de.nilsdruyen.koncept.data.GetDogListUseCaseImpl
 import de.nilsdruyen.koncept.dog.cache.DogsCacheDataSourceImpl
+import de.nilsdruyen.koncept.dogs.data.DogsRepositoryImpl
+import de.nilsdruyen.koncept.dogs.data.GetDogListUseCaseImpl
 import de.nilsdruyen.koncept.domain.DogsCacheDataSource
 import de.nilsdruyen.koncept.domain.DogsRemoteDataSource
 import de.nilsdruyen.koncept.domain.DogsRepository

@@ -72,6 +72,8 @@ mockitoJupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "
 mockitoKotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 turbine = "app.cash.turbine:turbine:0.7.0"
 coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+faker = "io.github.serpro69:kotlin-faker:1.9.0"
 
 [bundles]
 common = ["javax", "arrowKt"]
+test = ["junitApi", "mockito", "mockitoJupiter", "mockitoKotlin", "turbine", "coroutinesTest"]

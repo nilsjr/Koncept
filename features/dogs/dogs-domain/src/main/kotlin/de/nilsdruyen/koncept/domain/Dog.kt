@@ -1,6 +1,6 @@
 package de.nilsdruyen.koncept.domain
 
 data class Dog(
-    val id: String,
+    val id: Int,
     val name: String,
 )

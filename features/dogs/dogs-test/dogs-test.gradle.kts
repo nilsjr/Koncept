@@ -4,4 +4,6 @@ plugins {
 
 dependencies {
     implementation(projects.dogsDomain)
+
+    implementation(libs.faker)
 }

@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.data
+package de.nilsdruyen.koncept.dogs.data
 
 import arrow.core.Either
 import de.nilsdruyen.koncept.domain.DataSourceError

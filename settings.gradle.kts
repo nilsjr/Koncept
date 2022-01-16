@@ -36,6 +36,7 @@ include(":dogs-test")
 include(":common-domain")
 include(":common-remote")
 include(":common-ui")
+include(":common-test")
 
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

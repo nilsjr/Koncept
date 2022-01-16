@@ -8,7 +8,6 @@ import de.nilsdruyen.koncept.dog.cache.daos.DogDao
 import de.nilsdruyen.koncept.dog.cache.entities.DogCacheEntity
 
 @Database(entities = [DogCacheEntity::class], version = 1)
-//@TypeConverters(DateConverter::class, GameTypeConverter::class, StringListConverter::class)
 abstract class KonceptDatabase : RoomDatabase() {
 
     abstract fun dogDao(): DogDao

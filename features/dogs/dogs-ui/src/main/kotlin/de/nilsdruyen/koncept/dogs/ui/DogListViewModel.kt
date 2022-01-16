@@ -37,7 +37,6 @@ class DogListViewModel @Inject constructor(
                         loadList()
                     }
                     is DogListIntent.ShowDogDetail -> {
-
                     }
                 }
             }
@@ -57,7 +56,6 @@ class DogListViewModel @Inject constructor(
 
     private fun handleError(error: DataSourceError) {
         Logger.log(error.toString())
-        // TODO: handle error
     }
 }
 

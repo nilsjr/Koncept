@@ -51,11 +51,7 @@ dependencies {
     implementation(libs.lottie)
 
     testImplementation(projects.dogsTest)
-    testImplementation(libs.junitApi)
+    testImplementation(projects.commonTest)
+    testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.junitEngine)
-    testImplementation(libs.mockito)
-    testImplementation(libs.mockitoJupiter)
-    testImplementation(libs.mockitoKotlin)
-    testImplementation(libs.coroutinesTest)
-    testImplementation(libs.turbine)
 }

@@ -75,9 +75,7 @@ fun DogList(viewModel: DogListViewModel) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    // TODO: implement
-                },
+                onClick = {}
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Localized description")
             }
@@ -107,9 +105,7 @@ fun DogList(viewModel: DogListViewModel) {
                         }
                     }
                     currentState.list.isNotEmpty() -> {
-                        DogList(dogList = currentState.list, showDog = {
-
-                        })
+                        DogList(dogList = currentState.list, showDog = {})
                     }
                 }
             }

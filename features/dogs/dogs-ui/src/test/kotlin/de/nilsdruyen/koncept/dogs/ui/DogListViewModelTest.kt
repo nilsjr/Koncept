@@ -6,6 +6,7 @@ import de.nilsdruyen.koncept.dog.test.DogFactory
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Dog
 import de.nilsdruyen.koncept.domain.GetDogListUseCase
+import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -24,7 +25,7 @@ internal class DogListViewModelTest {
     @Mock
     lateinit var getDogListUseCase: GetDogListUseCase
 
-    lateinit var tested: DogListViewModel
+    private lateinit var tested: DogListViewModel
 
     @BeforeEach
     fun setup() {
