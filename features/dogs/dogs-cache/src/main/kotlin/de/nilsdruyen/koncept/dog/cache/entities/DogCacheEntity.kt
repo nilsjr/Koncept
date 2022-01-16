@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "dog_table")
 data class DogCacheEntity(
     @PrimaryKey
-    val id: String,
+    val id: Int,
     val name: String,
 )

@@ -2,8 +2,13 @@
 
 This is an sample project to experiment with architectures, modules structures, frameworks etc.
 
-# Ideas
-Consuming following api: [The Dog Api](https://docs.thedogapi.com/)
+# Usage
+
+1. Checkout repository
+2. Open with Android Studio Chipmunk
+3. Have a :coffee: and wait for Android Studio to finish syncing
+4. Create free account at [https://www.thedogapi.com/] for api token
+5. add x-api-key to your local gradle.properties
 
 ## General thoughts
 
@@ -11,6 +16,9 @@ Consuming following api: [The Dog Api](https://docs.thedogapi.com/)
 - dynamic modules
 - clean architecture
 - mvi with compose
+
+## Used APIs
+Consuming following api: https://www.thedogapi.com/ - [The Dog API docs](https://docs.thedogapi.com/)
 
 ## Android Jetpack
 
@@ -29,7 +37,7 @@ Here what is interesting:
 - testing
 - workmanager
 
-## Design
+## Design framework
 
 - all compose
 - compose navigation
@@ -50,6 +58,7 @@ Here what is interesting:
 - common-cache etc.
 
 ## Test setup
+
 Junit5 based mockito tests with coroutines & turbine for flow testing
 
 # tbd.

@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DogWebEntity(
-    val id: String,
+    val id: Int,
     val name: String,
     val temperament: String?,
     @Json(name = "life_span")
