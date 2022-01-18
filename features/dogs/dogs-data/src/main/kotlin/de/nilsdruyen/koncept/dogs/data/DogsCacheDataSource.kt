@@ -1,6 +1,8 @@
-package de.nilsdruyen.koncept.domain
+package de.nilsdruyen.koncept.dogs.data
 
 import arrow.core.Either
+import de.nilsdruyen.koncept.domain.DataSourceError
+import de.nilsdruyen.koncept.entities.Dog
 import kotlinx.coroutines.flow.Flow
 
 interface DogsCacheDataSource {

@@ -26,6 +26,7 @@ include(":app")
 
 // dogs feature
 include(":dogs-domain")
+include(":dogs-entities")
 include(":dogs-data")
 include(":dogs-cache")
 include(":dogs-remote")

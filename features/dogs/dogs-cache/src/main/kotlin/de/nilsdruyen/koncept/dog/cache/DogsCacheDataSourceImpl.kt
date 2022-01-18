@@ -3,16 +3,16 @@ package de.nilsdruyen.koncept.dog.cache
 import arrow.core.Either
 import de.nilsdruyen.koncept.dog.cache.daos.DogDao
 import de.nilsdruyen.koncept.dog.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.data.DogsCacheDataSource
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.domain.Dog
-import de.nilsdruyen.koncept.domain.DogsCacheDataSource
 import de.nilsdruyen.koncept.domain.toDataSourceError
+import de.nilsdruyen.koncept.entities.Dog
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class DogsCacheDataSourceImpl @Inject constructor(val dogDao: DogDao) : DogsCacheDataSource {
+class DogsCacheDataSourceImpl @Inject constructor(private val dogDao: DogDao) : DogsCacheDataSource {
 
     override suspend fun getDogList(): Flow<Either<DataSourceError, List<Dog>>> {
         return dogDao.getAll()

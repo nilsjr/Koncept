@@ -4,9 +4,7 @@ import app.cash.turbine.test
 import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dog.test.DogFactory
-import de.nilsdruyen.koncept.domain.DogsCacheDataSource
-import de.nilsdruyen.koncept.domain.DogsRemoteDataSource
-import de.nilsdruyen.koncept.domain.DogsRepository
+import de.nilsdruyen.koncept.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher

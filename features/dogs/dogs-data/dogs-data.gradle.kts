@@ -1,5 +1,6 @@
 plugins {
     id("kotlin")
+    kotlin("kapt")
 }
 
 tasks.withType<Test> {
@@ -17,6 +18,11 @@ dependencies {
 
     implementation(projects.commonDomain)
     implementation(projects.dogsDomain)
+    implementation(projects.dogsEntities)
+
+    implementation(libs.hiltCore)
+    kapt(libs.hiltCompiler)
+
 
     implementation(libs.coroutines)
     implementation(libs.arrowKt)

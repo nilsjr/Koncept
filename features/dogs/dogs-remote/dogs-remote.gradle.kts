@@ -8,12 +8,16 @@ dependencies {
 
     implementation(projects.commonDomain)
     implementation(projects.commonRemote)
-    implementation(projects.dogsDomain)
+    implementation(projects.dogsData)
+    implementation(projects.dogsEntities)
 
     implementation(libs.arrowKt)
     implementation(libs.retrofit)
     implementation(libs.moshi)
     kapt(libs.moshiCompiler)
+
+    implementation(libs.hiltCore)
+    kapt(libs.hiltCompiler)
 
     testImplementation(projects.commonTest)
     testImplementation(projects.dogsTest)

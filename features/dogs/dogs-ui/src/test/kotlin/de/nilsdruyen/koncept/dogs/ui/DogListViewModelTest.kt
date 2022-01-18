@@ -7,7 +7,7 @@ import de.nilsdruyen.koncept.dogs.ui.list.DogListIntent
 import de.nilsdruyen.koncept.dogs.ui.list.DogListViewModel
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Dog
-import de.nilsdruyen.koncept.domain.GetDogListUseCase
+import de.nilsdruyen.koncept.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf

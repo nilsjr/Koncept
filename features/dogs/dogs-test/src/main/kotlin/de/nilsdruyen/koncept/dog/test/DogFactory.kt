@@ -1,6 +1,5 @@
 package de.nilsdruyen.koncept.dog.test
 
-import de.nilsdruyen.koncept.domain.Dog
 import io.github.serpro69.kfaker.Faker
 
 object DogFactory {

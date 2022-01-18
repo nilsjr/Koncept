@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.domain
+package de.nilsdruyen.koncept.entities
 
 data class Dog(
     val id: Int,

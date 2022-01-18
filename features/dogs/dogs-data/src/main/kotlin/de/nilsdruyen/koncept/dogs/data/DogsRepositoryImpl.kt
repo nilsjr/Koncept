@@ -3,12 +3,10 @@ package de.nilsdruyen.koncept.dogs.data
 import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.domain.Dog
-import de.nilsdruyen.koncept.domain.DogsCacheDataSource
-import de.nilsdruyen.koncept.domain.DogsRemoteDataSource
-import de.nilsdruyen.koncept.domain.DogsRepository
+import de.nilsdruyen.koncept.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
 import de.nilsdruyen.koncept.domain.toDataSourceError
+import de.nilsdruyen.koncept.entities.Dog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,9 +17,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
-class DogsRepositoryImpl @Inject constructor(
-    val dogsRemoteDataSource: DogsRemoteDataSource,
-    val dogsCacheDataSource: DogsCacheDataSource,
+internal class DogsRepositoryImpl @Inject constructor(
+    private val dogsRemoteDataSource: DogsRemoteDataSource,
+    private val dogsCacheDataSource: DogsCacheDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : DogsRepository {
 

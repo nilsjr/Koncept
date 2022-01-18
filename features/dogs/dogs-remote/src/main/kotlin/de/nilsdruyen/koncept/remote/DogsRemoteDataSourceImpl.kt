@@ -1,9 +1,9 @@
 package de.nilsdruyen.koncept.remote
 
 import arrow.core.Either
+import de.nilsdruyen.koncept.dogs.data.DogsRemoteDataSource
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.domain.Dog
-import de.nilsdruyen.koncept.domain.DogsRemoteDataSource
+import de.nilsdruyen.koncept.entities.Dog
 import de.nilsdruyen.koncept.remote.entities.DogWebEntity
 import javax.inject.Inject
 
