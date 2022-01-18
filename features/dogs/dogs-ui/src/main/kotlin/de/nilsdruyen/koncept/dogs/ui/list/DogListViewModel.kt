@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui
+package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,7 +7,9 @@ import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Dog
 import de.nilsdruyen.koncept.domain.GetDogListUseCase
 import de.nilsdruyen.koncept.domain.Logger
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -15,15 +17,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DogListViewModel @Inject constructor(
-    val getDogListUseCase: GetDogListUseCase
-) : ViewModel() {
+class DogListViewModel @Inject constructor(val getDogListUseCase: GetDogListUseCase) : ViewModel() {
 
     private val _state = MutableStateFlow(DogListState(isLoading = true))
     internal val state: StateFlow<DogListState>
         get() = _state
 
-    val intent = Channel<DogListIntent>(Channel.CONFLATED)
+    val intent = Channel<DogListIntent>(BUFFERED)
 
     init {
         handleIntent()
@@ -36,7 +36,7 @@ class DogListViewModel @Inject constructor(
                     DogListIntent.LoadIntent -> {
                         loadList()
                     }
-                    is DogListIntent.ShowDogDetail -> {
+                    is DogListIntent.ShowDogDetailIntent -> {
                     }
                 }
             }
@@ -66,5 +66,5 @@ data class DogListState(
 
 sealed class DogListIntent {
     object LoadIntent : DogListIntent()
-    data class ShowDogDetail(val id: String) : DogListIntent()
+    data class ShowDogDetailIntent(val id: String) : DogListIntent()
 }

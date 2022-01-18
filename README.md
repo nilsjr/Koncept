@@ -5,7 +5,7 @@ This is an sample project to experiment with architectures, modules structures, 
 # Usage
 
 1. Checkout repository
-2. Open with Android Studio Chipmunk
+2. Open with Android Studio Arctic Fox (current stable)
 3. Have a :coffee: and wait for Android Studio to finish syncing
 4. Create free account at [https://www.thedogapi.com/] for api token
 5. add x-api-key to your local gradle.properties

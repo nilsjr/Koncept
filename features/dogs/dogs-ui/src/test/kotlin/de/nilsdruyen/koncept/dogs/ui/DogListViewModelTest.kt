@@ -3,6 +3,8 @@ package de.nilsdruyen.koncept.dogs.ui
 import app.cash.turbine.test
 import arrow.core.Either
 import de.nilsdruyen.koncept.dog.test.DogFactory
+import de.nilsdruyen.koncept.dogs.ui.list.DogListIntent
+import de.nilsdruyen.koncept.dogs.ui.list.DogListViewModel
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Dog
 import de.nilsdruyen.koncept.domain.GetDogListUseCase
@@ -18,7 +20,7 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 @ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
 internal class DogListViewModelTest {
 
@@ -46,7 +48,6 @@ internal class DogListViewModelTest {
             assert(awaitItem().list.isEmpty())
             tested.intent.send(DogListIntent.LoadIntent)
             assertEquals(2, awaitItem().list.size)
-//            awaitComplete()
         }
     }
 }

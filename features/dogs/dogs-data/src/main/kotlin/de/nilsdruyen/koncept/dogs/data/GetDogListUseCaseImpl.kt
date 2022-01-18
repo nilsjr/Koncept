@@ -11,12 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GetDogListUseCaseImpl @Inject constructor(
-    val dogsRepository: DogsRepository,
-    @IoDispatcher val ioDispatcher: CoroutineDispatcher,
-) : GetDogListUseCase {
+class GetDogListUseCaseImpl @Inject constructor(val dogsRepository: DogsRepository) : GetDogListUseCase {
 
-    override suspend fun execute(): Flow<Either<DataSourceError, List<Dog>>> {
-        return dogsRepository.getList().flowOn(ioDispatcher)
-    }
+    override suspend fun execute(): Flow<Either<DataSourceError, List<Dog>>> = dogsRepository.getList()
 }

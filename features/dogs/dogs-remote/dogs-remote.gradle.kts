@@ -14,4 +14,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.moshi)
     kapt(libs.moshiCompiler)
+
+    testImplementation(projects.commonTest)
+    testImplementation(projects.dogsTest)
+    testImplementation(libs.bundles.test)
+    testRuntimeOnly(libs.junitEngine)
 }

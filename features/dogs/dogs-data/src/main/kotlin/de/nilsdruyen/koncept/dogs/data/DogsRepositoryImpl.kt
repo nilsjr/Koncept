@@ -27,18 +27,13 @@ class DogsRepositoryImpl @Inject constructor(
 
     override suspend fun getList(): Flow<Either<DataSourceError, List<Dog>>> {
         return channelFlow {
-            val cache = dogsCacheDataSource.getDogList()
+            val cache = dogsCacheDataSource.getDogList().flowOn(ioDispatcher)
             val remote = flowOf(dogsRemoteDataSource.getList().also {
                 dogsCacheDataSource.setDogList(it.bind())
-            })
-
+            }).flowOn(ioDispatcher)
             merge(cache, remote)
-                .catch { throwable ->
-                    send(Either.Left(throwable.toDataSourceError()))
-                }
-                .collect {
-                    send(it)
-                }
-        }.flowOn(ioDispatcher).distinctUntilChanged()
+                .catch { throwable -> send(Either.Left(throwable.toDataSourceError())) }
+                .collect { send(it) }
+        }.distinctUntilChanged()
     }
 }

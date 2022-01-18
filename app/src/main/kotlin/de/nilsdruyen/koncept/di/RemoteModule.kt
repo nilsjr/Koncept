@@ -43,8 +43,8 @@ object RemoteModule {
     ): OkHttpClient {
         if (Looper.myLooper() == Looper.getMainLooper()) Timber.e("Initializing OkHttpClient on main thread.")
         return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .addInterceptor(headerInterceptor)
+            .addInterceptor(loggingInterceptor)
             .cache(cache)
             .retryOnConnectionFailure(true)
             .connectTimeout(OKHTTP_TIMEOUT_SECONDS, TimeUnit.SECONDS)

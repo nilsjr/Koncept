@@ -6,14 +6,16 @@ import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.application") version "7.2.0-alpha07" apply false
-    id("com.android.library") version "7.2.0-alpha07" apply false
+    id("com.android.application") version "7.0.4" apply false
+    id("com.android.library") version "7.0.4" apply false
     kotlin("android") version "1.6.10" apply false
     id("dagger.hilt.android.plugin") version "2.40.5" apply false
 
     id("com.github.ben-manes.versions") version "0.41.0"
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("io.gitlab.arturbosch.detekt") version "1.19.0" apply false
 }
+
+apply(plugin = "io.gitlab.arturbosch.detekt")
 
 subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
@@ -27,7 +29,7 @@ subprojects {
     pluginManager.withPlugin(Plugins.library) {
         extensions.configure<LibraryExtension> {
             configureAndroidBaseExtension()
-            configureAndroidLibraryExtension(this@subprojects.name)
+            configureAndroidLibraryExtension()
         }
     }
 
@@ -45,6 +47,16 @@ subprojects {
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xopt-in=kotlinx.coroutines.FlowPreview",
                 "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
+            )
+        }
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+        failFast = true
+        testLogging {
+            events = setOfNotNull(
+                org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
             )
         }
     }
@@ -74,7 +86,7 @@ fun BaseExtension.configureAndroidBaseExtension() {
     }
 }
 
-fun LibraryExtension.configureAndroidLibraryExtension(subprojectName: String) {
+fun LibraryExtension.configureAndroidLibraryExtension() {
     compileSdk = ProjectConfig.compileSdkVersion
     buildToolsVersion = ProjectConfig.buildToolsVersion
     defaultConfig.minSdk = ProjectConfig.minSdkVersion

@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui
+package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
@@ -37,6 +37,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import de.nilsdruyen.koncept.common.ui.MaterialCard
+import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
 import de.nilsdruyen.koncept.domain.Dog
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
