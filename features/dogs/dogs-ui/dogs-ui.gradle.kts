@@ -19,6 +19,7 @@ dependencies {
     implementation(projects.commonDomain)
     implementation(projects.commonUi)
 
+    implementation(projects.dogsEntity)
     implementation(projects.dogsDomain)
 
     implementation(libs.hilt)

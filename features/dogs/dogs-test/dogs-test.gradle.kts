@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.dogsDomain)
+    implementation(projects.dogsEntity)
 
     implementation(libs.faker)
 }

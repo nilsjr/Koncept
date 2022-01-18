@@ -3,10 +3,11 @@ package de.nilsdruyen.koncept.dogs.data
 import app.cash.turbine.test
 import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
-import de.nilsdruyen.koncept.dog.test.DogFactory
-import de.nilsdruyen.koncept.domain.DogsCacheDataSource
-import de.nilsdruyen.koncept.domain.DogsRemoteDataSource
-import de.nilsdruyen.koncept.domain.DogsRepository
+import de.nilsdruyen.koncept.dogs.DogFactory
+import de.nilsdruyen.koncept.dogs.DogsCacheDataSource
+import de.nilsdruyen.koncept.dogs.DogsRemoteDataSource
+import de.nilsdruyen.koncept.dogs.DogsRepository
+import de.nilsdruyen.koncept.dogs.DogsRepositoryImpl
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher

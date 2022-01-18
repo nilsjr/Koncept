@@ -8,7 +8,9 @@ dependencies {
 
     implementation(projects.commonDomain)
     implementation(projects.commonRemote)
-    implementation(projects.dogsDomain)
+
+    implementation(projects.dogsEntity)
+    implementation(projects.dogsData)
 
     implementation(libs.arrowKt)
     implementation(libs.retrofit)

@@ -11,7 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.nilsdruyen.koncept.BuildConfig
 import de.nilsdruyen.koncept.annotations.ApiKey
-import de.nilsdruyen.koncept.remote.DogsApi
+import de.nilsdruyen.koncept.dogs.DogsApi
 import de.nilsdruyen.koncept.remote.EitherCallAdapterFactory
 import okhttp3.Cache
 import okhttp3.Interceptor

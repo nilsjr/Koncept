@@ -6,7 +6,9 @@ plugins {
 
 dependencies {
     implementation(projects.commonDomain)
-    implementation(projects.dogsDomain)
+
+    implementation(projects.dogsEntity)
+    implementation(projects.dogsData)
 
     implementation(libs.bundles.common)
 

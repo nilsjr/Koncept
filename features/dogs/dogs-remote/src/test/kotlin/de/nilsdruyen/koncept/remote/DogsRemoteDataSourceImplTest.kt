@@ -2,8 +2,10 @@ package de.nilsdruyen.koncept.remote
 
 import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
+import de.nilsdruyen.koncept.dogs.DogsApi
+import de.nilsdruyen.koncept.dogs.DogsRemoteDataSourceImpl
+import de.nilsdruyen.koncept.dogs.entities.DogWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.remote.entities.DogWebEntity
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import de.nilsdruyen.koncept.test.parseList
 import kotlinx.coroutines.test.runTest

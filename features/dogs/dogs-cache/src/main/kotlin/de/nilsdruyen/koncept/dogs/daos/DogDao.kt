@@ -1,0 +1,21 @@
+package de.nilsdruyen.koncept.dogs.daos
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import de.nilsdruyen.koncept.dogs.entities.DogCacheEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface DogDao {
+
+    @Query("SELECT * from dog_table")
+    fun getAll(): Flow<List<DogCacheEntity>>
+
+    @Query("SELECT * from dog_table WHERE id=:id")
+    fun getDogById(id: String): Flow<DogCacheEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addList(list: List<DogCacheEntity>)
+}

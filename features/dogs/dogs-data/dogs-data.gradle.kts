@@ -17,6 +17,7 @@ dependencies {
 
     implementation(projects.commonDomain)
     implementation(projects.dogsDomain)
+    implementation(projects.dogsEntity)
 
     implementation(libs.coroutines)
     implementation(libs.arrowKt)

@@ -11,8 +11,8 @@ plugins {
     kotlin("android") version "1.6.10" apply false
     id("dagger.hilt.android.plugin") version "2.40.5" apply false
 
-    id("com.github.ben-manes.versions") version "0.41.0"
     id("io.gitlab.arturbosch.detekt") version "1.19.0" apply false
+    id("com.github.ben-manes.versions") version "0.41.0" apply false
 }
 
 apply(plugin = "io.gitlab.arturbosch.detekt")
@@ -68,13 +68,8 @@ tasks.register<Delete>("clean") {
     delete(buildDir)
 }
 
-tasks.dependencyUpdates.configure {
-    gradleReleaseChannel = "current"
-}
-
 fun BaseExtension.configureAndroidBaseExtension() {
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -120,4 +115,7 @@ fun Project.configureDetekt(vararg paths: String) {
     }
 }
 
-apply(from = "https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/gradle/projectDependencyGraph.gradle")
+if (hasProperty("custom")) {
+    apply(plugin = "com.github.ben-manes.versions")
+    apply(from = "https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/gradle/projectDependencyGraph.gradle")
+}

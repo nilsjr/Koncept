@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import de.nilsdruyen.koncept.dog.cache.daos.DogDao
-import de.nilsdruyen.koncept.dog.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.daos.DogDao
+import de.nilsdruyen.koncept.dogs.entities.DogCacheEntity
 
 @Database(entities = [DogCacheEntity::class], version = 1)
 abstract class KonceptDatabase : RoomDatabase() {
