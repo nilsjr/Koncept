@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 class GetDogListUseCase @Inject constructor(private val dogsRepository: DogsRepository) {
 
-    suspend fun invoke(): Flow<Either<DataSourceError, List<Dog>>> = dogsRepository.getList()
+    suspend operator fun invoke(): Flow<Either<DataSourceError, List<Dog>>> = dogsRepository.getList()
 }

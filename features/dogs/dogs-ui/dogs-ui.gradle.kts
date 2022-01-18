@@ -43,6 +43,6 @@ dependencies {
 
     testImplementation(projects.dogsTest)
     testImplementation(projects.commonTest)
-    testImplementation(libs.bundles.test)
+    testImplementation(libs.bundles.test2)
     testRuntimeOnly(libs.junitEngine)
 }

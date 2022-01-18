@@ -13,6 +13,7 @@ plugins {
 
     id("io.gitlab.arturbosch.detekt") version "1.19.0" apply false
     id("com.github.ben-manes.versions") version "0.41.0" apply false
+    id("org.jetbrains.kotlinx.kover") version "0.5.0-RC2"
 }
 
 apply(plugin = "io.gitlab.arturbosch.detekt")

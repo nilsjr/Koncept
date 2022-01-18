@@ -8,7 +8,6 @@ import de.nilsdruyen.koncept.dogs.GetDogListUseCase
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -22,7 +21,7 @@ class DogListViewModel @Inject constructor(private val getDogListUseCase: GetDog
     internal val state: StateFlow<DogListState>
         get() = _state
 
-    val intent = Channel<DogListIntent>(BUFFERED)
+    val intent = Channel<DogListIntent>()
 
     init {
         handleIntent()
@@ -44,7 +43,7 @@ class DogListViewModel @Inject constructor(private val getDogListUseCase: GetDog
 
     private fun loadList() {
         viewModelScope.launch {
-            getDogListUseCase.invoke().collect { result ->
+            getDogListUseCase().collect { result ->
                 result.fold(this@DogListViewModel::handleError) {
                     Logger.log("set list ${it.size}")
                     _state.value = DogListState(it)
