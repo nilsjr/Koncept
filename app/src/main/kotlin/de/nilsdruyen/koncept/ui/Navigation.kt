@@ -11,7 +11,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.nilsdruyen.koncept.dogs.list.DogList
+import de.nilsdruyen.koncept.dogs.ui.list.DogList
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

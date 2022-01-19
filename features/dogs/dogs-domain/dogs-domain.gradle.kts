@@ -1,5 +1,6 @@
 plugins {
     id("kotlin")
+    kotlin("kapt")
 }
 
 dependencies {
@@ -7,6 +8,9 @@ dependencies {
 
     implementation(projects.commonDomain)
     implementation(projects.dogsEntity)
+
+    implementation(libs.hiltCore)
+    kapt(libs.hiltCompiler)
 
     implementation(libs.coroutines)
 }

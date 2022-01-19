@@ -6,11 +6,13 @@ plugins {
 
 dependencies {
     implementation(projects.commonDomain)
-
-    implementation(projects.dogsEntity)
     implementation(projects.dogsData)
+    implementation(projects.dogsEntity)
 
     implementation(libs.bundles.common)
+    implementation(libs.hiltCore)
+    kapt(libs.hiltCompiler)
+
 
     implementation(libs.room)
     kapt(libs.roomCompiler)

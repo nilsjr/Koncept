@@ -19,8 +19,8 @@ dependencies {
     implementation(projects.commonDomain)
     implementation(projects.commonUi)
 
-    implementation(projects.dogsEntity)
     implementation(projects.dogsDomain)
+    implementation(projects.dogsEntity)
 
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
@@ -43,6 +43,6 @@ dependencies {
 
     testImplementation(projects.dogsTest)
     testImplementation(projects.commonTest)
-    testImplementation(libs.bundles.test2)
+    testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.junitEngine)
 }
