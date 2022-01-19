@@ -18,7 +18,7 @@ dependencies {
 
     implementation(projects.commonDomain)
     implementation(projects.dogsDomain)
-    implementation(projects.dogsEntities)
+    implementation(projects.dogsEntity)
 
     implementation(libs.hiltCore)
     kapt(libs.hiltCompiler)

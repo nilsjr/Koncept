@@ -7,7 +7,7 @@ plugins {
 dependencies {
     implementation(projects.commonDomain)
     implementation(projects.dogsData)
-    implementation(projects.dogsEntities)
+    implementation(projects.dogsEntity)
 
     implementation(libs.bundles.common)
     implementation(libs.hiltCore)

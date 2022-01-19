@@ -20,7 +20,7 @@ dependencies {
     implementation(projects.commonUi)
 
     implementation(projects.dogsDomain)
-    implementation(projects.dogsEntities)
+    implementation(projects.dogsEntity)
 
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
