@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import de.nilsdruyen.koncept.data.KonceptDatabase
-import de.nilsdruyen.koncept.dog.cache.daos.DogDao
+import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
 import javax.inject.Singleton
 
 @Module

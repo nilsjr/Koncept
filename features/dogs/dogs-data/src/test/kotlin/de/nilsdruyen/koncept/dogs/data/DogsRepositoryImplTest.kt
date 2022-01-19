@@ -3,8 +3,8 @@ package de.nilsdruyen.koncept.dogs.data
 import app.cash.turbine.test
 import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
-import de.nilsdruyen.koncept.dog.test.DogFactory
-import de.nilsdruyen.koncept.domain.repository.DogsRepository
+import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
+import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher

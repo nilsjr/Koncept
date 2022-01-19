@@ -108,7 +108,7 @@ configurations {
         isCanBeConsumed = true
     }
 }
-val dependencyUpdatesConfig by configurations
+//val dependencyUpdatesConfig by configurations
 val composeVersion = libs.versions.compose.get()
 dependencies {
     implementation(projects.commonDomain)
@@ -137,7 +137,7 @@ dependencies {
 
     debugImplementation(libs.composeUiTooling)
 
-    dependencyUpdatesConfig(libs.desugar)
+//    dependencyUpdatesConfig(libs.desugar)
     coreLibraryDesugaring(libs.desugar)
 
     implementation(libs.hilt)
@@ -164,9 +164,6 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.retrofitMoshi)
-
-//    testImplementation("junit:junit:4.13.2")
-//    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 fun Project.findStringProperty(propertyName: String): String? {

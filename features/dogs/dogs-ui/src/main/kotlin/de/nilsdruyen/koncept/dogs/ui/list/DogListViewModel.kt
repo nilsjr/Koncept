@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
-import de.nilsdruyen.koncept.domain.usecase.GetDogListUseCase
-import de.nilsdruyen.koncept.entities.Dog
+import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
+import de.nilsdruyen.koncept.dogs.entities.Dog
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow

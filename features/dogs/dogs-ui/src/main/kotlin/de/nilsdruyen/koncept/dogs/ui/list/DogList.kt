@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import de.nilsdruyen.koncept.common.ui.MaterialCard
 import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
-import de.nilsdruyen.koncept.entities.Dog
+import de.nilsdruyen.koncept.dogs.entities.Dog
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
