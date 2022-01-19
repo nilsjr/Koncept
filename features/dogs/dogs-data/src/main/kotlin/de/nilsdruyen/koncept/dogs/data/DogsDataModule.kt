@@ -12,5 +12,4 @@ internal interface DogsDataModule {
 
     @Binds
     fun DogsRepositoryImpl.bindDogsRepository(): DogsRepository
-
 }

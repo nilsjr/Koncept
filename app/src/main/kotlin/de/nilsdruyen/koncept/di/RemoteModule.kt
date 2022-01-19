@@ -58,12 +58,15 @@ object RemoteModule {
     fun provideHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
             chain.run {
-                proceed(
+                val request = if (BuildConfig.DOG_API_KEY == "null") {
+                    request()
+                } else {
                     request()
                         .newBuilder()
                         .addHeader("x-api-key", BuildConfig.DOG_API_KEY)
                         .build()
-                )
+                }
+                proceed(request)
             }
         }
     }
@@ -93,5 +96,5 @@ object RemoteModule {
     }
 
     @Provides
-    fun Retrofit.provideDogApi() = create(DogsApi::class.java)
+    fun Retrofit.provideDogApi(): DogsApi = create(DogsApi::class.java)
 }

@@ -2,8 +2,8 @@ package de.nilsdruyen.koncept.dogs.domain.usecase
 
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
+import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.dogs.entities.Dog
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -3,10 +3,10 @@ package de.nilsdruyen.koncept.dogs.data
 import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
+import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
 import de.nilsdruyen.koncept.domain.toDataSourceError
-import de.nilsdruyen.koncept.dogs.entities.Dog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

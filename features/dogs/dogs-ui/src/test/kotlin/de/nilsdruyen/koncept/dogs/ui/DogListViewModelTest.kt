@@ -2,12 +2,12 @@ package de.nilsdruyen.koncept.dogs.ui
 
 import app.cash.turbine.test
 import arrow.core.Either
+import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
+import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.dogs.ui.list.DogListIntent
 import de.nilsdruyen.koncept.dogs.ui.list.DogListViewModel
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
-import de.nilsdruyen.koncept.dogs.entities.Dog
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
