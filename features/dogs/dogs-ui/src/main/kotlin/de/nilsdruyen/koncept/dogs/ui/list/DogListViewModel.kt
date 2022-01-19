@@ -2,26 +2,34 @@ package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.computations.ResultEffect.bind
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
+import de.nilsdruyen.koncept.dogs.domain.usecase.GetListPositionUseCase
+import de.nilsdruyen.koncept.dogs.domain.usecase.SaveListPositionUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DogListViewModel @Inject constructor(private val getDogListUseCase: GetDogListUseCase) : ViewModel() {
+class DogListViewModel @Inject constructor(
+    private val getDogListUseCase: GetDogListUseCase,
+    private val saveListPositionUseCase: SaveListPositionUseCase,
+    private val getListPositionUseCase: GetListPositionUseCase,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(DogListState(isLoading = true))
     internal val state: StateFlow<DogListState>
         get() = _state
 
     val intent = Channel<DogListIntent>()
+
+    private val _effect: Channel<Effect> = Channel()
+    val effect = _effect.receiveAsFlow()
 
     init {
         handleIntent()
@@ -34,7 +42,11 @@ class DogListViewModel @Inject constructor(private val getDogListUseCase: GetDog
                     DogListIntent.LoadIntent -> {
                         loadList()
                     }
-                    is DogListIntent.ShowDogDetailIntent -> { }
+                    is DogListIntent.ShowDetailAndSaveListPosition -> {
+                        val (index, offset) = it.listPosition
+                        saveListPositionUseCase.execute("breedList", index, offset)
+                        _effect.send(Effect.NavigateToDetail(it.id))
+                    }
                 }
             }
         }
@@ -45,7 +57,9 @@ class DogListViewModel @Inject constructor(private val getDogListUseCase: GetDog
             getDogListUseCase.execute().collect { result ->
                 result.fold(this@DogListViewModel::handleError) {
                     Logger.log("set list ${it.size}")
-                    _state.value = DogListState(it)
+                    val (index, offset) = getListPositionUseCase.execute("").bind()
+                    _state.value = DogListState(list = it, listPosition = ListPosition(index, offset))
+                    saveListPositionUseCase.execute("breedList", 0, 0)
                 }
             }
         }
@@ -57,11 +71,21 @@ class DogListViewModel @Inject constructor(private val getDogListUseCase: GetDog
 }
 
 data class DogListState(
+    val listPosition: ListPosition = ListPosition(),
     val list: List<Dog> = emptyList(),
     val isLoading: Boolean = false,
 )
 
 sealed class DogListIntent {
     object LoadIntent : DogListIntent()
-    data class ShowDogDetailIntent(val id: String) : DogListIntent()
+    data class ShowDetailAndSaveListPosition(val id: Int, val listPosition: ListPosition) : DogListIntent()
 }
+
+sealed class Effect {
+    data class NavigateToDetail(val breedId: Int) : Effect()
+}
+
+data class ListPosition(
+    val index: Int = 0,
+    val offset: Int = 0,
+)

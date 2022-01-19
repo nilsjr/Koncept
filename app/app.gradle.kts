@@ -147,6 +147,8 @@ dependencies {
     implementation(libs.room)
     kapt(libs.roomCompiler)
 
+    implementation(libs.datastore)
+
     implementation(libs.moshi)
     kapt(libs.moshiCompiler)
 

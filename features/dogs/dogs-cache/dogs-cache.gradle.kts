@@ -15,4 +15,6 @@ dependencies {
 
     implementation(libs.room)
     kapt(libs.roomCompiler)
+
+    implementation(libs.datastore)
 }

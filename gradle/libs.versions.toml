@@ -20,6 +20,7 @@ core = { module = "androidx.core:core-ktx", version = "1.8.0-alpha02" }
 desugar = { module = "com.android.tools:desugar_jdk_libs", version = "1.1.5" }
 coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 startup = "androidx.startup:startup-runtime:1.1.0"
+datastore = "androidx.datastore:datastore-preferences:1.0.0"
 # lifecycle
 lifecycleRuntime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }

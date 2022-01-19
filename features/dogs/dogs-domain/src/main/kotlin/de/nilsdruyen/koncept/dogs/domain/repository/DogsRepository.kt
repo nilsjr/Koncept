@@ -7,4 +7,8 @@ interface DogsRepository {
     suspend fun getList(): DogListFlow
 
     suspend fun getImagesForBreed(breedId: Int): BreedImages
+
+    suspend fun saveListPosition(index: Int, offset: Int)
+
+    suspend fun getListPosition(): Pair<Int, Int>
 }

@@ -4,4 +4,6 @@ plugins {
 
 dependencies {
     implementation(libs.javax)
+
+    implementation(libs.arrowKt)
 }
