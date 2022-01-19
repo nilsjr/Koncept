@@ -8,7 +8,6 @@ import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -16,13 +15,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DogListViewModel @Inject constructor(val getDogListUseCase: GetDogListUseCase) : ViewModel() {
+class DogListViewModel @Inject constructor(private val getDogListUseCase: GetDogListUseCase) : ViewModel() {
 
     private val _state = MutableStateFlow(DogListState(isLoading = true))
     internal val state: StateFlow<DogListState>
         get() = _state
 
-    val intent = Channel<DogListIntent>(BUFFERED)
+    val intent = Channel<DogListIntent>()
 
     init {
         handleIntent()
@@ -35,8 +34,7 @@ class DogListViewModel @Inject constructor(val getDogListUseCase: GetDogListUseC
                     DogListIntent.LoadIntent -> {
                         loadList()
                     }
-                    is DogListIntent.ShowDogDetailIntent -> {
-                    }
+                    is DogListIntent.ShowDogDetailIntent -> { }
                 }
             }
         }

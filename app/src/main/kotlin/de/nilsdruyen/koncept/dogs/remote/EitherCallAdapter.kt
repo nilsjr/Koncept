@@ -8,6 +8,7 @@ import okio.Timeout
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
@@ -38,6 +39,11 @@ private class EitherCall<R>(
 
             override fun onFailure(call: Call<R>, throwable: Throwable) {
                 val error = when (throwable) {
+                    is HttpException -> DataSourceError.ApiError(
+                        throwable.code(),
+                        throwable.response()?.errorBody().toString(),
+                        throwable
+                    )
                     is IOException -> DataSourceError.NetworkError(throwable)
                     else -> DataSourceError.UnknownError(throwable)
                 }

@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.composeUiToolingPreview)
     implementation(libs.composeNavigation)
     implementation(libs.constraintCompose)
+    implementation(libs.coilCompose)
 
     debugImplementation(libs.composeUiTooling)
 

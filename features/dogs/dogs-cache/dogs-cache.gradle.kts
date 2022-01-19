@@ -13,7 +13,6 @@ dependencies {
     implementation(libs.hiltCore)
     kapt(libs.hiltCompiler)
 
-
     implementation(libs.room)
     kapt(libs.roomCompiler)
 }

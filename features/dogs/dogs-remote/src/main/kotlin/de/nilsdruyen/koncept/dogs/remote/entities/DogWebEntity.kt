@@ -12,4 +12,6 @@ data class DogWebEntity(
     val lifeSpan: String?,
     @Json(name = "reference_image_id")
     val imageId: String?,
+    @Json(name = "breed_group")
+    val group: String?,
 )

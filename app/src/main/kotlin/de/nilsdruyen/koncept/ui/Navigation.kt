@@ -6,11 +6,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
 import de.nilsdruyen.koncept.dogs.ui.list.DogList
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -38,8 +41,16 @@ fun KonceptApp() {
                 popExitTransition = { null },
             ) {
                 DogList(
-                    viewModel = hiltViewModel()
+                    viewModel = hiltViewModel(),
+                    onBreedClick = { id ->
+                        navController.navigate("breedDetail/$id")
+                    }
                 )
+            }
+            composable("breedDetail/{breedId}", arguments = listOf(navArgument("breedId") {
+                type = NavType.IntType
+            })) {
+                BreedDetail(hiltViewModel())
             }
         }
     }

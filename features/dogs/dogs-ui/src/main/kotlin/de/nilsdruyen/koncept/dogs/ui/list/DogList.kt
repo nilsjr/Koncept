@@ -42,7 +42,7 @@ import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
-fun DogList(viewModel: DogListViewModel) {
+fun DogList(viewModel: DogListViewModel, onBreedClick: (Int) -> Unit = {}) {
     val uiState = viewModel.state.collectAsState()
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
 
@@ -106,7 +106,9 @@ fun DogList(viewModel: DogListViewModel) {
                         }
                     }
                     currentState.list.isNotEmpty() -> {
-                        DogList(dogList = currentState.list, showDog = {})
+                        DogList(dogList = currentState.list, showDog = {
+                            onBreedClick(it.id)
+                        })
                     }
                 }
             }

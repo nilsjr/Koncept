@@ -47,6 +47,8 @@ composeMaterialIcons = { module = "androidx.compose.material:material-icons-exte
 composeMaterial3 = { module = "androidx.compose.material3:material3", version = "1.0.0-alpha03" }
 composeNavigation = { module = "androidx.navigation:navigation-compose", version = "2.4.0-rc01" }
 constraintCompose = { module = "androidx.constraintlayout:constraintlayout-compose", version = "1.0.0" }
+pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha14"
+coilCompose = "io.coil-kt:coil-compose:1.4.0"
 # accompanist
 accompanistSystemUi = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanistInsets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
@@ -78,6 +80,6 @@ faker = "io.github.serpro69:kotlin-faker:1.9.0"
 mockk = "io.mockk:mockk:1.12.2"
 
 [bundles]
-common = ["javax", "arrowKt"]
+common = ["javax", "arrowKt", "coroutines"]
 test = ["junitApi", "mockito", "mockitoJupiter", "mockitoKotlin", "turbine", "coroutinesTest"]
 test2 = ["junitApi", "turbine", "coroutinesTest", "mockk"]
