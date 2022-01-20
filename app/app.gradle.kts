@@ -113,6 +113,7 @@ val composeVersion = libs.versions.compose.get()
 dependencies {
     implementation(projects.commonDomain)
     implementation(projects.commonRemote)
+    implementation(projects.commonUi)
 
     implementation(projects.dogsRemote)
     implementation(projects.dogsCache)

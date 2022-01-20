@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.coilCompose)
 
     debugImplementation(libs.composeUiTooling)
+    debugImplementation(projects.dogsTest)
 
     implementation(libs.lottie)
 

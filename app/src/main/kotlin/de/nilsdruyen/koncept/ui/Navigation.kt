@@ -14,7 +14,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
-import de.nilsdruyen.koncept.dogs.ui.list.DogList
+import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -40,7 +40,7 @@ fun KonceptApp() {
                 popEnterTransition = { null },
                 popExitTransition = { null },
             ) {
-                DogList(
+                DogListScreen(
                     viewModel = hiltViewModel(),
                     onBreedClick = { id ->
                         navController.navigate("breedDetail/$id")
