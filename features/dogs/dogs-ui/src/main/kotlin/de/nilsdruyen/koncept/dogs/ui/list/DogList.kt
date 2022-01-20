@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +42,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import de.nilsdruyen.koncept.common.ui.MaterialCard
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
-import de.nilsdruyen.koncept.domain.Logger
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -52,6 +52,7 @@ fun DogList(viewModel: DogListViewModel, onBreedClick: (Int) -> Unit = {}) {
     val uiState = viewModel.state.collectAsState()
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     val coroutineScope = rememberCoroutineScope()
+    val scrollState = rememberLazyListState()
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(DogListIntent.LoadIntent)
@@ -122,16 +123,11 @@ fun DogList(viewModel: DogListViewModel, onBreedClick: (Int) -> Unit = {}) {
                     }
                     currentState.list.isNotEmpty() -> {
                         DogList(
-                            listPosition = currentState.listPosition,
+                            listState = scrollState,
                             dogList = currentState.list,
-                            showDog = { dog, listPosition ->
+                            showDog = { dog ->
                                 coroutineScope.launch {
-                                    viewModel.intent.send(
-                                        DogListIntent.ShowDetailAndSaveListPosition(
-                                            dog.id,
-                                            listPosition
-                                        )
-                                    )
+                                    viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
                                 }
                             }
                         )
@@ -144,19 +140,17 @@ fun DogList(viewModel: DogListViewModel, onBreedClick: (Int) -> Unit = {}) {
 
 @Composable
 fun DogList(
-    listPosition: ListPosition,
+    listState: LazyListState,
     dogList: List<Dog>,
-    showDog: (Dog, ListPosition) -> Unit,
+    showDog: (Dog) -> Unit,
 ) {
-    Logger.log("init state $listPosition")
-    val listState = rememberLazyListState(listPosition.index, listPosition.offset)
     LazyColumn(
         contentPadding = PaddingValues(bottom = 4.dp),
         state = listState,
     ) {
         items(dogList) { dog ->
             DogItem(dog) {
-                showDog(it, ListPosition(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset))
+                showDog(it)
             }
         }
     }

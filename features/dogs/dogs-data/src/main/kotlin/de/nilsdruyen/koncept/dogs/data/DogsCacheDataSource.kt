@@ -9,8 +9,4 @@ interface DogsCacheDataSource {
     suspend fun getDogList(): Flow<Either<DataSourceError, List<Dog>>>
 
     suspend fun setDogList(list: List<Dog>)
-
-    suspend fun saveListPosition(index: Int, offset: Int)
-
-    suspend fun getListPosition(): Pair<Int, Int>
 }

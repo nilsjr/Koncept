@@ -7,7 +7,12 @@ import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.toDataSourceError
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 internal class DogsRepositoryImpl @Inject constructor(
@@ -29,13 +34,5 @@ internal class DogsRepositoryImpl @Inject constructor(
 
     override suspend fun getImagesForBreed(breedId: Int): BreedImages {
         return dogsRemoteDataSource.getImagesForBreed(breedId)
-    }
-
-    override suspend fun saveListPosition(index: Int, offset: Int) {
-        return dogsCacheDataSource.saveListPosition(index, offset)
-    }
-
-    override suspend fun getListPosition(): Pair<Int, Int> {
-        return dogsCacheDataSource.getListPosition()
     }
 }
