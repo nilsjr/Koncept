@@ -69,4 +69,20 @@ Here what is interesting:
 
 Junit5 based mockito tests with coroutines & turbine for flow testing
 
+## ui tests
+
+with shot: [https://github.com/pedrovgs/Shot](https://github.com/pedrovgs/Shot)
+
+For android 10 or higher
+
+- adb shell settings put global hidden_api_policy 1
+
+### record screenshots
+
+gradle debugExecuteScreenshotTests -Precord
+
+### test against screenshots
+
+gradle debugExecuteScreenshotTests
+
 # tbd.

@@ -1,5 +1,6 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -39,6 +40,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -161,7 +163,9 @@ fun DogList(scrollState: LazyListState, list: List<Dog>, showDog: (Dog) -> Unit)
     LazyColumn(
         contentPadding = PaddingValues(bottom = 4.dp),
         state = scrollState,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag("dogList")
     ) {
         items(list) { dog ->
             DogItem(dog) {
@@ -208,10 +212,11 @@ fun PreviewDogItem() {
     }
 }
 
+@VisibleForTesting
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewEmptyDogList(@PreviewParameter(DogListPreviewProvider::class) listState: DogListState) {
+fun PreviewDogList(@PreviewParameter(DogListPreviewProvider::class) listState: DogListState) {
     val state = derivedStateOf { listState }
     KonceptTheme {
         DogListScreen(state) {}

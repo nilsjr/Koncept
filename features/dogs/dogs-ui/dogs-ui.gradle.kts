@@ -2,15 +2,24 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    id("shot")
 }
 
 android {
+    defaultConfig {
+        testApplicationId = "de.nilsdruyen.koncept.dogs.test"
+        testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
+    }
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
+}
+
+shot {
+    applicationId = "de.nilsdruyen.koncept.dogs.test"
 }
 
 dependencies {
@@ -47,4 +56,9 @@ dependencies {
     testImplementation(projects.commonTest)
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.junitEngine)
+
+    androidTestImplementation(libs.hiltTest)
+    androidTestImplementation(libs.composeUiTest)
+    debugImplementation(libs.composeUiManifestTest)
+    kaptAndroidTest(libs.hiltCompiler)
 }

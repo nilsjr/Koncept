@@ -9,6 +9,7 @@ pluginManagement {
             when (requested.id.id) {
                 // TODO: remove resolutionStrategy block when https://github.com/google/dagger/issues/2774 is fixed
                 "dagger.hilt.android.plugin" -> useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
+                "shot" -> useModule("com.karumi:shot:${requested.version}")
             }
         }
     }
