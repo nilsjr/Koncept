@@ -9,6 +9,7 @@ android {
     defaultConfig {
         testApplicationId = "de.nilsdruyen.koncept.dogs.test"
         testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
+        testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
     }
     buildFeatures {
         compose = true
@@ -56,9 +57,17 @@ dependencies {
     testImplementation(projects.commonTest)
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.junitEngine)
+    testImplementation(libs.hiltTest)
+    kaptTest(libs.hiltCompiler)
+    testImplementation(libs.okHttpMock)
 
     androidTestImplementation(libs.hiltTest)
     androidTestImplementation(libs.composeUiTest)
     debugImplementation(libs.composeUiManifestTest)
     kaptAndroidTest(libs.hiltCompiler)
+    androidTestImplementation("androidx.test:runner:1.4.0")
+
+    androidTestImplementation(projects.dogsData)
+    androidTestImplementation(projects.dogsRemote)
+    androidTestImplementation(projects.dogsCache)
 }
