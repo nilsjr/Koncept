@@ -206,9 +206,9 @@ fun DogItem(dog: Dog, showDog: (Dog) -> Unit) {
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewDogItem() {
+fun PreviewDogItem(dog: Dog = Dog(1, "Nils Hund")) {
     KonceptTheme {
-        DogItem(dog = Dog(1, "Nils Hund"), showDog = {})
+        DogItem(dog = dog, showDog = {})
     }
 }
 
