@@ -1,6 +1,5 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,6 +7,8 @@ import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
+import de.nilsdruyen.koncept.domain.annotations.DefaultDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,15 +17,14 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@VisibleForTesting
 @HiltViewModel
 class DogListViewModel @Inject constructor(
+    @DefaultDispatcher val coroutineDispatcher: CoroutineDispatcher,
     private val getDogListUseCase: GetDogListUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DogListState(isLoading = true))
-    internal val state: StateFlow<DogListState>
-        get() = _state
+    internal val state: StateFlow<DogListState> = _state
 
     val intent = Channel<DogListIntent>()
 
@@ -36,12 +36,10 @@ class DogListViewModel @Inject constructor(
     }
 
     private fun handleIntent() {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineDispatcher) {
             intent.consumeAsFlow().collect {
                 when (it) {
-                    DogListIntent.LoadIntent -> {
-                        loadList()
-                    }
+                    DogListIntent.LoadIntent -> loadList()
                     is DogListIntent.ShowDetailAndSaveListPosition -> {
                         _effect.send(Effect.NavigateToDetail(it.id))
                     }
@@ -50,13 +48,11 @@ class DogListViewModel @Inject constructor(
         }
     }
 
-    private fun loadList() {
-        viewModelScope.launch {
-            getDogListUseCase.execute().collect { result ->
-                result.fold(this@DogListViewModel::handleError) {
-                    Logger.log("set list ${it.size}")
-                    _state.value = DogListState(list = it)
-                }
+    private suspend fun loadList() {
+        getDogListUseCase.execute().collect { result ->
+            result.fold(this@DogListViewModel::handleError) {
+                Logger.log("set list ${it.size}")
+                _state.value = DogListState(list = it)
             }
         }
     }

@@ -6,6 +6,9 @@ plugins {
 dependencies {
     implementation(libs.bundles.common)
 
+    implementation(platform(libs.arrowStack))
+    implementation(libs.arrowKt)
+
     implementation(projects.commonDomain)
     implementation(projects.dogsEntity)
 

@@ -4,8 +4,10 @@ import app.cash.turbine.test
 import arrow.core.Either
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import de.nilsdruyen.koncept.dogs.cache.DogsCacheModule
@@ -16,28 +18,33 @@ import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.remote.DogsRemoteModule
 import de.nilsdruyen.koncept.domain.DataSourceError
+import de.nilsdruyen.koncept.domain.annotations.DefaultDispatcher
+import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
+import de.nilsdruyen.koncept.domain.annotations.MainDispatcher
+import de.nilsdruyen.koncept.test.TestCoroutineRule
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import javax.inject.Inject
 
 @HiltAndroidTest
-class DogListViewModelTest {
+@RunWith(RobolectricTestRunner::class)
+@Config(application = HiltTestApplication::class)
+class DogListViewModelIntTest {
 
-    @get:Rule
+    @get:Rule(order = 1)
     var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 2)
+    val testRule = TestCoroutineRule()
 
     @Inject
     lateinit var getDogListUseCase: GetDogListUseCase
@@ -47,44 +54,18 @@ class DogListViewModelTest {
     @Before
     fun init() {
         hiltRule.inject()
-
-//        Dispatchers.setMain(StandardTestDispatcher())
-
-        viewModel = DogListViewModel(getDogListUseCase)
+        viewModel = DogListViewModel(testRule.dispatcher, getDogListUseCase)
     }
 
-    @After
-    fun reset() {
-//        Dispatchers.resetMain()
-    }
-
-    @Ignore("not working")
     @Test
-    fun loaDogList() = runTest {
-        val states = mutableListOf<DogListState>()
+    fun `load dogs`() = testRule.scope.runTest {
+        viewModel.state.test {
+            viewModel.intent.send(DogListIntent.LoadIntent)
 
-//        val job = launch {
-//            viewModel.state.toList(states)
-//        }
-
-        viewModel.intent.send(DogListIntent.LoadIntent)
-
-//        viewModel.state.toList(states)
-//        val currentState = viewModel.state.value
-
-        println("list ${states.size}")
-
-    viewModel.state.test {
-        assert(awaitItem().isLoading)
-        assert(!awaitItem().isLoading)
-    }
-
-//        assert(states[0].isLoading)
-//        assert(states.size > 1)
-//        assert(currentState.list.isNotEmpty())
-//        assert(currentState.list.size == 1)
-
-//        job.cancel()
+            assert(awaitItem().list.isEmpty())
+            assert(awaitItem().list.isEmpty())
+            assert(awaitItem().list.size == 1)
+        }
     }
 }
 
@@ -93,7 +74,7 @@ class DogListViewModelTest {
     components = [SingletonComponent::class],
     replaces = [DogsRemoteModule::class, DogsCacheModule::class]
 )
-object FakeModule {
+object FakeIntModule {
 
     @Provides
     fun bindDogsRemoteDataSource(): DogsRemoteDataSource {
@@ -119,10 +100,24 @@ object FakeModule {
                 return flowOf(Either.Right(emptyList()))
             }
 
-            override suspend fun setDogList(list: List<Dog>) {
-
-            }
+            override suspend fun setDogList(list: List<Dog>) {}
         }
     }
 }
 
+@Module
+@InstallIn(SingletonComponent::class)
+object DispatchersModule {
+
+    @IoDispatcher
+    @Provides
+    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @MainDispatcher
+    @Provides
+    fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+
+    @DefaultDispatcher
+    @Provides
+    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+}

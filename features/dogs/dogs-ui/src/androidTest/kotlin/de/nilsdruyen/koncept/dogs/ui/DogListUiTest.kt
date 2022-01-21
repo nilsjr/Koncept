@@ -14,7 +14,6 @@ import de.nilsdruyen.koncept.dogs.ui.list.PreviewDogList
 import org.junit.Rule
 import org.junit.Test
 
-//@RunWith(ShotTestRunner::class)
 class DogListUiTest : ScreenshotTest {
 
     @get:Rule

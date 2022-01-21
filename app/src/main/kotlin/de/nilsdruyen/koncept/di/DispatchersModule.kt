@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import de.nilsdruyen.koncept.domain.annotations.DefaultDispatcher
 import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
 import de.nilsdruyen.koncept.domain.annotations.MainDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,4 +21,8 @@ object DispatchersModule {
     @MainDispatcher
     @Provides
     fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+
+    @DefaultDispatcher
+    @Provides
+    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 }

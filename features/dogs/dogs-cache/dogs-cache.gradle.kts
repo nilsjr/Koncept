@@ -5,11 +5,15 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.bundles.common)
+
     implementation(projects.commonDomain)
     implementation(projects.dogsData)
     implementation(projects.dogsEntity)
 
-    implementation(libs.bundles.common)
+    implementation(platform(libs.arrowStack))
+    implementation(libs.arrowKt)
+
     implementation(libs.hiltCore)
     kapt(libs.hiltCompiler)
 

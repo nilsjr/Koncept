@@ -8,8 +8,8 @@ plugins {
 android {
     defaultConfig {
         testApplicationId = "de.nilsdruyen.koncept.dogs.test"
-        testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
-//        testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
+//        testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
+        testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
     }
     buildFeatures {
         compose = true
@@ -17,6 +17,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
+//    testOptions {
+//        unitTests {
+//            includeAndroidResources = true
+//        }
+//    }
 }
 
 shot {
@@ -49,18 +54,37 @@ dependencies {
     implementation(libs.coilCompose)
 
     debugImplementation(libs.composeUiTooling)
-    debugImplementation(projects.dogsTest)
+
+    implementation(platform(libs.arrowStack))
+    implementation(libs.arrowKt)
 
     implementation(libs.lottie)
 
-    testImplementation(projects.dogsTest)
-    testImplementation(projects.commonTest)
+    // testing
     testImplementation(libs.bundles.test)
-    testRuntimeOnly(libs.junitEngine)
+    testImplementation(platform(libs.junit5Bom))
+    testImplementation(libs.junit5Api)
+    testRuntimeOnly(libs.junit5Engine)
+
+    testImplementation(libs.junit4)
+    testRuntimeOnly(libs.junit5VintageEngine)
+
+    testImplementation(libs.bundles.mockito)
+    testImplementation(libs.mockitoJupiter)
+
+    testImplementation(projects.commonTest)
+    testImplementation(projects.dogsTest)
+    testImplementation(projects.dogsData)
+    testImplementation(projects.dogsRemote)
+    testImplementation(projects.dogsCache)
+
+    testImplementation(libs.androidxTestCore)
+    testImplementation("org.robolectric:robolectric:4.7.3")
     testImplementation(libs.hiltTest)
     kaptTest(libs.hiltCompiler)
-//    testImplementation(libs.okHttpMock)
 
+    // android testing
+    androidTestImplementation(libs.bundles.androidTest)
     androidTestImplementation(libs.hiltTest)
     androidTestImplementation(libs.composeUiTest)
     debugImplementation(libs.composeUiManifestTest)

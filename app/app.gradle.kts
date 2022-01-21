@@ -159,7 +159,9 @@ dependencies {
     implementation(libs.accompanistNavMaterial)
 
     implementation(libs.timber)
+    implementation(platform(libs.arrowStack))
     implementation(libs.arrowKt)
+    implementation(libs.arrowKtRetrofit)
 
     implementation(platform(libs.okHttpBom))
     implementation(libs.okHttp)
@@ -167,6 +169,9 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.retrofitMoshi)
+
+    implementation(libs.junit4)
+//    implementation(libs.junit4)
 }
 
 fun Project.findStringProperty(propertyName: String): String? {

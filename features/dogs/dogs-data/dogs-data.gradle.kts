@@ -23,12 +23,14 @@ dependencies {
     implementation(libs.hiltCore)
     kapt(libs.hiltCompiler)
 
-
     implementation(libs.coroutines)
+
+    implementation(platform(libs.arrowStack))
     implementation(libs.arrowKt)
 
     testImplementation(projects.dogsTest)
     testImplementation(projects.commonTest)
-    testImplementation(libs.bundles.test)
-    testRuntimeOnly(libs.junitEngine)
+
+    testImplementation(platform(libs.junit5Bom))
+    testRuntimeOnly(libs.junit5Engine)
 }

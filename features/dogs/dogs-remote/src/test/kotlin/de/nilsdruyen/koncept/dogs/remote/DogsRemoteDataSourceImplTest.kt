@@ -4,24 +4,34 @@ import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
+import de.nilsdruyen.koncept.test.CoroutineTest
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import de.nilsdruyen.koncept.test.parseList
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
 
 @ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
-internal class DogsRemoteDataSourceImplTest {
+internal class DogsRemoteDataSourceImplTest : CoroutineTest {
+
+    override lateinit var testScope: TestScope
+    override lateinit var dispatcher: TestDispatcher
 
     @Mock
     lateinit var api: DogsApi
 
-    @InjectMocks
     lateinit var tested: DogsRemoteDataSourceImpl
+
+    @BeforeEach
+    fun setup() {
+        tested = DogsRemoteDataSourceImpl(api, dispatcher)
+    }
 
     @Test
     fun `Get dog list from remote`() = runTest {
