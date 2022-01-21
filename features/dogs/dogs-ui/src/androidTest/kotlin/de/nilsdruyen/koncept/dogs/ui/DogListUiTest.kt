@@ -5,12 +5,15 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.karumi.shot.ScreenshotTest
+import com.karumi.shot.ShotTestRunner
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.dogs.ui.list.DogListState
 import de.nilsdruyen.koncept.dogs.ui.list.PreviewDogList
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+//@RunWith(ShotTestRunner::class)
 class DogListUiTest : ScreenshotTest {
 
     @get:Rule

@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
@@ -54,6 +55,7 @@ class DogListViewModelTest {
         Dispatchers.resetMain()
     }
 
+    @Ignore
     @Test
     fun loaDogList() = runTest {
         viewModel.intent.send(DogListIntent.LoadIntent)
