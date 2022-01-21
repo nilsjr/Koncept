@@ -1,7 +1,6 @@
 package de.nilsdruyen.koncept.test
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestDispatcher
@@ -20,7 +19,6 @@ interface CoroutineTest {
     var dispatcher: TestDispatcher
 }
 
-@ExperimentalCoroutinesApi
 class CoroutinesTestExtension(
     val testDispatcher: TestDispatcher = StandardTestDispatcher(TestCoroutineScheduler())
 ) : BeforeAllCallback, AfterAllCallback, TestInstancePostProcessor {

@@ -5,9 +5,11 @@ import arrow.core.Either
 import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.dogs.test.DogFactory
+import de.nilsdruyen.koncept.test.CoroutineTest
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -18,7 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
 
 @ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
-internal class DogsRepositoryImplTest(private val testDispatcher: TestDispatcher) {
+internal class DogsRepositoryImplTest : CoroutineTest {
+
+    override lateinit var testScope: TestScope
+    override lateinit var dispatcher: TestDispatcher
 
     @Mock
     lateinit var dogsRemoteDataSource: DogsRemoteDataSource
@@ -30,7 +35,7 @@ internal class DogsRepositoryImplTest(private val testDispatcher: TestDispatcher
 
     @BeforeEach
     fun setup() {
-        tested = DogsRepositoryImpl(dogsRemoteDataSource, dogsCacheDataSource, testDispatcher)
+        tested = DogsRepositoryImpl(dogsRemoteDataSource, dogsCacheDataSource)
     }
 
     @Nested

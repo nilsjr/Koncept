@@ -100,7 +100,7 @@ object FakeIntModule {
                 return flowOf(Either.Right(emptyList()))
             }
 
-            override suspend fun setDogList(list: List<Dog>) {}
+            override suspend fun setDogList(list: List<Dog>) { }
         }
     }
 }

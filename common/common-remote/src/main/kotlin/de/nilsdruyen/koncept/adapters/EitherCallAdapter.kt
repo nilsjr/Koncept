@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.remote
+package de.nilsdruyen.koncept.adapters
 
 import arrow.core.Either
 import de.nilsdruyen.koncept.domain.DataSourceError

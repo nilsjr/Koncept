@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DogListViewModel @Inject constructor(
-    @DefaultDispatcher val coroutineDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher val dispatcher: CoroutineDispatcher,
     private val getDogListUseCase: GetDogListUseCase,
 ) : ViewModel() {
 
@@ -36,7 +36,7 @@ class DogListViewModel @Inject constructor(
     }
 
     private fun handleIntent() {
-        viewModelScope.launch(coroutineDispatcher) {
+        viewModelScope.launch(dispatcher) {
             intent.consumeAsFlow().collect {
                 when (it) {
                     DogListIntent.LoadIntent -> loadList()

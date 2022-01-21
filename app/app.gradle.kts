@@ -170,7 +170,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofitMoshi)
 
-    implementation(libs.junit4)
+//    testImplementation(libs.junit4)
 //    implementation(libs.junit4)
 }
 

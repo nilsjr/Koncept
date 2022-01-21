@@ -5,8 +5,7 @@ import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.test.CoroutineTest
-import de.nilsdruyen.koncept.test.CoroutinesTestExtension
-import de.nilsdruyen.koncept.test.parseList
+import de.nilsdruyen.koncept.test.utils.parseList
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -17,7 +16,7 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
 
-@ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
+@ExtendWith(MockitoExtension::class)
 internal class DogsRemoteDataSourceImplTest : CoroutineTest {
 
     override lateinit var testScope: TestScope

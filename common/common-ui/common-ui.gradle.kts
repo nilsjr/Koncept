@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -25,4 +26,7 @@ dependencies {
     implementation(libs.constraintCompose)
 
     debugImplementation(libs.composeUiTooling)
+
+    implementation(libs.hilt)
+    kapt(libs.hiltCompiler)
 }

@@ -83,6 +83,8 @@ dependencies {
     testImplementation(libs.hiltTest)
     kaptTest(libs.hiltCompiler)
 
+    testImplementation(libs.okHttpMock)
+
     // android testing
     androidTestImplementation(libs.bundles.androidTest)
     androidTestImplementation(libs.hiltTest)

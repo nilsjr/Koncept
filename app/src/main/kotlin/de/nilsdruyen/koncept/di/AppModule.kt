@@ -1,6 +1,7 @@
 package de.nilsdruyen.koncept.di
 
 import android.content.Context
+import android.os.Looper
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -10,6 +11,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import de.nilsdruyen.koncept.MainThreadCheck
 import javax.inject.Singleton
 
 // At the top level of your kotlin file:
@@ -30,4 +32,7 @@ object AppStaticModule {
     @Provides
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> = context.dataStore
+
+    @Provides
+    fun mainThreadCheck() = MainThreadCheck { Looper.myLooper() == Looper.getMainLooper() }
 }

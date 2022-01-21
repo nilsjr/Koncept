@@ -16,4 +16,15 @@ dependencies {
     kapt(libs.hiltCompiler)
 
     implementation(libs.coroutines)
+
+    testImplementation(libs.bundles.test)
+    testImplementation(projects.dogsTest)
+    testImplementation(projects.commonTest)
+
+    testImplementation(platform(libs.junit5Bom))
+    testImplementation(libs.junit5Api)
+    testRuntimeOnly(libs.junit5Engine)
+
+    testImplementation(libs.bundles.mockito)
+    testImplementation(libs.mockitoJupiter)
 }

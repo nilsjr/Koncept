@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.test
+package de.nilsdruyen.koncept.test.utils
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types

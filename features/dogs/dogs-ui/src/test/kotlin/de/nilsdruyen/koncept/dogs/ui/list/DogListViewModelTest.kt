@@ -4,8 +4,6 @@ import app.cash.turbine.test
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.test.DogFactory
-import de.nilsdruyen.koncept.dogs.ui.list.DogListIntent
-import de.nilsdruyen.koncept.dogs.ui.list.DogListViewModel
 import de.nilsdruyen.koncept.test.CoroutineTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -54,6 +52,7 @@ internal class DogListViewModelTest : CoroutineTest {
             assert(awaitItem().list.isEmpty())
             assert(awaitItem().list.size == 2)
             assert(awaitItem().list.size == 3)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 }

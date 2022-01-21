@@ -1,8 +1,10 @@
 package de.nilsdruyen.koncept.domain
 
-fun interface Logger {
+interface Logger {
 
     fun log(text: String)
+
+    fun e(message: String)
 
     companion object : Logger {
 
@@ -15,10 +17,15 @@ fun interface Logger {
         override fun log(text: String) {
             logger.log(text)
         }
+
+        override fun e(message: String) {
+            logger.e(message)
+        }
     }
 }
 
 object StubLogger : Logger {
 
     override fun log(text: String) {}
+    override fun e(message: String) {}
 }

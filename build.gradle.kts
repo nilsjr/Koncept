@@ -60,6 +60,7 @@ subprojects {
         testLogging {
             events = setOfNotNull(
                 org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+                org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
             )
         }
     }
@@ -80,6 +81,16 @@ fun BaseExtension.configureAndroidBaseExtension() {
         unitTests {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
+        }
+        unitTests.all {
+            if (it.name == "testDebugUnitTest") {
+                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                    isDisabled = false
+//                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
+//                    includes = listOf("com.example.*")
+//                    excludes = listOf("com.example.subpackage.*")
+                }
+            }
         }
     }
 }
@@ -115,6 +126,12 @@ fun Project.configureDetekt(vararg paths: String) {
     }
     dependencies {
         "detektPlugins"("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.register("allTests") {
+        dependsOn(TaskUtils.filterTestTasks(subprojects.toList()))
     }
 }
 
