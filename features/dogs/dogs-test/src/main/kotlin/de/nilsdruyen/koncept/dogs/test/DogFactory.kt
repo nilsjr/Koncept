@@ -5,9 +5,34 @@ import io.github.serpro69.kfaker.Faker
 
 object DogFactory {
 
-    private val faker = Faker()
+    fun buildList(count: Int = 3) = List(count) {
+        dog {
+            id = it
+            name = "DogBreed $it"
+        }
+    }
 
-    fun buildList(count: Int = 3) = List(count) { build() }
+    fun build() = dog {
+        id = 1
+        name = "DogBreed"
+    }
 
-    fun build() = Dog(faker.random.nextInt(), faker.dog.name())
+    object Random {
+
+        private val faker = Faker()
+
+        fun buildList(count: Int = 3) = List(count) { build() }
+
+        fun build() = Dog(faker.random.nextInt(), faker.dog.name())
+    }
+}
+
+fun dog(block: DogBuilder.() -> Unit) = DogBuilder().apply(block).build()
+
+class DogBuilder {
+
+    var id: Int = 0
+    var name: String = ""
+
+    fun build(): Dog = Dog(id, name)
 }

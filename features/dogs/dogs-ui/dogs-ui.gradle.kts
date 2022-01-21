@@ -8,7 +8,6 @@ plugins {
 android {
     defaultConfig {
         testApplicationId = "de.nilsdruyen.koncept.dogs.test"
-//        testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
         testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
     }
     buildFeatures {
@@ -17,11 +16,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-//    testOptions {
-//        unitTests {
-//            includeAndroidResources = true
-//        }
-//    }
 }
 
 shot {
@@ -93,7 +87,5 @@ dependencies {
     kaptAndroidTest(libs.hiltCompiler)
     androidTestImplementation("androidx.test:runner:1.4.0")
 
-    androidTestImplementation(projects.dogsData)
-    androidTestImplementation(projects.dogsRemote)
-    androidTestImplementation(projects.dogsCache)
+    androidTestImplementation(projects.dogsTest)
 }

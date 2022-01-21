@@ -109,7 +109,6 @@ configurations {
     }
 }
 //val dependencyUpdatesConfig by configurations
-val composeVersion = libs.versions.compose.get()
 dependencies {
     implementation(projects.commonDomain)
     implementation(projects.commonRemote)

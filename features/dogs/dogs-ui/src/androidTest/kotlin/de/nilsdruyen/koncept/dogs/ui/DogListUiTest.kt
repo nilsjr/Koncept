@@ -22,7 +22,7 @@ class DogListUiTest : ScreenshotTest {
     @ExperimentalMaterial3Api
     @Test
     fun MyTest() {
-        val dogListState = DogListState(DogFactory.buildList(20))
+        val dogListState = DogListState(DogFactory.buildList(10))
 
         composeTestRule.setContent {
             PreviewDogList(dogListState)
