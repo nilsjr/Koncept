@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui
+package de.nilsdruyen.koncept.dogs.ui.list
 
 import app.cash.turbine.test
 import arrow.core.Either
