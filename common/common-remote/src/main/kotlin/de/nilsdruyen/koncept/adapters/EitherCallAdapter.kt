@@ -95,7 +95,7 @@ private class EitherCall<R>(
 }
 
 @Suppress("ReturnCount")
-internal class EitherCallAdapterFactory : CallAdapter.Factory() {
+class EitherCallAdapterFactory : CallAdapter.Factory() {
 
     override fun get(
         returnType: Type,

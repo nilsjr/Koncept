@@ -67,17 +67,17 @@ dependencies {
     testImplementation(libs.mockitoJupiter)
 
     testImplementation(projects.commonTest)
+    testImplementation(projects.commonRemote)
+
     testImplementation(projects.dogsTest)
     testImplementation(projects.dogsData)
     testImplementation(projects.dogsRemote)
     testImplementation(projects.dogsCache)
 
     testImplementation(libs.androidxTestCore)
-    testImplementation("org.robolectric:robolectric:4.7.3")
+    testImplementation(libs.robolectric)
     testImplementation(libs.hiltTest)
     kaptTest(libs.hiltCompiler)
-
-    testImplementation(libs.okHttpMock)
 
     // android testing
     androidTestImplementation(libs.bundles.androidTest)
@@ -85,7 +85,7 @@ dependencies {
     androidTestImplementation(libs.composeUiTest)
     debugImplementation(libs.composeUiManifestTest)
     kaptAndroidTest(libs.hiltCompiler)
-    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation(libs.androidxTestRunner)
 
     androidTestImplementation(projects.dogsTest)
 }
