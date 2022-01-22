@@ -3,6 +3,7 @@ import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -63,6 +64,18 @@ subprojects {
                 org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
             )
         }
+        extensions.configure(KoverTaskExtension::class) {
+            includes = listOf("de.nilsdruyen.koncept.dogs.domain.usecase.*")
+            excludes = listOf(
+//                "de.nilsdruyen.koncept.**Factory",
+                ".+Factory",
+//                "hilt_aggregated_deps*",
+//                "de.nilsdruyen.koncept.*HiltWrapper*",
+//                "de/nilsdruyen/koncept/**/HiltWrapper*.java",
+//                "**/HiltWrapper*.*",
+//                "*HiltWrapper*.*",
+            )
+        }
     }
 
     configureDetekt("src/main/kotlin", "src/test/kotlin")
@@ -84,16 +97,77 @@ fun BaseExtension.configureAndroidBaseExtension() {
         }
         unitTests.all {
             if (it.name == "testDebugUnitTest") {
-                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                it.extensions.configure(KoverTaskExtension::class) {
                     isDisabled = false
-//                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
-//                    includes = listOf("com.example.*")
-//                    excludes = listOf("com.example.subpackage.*")
+                    includes = listOf("de.nilsdruyen.koncept.*")
+                    excludes = listOf(
+                        "hilt_aggregated_deps*",
+                        "de.nilsdruyen.koncept.*HiltWrapper*",
+                        "de/nilsdruyen/koncept/**/HiltWrapper*.java",
+                        "**/HiltWrapper*.*",
+                        "*HiltWrapper*.*",
+                    )
                 }
             }
         }
     }
 }
+
+kover {
+    isDisabled = false
+    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
+    intellijEngineVersion.set("1.0.647")
+    jacocoEngineVersion.set("0.8.7")
+    generateReportOnCheck = true
+    disabledProjects = setOf("common-test", "dogs-test")
+    instrumentAndroidPackage = false
+    runAllTestsForProjectTask = false
+}
+
+//tasks.koverMergedHtmlReport {
+//    isEnabled = true
+//    htmlReportDir.set(layout.buildDirectory.dir("kover-report/html-result"))
+//    includes = listOf("de.nilsdruyen.koncept.*")
+//    excludes = listOf("")
+//}
+
+tasks.koverCollectReports {
+    outputDir.set(layout.buildDirectory.dir("all-projects-reports"))
+}
+
+//tasks.koverMergedVerify {
+//    includes = listOf("com.example.*")            // inclusion rules for classes
+//    excludes = listOf("com.example.subpackage.*") // exclusion rules for classes
+//
+//    rule {
+//        name = "Minimum number of lines covered"
+//        bound {
+//            minValue = 100000
+//            valueType = kotlinx.kover.api.VerificationValueType.COVERED_LINES_COUNT
+//        }
+//    }
+//    rule {
+//        // rule without a custom name
+//        bound {
+//            minValue = 1
+//            maxValue = 1000
+//            valueType = kotlinx.kover.api.VerificationValueType.MISSED_LINES_COUNT
+//        }
+//    }
+//    rule {
+//        name = "Minimal line coverage rate in percent"
+//        bound {
+//            minValue = 50
+//            // valueType is kotlinx.kover.api.VerificationValueType.COVERED_LINES_PERCENTAGE by default
+//        }
+//    }
+//}
+//tasks.koverMergedXmlReport {
+//    isEnabled = true                        // false to disable report generation
+//    xmlReportFile.set(layout.buildDirectory.file("my-merged-report/result.xml"))
+////    includes = listOf("com.example.*")            // inclusion rules for classes
+////    excludes = listOf("com.example.subpackage.*") // exclusion rules for classes
+//}
 
 fun LibraryExtension.configureAndroidLibraryExtension() {
     compileSdk = ProjectConfig.compileSdkVersion
