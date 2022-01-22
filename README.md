@@ -15,6 +15,8 @@ This is an sample project to experiment with architectures, modules structures, 
 
 - gradle dependencyUpdates -Pcustom
 - gradle projectDependencyGraph -Pcustom
+- gradle allTests // run all tests filtered by TaskUtils class in buildSrc directory
+- gradle connectedDebugAndroidTest // run ui tests
 
 ## General thoughts
 
@@ -67,7 +69,9 @@ Here what is interesting:
 
 ## Test setup
 
-Junit5 based mockito tests with coroutines & turbine for flow testing
+1. Junit5 based mockito tests with coroutines & turbine for flow testing
+2. Robolectric for integration tests with hilt
+3. Shot for compose screenshot testing
 
 ## ui tests
 
@@ -84,5 +88,3 @@ gradle debugExecuteScreenshotTests -Precord
 ### test against screenshots
 
 gradle debugExecuteScreenshotTests
-
-# tbd.
