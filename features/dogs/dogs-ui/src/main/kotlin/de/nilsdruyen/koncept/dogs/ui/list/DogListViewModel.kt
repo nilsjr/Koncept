@@ -40,20 +40,26 @@ class DogListViewModel @Inject constructor(
             intent.consumeAsFlow().collect {
                 when (it) {
                     DogListIntent.LoadIntent -> loadList()
-                    is DogListIntent.ShowDetailAndSaveListPosition -> {
-                        _effect.send(Effect.NavigateToDetail(it.id))
-                    }
+                    is DogListIntent.ShowDetailAndSaveListPosition -> navigateToDetail(it.id)
                 }
             }
         }
     }
 
-    private suspend fun loadList() {
-        getDogListUseCase.execute().collect { result ->
-            result.fold(this@DogListViewModel::handleError) {
-                Logger.log("set list ${it.size}")
-                _state.value = DogListState(list = it)
+    private fun loadList() {
+        viewModelScope.launch(dispatcher) {
+            getDogListUseCase.execute().collect { result ->
+                result.fold(this@DogListViewModel::handleError) {
+                    Logger.log("set list ${it.size}")
+                    _state.value = DogListState(list = it)
+                }
             }
+        }
+    }
+
+    private fun navigateToDetail(id: Int) {
+        viewModelScope.launch(dispatcher) {
+            _effect.send(Effect.NavigateToDetail(id))
         }
     }
 

@@ -46,6 +46,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
 import de.nilsdruyen.koncept.common.ui.KonceptTheme
 import de.nilsdruyen.koncept.common.ui.MaterialCard
 import de.nilsdruyen.koncept.dogs.entity.Dog
@@ -56,18 +57,15 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
-fun DogListScreen(viewModel: DogListViewModel, onBreedClick: (Int) -> Unit = {}) {
+fun DogListScreen(viewModel: DogListViewModel, navController: NavController) {
     val uiState = viewModel.state.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(DogListIntent.LoadIntent)
-    }
-
-    LaunchedEffect("events") {
         viewModel.effect.onEach {
             when (it) {
-                is Effect.NavigateToDetail -> onBreedClick(it.breedId)
+                is Effect.NavigateToDetail -> navController.navigate("breedDetail/${it.breedId}")
             }
         }.collect()
     }

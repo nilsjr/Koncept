@@ -3,6 +3,7 @@ package de.nilsdruyen.koncept.dogs.ui.detail
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
@@ -31,13 +33,13 @@ import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BreedDetail(viewModel: BreedDetailViewModel) {
+fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
     val state = viewModel.state.collectAsState()
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
 
-    LaunchedEffect(key1 = Unit, block = {
+    LaunchedEffect(Unit) {
         viewModel.intent.send(BreedDetailIntent.LoadImages)
-    })
+    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -49,14 +51,16 @@ fun BreedDetail(viewModel: BreedDetailViewModel) {
         },
         content = {
             Crossfade(targetState = state) { state ->
-                BreedDetailContainer(state.value)
+                BreedDetailContainer(state.value) { url ->
+                    navController.navigate("image/$url")
+                }
             }
         }
     )
 }
 
 @Composable
-fun BreedDetailContainer(uiState: BreedDetailState) {
+fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Unit) {
     when {
         uiState.isLoading -> {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -77,22 +81,24 @@ fun BreedDetailContainer(uiState: BreedDetailState) {
                 )
             }
         }
-        uiState.images.isNotEmpty() -> BreedImageList(list = uiState.images)
+        uiState.images.isNotEmpty() -> BreedImageList(list = uiState.images, onImageClick)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BreedImageList(list: List<BreedImage>) {
+fun BreedImageList(list: List<BreedImage>, onImageClick: (String) -> Unit) {
     LazyVerticalGrid(cells = GridCells.Fixed(2), content = {
         items(list) {
-            BreedImage(it.url)
+            BreedImage(it.url) {
+                onImageClick(it.id)
+            }
         }
     })
 }
 
 @Composable
-fun BreedImage(url: String) {
+fun BreedImage(url: String, onImageClick: () -> Unit) {
     val pxValue = with(LocalDensity.current) { 16.dp.toPx() }
 
     Image(
@@ -108,5 +114,6 @@ fun BreedImage(url: String) {
             .fillMaxSize()
             .aspectRatio(1f)
             .padding(8.dp)
+            .clickable { onImageClick() }
     )
 }
