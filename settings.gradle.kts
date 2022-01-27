@@ -44,7 +44,6 @@ enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 val skipConfiguration = listOf("app", "buildSrc")
-
 rootProject.children.forEach {
     it.buildFileName = "${it.name}.gradle.kts"
     if (skipConfiguration.contains(it.name)) return@forEach

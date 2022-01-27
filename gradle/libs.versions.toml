@@ -1,8 +1,8 @@
 [versions]
 kotlin = "1.6.10"
 coroutines = "1.6.0"
-compose = "1.2.0-alpha01"
-composeCompiler = "1.2.0-alpha01"
+compose = "1.2.0-alpha02"
+composeCompiler = "1.2.0-alpha02"
 room = "2.4.1"
 moshi = "1.13.0"
 hilt = "2.40.5"
@@ -12,7 +12,7 @@ retrofit = "2.9.0"
 okHttp = "4.9.3"
 junit4 = "4.13.2"
 junit5 = "5.8.2"
-mockito = "4.2.0"
+mockito = "4.3.1"
 mockitoKotlin = "4.0.0"
 
 [libraries]
@@ -37,7 +37,7 @@ moshiCompiler = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.re
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hiltCore = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
 hiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
-hiltNavigation = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0-rc01" }
+hiltNavigation = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0" }
 # compose
 composeActivity = "androidx.activity:activity-compose:1.4.0"
 composeUi = { module = "androidx.compose.ui:ui", version.ref = "compose" }
