@@ -2,8 +2,10 @@ package de.nilsdruyen.koncept.dogs.remote
 
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
+import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -34,4 +36,10 @@ interface DogsApi {
 
     @GET("images/{id}")
     suspend fun getImage(@Path("id") id: String): Either<DataSourceError, BreedImageWebEntity>
+
+    @GET("breeds")
+    suspend fun getPagedBreeds(
+        @Query("limit") limit: Int,
+        @Query("page") page: Int,
+    ): Response<Either<DataSourceError, List<BreedWebEntity>>>
 }

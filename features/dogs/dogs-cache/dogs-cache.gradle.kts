@@ -20,5 +20,7 @@ dependencies {
     implementation(libs.room)
     kapt(libs.roomCompiler)
 
+    implementation(libs.pagingCommonKtx)
+
     implementation(libs.datastore)
 }

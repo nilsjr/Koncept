@@ -1,0 +1,19 @@
+package de.nilsdruyen.koncept.dogs.remote.entities
+
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class BreedWebEntity(
+    val id: Int,
+    val name: String,
+    val temperament: String?,
+    @Json(name = "life_span")
+    val lifeSpan: String?,
+    @Json(name = "reference_image_id")
+    val imageId: String?,
+    @Json(name = "breed_group")
+    val group: String?,
+    @Json(name = "country_code")
+    val countryCode: String,
+)

@@ -21,6 +21,8 @@ dependencies {
     implementation(libs.hiltCore)
     kapt(libs.hiltCompiler)
 
+    implementation(libs.pagingCommonKtx)
+
     // testing
     testImplementation(projects.commonTest)
     testImplementation(projects.dogsTest)

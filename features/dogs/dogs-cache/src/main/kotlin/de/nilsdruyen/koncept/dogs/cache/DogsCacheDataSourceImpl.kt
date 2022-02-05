@@ -1,9 +1,12 @@
 package de.nilsdruyen.koncept.dogs.cache
 
+import androidx.paging.PagingSource
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
 import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
 import de.nilsdruyen.koncept.dogs.data.DogsCacheDataSource
+import de.nilsdruyen.koncept.dogs.entity.Breed
+import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
@@ -31,5 +34,9 @@ class DogsCacheDataSourceImpl @Inject constructor(
 
     override suspend fun setDogList(list: List<Dog>) = withContext(ioDispatcher) {
         dogDao.addList(list.map(Dog::toEntity))
+    }
+
+    override fun getBreedPaging(): PagingSource<Int, Breed> {
+        return dogDao.pagingSource()
     }
 }

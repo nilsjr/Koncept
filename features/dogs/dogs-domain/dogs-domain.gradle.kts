@@ -17,6 +17,8 @@ dependencies {
 
     implementation(libs.coroutines)
 
+    implementation(libs.pagingCommonKtx)
+
     testImplementation(libs.bundles.test)
     testImplementation(projects.dogsTest)
     testImplementation(projects.commonTest)

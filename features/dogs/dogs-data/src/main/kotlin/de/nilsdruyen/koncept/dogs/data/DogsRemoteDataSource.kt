@@ -1,8 +1,10 @@
 package de.nilsdruyen.koncept.dogs.data
 
 import arrow.core.Either
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.PagedResponse
 import de.nilsdruyen.koncept.domain.DataSourceError
 
 interface DogsRemoteDataSource {
@@ -11,4 +13,6 @@ interface DogsRemoteDataSource {
     suspend fun getImagesForBreed(breedId: Int): Either<DataSourceError, List<BreedImage>>
 
     suspend fun getImage(imageId: String): Either<DataSourceError, BreedImage>
+
+    suspend fun getBreeds(limit: Int, page: Int): Either<DataSourceError, PagedResponse<Breed>>
 }

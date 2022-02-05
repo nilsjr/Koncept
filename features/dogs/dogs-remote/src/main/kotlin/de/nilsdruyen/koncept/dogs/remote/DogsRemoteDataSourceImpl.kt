@@ -1,9 +1,13 @@
 package de.nilsdruyen.koncept.dogs.remote
 
 import arrow.core.Either
+import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.data.DogsRemoteDataSource
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.PageInfo
+import de.nilsdruyen.koncept.dogs.entity.PagedResponse
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
 import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
@@ -38,5 +42,18 @@ class DogsRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getImage(imageId: String): Either<DataSourceError, BreedImage> = withContext(ioDispatcher) {
         dogsApi.getImage(imageId).map(BreedImageWebEntity::toModel)
+    }
+
+    override suspend fun getBreeds(limit: Int, page: Int): Either<DataSourceError, PagedResponse<Breed>> {
+        val response = dogsApi.getPagedBreeds(limit, page)
+        val pagination = response.headers()["pagination-count"] ?: ""
+        val body = response.body()
+        val pageInfo = PageInfo(limit, page, pagination.toIntOrNull() ?: 0)
+        return if (body != null) {
+            val list = body.bind().map { it.toModel() }
+            Either.Right(PagedResponse(pageInfo, list))
+        } else {
+            Either.Left(DataSourceError.NetworkError(NullPointerException("no body available")))
+        }
     }
 }

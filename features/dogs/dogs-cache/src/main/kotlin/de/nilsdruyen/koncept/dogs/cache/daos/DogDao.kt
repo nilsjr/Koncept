@@ -1,5 +1,6 @@
 package de.nilsdruyen.koncept.dogs.cache.daos
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -18,4 +19,7 @@ interface DogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addList(list: List<DogCacheEntity>)
+
+    @Query("SELECT * from dog_table")
+    fun pagingSource(): PagingSource<Int, DogCacheEntity>
 }
