@@ -1,13 +1,13 @@
 [versions]
 kotlin = "1.6.10"
 coroutines = "1.6.0"
-compose = "1.2.0-alpha02"
+compose = "1.2.0-alpha03"
 composeCompiler = "1.2.0-alpha02"
 room = "2.4.1"
 moshi = "1.13.0"
 hilt = "2.40.5"
-lifecycle = "2.4.0"
-accompanist = "0.22.0-rc"
+lifecycle = "2.5.0-alpha02"
+accompanist = "0.24.1-alpha"
 retrofit = "2.9.0"
 okHttp = "4.9.3"
 junit4 = "4.13.2"
@@ -17,7 +17,7 @@ mockitoKotlin = "4.0.0"
 
 [libraries]
 # android
-core = { module = "androidx.core:core-ktx", version = "1.8.0-alpha02" }
+core = { module = "androidx.core:core-ktx", version = "1.8.0-alpha04" }
 desugar = { module = "com.android.tools:desugar_jdk_libs", version = "1.1.5" }
 coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 startup = "androidx.startup:startup-runtime:1.1.0"
@@ -46,8 +46,8 @@ composeUiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "c
 composeUiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 composeMaterial = { module = "androidx.compose.material:material", version.ref = "compose" }
 composeMaterialIcons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
-composeMaterial3 = { module = "androidx.compose.material3:material3", version = "1.0.0-alpha03" }
-composeNavigation = { module = "androidx.navigation:navigation-compose", version = "2.4.0-rc01" }
+composeMaterial3 = { module = "androidx.compose.material3:material3", version = "1.0.0-alpha05" }
+composeNavigation = { module = "androidx.navigation:navigation-compose", version = "2.5.0-alpha02" }
 constraintCompose = { module = "androidx.constraintlayout:constraintlayout-compose", version = "1.0.0" }
 pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha14"
 coilCompose = "io.coil-kt:coil-compose:1.4.0"
@@ -94,8 +94,8 @@ hiltTest = { module = "com.google.dagger:hilt-android-testing", version.ref = "h
 composeUiTest = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 composeUiManifestTest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 # androidx
-androidxTestCore = "androidx.test:core:1.4.0"
-androidxTestRunner = "androidx.test:runner:1.4.0"
+androidxTestCore = "androidx.test:core:1.4.1-alpha03"
+androidxTestRunner = "androidx.test:runner:1.4.1-alpha03"
 
 [bundles]
 common = ["javax", "coroutines"]
