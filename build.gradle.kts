@@ -6,13 +6,13 @@ import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.application") version "7.1.0" apply false
-    id("com.android.library") version "7.1.0" apply false
+    id("com.android.application") version "7.1.1" apply false
+    id("com.android.library") version "7.1.1" apply false
     kotlin("android") version "1.6.10" apply false
-    id("dagger.hilt.android.plugin") version "2.40.5" apply false
+    id("com.google.dagger.hilt.android") version "2.41" apply false
 
     id("io.gitlab.arturbosch.detekt") version "1.19.0" apply false
-    id("com.github.ben-manes.versions") version "0.41.0" apply false
+    id("com.github.ben-manes.versions") version "0.42.0" apply false
     id("org.jetbrains.kotlinx.kover") version "0.5.0-RC2"
 
     id("shot") version "5.12.2" apply false

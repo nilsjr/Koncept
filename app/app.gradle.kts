@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
 }
 android {
     compileSdk = 31
@@ -114,7 +114,7 @@ dependencies {
     implementation(projects.commonRemote)
     implementation(projects.commonUi)
 
-    implementation(projects.dogsRemote)
+//    implementation(projects.dogsRemote)
     implementation(projects.dogsCache)
     implementation(projects.dogsUi)
 
