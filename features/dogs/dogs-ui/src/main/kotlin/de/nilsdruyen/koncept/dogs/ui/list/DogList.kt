@@ -70,7 +70,11 @@ fun DogListScreen(viewModel: DogListViewModel, navController: NavController) {
         }.collect()
     }
 
-    DogListScreen(uiState) { dog ->
+    DogListScreen(uiState, {
+        coroutineScope.launch {
+            viewModel.intent.send(DogListIntent.StartLongTask)
+        }
+    }) { dog ->
         coroutineScope.launch {
             viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
         }
@@ -81,6 +85,7 @@ fun DogListScreen(viewModel: DogListViewModel, navController: NavController) {
 @Composable
 fun DogListScreen(
     state: State<DogListState>,
+    startTask: () -> Unit,
     showDog: (Dog) -> Unit,
 ) {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
@@ -112,7 +117,9 @@ fun DogListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {}
+                onClick = {
+                    startTask()
+                }
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Localized description")
             }
@@ -217,7 +224,7 @@ fun PreviewDogItem(dog: Dog = Dog(1, "Nils Hund")) {
 fun PreviewDogList(@PreviewParameter(DogListPreviewProvider::class) listState: DogListState) {
     val state = derivedStateOf { listState }
     KonceptTheme {
-        DogListScreen(state) {}
+        DogListScreen(state, {}) {}
     }
 }
 
