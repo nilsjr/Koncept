@@ -55,7 +55,7 @@ abstract class BaseViewModel<S, I, E> : ViewModel() {
 
     abstract fun handleIntent(intent: I)
 
-    protected fun launchOnUi(block: suspend CoroutineScope.() -> Unit){
+    protected fun launchOnUi(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(dispatcher) {
             block()
         }

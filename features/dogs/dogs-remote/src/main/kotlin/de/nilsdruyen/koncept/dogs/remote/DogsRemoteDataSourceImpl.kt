@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DogsRemoteDataSourceImpl @Inject constructor(
+internal class DogsRemoteDataSourceImpl @Inject constructor(
     private val dogsApi: DogsApi,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : DogsRemoteDataSource {

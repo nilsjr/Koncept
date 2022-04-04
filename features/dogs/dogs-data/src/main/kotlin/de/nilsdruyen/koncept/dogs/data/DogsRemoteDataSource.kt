@@ -6,6 +6,7 @@ import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 
 interface DogsRemoteDataSource {
+
     suspend fun getList(): Either<DataSourceError, List<Dog>>
 
     suspend fun getImagesForBreed(breedId: Int): Either<DataSourceError, List<BreedImage>>

@@ -5,11 +5,13 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal interface DogsDataModule {
 
     @Binds
+    @Singleton
     fun DogsRepositoryImpl.bindDogsRepository(): DogsRepository
 }

@@ -33,6 +33,7 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
+    implementation(libs.hiltNavigation)
 
     implementation(libs.viewModelCompose)
     implementation(libs.composeActivity)

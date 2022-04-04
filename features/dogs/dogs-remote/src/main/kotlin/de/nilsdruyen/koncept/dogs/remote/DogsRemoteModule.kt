@@ -8,17 +8,22 @@ import dagger.hilt.components.SingletonComponent
 import de.nilsdruyen.koncept.dogs.data.DogsRemoteDataSource
 import retrofit2.Retrofit
 import retrofit2.create
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface DogsRemoteModule {
 
     @Binds
+    @Singleton
     fun DogsRemoteDataSourceImpl.bindDogsRemoteDataSource(): DogsRemoteDataSource
+}
 
-    companion object {
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class DogsRemoteStaticModule {
 
-        @Provides
-        fun Retrofit.provideDogApi(): DogsApi = create()
-    }
+    @Provides
+    @Singleton
+    fun Retrofit.provideDogApi(): DogsApi = create()
 }

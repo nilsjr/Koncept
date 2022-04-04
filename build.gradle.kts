@@ -3,9 +3,7 @@ import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
-import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kotlinx.kover.api.KoverTaskExtension
 
 plugins {
     id("com.android.application") version "7.1.2" apply false
@@ -16,6 +14,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.19.0" apply false
     id("com.github.ben-manes.versions") version "0.42.0" apply false
     id("org.jetbrains.kotlinx.kover") version "0.5.0"
+//    id("org.sonarqube") version "3.3"
 
     id("shot") version "5.13.0" apply false
 }
@@ -65,18 +64,6 @@ subprojects {
                 org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
             )
         }
-        extensions.configure(KoverTaskExtension::class) {
-            includes = listOf("de.nilsdruyen.koncept.dogs.domain.usecase.*")
-            excludes = listOf(
-//                "de.nilsdruyen.koncept.**Factory",
-                ".+Factory",
-//                "hilt_aggregated_deps*",
-//                "de.nilsdruyen.koncept.*HiltWrapper*",
-//                "de/nilsdruyen/koncept/**/HiltWrapper*.java",
-//                "**/HiltWrapper*.*",
-//                "*HiltWrapper*.*",
-            )
-        }
     }
 
     configureDetekt("src/main/kotlin", "src/test/kotlin")
@@ -87,10 +74,6 @@ tasks.register<Delete>("clean") {
 }
 
 fun BaseExtension.configureAndroidBaseExtension() {
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -98,7 +81,7 @@ fun BaseExtension.configureAndroidBaseExtension() {
         }
         unitTests.all {
             if (it.name == "testDebugUnitTest") {
-                it.extensions.configure(KoverTaskExtension::class) {
+                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
                     isDisabled = false
                     includes = listOf("de.nilsdruyen.koncept.*")
                     excludes = listOf(
@@ -109,6 +92,19 @@ fun BaseExtension.configureAndroidBaseExtension() {
                         "*HiltWrapper*.*",
                     )
                 }
+//        extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+//            includes = listOf("de.nilsdruyen.koncept.dogs.domain.usecase.*")
+//            excludes = listOf(
+//                "de.nilsdruyen.koncept.**Factory",
+//                ".+Factory",
+//                "hilt_aggregated_deps*",
+//                "de.nilsdruyen.koncept.*HiltWrapper*",
+//                "de/nilsdruyen/koncept/**/HiltWrapper*.java",
+//                "**/HiltWrapper*.*",
+//                "*HiltWrapper*.*",
+//                "_de_nilsdruyen_koncept_dogs_domain_HiltWrapper_DogsDomainModule.java",
+//            )
+//        }
             }
         }
     }
@@ -121,8 +117,8 @@ fun BaseExtension.configureAndroidBaseExtension() {
 
 kover {
     isDisabled = false
-    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
-    intellijEngineVersion.set("1.0.647")
+    coverageEngine.set(kotlinx.kover.api.CoverageEngine.JACOCO)
+//    intellijEngineVersion.set("1.0.647")
     jacocoEngineVersion.set("0.8.7")
     generateReportOnCheck = true
     disabledProjects = setOf("common-test", "dogs-test")
@@ -130,12 +126,14 @@ kover {
     runAllTestsForProjectTask = false
 }
 
-//tasks.koverMergedHtmlReport {
-//    isEnabled = true
-//    htmlReportDir.set(layout.buildDirectory.dir("kover-report/html-result"))
-//    includes = listOf("de.nilsdruyen.koncept.*")
-//    excludes = listOf("")
-//}
+tasks.koverMergedHtmlReport {
+    isEnabled = true
+    htmlReportDir.set(layout.buildDirectory.dir("kover-report/html-result"))
+    includes = listOf("de.nilsdruyen.koncept.*")
+    excludes = listOf(
+        "",
+    )
+}
 
 tasks.koverCollectReports {
     outputDir.set(layout.buildDirectory.dir("all-projects-reports"))
