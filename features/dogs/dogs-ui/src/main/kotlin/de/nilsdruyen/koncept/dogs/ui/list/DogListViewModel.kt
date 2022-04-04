@@ -1,60 +1,58 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.ui.base.BaseViewModel
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
-import de.nilsdruyen.koncept.domain.annotations.DefaultDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 @HiltViewModel
 class DogListViewModel @Inject constructor(
-    @DefaultDispatcher val dispatcher: CoroutineDispatcher,
     private val getDogListUseCase: GetDogListUseCase,
-) : ViewModel() {
+) : BaseViewModel<DogListState, DogListIntent, Effect>() {
 
-    private val _state = MutableStateFlow(DogListState(isLoading = true))
-    internal val state: StateFlow<DogListState> = _state
+    override fun initalState(): DogListState = DogListState(isLoading = true)
 
-    val intent = Channel<DogListIntent>()
-
-    private val _effect: Channel<Effect> = Channel()
-    val effect = _effect.receiveAsFlow()
-
-    init {
-        handleIntent()
+    override fun handleIntent(intent: DogListIntent) {
+        when (intent) {
+            DogListIntent.LoadIntent -> loadList()
+            is DogListIntent.ShowDetailAndSaveListPosition -> navigateToDetail(intent.id)
+            DogListIntent.StartLongTask -> startTask()
+        }
     }
 
-    private fun handleIntent() {
-        viewModelScope.launch(dispatcher) {
-            intent.consumeAsFlow().collect {
-                when (it) {
-                    DogListIntent.LoadIntent -> loadList()
-                    is DogListIntent.ShowDetailAndSaveListPosition -> {
-                        _effect.send(Effect.NavigateToDetail(it.id))
+    private fun loadList() {
+        launchOnUi {
+            getDogListUseCase.execute().collect { result ->
+                result.fold(this@DogListViewModel::handleError) {
+                    Logger.log("set list ${it.size}")
+                    setState {
+                        copy(list = it)
                     }
                 }
             }
         }
     }
 
-    private suspend fun loadList() {
-        getDogListUseCase.execute().collect { result ->
-            result.fold(this@DogListViewModel::handleError) {
-                Logger.log("set list ${it.size}")
-                _state.value = DogListState(list = it)
+    private fun startTask() {
+        launchDistinct(JobKey.LONG_TASK) {
+            flow {
+                repeat(40) {
+                    delay(500)
+                    emit(it)
+                }
+            }.collect {
+                Logger.log("collect $it")
             }
         }
+    }
+
+    private fun navigateToDetail(id: Int) {
+        sendEffect(Effect.NavigateToDetail(id))
     }
 
     private fun handleError(error: DataSourceError) {
@@ -70,6 +68,7 @@ data class DogListState(
 sealed class DogListIntent {
     object LoadIntent : DogListIntent()
     data class ShowDetailAndSaveListPosition(val id: Int) : DogListIntent()
+    object StartLongTask : DogListIntent()
 }
 
 sealed class Effect {

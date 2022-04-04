@@ -46,6 +46,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
 import de.nilsdruyen.koncept.common.ui.KonceptTheme
 import de.nilsdruyen.koncept.common.ui.MaterialCard
 import de.nilsdruyen.koncept.dogs.entity.Dog
@@ -56,23 +57,24 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
-fun DogListScreen(viewModel: DogListViewModel, onBreedClick: (Int) -> Unit = {}) {
+fun DogListScreen(viewModel: DogListViewModel, navController: NavController) {
     val uiState = viewModel.state.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(DogListIntent.LoadIntent)
-    }
-
-    LaunchedEffect("events") {
         viewModel.effect.onEach {
             when (it) {
-                is Effect.NavigateToDetail -> onBreedClick(it.breedId)
+                is Effect.NavigateToDetail -> navController.navigate("breedDetail/${it.breedId}")
             }
         }.collect()
     }
 
-    DogListScreen(uiState) { dog ->
+    DogListScreen(uiState, {
+        coroutineScope.launch {
+            viewModel.intent.send(DogListIntent.StartLongTask)
+        }
+    }) { dog ->
         coroutineScope.launch {
             viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
         }
@@ -83,6 +85,7 @@ fun DogListScreen(viewModel: DogListViewModel, onBreedClick: (Int) -> Unit = {})
 @Composable
 fun DogListScreen(
     state: State<DogListState>,
+    startTask: () -> Unit,
     showDog: (Dog) -> Unit,
 ) {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
@@ -114,7 +117,9 @@ fun DogListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {}
+                onClick = {
+                    startTask()
+                }
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Localized description")
             }
@@ -219,7 +224,7 @@ fun PreviewDogItem(dog: Dog = Dog(1, "Nils Hund")) {
 fun PreviewDogList(@PreviewParameter(DogListPreviewProvider::class) listState: DogListState) {
     val state = derivedStateOf { listState }
     KonceptTheme {
-        DogListScreen(state) {}
+        DogListScreen(state, {}) {}
     }
 }
 

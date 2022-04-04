@@ -9,98 +9,97 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
-import de.nilsdruyen.koncept.dogs.cache.DogsCacheModule
-import de.nilsdruyen.koncept.dogs.data.DogsCacheDataSource
-import de.nilsdruyen.koncept.dogs.data.DogsRemoteDataSource
+import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
+import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
-import de.nilsdruyen.koncept.dogs.entity.BreedImage
-import de.nilsdruyen.koncept.dogs.entity.Dog
-import de.nilsdruyen.koncept.dogs.remote.DogsRemoteModule
-import de.nilsdruyen.koncept.domain.DataSourceError
+import de.nilsdruyen.koncept.dogs.remote.DogsApi
+import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
 import de.nilsdruyen.koncept.domain.annotations.DefaultDispatcher
 import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
 import de.nilsdruyen.koncept.domain.annotations.MainDispatcher
-import de.nilsdruyen.koncept.test.TestCoroutineRule
+import de.nilsdruyen.koncept.test.utils.parseList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnit
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-@Config(application = HiltTestApplication::class)
+@Config(sdk = [28], application = HiltTestApplication::class)
 class DogListViewModelIntTest {
 
     @get:Rule(order = 1)
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 2)
-    val testRule = TestCoroutineRule()
+    val mockRule = MockitoJUnit.rule()
+
+    @Inject
+    lateinit var dispatcher: TestDispatcher
 
     @Inject
     lateinit var getDogListUseCase: GetDogListUseCase
 
-    lateinit var viewModel: DogListViewModel
+    @Inject
+    lateinit var dogDao: DogDao
+
+    @Inject
+    lateinit var dogsApi: DogsApi
+
+    private lateinit var viewModel: DogListViewModel
+
+    private val scope = lazy {
+        TestScope(dispatcher)
+    }
 
     @Before
     fun init() {
         hiltRule.inject()
-        viewModel = DogListViewModel(testRule.dispatcher, getDogListUseCase)
+        Dispatchers.setMain(dispatcher)
+        viewModel = DogListViewModel(dispatcher, getDogListUseCase)
+    }
+
+    @After
+    fun cleanup() {
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun `load dogs`() = testRule.scope.runTest {
+    fun `load dogs`() = scope.value.runTest {
+        val dogEntityList = "/json/dog-list.json".parseList(DogWebEntity::class.java).take(25)
+        val dogWebEntityList = Either.Right(dogEntityList)
+        val dogCacheEntityList = listOf(DogCacheEntity(1, "Dog 1"))
+
+        whenever(dogsApi.getBreeds()) doReturn dogWebEntityList
+        whenever(dogDao.getAll()) doReturn flowOf(dogCacheEntityList)
+        whenever(dogDao.addList(any())) doReturn Unit
+
         viewModel.state.test {
             viewModel.intent.send(DogListIntent.LoadIntent)
 
             assert(awaitItem().list.isEmpty())
-            assert(awaitItem().list.isEmpty())
-            assert(awaitItem().list.size == 1)
-        }
-    }
-}
-
-@Module
-@TestInstallIn(
-    components = [SingletonComponent::class],
-    replaces = [DogsRemoteModule::class, DogsCacheModule::class]
-)
-object FakeIntModule {
-
-    @Provides
-    fun bindDogsRemoteDataSource(): DogsRemoteDataSource {
-        return object : DogsRemoteDataSource {
-            override suspend fun getList(): Either<DataSourceError, List<Dog>> {
-                return Either.Right(listOf(Dog(1, "Nils")))
-            }
-
-            override suspend fun getImagesForBreed(breedId: Int): Either<DataSourceError, List<BreedImage>> {
-                return Either.Right(emptyList())
-            }
-
-            override suspend fun getImage(imageId: String): Either<DataSourceError, BreedImage> {
-                return Either.Right(BreedImage("", "", 1, ""))
-            }
-        }
-    }
-
-    @Provides
-    fun bindDogsCacheDataSource(): DogsCacheDataSource {
-        return object : DogsCacheDataSource {
-            override suspend fun getDogList(): Flow<Either<DataSourceError, List<Dog>>> {
-                return flowOf(Either.Right(emptyList()))
-            }
-
-            override suspend fun setDogList(list: List<Dog>) { }
+            assert(awaitItem().list.size == 1) // cache
+            assert(awaitItem().list.size == 25) // web
         }
     }
 }
@@ -109,15 +108,32 @@ object FakeIntModule {
 @InstallIn(SingletonComponent::class)
 object DispatchersModule {
 
+    @Provides
+    @Singleton
+    fun provideTestDispatcher(): TestDispatcher = StandardTestDispatcher(TestCoroutineScheduler())
+
+    @Provides
     @IoDispatcher
-    @Provides
-    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    fun providesIoDispatcher(dispatcher: TestDispatcher): CoroutineDispatcher = dispatcher
 
+    @Provides
     @MainDispatcher
-    @Provides
-    fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+    fun providesMainDispatcher(dispatcher: TestDispatcher): CoroutineDispatcher = dispatcher
 
-    @DefaultDispatcher
     @Provides
-    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+    @DefaultDispatcher
+    fun providesDefaultDispatcher(dispatcher: TestDispatcher): CoroutineDispatcher = dispatcher
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object IntegrationTestModule {
+
+    @Provides
+    @Singleton
+    fun provideDogDao(): DogDao = mock()
+
+    @Provides
+    @Singleton
+    fun provideDogApi(): DogsApi = mock()
 }

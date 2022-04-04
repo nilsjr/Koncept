@@ -19,10 +19,6 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ko
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppModule
-
-@Module
-@InstallIn(SingletonComponent::class)
 object AppStaticModule {
 
     @Provides

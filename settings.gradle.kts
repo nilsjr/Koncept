@@ -7,8 +7,6 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
-                // TODO: remove resolutionStrategy block when https://github.com/google/dagger/issues/2774 is fixed
-                "dagger.hilt.android.plugin" -> useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
                 "shot" -> useModule("com.karumi:shot:${requested.version}")
             }
         }
@@ -44,7 +42,6 @@ enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 val skipConfiguration = listOf("app", "buildSrc")
-
 rootProject.children.forEach {
     it.buildFileName = "${it.name}.gradle.kts"
     if (skipConfiguration.contains(it.name)) return@forEach

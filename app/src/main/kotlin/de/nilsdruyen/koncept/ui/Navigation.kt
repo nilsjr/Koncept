@@ -1,6 +1,8 @@
 package de.nilsdruyen.koncept.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -14,6 +16,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
+import de.nilsdruyen.koncept.dogs.ui.detail.ImageDetail
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -32,25 +35,30 @@ fun KonceptApp() {
     }
 
     ProvideWindowInsets {
-        AnimatedNavHost(navController = navController, startDestination = "/") {
+        AnimatedNavHost(navController = navController, startDestination = "breedList") {
             composable(
-                route = "/",
+                route = "breedList",
                 enterTransition = { null },
                 exitTransition = { null },
                 popEnterTransition = { null },
                 popExitTransition = { null },
             ) {
-                DogListScreen(
-                    viewModel = hiltViewModel(),
-                    onBreedClick = { id ->
-                        navController.navigate("breedDetail/$id")
-                    }
-                )
+                DogListScreen(viewModel = hiltViewModel(), navController = navController)
             }
             composable("breedDetail/{breedId}", arguments = listOf(navArgument("breedId") {
                 type = NavType.IntType
             })) {
-                BreedDetail(hiltViewModel())
+                BreedDetail(hiltViewModel(), navController)
+            }
+            composable(
+                route = "image/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.StringType }),
+                enterTransition = { fadeIn() },
+                exitTransition = { fadeOut() },
+                popEnterTransition = { fadeIn() },
+                popExitTransition = { fadeOut() },
+            ) { backStackEntry ->
+                ImageDetail(backStackEntry.arguments?.getString("id") ?: "")
             }
         }
     }

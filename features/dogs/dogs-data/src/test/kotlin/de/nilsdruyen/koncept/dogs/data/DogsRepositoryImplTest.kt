@@ -35,7 +35,7 @@ internal class DogsRepositoryImplTest : CoroutineTest {
 
     @BeforeEach
     fun setup() {
-        tested = DogsRepositoryImpl(dogsRemoteDataSource, dogsCacheDataSource)
+        tested = DogsRepositoryImpl(dogsRemoteDataSource, dogsCacheDataSource, dispatcher)
     }
 
     @Nested

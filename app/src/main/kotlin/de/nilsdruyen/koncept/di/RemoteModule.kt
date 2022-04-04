@@ -8,11 +8,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.nilsdruyen.koncept.BuildConfig
 import de.nilsdruyen.koncept.annotations.ApiKey
-import de.nilsdruyen.koncept.dogs.remote.DogsApi
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
 import timber.log.Timber
 import java.io.File
 
@@ -58,7 +56,4 @@ object RemoteModule {
             }
         }
     }
-
-    @Provides
-    fun Retrofit.provideDogApi(): DogsApi = create(DogsApi::class.java)
 }
