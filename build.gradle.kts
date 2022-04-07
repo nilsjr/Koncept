@@ -168,7 +168,7 @@ sonarqube {
         property("sonar.login", properties.getOrDefault("sonar.token", ""))
         property("sonar.sourceEncoding", "UTF-8")
         property("sonar.projectName", "Koncept")
-        property("sonar.projectVersion", "0.0.1")
+        property("sonar.projectVersion", "0.0.2")
 
         property("sonar.branch.name", "feature/fix-di")
     }
