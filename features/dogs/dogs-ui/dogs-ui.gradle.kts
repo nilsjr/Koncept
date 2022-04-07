@@ -79,6 +79,12 @@ dependencies {
     testImplementation(libs.hiltTest)
     kaptTest(libs.hiltCompiler)
 
+    testImplementation(platform(libs.okHttpBom))
+    testImplementation(libs.okHttp)
+    testImplementation(libs.okHttpInterceptor)
+    testImplementation(libs.retrofit)
+    testImplementation(libs.retrofitMoshi)
+
     // android testing
     androidTestImplementation(libs.bundles.androidTest)
     androidTestImplementation(libs.hiltTest)

@@ -114,7 +114,7 @@ dependencies {
     implementation(projects.commonRemote)
     implementation(projects.commonUi)
 
-//    implementation(projects.dogsRemote)
+    implementation(projects.dogsRemote)
     implementation(projects.dogsCache)
     implementation(projects.dogsUi)
 

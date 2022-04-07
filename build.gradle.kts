@@ -3,37 +3,54 @@ import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.sonarqube.gradle.SonarQubeExtension
 
 plugins {
-    id("com.android.application") version "7.1.1" apply false
-    id("com.android.library") version "7.1.1" apply false
+    id("com.android.application") version "7.1.2" apply false
+    id("com.android.library") version "7.1.2" apply false
     kotlin("android") version "1.6.10" apply false
     id("com.google.dagger.hilt.android") version "2.41" apply false
 
     id("io.gitlab.arturbosch.detekt") version "1.19.0" apply false
     id("com.github.ben-manes.versions") version "0.42.0" apply false
-    id("org.jetbrains.kotlinx.kover") version "0.5.0-RC2"
+//    id("org.jetbrains.kotlinx.kover") version "0.5.0-RC2"
+    id("org.sonarqube") version "3.3"
 
     id("shot") version "5.12.2" apply false
 }
 
 apply(plugin = "io.gitlab.arturbosch.detekt")
+apply(plugin = "jacoco-merged")
 
 subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
+    configureDetekt("src/main/kotlin", "src/test/kotlin")
+
+    apply(plugin = "org.sonarqube")
 
     pluginManager.withPlugin(Plugins.app) {
+        apply(plugin = "jacoco-android-config")
+        sonarqube.configureAndroidAppModule(this@subprojects)
         extensions.configure<AppExtension> {
             configureAndroidBaseExtension()
         }
     }
 
     pluginManager.withPlugin(Plugins.library) {
+        apply(plugin = "jacoco-android-config")
+        sonarqube.configureAndroidLibraryModule(this@subprojects)
         extensions.configure<LibraryExtension> {
             configureAndroidBaseExtension()
             configureAndroidLibraryExtension()
         }
+    }
+
+    val isAndroidProject = File(this.projectDir, "src/main/AndroidManifest.xml").exists()
+    if (!isAndroidProject) {
+        apply(plugin = "jacoco-config")
+        sonarqube.configureKotlinModule(this@subprojects)
     }
 
     tasks.withType<JavaCompile>().configureEach {
@@ -59,13 +76,11 @@ subprojects {
         failFast = true
         testLogging {
             events = setOfNotNull(
-                org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+                TestLogEvent.FAILED,
+                TestLogEvent.PASSED,
             )
         }
     }
-
-    configureDetekt("src/main/kotlin", "src/test/kotlin")
 }
 
 tasks.register<Delete>("clean") {
@@ -82,16 +97,21 @@ fun BaseExtension.configureAndroidBaseExtension() {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
         }
-        unitTests.all {
-            if (it.name == "testDebugUnitTest") {
-                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                    isDisabled = false
+//        unitTests.all {
+//            if (it.name == "testDebugUnitTest") {
+//                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+//                    isDisabled = false
 //                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
 //                    includes = listOf("com.example.*")
 //                    excludes = listOf("com.example.subpackage.*")
-                }
-            }
-        }
+//                }
+//            }
+//        }
+    }
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/kotlin")
+        getByName("test").java.srcDirs("src/test/kotlin")
+        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
     }
 }
 
@@ -138,4 +158,82 @@ gradle.projectsEvaluated {
 if (hasProperty("custom")) {
     apply(plugin = "com.github.ben-manes.versions")
     apply(from = "https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/gradle/projectDependencyGraph.gradle")
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "koncept")
+        property("sonar.organization", "nilsjr")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.login", properties.getOrDefault("sonar.token", ""))
+        property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.projectName", "Koncept")
+        property("sonar.projectVersion", "0.0.1")
+
+        property("sonar.branch.name", "feature/fix-di")
+    }
+}
+
+fun SonarQubeExtension.configureAndroidAppModule(project: Project) {
+    isSkipProject = SonarQubeConfig.skipProject(project)
+    properties {
+        property("sonar.exclusions", SonarQubeConfig.fileExclusions)
+        property("sonar.coverage.exclusions", SonarQubeConfig.appCoverageExclusions)
+        property(
+            "sonar.kotlin.detekt.reportPaths",
+            "${project.buildDir}/reports/detekt/detekt.xml"
+        )
+//        property(
+//            "sonar.androidLint.reportPaths",
+//            "${project.rootProject.buildDir}/reports/lint-report.xml"
+//        )
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+        )
+        property("sonar.tests", "src/test/kotlin")
+        property(
+            "sonar.junit.reportPaths",
+            "${project.buildDir}/test-results/testDebugUnitTest"
+        )
+    }
+}
+
+fun SonarQubeExtension.configureAndroidLibraryModule(project: Project) {
+    isSkipProject = SonarQubeConfig.skipProject(project)
+    properties {
+        property("sonar.exclusions", SonarQubeConfig.fileExclusions)
+        property("sonar.coverage.exclusions", SonarQubeConfig.libCoverageExclusions)
+        property(
+            "sonar.kotlin.detekt.reportPaths",
+            "${project.buildDir}/reports/detekt/detekt.xml"
+        )
+//        property(
+//            "sonar.androidLint.reportPaths",
+//            "${project.rootProject.buildDir}/reports/lint-report.xml"
+//        )
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+        )
+        property("sonar.tests", "src/test/kotlin")
+        property(
+            "sonar.junit.reportPaths",
+            "${project.buildDir}/test-results/testDebugUnitTest"
+        )
+    }
+}
+
+fun SonarQubeExtension.configureKotlinModule(project: Project) {
+    isSkipProject = SonarQubeConfig.skipProject(project)
+    properties {
+        property(
+            "sonar.kotlin.detekt.reportPaths",
+            "${project.buildDir}/reports/detekt/detekt.xml"
+        )
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        )
+    }
 }
