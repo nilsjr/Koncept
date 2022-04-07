@@ -173,9 +173,9 @@ dependencies {
 //    implementation(libs.junit4)
 }
 
-fun Project.findStringProperty(propertyName: String): String? {
+fun Project.findStringProperty(propertyName: String, default: String = ""): String {
     return findProperty(propertyName) as String? ?: run {
         println("$propertyName missing in gradle.properties")
-        null
+        default
     }
 }

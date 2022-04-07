@@ -165,12 +165,19 @@ sonarqube {
         property("sonar.projectKey", "koncept")
         property("sonar.organization", "nilsjr")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.login", properties.getOrDefault("sonar.token", ""))
+        property("sonar.login", findStringProperty("konceptSonarToken"))
         property("sonar.sourceEncoding", "UTF-8")
         property("sonar.projectName", "Koncept")
         property("sonar.projectVersion", "0.0.2")
 
         property("sonar.branch.name", "feature/fix-di")
+    }
+}
+
+fun Project.findStringProperty(propertyName: String, default: String = ""): String {
+    return findProperty(propertyName) as String? ?: run {
+        println("$propertyName missing in gradle.properties")
+        default
     }
 }
 
