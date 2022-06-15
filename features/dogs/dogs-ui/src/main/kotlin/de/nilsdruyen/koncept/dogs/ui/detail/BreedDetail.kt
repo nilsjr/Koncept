@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -88,7 +88,7 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BreedImageList(list: List<BreedImage>, onImageClick: (String) -> Unit) {
-    LazyVerticalGrid(cells = GridCells.Fixed(2), content = {
+    LazyVerticalGrid(columns = GridCells.Fixed(2), content = {
         items(list) {
             BreedImage(it.url) {
                 onImageClick(it.id)

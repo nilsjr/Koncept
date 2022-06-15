@@ -5,11 +5,11 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 android {
-    compileSdk = 31
+    compileSdk = 32
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
         minSdk = 24
-        targetSdk = 31
+        targetSdk = 32
         versionCode = 1
         versionName = "0.0.1"
 
@@ -114,7 +114,7 @@ dependencies {
     implementation(projects.commonRemote)
     implementation(projects.commonUi)
 
-//    implementation(projects.dogsRemote)
+    implementation(projects.dogsRemote)
     implementation(projects.dogsCache)
     implementation(projects.dogsUi)
 

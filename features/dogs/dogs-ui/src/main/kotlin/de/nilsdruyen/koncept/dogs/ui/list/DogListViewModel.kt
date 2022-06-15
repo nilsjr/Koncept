@@ -31,7 +31,7 @@ class DogListViewModel @Inject constructor(
                 result.fold(this@DogListViewModel::handleError) {
                     Logger.log("set list ${it.size}")
                     setState {
-                        copy(list = it)
+                        copy(isLoading = false, list = it)
                     }
                 }
             }

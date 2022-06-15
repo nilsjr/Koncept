@@ -2,8 +2,6 @@ package de.nilsdruyen.koncept.dogs.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.nilsdruyen.koncept.domain.annotations.DefaultDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -13,13 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 abstract class BaseViewModel<S, I, E> : ViewModel() {
-
-    @Inject
-    @DefaultDispatcher
-    lateinit var dispatcher: CoroutineDispatcher
 
     private val initalState: S by lazy {
         initalState()
@@ -44,7 +37,7 @@ abstract class BaseViewModel<S, I, E> : ViewModel() {
     }
 
     private fun handleIntent() {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch {
             intent.consumeAsFlow().collect {
                 handleIntent(it)
             }
@@ -55,16 +48,16 @@ abstract class BaseViewModel<S, I, E> : ViewModel() {
 
     abstract fun handleIntent(intent: I)
 
-    protected fun launchOnUi(block: suspend CoroutineScope.() -> Unit){
-        viewModelScope.launch(dispatcher) {
+    protected fun launchOnUi(block: suspend CoroutineScope.() -> Unit) {
+        viewModelScope.launch {
             block()
         }
     }
 
     protected fun launchDistinct(key: JobKey, block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch {
             jobs[key]?.cancelAndJoin()
-            jobs[key] = this.launch(dispatcher) {
+            jobs[key] = this.launch {
                 block()
             }
         }
@@ -75,7 +68,7 @@ abstract class BaseViewModel<S, I, E> : ViewModel() {
     }
 
     protected fun sendEffect(effect: E) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch {
             _effect.send(effect)
         }
     }
