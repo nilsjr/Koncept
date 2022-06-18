@@ -169,6 +169,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofitMoshi)
 
+    implementation("io.github.fornewid:material-motion-compose-core:0.9.0-beta03")
+    implementation("io.github.fornewid:material-motion-compose-navigation:0.9.0-beta03")
+
 //    testImplementation(libs.junit4)
 //    implementation(libs.junit4)
 }

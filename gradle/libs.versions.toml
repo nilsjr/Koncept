@@ -46,7 +46,7 @@ composeUiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "c
 composeUiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 composeMaterial = { module = "androidx.compose.material:material", version.ref = "compose" }
 composeMaterialIcons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
-composeMaterial3 = { module = "androidx.compose.material3:material3", version = "1.0.0-alpha08" }
+composeMaterial3 = { module = "androidx.compose.material3:material3", version = "1.0.0-alpha13" }
 composeNavigation = { module = "androidx.navigation:navigation-compose", version = "2.5.0-alpha03" }
 constraintCompose = { module = "androidx.constraintlayout:constraintlayout-compose", version = "1.0.0" }
 pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha14"

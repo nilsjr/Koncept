@@ -16,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,7 +36,8 @@ import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
 @Composable
 fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
     val state = viewModel.state.collectAsState()
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val scrollState = rememberTopAppBarScrollState()
+    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior(scrollState) }
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(BreedDetailIntent.LoadImages)
@@ -51,19 +53,23 @@ fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
         },
         content = {
             Crossfade(targetState = state) { state ->
-                BreedDetailContainer(state.value) { url ->
-                    navController.navigate("image/$url")
-                }
+                BreedDetailContainer(
+                    uiState = state.value,
+                    onImageClick = { url ->
+                        navController.navigate("image/$url")
+                    },
+                    modifier = Modifier.padding(it)
+                )
             }
         }
     )
 }
 
 @Composable
-fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Unit) {
+fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Unit, modifier: Modifier = Modifier) {
     when {
         uiState.isLoading -> {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = modifier.fillMaxSize()) {
                 LoadingDoggo(
                     Modifier
                         .fillMaxSize(fraction = 0.5f)
@@ -72,7 +78,7 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
             }
         }
         uiState.images.isEmpty() -> {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = modifier.fillMaxSize()) {
                 Text(
                     text = "No doggo images!",
                     modifier = Modifier
@@ -81,14 +87,13 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
                 )
             }
         }
-        uiState.images.isNotEmpty() -> BreedImageList(list = uiState.images, onImageClick)
+        uiState.images.isNotEmpty() -> BreedImageList(list = uiState.images, onImageClick, modifier)
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BreedImageList(list: List<BreedImage>, onImageClick: (String) -> Unit) {
-    LazyVerticalGrid(columns = GridCells.Fixed(2), content = {
+fun BreedImageList(list: List<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
         items(list) {
             BreedImage(it.url) {
                 onImageClick(it.id)
