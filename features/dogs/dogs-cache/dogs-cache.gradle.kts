@@ -1,6 +1,5 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    id("de.nilsdruyen.plugin.android.library")
     kotlin("kapt")
 }
 

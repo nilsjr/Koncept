@@ -1,4 +1,7 @@
+rootProject.name = "koncept"
+
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
         google()
@@ -19,7 +22,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Koncept"
 
 include(":app")
 
@@ -38,7 +40,6 @@ include(":common-remote")
 include(":common-ui")
 include(":common-test")
 
-enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 val skipConfiguration = listOf("app", "buildSrc")

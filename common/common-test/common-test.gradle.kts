@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin")
+    id("de.nilsdruyen.plugin.kotlin")
 }
 
 dependencies {

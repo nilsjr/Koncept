@@ -1,16 +1,7 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    id("de.nilsdruyen.plugin.android.library")
+    id("de.nilsdruyen.plugin.android.library.compose")
     kotlin("kapt")
-}
-
-android {
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
 }
 
 dependencies {

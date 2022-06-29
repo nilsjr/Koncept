@@ -1,3 +1,5 @@
+package de.nilsdruyen.plugin.config
+
 object ProjectConfig {
 
     const val minSdkVersion = 23

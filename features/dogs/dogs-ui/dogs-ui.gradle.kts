@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    id("de.nilsdruyen.plugin.android.library")
+    id("de.nilsdruyen.plugin.android.library.compose")
     kotlin("kapt")
     id("shot")
 }
@@ -9,12 +9,6 @@ android {
     defaultConfig {
         testApplicationId = "de.nilsdruyen.koncept.dogs.test"
         testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 }
 

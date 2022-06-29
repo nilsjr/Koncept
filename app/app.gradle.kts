@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("de.nilsdruyen.plugin.android.application")
     kotlin("android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
@@ -152,10 +152,10 @@ dependencies {
     implementation(libs.moshi)
     kapt(libs.moshiCompiler)
 
-    implementation(libs.accompanistSystemUi)
-    implementation(libs.accompanistInsets)
-    implementation(libs.accompanistNavAnim)
-    implementation(libs.accompanistNavMaterial)
+    implementation(libs.accompanist.systemUi)
+    implementation(libs.accompanist.insets)
+    implementation(libs.accompanist.navAnim)
+    implementation(libs.accompanist.navMaterial)
 
     implementation(libs.timber)
     implementation(platform(libs.arrowStack))

@@ -1,5 +1,6 @@
 plugins {
-    id("kotlin")
+    id("de.nilsdruyen.plugin.kotlin")
+    id("de.nilsdruyen.plugin.jacoco")
     kotlin("kapt")
 }
 
