@@ -1,6 +1,7 @@
 package de.nilsdruyen.plugin
 
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import de.nilsdruyen.plugin.config.configure
 import de.nilsdruyen.plugin.config.configureDetekt
 import de.nilsdruyen.plugin.config.configureKotlinAndroid
 import org.gradle.api.Plugin
@@ -19,6 +20,7 @@ class ApplicationConventionPlugin : Plugin<Project> {
             extensions.configure<BaseAppModuleExtension> {
                 configureKotlinAndroid(this)
             }
+            configure()
             configureDetekt("src/main/kotlin", "src/test/kotlin")
         }
     }

@@ -2,6 +2,7 @@ package de.nilsdruyen.plugin
 
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import de.nilsdruyen.plugin.config.configure
 import de.nilsdruyen.plugin.config.configureDetekt
 import de.nilsdruyen.plugin.config.configureKotlinAndroid
 import de.nilsdruyen.plugin.config.configureKotlinAndroidLibrary
@@ -24,6 +25,7 @@ class LibraryConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 configureKotlinAndroidLibrary(this)
             }
+            configure()
             configureDetekt("src/main/kotlin", "src/test/kotlin")
         }
     }
