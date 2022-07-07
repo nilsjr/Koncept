@@ -1,21 +1,22 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.kotlin")
-    kotlin("kapt")
+    id(libs.plugins.kotlin.kapt.get().pluginId)
 }
 
 dependencies {
     implementation(projects.commonDomain)
 
-    implementation(libs.retrofit)
-    implementation(libs.retrofitMoshi)
+    implementation(libs.square.retrofit)
+    implementation(libs.square.retrofit.moshi)
 
-    implementation(platform(libs.okHttpBom))
-    implementation(libs.okHttp)
-    implementation(libs.okHttpInterceptor)
+    implementation(platform(libs.square.okhttp.bom))
+    implementation(libs.square.okhttp)
+    implementation(libs.square.okhttp.interceptor)
 
-    implementation(libs.hiltCore)
-    kapt(libs.hiltCompiler)
+    implementation(libs.hilt.core)
+    kapt(libs.hilt.compiler)
 
-    implementation(platform(libs.arrowStack))
-    implementation(libs.arrowKt)
+    implementation(platform(libs.arrow.bom))
+    implementation(libs.arrow.core)
 }

@@ -1,6 +1,7 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.kotlin")
-    kotlin("kapt")
+    id(libs.plugins.kotlin.kapt.get().pluginId)
 }
 
 dependencies {
@@ -11,15 +12,15 @@ dependencies {
     implementation(projects.dogsData)
     implementation(projects.dogsEntity)
 
-    implementation(platform(libs.arrowStack))
-    implementation(libs.arrowKt)
+    implementation(platform(libs.arrow.bom))
+    implementation(libs.arrow.core)
 
-    implementation(libs.retrofit)
-    implementation(libs.moshi)
-    kapt(libs.moshiCompiler)
+    implementation(libs.square.retrofit)
+    implementation(libs.square.moshi)
+    kapt(libs.square.moshi.codegen)
 
-    implementation(libs.hiltCore)
-    kapt(libs.hiltCompiler)
+    implementation(libs.hilt.core)
+    kapt(libs.hilt.compiler)
 
     // testing
     testImplementation(projects.commonTest)
@@ -27,10 +28,10 @@ dependencies {
 
     testImplementation(libs.bundles.test)
 
-    testImplementation(platform(libs.junit5Bom))
-    testImplementation(libs.junit5Api)
-    testRuntimeOnly(libs.junit5Engine)
+    testImplementation(platform(libs.junit5.bom))
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
 
     testImplementation(libs.bundles.mockito)
-    testImplementation(libs.mockitoJupiter)
+    testImplementation(libs.mockito.jupiter)
 }

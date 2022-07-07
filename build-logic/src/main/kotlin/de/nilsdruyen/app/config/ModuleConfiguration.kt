@@ -1,4 +1,4 @@
-package de.nilsdruyen.plugin.config
+package de.nilsdruyen.app.config
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project

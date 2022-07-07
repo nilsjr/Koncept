@@ -1,4 +1,4 @@
-package de.nilsdruyen.plugin.config
+package de.nilsdruyen.app.config
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -41,24 +41,19 @@ internal fun Project.configureJacoco() {
     }
 }
 
-object JacocoConfig {
-
-    val minCoverage = "0.38".toBigDecimal()
-}
-
-enum class ProjectType {
+internal enum class ProjectType {
     APP,
     LIB,
     KOTLIN,
 }
 
-fun Project.toType(): ProjectType = when {
-    pluginManager.hasPlugin(Constants.Android.Plugin.app) -> ProjectType.APP
-    pluginManager.hasPlugin(Constants.Android.Plugin.library) -> ProjectType.LIB
+internal fun Project.toType(): ProjectType = when {
+    pluginManager.hasPlugin("com.android.application") -> ProjectType.APP
+    pluginManager.hasPlugin("com.android.library") -> ProjectType.LIB
     else -> ProjectType.KOTLIN
 }
 
-fun JacocoReportBase.applyAllProjectDirectories(project: Project) {
+internal fun JacocoReportBase.applyAllProjectDirectories(project: Project) {
     with(project) {
         classDirectories.setFrom(files(subprojects.allClassFiles()))
         sourceDirectories.setFrom(files(subprojects.allSourceFiles()))
@@ -66,7 +61,7 @@ fun JacocoReportBase.applyAllProjectDirectories(project: Project) {
     }
 }
 
-fun JacocoReportBase.applyDirectories(project: Project) {
+internal fun JacocoReportBase.applyDirectories(project: Project) {
     with(project) {
         classDirectories.setFrom(files(classFiles()))
         sourceDirectories.setFrom(files(sourceFiles()))
@@ -74,17 +69,17 @@ fun JacocoReportBase.applyDirectories(project: Project) {
     }
 }
 
-fun JacocoCoverageVerification.applyRules() {
+internal fun JacocoCoverageVerification.applyRules() {
     violationRules {
         rule {
             limit {
-                minimum = JacocoConfig.minCoverage
+                minimum = "0.38".toBigDecimal()
             }
         }
     }
 }
 
-val ignoreFiles = listOf(
+internal val ignoreFiles = listOf(
     // android
     "**/R.class",
     "**/R$*.class",
@@ -133,13 +128,13 @@ val ignoreFiles = listOf(
     "**/**/composables/**/*.*",
 )
 
-fun Set<Project>.allClassFiles(): List<ConfigurableFileTree> = this.map { it.classFiles() }
-fun Set<Project>.allSourceFiles(): List<String> = this.map { it.sourceFiles() }.flatten()
-fun Set<Project>.allExecFiles(): List<String> = this.map { it.execFiles() }.filter {
+internal fun Set<Project>.allClassFiles(): List<ConfigurableFileTree> = this.map { it.classFiles() }
+internal fun Set<Project>.allSourceFiles(): List<String> = this.map { it.sourceFiles() }.flatten()
+internal fun Set<Project>.allExecFiles(): List<String> = this.map { it.execFiles() }.filter {
     java.io.File(it).exists()
 }
 
-fun Project.classFiles(): ConfigurableFileTree {
+internal fun Project.classFiles(): ConfigurableFileTree {
     val item = toType().classDirs(buildDir.toString())
     return fileTree(item.buildDir) {
         include(item.includeDirs)
@@ -147,15 +142,15 @@ fun Project.classFiles(): ConfigurableFileTree {
     }
 }
 
-fun Project.sourceFiles(): List<String> = toType().sourceFiles(projectDir = projectDir.toString())
-fun Project.execFiles(): String = toType().execPath(this.buildDir.toString())
+internal fun Project.sourceFiles(): List<String> = toType().sourceFiles(projectDir = projectDir.toString())
+internal fun Project.execFiles(): String = toType().execPath(this.buildDir.toString())
 
-data class ProjectClassFiles(
+internal data class ProjectClassFiles(
     val buildDir: String,
     val includeDirs: List<String>,
 )
 
-fun Project.reportTask(): String {
+internal fun Project.reportTask(): String {
     return when (this.toType()) {
         ProjectType.APP -> "jacocoDevTestReport"
         ProjectType.LIB -> "jacocoTestReport"
@@ -163,7 +158,7 @@ fun Project.reportTask(): String {
     }
 }
 
-fun Project.testTask(): String {
+internal fun Project.testTask(): String {
     return when (this.toType()) {
         ProjectType.APP -> "testDevDebugUnitTest"
         ProjectType.LIB -> "testDebugUnitTest"
@@ -171,7 +166,7 @@ fun Project.testTask(): String {
     }
 }
 
-fun ProjectType.classDirs(buildDir: String): ProjectClassFiles {
+internal fun ProjectType.classDirs(buildDir: String): ProjectClassFiles {
     val dirs = when (this) {
         ProjectType.APP -> listOf(
             "**/intermediates/javac/devDebug/classes/**",
@@ -189,7 +184,7 @@ fun ProjectType.classDirs(buildDir: String): ProjectClassFiles {
     return ProjectClassFiles(buildDir, dirs)
 }
 
-fun ProjectType.sourceFiles(projectDir: String): List<String> = when (this) {
+internal fun ProjectType.sourceFiles(projectDir: String): List<String> = when (this) {
     ProjectType.APP -> listOf(
         "$projectDir/src/main/kotlin",
         "$projectDir/src/debug/kotlin",
@@ -202,7 +197,7 @@ fun ProjectType.sourceFiles(projectDir: String): List<String> = when (this) {
     ProjectType.KOTLIN -> listOf("$projectDir/src/main/kotlin")
 }
 
-fun ProjectType.execPath(buildDir: String): String = when (this) {
+internal fun ProjectType.execPath(buildDir: String): String = when (this) {
     ProjectType.APP -> "$buildDir/jacoco/testDevDebugUnitTest.exec"
     ProjectType.LIB -> "$buildDir/jacoco/testDebugUnitTest.exec"
     ProjectType.KOTLIN -> "$buildDir/jacoco/test.exec"

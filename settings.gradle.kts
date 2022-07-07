@@ -3,9 +3,9 @@ rootProject.name = "koncept"
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
     resolutionStrategy {
         eachPlugin {
@@ -41,6 +41,7 @@ include(":common-ui")
 include(":common-test")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("VERSION_CATALOGS")
 
 val skipConfiguration = listOf("app", "buildSrc")
 rootProject.children.forEach {

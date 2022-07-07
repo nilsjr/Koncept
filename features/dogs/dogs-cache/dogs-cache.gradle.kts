@@ -1,6 +1,7 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.library")
-    kotlin("kapt")
+    id(libs.plugins.kotlin.kapt.get().pluginId)
 }
 
 dependencies {
@@ -10,14 +11,14 @@ dependencies {
     implementation(projects.dogsData)
     implementation(projects.dogsEntity)
 
-    implementation(platform(libs.arrowStack))
-    implementation(libs.arrowKt)
+    implementation(platform(libs.arrow.bom))
+    implementation(libs.arrow.core)
 
-    implementation(libs.hiltCore)
-    kapt(libs.hiltCompiler)
+    implementation(libs.hilt.core)
+    kapt(libs.hilt.compiler)
 
-    implementation(libs.room)
-    kapt(libs.roomCompiler)
+    implementation(libs.androidx.room)
+    kapt(libs.androidx.room.compiler)
 
-    implementation(libs.datastore)
+    implementation(libs.androidx.datastore)
 }

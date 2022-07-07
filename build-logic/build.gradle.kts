@@ -1,35 +1,52 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     `kotlin-dsl`
-    id("io.gitlab.arturbosch.detekt") version "1.21.0-RC1"
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = JavaVersion.VERSION_11.toString()
+    targetCompatibility = JavaVersion.VERSION_11.toString()
+}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+        freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
+    }
 }
 
 dependencies {
-    implementation(libs.kotlin.gradlePlugin)
-    implementation(libs.android.gradlePlugin)
-    implementation(libs.detekt.gradlePlugin)
+    implementation(libs.kotlin.plugin)
+    implementation(libs.android.plugin)
+    implementation(libs.detekt.plugin)
+    implementation(libs.gradleVersions.plugin)
 }
 
 gradlePlugin {
+    @Suppress("DSL_SCOPE_VIOLATION")
     plugins {
+        register("de.nilsdruyen.plugin.root") {
+            id = "de.nilsdruyen.plugin.root"
+            implementationClass = "de.nilsdruyen.app.plugins.ProjectConventionPlugin"
+        }
         register("de.nilsdruyen.plugin.kotlin") {
             id = "de.nilsdruyen.plugin.kotlin"
-            implementationClass = "de.nilsdruyen.plugin.KotlinConventionPlugin"
+            implementationClass = "de.nilsdruyen.app.plugins.KotlinConventionPlugin"
         }
         register("de.nilsdruyen.plugin.android.application") {
             id = "de.nilsdruyen.plugin.android.application"
-            implementationClass = "de.nilsdruyen.plugin.ApplicationConventionPlugin"
+            implementationClass = "de.nilsdruyen.app.plugins.ApplicationConventionPlugin"
         }
         register("de.nilsdruyen.plugin.android.library") {
             id = "de.nilsdruyen.plugin.android.library"
-            implementationClass = "de.nilsdruyen.plugin.LibraryConventionPlugin"
+            implementationClass = "de.nilsdruyen.app.plugins.LibraryConventionPlugin"
         }
         register("de.nilsdruyen.plugin.android.library.compose") {
             id = "de.nilsdruyen.plugin.android.library.compose"
-            implementationClass = "de.nilsdruyen.plugin.LibraryComposeConventionPlugin"
+            implementationClass = "de.nilsdruyen.app.plugins.LibraryComposeConventionPlugin"
         }
         register("de.nilsdruyen.plugin.jacoco") {
             id = "de.nilsdruyen.plugin.jacoco"
-            implementationClass = "de.nilsdruyen.plugin.JacocoConfigPlugin"
+            implementationClass = "de.nilsdruyen.app.plugins.JacocoConfigPlugin"
         }
     }
 }

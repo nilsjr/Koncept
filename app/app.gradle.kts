@@ -1,11 +1,13 @@
+import de.nilsdruyen.app.ProjectConfig
+
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.hilt.android.get().pluginId)
 }
 android {
-    compileSdk = 32
+    compileSdk = ProjectConfig.compileSdkVersion
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
         minSdk = 24
@@ -101,14 +103,6 @@ android {
     }
 }
 
-configurations {
-// https://github.com/ben-manes/gradle-versions-plugin/issues/393#issuecomment-726275755
-    create("dependencyUpdatesConfig") {
-        isCanBeResolved = false
-        isCanBeConsumed = true
-    }
-}
-//val dependencyUpdatesConfig by configurations
 dependencies {
     implementation(projects.commonDomain)
     implementation(projects.commonRemote)
@@ -118,59 +112,60 @@ dependencies {
     implementation(projects.dogsCache)
     implementation(projects.dogsUi)
 
-    implementation(libs.core)
-    implementation(libs.coroutines)
+    implementation(libs.androidx.core)
+    implementation(libs.kotlinx.coroutines)
 
-    implementation(libs.lifecycleRuntime)
-    implementation(libs.viewModel)
-    implementation(libs.viewModelCompose)
-    implementation(libs.composeActivity)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.lifecycle.viewModel)
+    implementation(libs.androidx.compose.viewmodel)
+    implementation(libs.androidx.compose.activity)
 
-    implementation(libs.composeUi)
-    implementation(libs.composeFoundation)
-    implementation(libs.composeMaterial)
-    implementation(libs.composeMaterialIcons)
-    implementation(libs.composeMaterial3)
-    implementation(libs.composeUiToolingPreview)
-    implementation(libs.composeNavigation)
-    implementation(libs.constraintCompose)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.icons)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.compose.constraint)
 
-    debugImplementation(libs.composeUiTooling)
+    implementation(libs.androidx.compose.uiToolingPreview)
+    debugImplementation(libs.androidx.compose.uiTooling)
 
-//    dependencyUpdatesConfig(libs.desugar)
-    coreLibraryDesugaring(libs.desugar)
+    coreLibraryDesugaring(libs.android.desugar)
 
-    implementation(libs.hilt)
-    implementation(libs.hiltNavigation)
-    kapt(libs.hiltCompiler)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.androidx.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
-    implementation(libs.room)
-    kapt(libs.roomCompiler)
+    implementation(libs.androidx.room)
+    kapt(libs.androidx.room.compiler)
 
-    implementation(libs.datastore)
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
 
-    implementation(libs.moshi)
-    kapt(libs.moshiCompiler)
+    implementation(libs.square.moshi)
+    kapt(libs.square.moshi.codegen)
 
-    implementation(libs.accompanist.systemUi)
+    implementation(libs.accompanist.systemUiController)
     implementation(libs.accompanist.insets)
-    implementation(libs.accompanist.navAnim)
-    implementation(libs.accompanist.navMaterial)
+    implementation(libs.accompanist.nav.anim)
+    implementation(libs.accompanist.nav.material)
 
     implementation(libs.timber)
-    implementation(platform(libs.arrowStack))
-    implementation(libs.arrowKt)
-    implementation(libs.arrowKtRetrofit)
 
-    implementation(platform(libs.okHttpBom))
-    implementation(libs.okHttp)
-    implementation(libs.okHttpInterceptor)
+    implementation(platform(libs.arrow.bom))
+    implementation(libs.arrow.core)
+    implementation(libs.arrow.retrofit)
 
-    implementation(libs.retrofit)
-    implementation(libs.retrofitMoshi)
+    implementation(platform(libs.square.okhttp.bom))
+    implementation(libs.square.okhttp)
+    implementation(libs.square.okhttp.interceptor)
 
-    implementation("io.github.fornewid:material-motion-compose-core:0.9.0-beta03")
-    implementation("io.github.fornewid:material-motion-compose-navigation:0.9.0-beta03")
+    implementation(libs.square.retrofit)
+    implementation(libs.square.retrofit.moshi)
+
+    implementation("io.github.fornewid:material-motion-compose-core:0.9.0-rc03")
+    implementation("io.github.fornewid:material-motion-compose-navigation:0.9.0-rc03")
 
 //    testImplementation(libs.junit4)
 //    implementation(libs.junit4)

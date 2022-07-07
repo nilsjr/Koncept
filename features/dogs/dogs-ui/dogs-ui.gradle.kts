@@ -1,7 +1,8 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
-    kotlin("kapt")
+    id(libs.plugins.kotlin.kapt.get().pluginId)
     id("shot")
 }
 
@@ -25,40 +26,37 @@ dependencies {
     implementation(projects.dogsDomain)
     implementation(projects.dogsEntity)
 
-    implementation(libs.hilt)
-    kapt(libs.hiltCompiler)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
-    implementation(libs.viewModelCompose)
-    implementation(libs.composeActivity)
-
-    implementation(libs.composeUi)
-    implementation(libs.composeFoundation)
-    implementation(libs.composeMaterial)
-    implementation(libs.composeMaterialIcons)
-    implementation(libs.composeMaterial3)
-    implementation(libs.composeUiToolingPreview)
-    implementation(libs.composeNavigation)
-    implementation(libs.constraintCompose)
+    implementation(libs.androidx.compose.viewmodel)
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.icons)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.compose.constraint)
     implementation(libs.coilCompose)
 
-    debugImplementation(libs.composeUiTooling)
+    implementation(libs.androidx.compose.uiToolingPreview)
+    debugImplementation(libs.androidx.compose.uiTooling)
 
-    implementation(platform(libs.arrowStack))
-    implementation(libs.arrowKt)
+    implementation(platform(libs.arrow.bom))
+    implementation(libs.arrow.core)
 
-    implementation(libs.lottie)
+    implementation(libs.lottie.compose)
 
     // testing
     testImplementation(libs.bundles.test)
-    testImplementation(platform(libs.junit5Bom))
-    testImplementation(libs.junit5Api)
-    testRuntimeOnly(libs.junit5Engine)
-
     testImplementation(libs.junit4)
-    testRuntimeOnly(libs.junit5VintageEngine)
+    testImplementation(platform(libs.junit5.bom))
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
+    testRuntimeOnly(libs.junit5.vintage.engine)
 
     testImplementation(libs.bundles.mockito)
-    testImplementation(libs.mockitoJupiter)
+    testImplementation(libs.mockito.jupiter)
 
     testImplementation(projects.commonTest)
     testImplementation(projects.commonRemote)
@@ -68,18 +66,18 @@ dependencies {
     testImplementation(projects.dogsRemote)
     testImplementation(projects.dogsCache)
 
-    testImplementation(libs.androidxTestCore)
+    testImplementation(libs.androidx.test.core)
     testImplementation(libs.robolectric)
-    testImplementation(libs.hiltTest)
-    kaptTest(libs.hiltCompiler)
+    testImplementation(libs.hilt.test)
+    kaptTest(libs.hilt.compiler)
 
     // android testing
-    androidTestImplementation(libs.bundles.androidTest)
-    androidTestImplementation(libs.hiltTest)
-    androidTestImplementation(libs.composeUiTest)
-    debugImplementation(libs.composeUiManifestTest)
-    kaptAndroidTest(libs.hiltCompiler)
-    androidTestImplementation(libs.androidxTestRunner)
+    androidTestImplementation(libs.bundles.android.test)
+    androidTestImplementation(libs.hilt.test)
+    androidTestImplementation(libs.androidx.compose.uiTest)
+    debugImplementation(libs.androidx.compose.uiManifestTest)
+    kaptAndroidTest(libs.hilt.compiler)
+    androidTestImplementation(libs.androidx.test.runner)
 
     androidTestImplementation(projects.dogsTest)
 }

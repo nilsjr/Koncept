@@ -5,11 +5,11 @@ plugins {
 dependencies {
     implementation(libs.junit4)
 
-    implementation(platform(libs.junit5Bom))
-    implementation(libs.junit5Api)
+    implementation(platform(libs.junit5.bom))
+    implementation(libs.junit5.api)
     
-    implementation(libs.coroutinesTest)
+    implementation(libs.kotlinx.coroutines)
 
-    implementation(libs.moshi)
-    implementation(libs.moshiKotlin)
+    implementation(libs.square.moshi)
+    implementation(libs.square.moshi.kotlin)
 }
