@@ -45,9 +45,9 @@ internal class DogsRepositoryImplTest : CoroutineTest {
         fun `Given cache is empty & remote not Then it should return an empty list & a filled list`() = runTest {
             // given
             whenever(dogsCacheDataSource.getDogList()).thenReturn(flowOf(Either.Right(emptyList())))
-            whenever(dogsRemoteDataSource.getList()).thenReturn(Either.Right(
-                List(2) { DogFactory.build() }
-            ))
+            whenever(dogsRemoteDataSource.getList()).thenReturn(
+                Either.Right(List(2) { DogFactory.build() })
+            )
 
             // when
             tested.getList().test {

@@ -13,7 +13,7 @@ This is an sample project to experiment with architectures, modules structures, 
 
 ## custom gradle tasks
 
-- gradle dependencyUpdates -Pcustom
+- gradle dependencyUpdates
 - gradle projectDependencyGraph -Pcustom
 - gradle allTests // run all tests filtered by TaskUtils class in buildSrc directory
 - gradle connectedDebugAndroidTest // run ui tests
@@ -88,3 +88,8 @@ gradle debugExecuteScreenshotTests -Precord
 ### test against screenshots
 
 gradle debugExecuteScreenshotTests
+
+# ToDos
+- kover usage
+- moshix usage
+- 

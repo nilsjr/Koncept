@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.android.plugin)
     implementation(libs.detekt.plugin)
     implementation(libs.gradleVersions.plugin)
+    implementation(libs.kotlinx.kover.plugin)
 }
 
 gradlePlugin {

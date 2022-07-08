@@ -7,12 +7,11 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 
-@Suppress("unused")
+@Suppress("unused", "UnstableApiUsage")
 internal class LibraryComposeConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.android.library")
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             configure<LibraryExtension> {
                 buildFeatures {

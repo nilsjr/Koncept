@@ -4,6 +4,7 @@ import de.nilsdruyen.app.ProjectConfig
 plugins {
     id("de.nilsdruyen.plugin.android.application")
     id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
 }
 android {
@@ -95,11 +96,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    kapt {
-        correctErrorTypes = true
-        arguments {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
 
@@ -138,13 +136,13 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.room)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.square.moshi)
-    kapt(libs.square.moshi.codegen)
+    ksp(libs.square.moshi.codegen)
 
     implementation(libs.accompanist.systemUiController)
     implementation(libs.accompanist.insets)
@@ -166,9 +164,6 @@ dependencies {
 
     implementation("io.github.fornewid:material-motion-compose-core:0.9.0-rc03")
     implementation("io.github.fornewid:material-motion-compose-navigation:0.9.0-rc03")
-
-//    testImplementation(libs.junit4)
-//    implementation(libs.junit4)
 }
 
 fun Project.findStringProperty(propertyName: String): String? {

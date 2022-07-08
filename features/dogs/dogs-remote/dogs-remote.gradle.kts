@@ -2,6 +2,7 @@
 plugins {
     id("de.nilsdruyen.plugin.kotlin")
     id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.google.ksp.get().pluginId)
 }
 
 dependencies {
@@ -17,7 +18,7 @@ dependencies {
 
     implementation(libs.square.retrofit)
     implementation(libs.square.moshi)
-    kapt(libs.square.moshi.codegen)
+    ksp(libs.square.moshi.codegen)
 
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)

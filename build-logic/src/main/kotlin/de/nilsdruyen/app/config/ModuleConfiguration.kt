@@ -12,15 +12,16 @@ internal fun Project.configure() {
         sourceCompatibility = JavaVersion.VERSION_11.toString()
         targetCompatibility = JavaVersion.VERSION_11.toString()
     }
+    val isEntityModule = name.endsWith("-entity")
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_11.toString()
-            freeCompilerArgs = freeCompilerArgs + listOf(
+            freeCompilerArgs = freeCompilerArgs + listOfNotNull(
                 "-progressive", // https://kotlinlang.org/docs/whatsnew13.html#progressive-mode
-                "-Xopt-in=kotlin.RequiresOptIn",
-                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xopt-in=kotlinx.coroutines.FlowPreview",
-                "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-opt-in=kotlinx.coroutines.FlowPreview",
+                "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { !isEntityModule },
             )
         }
     }

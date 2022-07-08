@@ -68,6 +68,7 @@ javaxInject = "1"
 junit4 = "4.13.2"
 junit5 = "5.8.2"
 kotlin = "1.7.0"
+koverPlugin = "0.5.1"
 kspPlugin = "1.7.0-1.0.6"
 ktlint = "0.45.2"
 ktlintPlugin = "10.3.0"
@@ -86,6 +87,7 @@ protoBuf = "3.21.2"
 protoBufPlugin = "0.8.19"
 retrofit = "2.9.0"
 robolectric = "4.8.1"
+shotPlugin = "5.14.1"
 soloader = "0.10.4"
 sonarqubePlugin = "3.4.0.2513"
 turbine = "0.8.0"
@@ -230,6 +232,7 @@ timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 versionCompare = { module = "io.github.g00fy2:versioncompare", version.ref = "versionCompare" }
 zxing = { module = "com.google.zxing:core", version.ref = "zxing" }
+kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover", version.ref = "koverPlugin" }
 
 [bundles]
 common = ["javaxInject", "kotlinx.coroutines"]
@@ -255,5 +258,7 @@ kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
 kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
+shot = { id = "shot", version.ref = "shotPlugin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqubePlugin" }

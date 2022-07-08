@@ -2,6 +2,7 @@
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.google.ksp.get().pluginId)
 }
 
 dependencies {
@@ -18,7 +19,7 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.room)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.androidx.datastore)
 }
