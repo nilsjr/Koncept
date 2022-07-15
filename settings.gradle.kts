@@ -1,7 +1,6 @@
 rootProject.name = "koncept"
 
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -22,6 +21,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+includeBuild("build-logic")
 
 include(":app")
 
