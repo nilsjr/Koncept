@@ -1,7 +1,10 @@
 package de.nilsdruyen.koncept.dogs.ui.components
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -22,4 +25,15 @@ fun LoadingDoggo(modifier: Modifier = Modifier) {
         progress = { progress },
         modifier = modifier,
     )
+}
+
+@Composable
+fun Loading(modifier: Modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
+        LoadingDoggo(
+            Modifier
+                .fillMaxSize(fraction = 0.5f)
+                .align(Alignment.Center)
+        )
+    }
 }
