@@ -59,15 +59,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DogListScreen(viewModel: DogListViewModel, navController: NavController) {
+fun DogListScreen(viewModel: DogListViewModel, navController: NavController, modifier: Modifier = Modifier) {
     val uiState = viewModel.state.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        viewModel.intent.send(DogListIntent.LoadIntent)
-        viewModel.effect.onEach {
+        viewModel.events.onEach {
             when (it) {
-                is Effect.NavigateToDetail -> navController.navigate("breedDetail/${it.breedId}")
+                is DogListEvent.NavigateToDetail -> navController.navigate("breedDetail/${it.breedId}")
             }
         }.collect()
     }
@@ -84,9 +83,7 @@ fun DogListScreen(viewModel: DogListViewModel, navController: NavController) {
                 viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
             }
         },
-        scrollListener = {
-
-        }
+        modifier = modifier,
     )
 }
 
@@ -94,32 +91,21 @@ fun DogListScreen(viewModel: DogListViewModel, navController: NavController) {
 @Composable
 fun DogListScreen(
     state: DogListState,
+    modifier: Modifier = Modifier,
     startTask: () -> Unit = {},
     showDog: (Dog) -> Unit = {},
-    scrollListener: (Boolean) -> Unit = {},
 ) {
-//    val systemUiController = rememberSystemUiController()
+    val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarScrollState()
-//    val decay = rememberSplineBasedDecay<Float>()
     val scrollBehavior = remember {
         TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
     }
-    val scrollState = rememberLazyListState()
-
-//    scrollListener(appBarScrollState.offset > 0f)
-
     val color =
         TopAppBarDefaults.smallTopAppBarColors().containerColor(scrollFraction = scrollBehavior.scrollFraction).value
-//    val statusBarColor = if (scrollBehavior.scrollFraction > 0.01f) {
-//        MaterialTheme.colorScheme.surface
-//    } else {
-//        MaterialTheme.colorScheme.background
-//    }
 
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .navigationBarsPadding(),
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             SmallTopAppBar(
                 title = { Text("Doggo List") },
@@ -160,7 +146,7 @@ fun DogListScreen(
                 when {
                     state.isLoading -> DogListLoading(Modifier.padding(it))
                     state.list.isEmpty() -> DogListEmpty(Modifier.padding(it))
-                    state.list.isNotEmpty() -> DogList(
+                    else -> DogList(
                         scrollState = scrollState,
                         list = state.list,
                         showDog = { showDog(it) },

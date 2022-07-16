@@ -19,7 +19,7 @@ fun LoadingDoggo(modifier: Modifier = Modifier) {
     )
     LottieAnimation(
         composition = composition,
-        progress = progress,
+        progress = { progress },
         modifier = modifier,
     )
 }

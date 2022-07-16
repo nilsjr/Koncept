@@ -3,7 +3,7 @@ package de.nilsdruyen.koncept.dogs.ui.list
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
-import de.nilsdruyen.koncept.dogs.ui.base.BaseViewModel
+import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import kotlinx.coroutines.delay
@@ -13,13 +13,14 @@ import javax.inject.Inject
 @HiltViewModel
 class DogListViewModel @Inject constructor(
     private val getDogListUseCase: GetDogListUseCase,
-) : BaseViewModel<DogListState, DogListIntent, Effect>() {
+) : BaseViewModel<DogListState, DogListIntent, DogListEvent>(DogListState(isLoading = true)) {
 
-    override fun initalState(): DogListState = DogListState(isLoading = true)
+    override fun initalize() {
+        loadList()
+    }
 
     override fun handleIntent(intent: DogListIntent) {
         when (intent) {
-            DogListIntent.LoadIntent -> loadList()
             is DogListIntent.ShowDetailAndSaveListPosition -> navigateToDetail(intent.id)
             DogListIntent.StartLongTask -> startTask()
         }
@@ -30,7 +31,7 @@ class DogListViewModel @Inject constructor(
             getDogListUseCase.execute().collect { result ->
                 result.fold(this@DogListViewModel::handleError) {
                     Logger.log("set list ${it.size}")
-                    setState {
+                    updateState {
                         copy(isLoading = false, list = it)
                     }
                 }
@@ -52,7 +53,7 @@ class DogListViewModel @Inject constructor(
     }
 
     private fun navigateToDetail(id: Int) {
-        sendEffect(Effect.NavigateToDetail(id))
+        emitEvent(DogListEvent.NavigateToDetail(id))
     }
 
     private fun handleError(error: DataSourceError) {
@@ -65,12 +66,11 @@ data class DogListState(
     val isLoading: Boolean = false,
 )
 
-sealed class DogListIntent {
-    object LoadIntent : DogListIntent()
-    data class ShowDetailAndSaveListPosition(val id: Int) : DogListIntent()
-    object StartLongTask : DogListIntent()
+sealed interface DogListIntent {
+    data class ShowDetailAndSaveListPosition(val id: Int) : DogListIntent
+    object StartLongTask : DogListIntent
 }
 
-sealed class Effect {
-    data class NavigateToDetail(val breedId: Int) : Effect()
+sealed interface DogListEvent {
+    data class NavigateToDetail(val breedId: Int) : DogListEvent
 }

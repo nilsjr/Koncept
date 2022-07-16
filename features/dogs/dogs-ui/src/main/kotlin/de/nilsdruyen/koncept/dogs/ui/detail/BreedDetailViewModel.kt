@@ -67,8 +67,8 @@ data class BreedDetailState(
     val isLoading: Boolean = false,
 )
 
-sealed class BreedDetailIntent {
+sealed interface BreedDetailIntent {
 
-    object LoadImages : BreedDetailIntent()
-    object ShowImage : BreedDetailIntent()
+    object LoadImages : BreedDetailIntent
+    object ShowImage : BreedDetailIntent
 }

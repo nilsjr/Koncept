@@ -29,7 +29,7 @@ interface DogsApi {
 //        @Query("page") page: Int,
 //        @Query("order") order: String,
         @Query("breed_id") breedId: Int,
-//        @Query("size") size: String,
+        @Query("size") size: String,
     ): Either<DataSourceError, List<BreedImageWebEntity>>
 
     @GET("images/{id}")

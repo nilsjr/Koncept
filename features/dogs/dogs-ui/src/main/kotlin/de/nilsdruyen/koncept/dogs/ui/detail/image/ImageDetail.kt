@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui.detail
+package de.nilsdruyen.koncept.dogs.ui.detail.image
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
