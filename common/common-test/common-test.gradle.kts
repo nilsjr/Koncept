@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.junit5.api)
     
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.coroutines.test)
 
     implementation(libs.square.moshi)
     implementation(libs.square.moshi.kotlin)

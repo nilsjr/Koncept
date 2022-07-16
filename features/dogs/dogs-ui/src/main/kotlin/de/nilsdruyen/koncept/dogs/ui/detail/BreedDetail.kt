@@ -1,8 +1,6 @@
 package de.nilsdruyen.koncept.dogs.ui.detail
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -24,10 +22,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
@@ -106,19 +106,17 @@ fun BreedImageList(list: List<BreedImage>, onImageClick: (String) -> Unit, modif
 fun BreedImage(url: String, onImageClick: () -> Unit) {
     val pxValue = with(LocalDensity.current) { 16.dp.toPx() }
 
-    Image(
-        painter = rememberImagePainter(
-            data = url,
-            builder = {
-                crossfade(true)
-                transformations(RoundedCornersTransformation(pxValue))
-            }
-        ),
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .crossfade(true)
+            .transformations(RoundedCornersTransformation(pxValue))
+            .build(),
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize()
             .aspectRatio(1f)
             .padding(8.dp)
-            .clickable { onImageClick() }
+            .clickable { onImageClick() },
     )
 }
