@@ -99,10 +99,9 @@ fun FavoriteList(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 4.dp),
+        contentPadding = PaddingValues(),
         state = scrollState,
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         items(list) { dog ->
             DogFavoriteItem(dog)
