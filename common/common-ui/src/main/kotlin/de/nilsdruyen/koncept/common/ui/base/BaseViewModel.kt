@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui.base
+package de.nilsdruyen.koncept.common.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,23 +8,22 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel<S, I, E> : ViewModel() {
+abstract class BaseViewModel<State, Intent, Event>(initalState: State) : ViewModel() {
 
-    private val initalState: S by lazy {
-        initalState()
+    private val mutableState = MutableStateFlow(initalState)
+    val state: StateFlow<State> by lazy {
+        initalize()
+        mutableState.asStateFlow()
     }
+    val intent = Channel<Intent>(Channel.BUFFERED)
 
-    private val _state = MutableStateFlow(initalState)
-    internal val state: StateFlow<S> = _state
-
-    val intent = Channel<I>()
-
-    private val _effect: Channel<E> = Channel()
-    val effect = _effect.receiveAsFlow()
+    private val eventChannel: Channel<Event> = Channel()
+    val events = eventChannel.receiveAsFlow()
 
     private val jobs = mutableMapOf<JobKey, Job>()
 
@@ -44,9 +43,9 @@ abstract class BaseViewModel<S, I, E> : ViewModel() {
         }
     }
 
-    abstract fun initalState(): S
+    abstract fun initalize()
 
-    abstract fun handleIntent(intent: I)
+    abstract fun handleIntent(intent: Intent)
 
     protected fun launchOnUi(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
@@ -63,13 +62,13 @@ abstract class BaseViewModel<S, I, E> : ViewModel() {
         }
     }
 
-    protected fun setState(setState: S.() -> S) {
-        _state.value = setState(state.value)
+    protected fun updateState(setState: State.() -> State) {
+        mutableState.value = setState(state.value)
     }
 
-    protected fun sendEffect(effect: E) {
+    protected fun emitEvent(event: Event) {
         viewModelScope.launch {
-            _effect.send(effect)
+            eventChannel.send(event)
         }
     }
 }

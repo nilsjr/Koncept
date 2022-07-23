@@ -21,7 +21,7 @@ class DogsCacheDataSourceImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : DogsCacheDataSource {
 
-    override suspend fun getDogList(): Flow<Either<DataSourceError, List<Dog>>> {
+    override fun getDogList(): Flow<Either<DataSourceError, List<Dog>>> {
         return dogDao.getAll()
             .map { Either.Right(it.map(DogCacheEntity::toModel)) }
             .catch { throwable ->
@@ -30,6 +30,26 @@ class DogsCacheDataSourceImpl @Inject constructor(
     }
 
     override suspend fun setDogList(list: List<Dog>) = withContext(ioDispatcher) {
-        dogDao.addList(list.map(Dog::toEntity))
+        dogDao.upsertList(list.map(Dog::toMinimalEntity))
+    }
+
+    override suspend fun setFavorite(breedId: Int) {
+        dogDao.setFavorite(breedId)
+    }
+
+    override suspend fun removeFavorite(breedId: Int) {
+        dogDao.removeFavorite(breedId)
+    }
+
+    override fun isFavoriteFlow(breedId: Int): Flow<Boolean> {
+        return dogDao.getDogById(breedId).map { it.isFavorite }
+    }
+
+    override fun getFavorites(): Flow<Either<DataSourceError, List<Dog>>> {
+        return dogDao.getAllFavorites()
+            .map { Either.Right(it.map(DogCacheEntity::toModel)) }
+            .catch { throwable ->
+                Either.Left(throwable.toDataSourceError())
+            }.flowOn(ioDispatcher)
     }
 }

@@ -71,7 +71,7 @@ android {
             jvmTarget = "11"
             freeCompilerArgs = listOf(
                 "-progressive",
-                "-Xopt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.RequiresOptIn",
             )
         }
     }
@@ -145,7 +145,6 @@ dependencies {
     ksp(libs.square.moshi.codegen)
 
     implementation(libs.accompanist.systemUiController)
-    implementation(libs.accompanist.insets)
     implementation(libs.accompanist.nav.anim)
     implementation(libs.accompanist.nav.material)
 
@@ -162,8 +161,8 @@ dependencies {
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)
 
-    implementation("io.github.fornewid:material-motion-compose-core:0.9.0-rc03")
-    implementation("io.github.fornewid:material-motion-compose-navigation:0.9.0-rc03")
+    implementation(libs.fornewid.compose.motion.core)
+    implementation(libs.fornewid.compose.motion.navigation)
 }
 
 fun Project.findStringProperty(propertyName: String): String? {

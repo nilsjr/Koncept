@@ -30,7 +30,7 @@ class DogsRemoteDataSourceImpl @Inject constructor(
 //                1,
 //                "ASC",
                 breedId = breedId,
-//                "thumb"
+                "small"
             ).map {
                 it.map(BreedImageWebEntity::toModel)
             }
