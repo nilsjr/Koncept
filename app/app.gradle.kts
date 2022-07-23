@@ -71,7 +71,7 @@ android {
             jvmTarget = "11"
             freeCompilerArgs = listOf(
                 "-progressive",
-                "-Xopt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.RequiresOptIn",
             )
         }
     }
