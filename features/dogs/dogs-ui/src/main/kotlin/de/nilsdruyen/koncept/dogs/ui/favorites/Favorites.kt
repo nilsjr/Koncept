@@ -11,15 +11,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.primarySurface
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarScrollState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,12 +39,12 @@ fun Favorites(viewModel: FavoritesViewModel) {
 @Composable
 fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
     val scrollState = rememberLazyListState()
-    val appBarScrollState = rememberTopAppBarScrollState()
+    val appBarScrollState = rememberTopAppBarState()
     val scrollBehavior = remember {
         TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
     }
     val color =
-        TopAppBarDefaults.smallTopAppBarColors().containerColor(scrollFraction = scrollBehavior.scrollFraction).value
+        TopAppBarDefaults.smallTopAppBarColors().containerColor(appBarScrollState.contentOffset)
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -55,7 +52,7 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
             SmallTopAppBar(
                 title = { Text("Favoriten") },
                 modifier = Modifier
-                    .background(color)
+                    .background(color.value)
                     .statusBarsPadding(),
                 scrollBehavior = scrollBehavior
             )

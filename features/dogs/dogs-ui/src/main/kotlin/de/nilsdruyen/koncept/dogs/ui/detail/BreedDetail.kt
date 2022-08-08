@@ -16,8 +16,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,7 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarScrollState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -50,11 +48,10 @@ import kotlinx.coroutines.launch
 fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
     val composeScope = rememberCoroutineScope()
     val state = viewModel.state.collectAsState()
-    val scrollState = rememberTopAppBarScrollState()
+    val scrollState = rememberTopAppBarState()
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior(scrollState) }
     val color =
-        TopAppBarDefaults.centerAlignedTopAppBarColors()
-            .containerColor(scrollFraction = scrollBehavior.scrollFraction).value
+        TopAppBarDefaults.centerAlignedTopAppBarColors().containerColor(scrollState.contentOffset)
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(BreedDetailIntent.LoadImages)
@@ -81,7 +78,7 @@ fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
                     }
                 },
                 modifier = Modifier
-                    .background(color)
+                    .background(color.value)
                     .statusBarsPadding()
             )
         },
