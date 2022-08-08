@@ -50,6 +50,7 @@ dependencies {
     // testing
     testImplementation(libs.bundles.test)
     testImplementation(libs.junit4)
+
     testImplementation(platform(libs.junit5.bom))
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
@@ -70,6 +71,13 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.hilt.test)
     kaptTest(libs.hilt.compiler)
+
+    testImplementation(libs.square.retrofit)
+
+    testImplementation(platform(libs.square.okhttp.bom))
+    testImplementation(libs.square.okhttp)
+    testImplementation(libs.square.okhttp.interceptor)
+    testImplementation(libs.square.moshi)
 
     // android testing
     androidTestImplementation(libs.bundles.android.test)

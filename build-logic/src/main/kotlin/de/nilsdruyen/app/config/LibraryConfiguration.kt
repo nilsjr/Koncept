@@ -12,6 +12,7 @@ internal fun Project.configureAndroidLibrary() {
         buildToolsVersion = ProjectConfig.buildToolsVersion
         defaultConfig {
             targetSdk = ProjectConfig.targetSdkVersion
+            minSdk = ProjectConfig.minSdkVersion
         }
         libraryVariants.all {
             generateBuildConfigProvider?.configure { enabled = false }

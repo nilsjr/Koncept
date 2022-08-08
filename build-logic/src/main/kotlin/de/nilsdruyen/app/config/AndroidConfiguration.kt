@@ -18,16 +18,16 @@ internal fun Project.configureKotlinAndroid() {
                 isIncludeAndroidResources = true
                 isReturnDefaultValues = true
             }
-            unitTests.all {
-                if (it.name == "testDebugUnitTest") {
-                    it.extensions.configure(KoverTaskExtension::class) {
-                        isDisabled = false
-//                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
-//                    includes = listOf("com.example.*")
-//                    excludes = listOf("com.example.subpackage.*")
-                    }
-                }
-            }
+//            unitTests.all {
+//                if (it.name == "testDebugUnitTest") {
+//                    it.extensions.configure(KoverTaskExtension::class) {
+//                        isDisabled = false
+////                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
+////                    includes = listOf("com.example.*")
+////                    excludes = listOf("com.example.subpackage.*")
+//                    }
+//                }
+//            }
         }
         sourceSets {
             getByName("main").java.srcDirs("src/main/kotlin")

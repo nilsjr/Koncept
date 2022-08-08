@@ -2,7 +2,6 @@ package de.nilsdruyen.koncept.dogs.data
 
 import app.cash.turbine.test
 import arrow.core.Either
-import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.test.CoroutineTest
@@ -44,24 +43,29 @@ internal class DogsRepositoryImplTest : CoroutineTest {
         @Test
         fun `Given cache is empty & remote not Then it should return an empty list & a filled list`() = runTest {
             // given
-            whenever(dogsCacheDataSource.getDogList()).thenReturn(flowOf(Either.Right(emptyList())))
-            whenever(dogsRemoteDataSource.getList()).thenReturn(
-                Either.Right(List(2) { DogFactory.build() })
-            )
+            val remote = Either.Right(List(2) { DogFactory.build() })
+            whenever(dogsCacheDataSource.getDogList()).thenReturn(flowOf(Either.Right(emptyList()), remote))
+            whenever(dogsRemoteDataSource.getList()).thenReturn(remote)
 
             // when
             tested.getList().test {
                 // then
                 with(awaitItem()) {
                     println("item $this")
-                    assert(this is Either.Right)
-                    assert(this.bind().isEmpty())
+
+                    assert(this.isRight())
+                    fold({}) {
+                        assert(it.isEmpty())
+                    }
                 }
                 with(awaitItem()) {
                     println("item $this")
-                    assert(this is Either.Right)
-                    assert(this.bind().isNotEmpty())
-                    assert(this.bind().size == 2)
+
+                    assert(this.isRight())
+                    fold({}) {
+                        assert(it.isNotEmpty())
+                        assert(it.size == 2)
+                    }
                 }
                 awaitComplete()
             }
@@ -76,9 +80,11 @@ internal class DogsRepositoryImplTest : CoroutineTest {
 
             tested.getList().test {
                 with(awaitItem()) {
-                    assert(this is Either.Right)
-                    assert(this.bind().size == 4)
-                    assert(this.bind().first().name == dogList.first().name)
+                    assert(this.isRight())
+                    fold({}) {
+                        assert(it.size == 4)
+                        assert(it.first().name == dogList.first().name)
+                    }
                 }
                 awaitComplete()
             }

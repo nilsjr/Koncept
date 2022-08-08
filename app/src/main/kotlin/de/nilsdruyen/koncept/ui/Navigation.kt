@@ -3,6 +3,7 @@ package de.nilsdruyen.koncept.ui
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -18,11 +19,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -87,8 +90,10 @@ fun KonceptApp() {
                     backgroundColor = MaterialTheme.colorScheme.surface,
                 ) {
                     BottomBarItem.values().forEach { item ->
+                        val isSelected = currentDestination?.hierarchy?.any { it.route == item.route } == true
+                        val alpha by animateFloatAsState(targetValue = if (isSelected) 1f else .7f)
                         BottomNavigationItem(
-                            selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                            selected = isSelected,
                             onClick = {
                                 navController.navigate(item.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
@@ -99,10 +104,16 @@ fun KonceptApp() {
                                 }
                             },
                             icon = {
-                                Icon(imageVector = item.icon, contentDescription = null)
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = null,
+                                    tint = contentColorFor(backgroundColor = MaterialTheme.colorScheme.background).copy(
+                                        alpha = alpha
+                                    ),
+                                )
                             },
                             label = {
-                                Text(text = stringResource(id = item.labelRes))
+                                Text(text = stringResource(id = item.labelRes), modifier = Modifier.alpha(alpha))
                             }
                         )
                     }

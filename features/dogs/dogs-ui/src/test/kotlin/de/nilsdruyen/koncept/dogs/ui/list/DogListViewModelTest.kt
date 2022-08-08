@@ -32,7 +32,7 @@ internal class DogListViewModelTest : CoroutineTest {
 
     @BeforeEach
     fun setup() {
-        tested = DogListViewModel(dispatcher, getDogListUseCase)
+        tested = DogListViewModel(getDogListUseCase)
     }
 
     @Test
@@ -47,8 +47,6 @@ internal class DogListViewModelTest : CoroutineTest {
         whenever(getDogListUseCase.execute()) doReturn responses
 
         tested.state.test {
-            tested.intent.send(DogListIntent.LoadIntent)
-
             assert(awaitItem().list.isEmpty())
             assert(awaitItem().list.size == 2)
             assert(awaitItem().list.size == 3)

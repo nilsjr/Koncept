@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.ktlint)
     alias(libs.plugins.gradleVersions)
-    alias(libs.plugins.kover)
+//    alias(libs.plugins.kover)
     alias(libs.plugins.shot) apply false
 
     id("de.nilsdruyen.plugin.root")
