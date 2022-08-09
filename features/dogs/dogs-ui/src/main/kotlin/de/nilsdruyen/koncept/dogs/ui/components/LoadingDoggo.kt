@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -34,6 +35,7 @@ fun Loading(modifier: Modifier) {
             Modifier
                 .fillMaxSize(fraction = 0.5f)
                 .align(Alignment.Center)
+                .testTag("loading")
         )
     }
 }

@@ -8,7 +8,7 @@ import de.nilsdruyen.koncept.utils.LoggerImpl
 import timber.log.Timber
 
 @HiltAndroidApp
-class KonceptApplication : Application() {
+open class KonceptApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

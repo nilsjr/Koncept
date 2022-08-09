@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -30,7 +31,8 @@ fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { showDog(dog) },
+            .clickable { showDog(dog) }
+            .testTag("dogItem"),
         backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
         shape = RoundedCornerShape(8.dp),
         elevation = 2.dp

@@ -110,7 +110,8 @@ fun DogListScreen(
                 title = { Text("Doggo List") },
                 modifier = Modifier
                     .background(color.value)
-                    .statusBarsPadding(),
+                    .statusBarsPadding()
+                    .testTag("appbar"),
                 actions = {
                     IconButton(onClick = {}) {
                         BadgedBox(badge = { Badge { Text("1") } }) {

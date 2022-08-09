@@ -16,6 +16,9 @@ android {
         versionCode = 1
         versionName = "0.0.1"
 
+        testApplicationId = "de.nilsdruyen.koncept.test"
+        testInstrumentationRunner = "de.nilsdruyen.koncept.KonceptRunner"
+
         buildConfigField(
             "String",
             "DOG_API_KEY",
@@ -106,6 +109,7 @@ dependencies {
     implementation(projects.commonRemote)
     implementation(projects.commonUi)
 
+    implementation(projects.dogsDomain)
     implementation(projects.dogsRemote)
     implementation(projects.dogsCache)
     implementation(projects.dogsUi)
@@ -163,6 +167,32 @@ dependencies {
 
     implementation(libs.fornewid.compose.motion.core)
     implementation(libs.fornewid.compose.motion.navigation)
+
+    testImplementation(projects.dogsTest)
+
+    testImplementation(libs.junit4)
+    testImplementation("org.robolectric:robolectric:4.8.1")
+
+    testImplementation(libs.hilt.test)
+
+    testImplementation(libs.androidx.compose.uiTest)
+    debugImplementation(libs.androidx.compose.uiManifestTest)
+
+    testImplementation(libs.bundles.test)
+    testImplementation(libs.bundles.mockito)
+
+    testImplementation(platform(libs.junit5.bom))
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
+    testRuntimeOnly(libs.junit5.vintage.engine)
+
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.espresso)
+    androidTestImplementation(libs.androidx.compose.uiTest)
+
+    androidTestImplementation("io.mockk:mockk-android:1.12.3")
+    androidTestImplementation("org.robolectric:annotations:4.8.1")
 }
 
 fun Project.findStringProperty(propertyName: String): String? {

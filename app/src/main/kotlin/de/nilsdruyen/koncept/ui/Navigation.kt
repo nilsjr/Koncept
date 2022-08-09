@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
@@ -114,7 +115,8 @@ fun KonceptApp() {
                             },
                             label = {
                                 Text(text = stringResource(id = item.labelRes), modifier = Modifier.alpha(alpha))
-                            }
+                            },
+                            modifier = Modifier.testTag(item.route)
                         )
                     }
                 }

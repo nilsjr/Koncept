@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
@@ -53,7 +54,8 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
                 title = { Text("Favoriten") },
                 modifier = Modifier
                     .background(color.value)
-                    .statusBarsPadding(),
+                    .statusBarsPadding()
+                    .testTag("fav_appbar"),
                 scrollBehavior = scrollBehavior
             )
         }
