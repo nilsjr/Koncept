@@ -12,7 +12,7 @@ import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
     entities = [DogCacheEntity::class],
     version = 2,
     autoMigrations = [
-        AutoMigration (from = 1, to = 2)
+        AutoMigration(from = 1, to = 2)
     ]
 )
 abstract class KonceptDatabase : RoomDatabase() {

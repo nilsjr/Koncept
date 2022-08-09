@@ -3,7 +3,6 @@ package de.nilsdruyen.koncept.dogs.ui.detail
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import arrow.core.Either
-import de.nilsdruyen.koncept.common.ui.providers.PropertyProvider
 import de.nilsdruyen.koncept.common.ui.providers.PropertyProviderImpl
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetBreedImageListUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
