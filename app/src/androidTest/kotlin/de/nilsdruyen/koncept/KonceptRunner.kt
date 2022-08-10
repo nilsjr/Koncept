@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.test.runner.AndroidJUnitRunner
+import dagger.hilt.android.testing.HiltTestApplication
 
+@Suppress("Unused")
 class KonceptRunner : AndroidJUnitRunner() {
 
     companion object {
@@ -26,6 +28,6 @@ class KonceptRunner : AndroidJUnitRunner() {
         className: String?,
         context: Context?
     ): Application {
-        return super.newApplication(cl, KonceptTestApplication::class.java.canonicalName, context)
+        return super.newApplication(cl, HiltTestApplication::class.java.canonicalName, context)
     }
 }

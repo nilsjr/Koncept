@@ -1,9 +1,9 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
-import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import kotlinx.coroutines.delay

@@ -81,11 +81,13 @@ dependencies {
 
     // android testing
     androidTestImplementation(libs.bundles.android.test)
+    androidTestImplementation(libs.androidx.test.runner)
+
     androidTestImplementation(libs.hilt.test)
+    kaptAndroidTest(libs.hilt.compiler)
+
     androidTestImplementation(libs.androidx.compose.uiTest)
     debugImplementation(libs.androidx.compose.uiManifestTest)
-    kaptAndroidTest(libs.hilt.compiler)
-    androidTestImplementation(libs.androidx.test.runner)
 
     androidTestImplementation(projects.dogsTest)
 }

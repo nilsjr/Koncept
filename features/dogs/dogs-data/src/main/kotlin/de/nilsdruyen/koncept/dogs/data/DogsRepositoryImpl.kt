@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-internal class DogsRepositoryImpl @Inject constructor(
+class DogsRepositoryImpl @Inject constructor(
     private val dogsRemoteDataSource: DogsRemoteDataSource,
     private val dogsCacheDataSource: DogsCacheDataSource,
     @MainDispatcher private val dispatcher: CoroutineDispatcher,

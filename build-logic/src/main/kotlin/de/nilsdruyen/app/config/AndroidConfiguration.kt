@@ -14,6 +14,7 @@ internal fun Project.configureKotlinAndroid() {
             targetCompatibility = JavaVersion.VERSION_11
         }
         testOptions {
+            animationsDisabled = true
             unitTests {
                 isIncludeAndroidResources = true
                 isReturnDefaultValues = true

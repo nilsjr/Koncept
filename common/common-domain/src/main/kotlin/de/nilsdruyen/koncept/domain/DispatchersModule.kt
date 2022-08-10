@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.di
+package de.nilsdruyen.koncept.domain
 
 import dagger.Module
 import dagger.Provides

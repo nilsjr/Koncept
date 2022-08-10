@@ -8,7 +8,7 @@ import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface DogsDataModule {
+interface DogsDataModule {
 
     @Binds
     fun DogsRepositoryImpl.bindDogsRepository(): DogsRepository

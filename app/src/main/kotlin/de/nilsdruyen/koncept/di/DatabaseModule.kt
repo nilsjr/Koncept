@@ -17,7 +17,12 @@ object DatabaseModule {
     @Singleton
     fun provideAppDatabase(application: Application): KonceptDatabase =
         KonceptDatabase.getInstance(application)
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object DaoModule {
+    
     @Provides
     @Singleton
     fun KonceptDatabase.provideDogDao(): DogDao = dogDao()

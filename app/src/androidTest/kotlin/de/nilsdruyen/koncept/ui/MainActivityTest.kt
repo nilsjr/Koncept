@@ -8,6 +8,8 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import de.nilsdruyen.koncept.KonceptTestApplication
 import org.junit.Before
 import org.junit.Rule
@@ -16,17 +18,21 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [24], application = KonceptTestApplication::class)
 @LooperMode(LooperMode.Mode.PAUSED)
 class MainActivityTest {
 
-    @get:Rule
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     @Before
     fun setup() {
-
+        hiltRule.inject()
     }
 
     @Test

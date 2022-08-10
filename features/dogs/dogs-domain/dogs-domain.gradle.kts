@@ -8,7 +8,7 @@ dependencies {
     implementation(libs.bundles.common)
 
     implementation(projects.commonDomain)
-    implementation(projects.dogsEntity)
+    api(projects.dogsEntity)
 
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)

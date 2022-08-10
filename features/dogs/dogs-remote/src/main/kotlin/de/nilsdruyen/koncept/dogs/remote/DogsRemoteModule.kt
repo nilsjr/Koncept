@@ -15,10 +15,12 @@ interface DogsRemoteModule {
 
     @Binds
     fun DogsRemoteDataSourceImpl.bindDogsRemoteDataSource(): DogsRemoteDataSource
+}
 
-    companion object {
+@Module
+@InstallIn(SingletonComponent::class)
+object DogsRemoteStaticModule {
 
-        @Provides
-        fun Retrofit.provideDogApi(): DogsApi = create()
-    }
+    @Provides
+    fun Retrofit.provideDogApi(): DogsApi = create()
 }

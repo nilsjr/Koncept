@@ -18,6 +18,7 @@ android {
 
         testApplicationId = "de.nilsdruyen.koncept.test"
         testInstrumentationRunner = "de.nilsdruyen.koncept.KonceptRunner"
+        testInstrumentationRunnerArguments += mapOf("clearPackageData" to "true")
 
         buildConfigField(
             "String",
@@ -102,6 +103,9 @@ android {
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
+    testOptions {
+        execution = "ANDROID_TEST_ORCHESTRATOR"
+    }
 }
 
 dependencies {
@@ -109,6 +113,7 @@ dependencies {
     implementation(projects.commonRemote)
     implementation(projects.commonUi)
 
+    implementation(projects.dogsData)
     implementation(projects.dogsDomain)
     implementation(projects.dogsRemote)
     implementation(projects.dogsCache)
@@ -168,28 +173,43 @@ dependencies {
     implementation(libs.fornewid.compose.motion.core)
     implementation(libs.fornewid.compose.motion.navigation)
 
+    // testing
+
     testImplementation(projects.dogsTest)
-
-    testImplementation(libs.junit4)
-    testImplementation("org.robolectric:robolectric:4.8.1")
-
-    testImplementation(libs.hilt.test)
-
-    testImplementation(libs.androidx.compose.uiTest)
-    debugImplementation(libs.androidx.compose.uiManifestTest)
 
     testImplementation(libs.bundles.test)
     testImplementation(libs.bundles.mockito)
 
+    testImplementation(libs.junit4)
     testImplementation(platform(libs.junit5.bom))
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
     testRuntimeOnly(libs.junit5.vintage.engine)
 
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.hilt.test)
+    kaptTest(libs.hilt.compiler)
+
+    testImplementation(libs.androidx.compose.uiTest)
+    debugImplementation(libs.androidx.compose.uiManifestTest)
+
+    testImplementation(platform(libs.square.okhttp.bom))
+    testImplementation(libs.square.okhttp.mockwebserver)
+
+    // android testing
+
+    androidTestImplementation(projects.dogsTest)
+
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.espresso)
     androidTestImplementation(libs.androidx.compose.uiTest)
+
+    androidTestImplementation(libs.hilt.test)
+    kaptAndroidTest(libs.hilt.compiler)
+
+    androidTestUtil("androidx.test:orchestrator:1.4.1")
 
     androidTestImplementation("io.mockk:mockk-android:1.12.3")
     androidTestImplementation("org.robolectric:annotations:4.8.1")
