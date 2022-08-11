@@ -11,8 +11,8 @@ android {
     compileSdk = ProjectConfig.compileSdkVersion
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
-        minSdk = 24
-        targetSdk = 32
+        minSdk = ProjectConfig.minSdkVersion
+        targetSdk = ProjectConfig.targetSdkVersion
         versionCode = 1
         versionName = "0.0.1"
 
@@ -209,10 +209,10 @@ dependencies {
     androidTestImplementation(libs.hilt.test)
     kaptAndroidTest(libs.hilt.compiler)
 
-    androidTestUtil("androidx.test:orchestrator:1.4.1")
+    androidTestUtil(libs.androidx.test.orchestrator)
 
-    androidTestImplementation("io.mockk:mockk-android:1.12.3")
-    androidTestImplementation("org.robolectric:annotations:4.8.1")
+    androidTestImplementation(libs.mockk)
+    androidTestImplementation(libs.robolectric.annotations)
 }
 
 fun Project.findStringProperty(propertyName: String): String? {
