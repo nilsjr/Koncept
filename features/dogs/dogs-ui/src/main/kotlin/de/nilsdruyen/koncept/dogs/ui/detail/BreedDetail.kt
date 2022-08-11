@@ -72,7 +72,11 @@ fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
                         }
                     }) {
                         Icon(
-                            imageVector = if (state.value.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            imageVector = if (state.value.isFavorite) {
+                                Icons.Default.Favorite
+                            } else {
+                                Icons.Default.FavoriteBorder
+                            },
                             contentDescription = "Set Favorite"
                         )
                     }

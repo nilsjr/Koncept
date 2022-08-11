@@ -22,7 +22,7 @@ object DatabaseModule {
 @Module
 @InstallIn(SingletonComponent::class)
 object DaoModule {
-    
+
     @Provides
     @Singleton
     fun KonceptDatabase.provideDogDao(): DogDao = dogDao()

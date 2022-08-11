@@ -150,9 +150,11 @@ fun KonceptNavigation(navController: NavHostController, modifier: Modifier) {
             route = "breedDetail/{breedId}",
             enterMotionSpec = { materialSharedAxisXIn() },
             exitMotionSpec = { materialSharedAxisXOut() },
-            arguments = listOf(navArgument("breedId") {
-                type = NavType.IntType
-            })
+            arguments = listOf(
+                navArgument("breedId") {
+                    type = NavType.IntType
+                }
+            )
         ) {
             BreedDetail(hiltViewModel(), navController)
         }
