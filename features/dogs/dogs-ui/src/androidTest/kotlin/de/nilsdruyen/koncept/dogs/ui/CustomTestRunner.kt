@@ -7,6 +7,7 @@ import com.karumi.shot.ShotTestRunner
 import dagger.hilt.android.testing.HiltTestApplication
 
 // A custom runner to set up the instrumented application class for tests.
+@Suppress("Unused")
 class CustomTestRunner : ShotTestRunner() {
 
     override fun newApplication(cl: ClassLoader?, name: String?, context: Context?): Application {

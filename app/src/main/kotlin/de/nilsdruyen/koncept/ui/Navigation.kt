@@ -55,7 +55,8 @@ import soup.compose.material.motion.navigation.rememberMaterialMotionNavControll
 
 val showBottomBarFor = listOf(
     "breedList",
-    "favorites"
+    "favorites",
+    "web",
 )
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
@@ -166,6 +167,13 @@ fun KonceptNavigation(navController: NavHostController, modifier: Modifier) {
         ) { backStackEntry ->
             ImageDetail(backStackEntry.arguments?.getString("id") ?: "")
         }
+        composable(
+            route = "web",
+            enterMotionSpec = { materialElevationScaleIn() },
+            exitMotionSpec = { materialElevationScaleOut() },
+        ) {
+            WebScreen()
+        }
     }
 }
 
@@ -175,5 +183,6 @@ enum class BottomBarItem(
     @StringRes val labelRes: Int,
 ) {
     BreedList("breedList", Icons.Default.List, de.nilsdruyen.koncept.dogs.ui.R.string.dog_list_all),
-    BreedFavorites("favorites", Icons.Default.Favorite, de.nilsdruyen.koncept.dogs.ui.R.string.dog_list_favorites)
+    BreedFavorites("favorites", Icons.Default.Favorite, de.nilsdruyen.koncept.dogs.ui.R.string.dog_list_favorites),
+    Web("web", Icons.Default.Favorite, de.nilsdruyen.koncept.dogs.ui.R.string.dog_list_favorites),
 }
