@@ -29,7 +29,7 @@ fun KonceptNavigation(
     ) {
         dogGraph(onNavigate)
         composable(
-            route = "web",
+            route = WebDestination.route,
             enterMotionSpec = { materialElevationScaleIn() },
             exitMotionSpec = { materialElevationScaleOut() },
         ) {

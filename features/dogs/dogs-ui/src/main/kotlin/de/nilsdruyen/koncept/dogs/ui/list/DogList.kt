@@ -2,6 +2,7 @@ package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,6 +33,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
@@ -83,7 +85,7 @@ fun DogListScreen(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DogListScreen(
     state: DogListState,
@@ -134,13 +136,7 @@ fun DogListScreen(
         },
         floatingActionButtonPosition = FabPosition.End,
         content = { padding ->
-            Crossfade(
-                targetState = state,
-                modifier = Modifier
-                    .padding(padding)
-                    .consumedWindowInsets(padding)
-                    .fillMaxSize()
-            ) { state ->
+            Crossfade(targetState = state, modifier = Modifier.background(Color.Yellow)) { state ->
                 when {
                     state.isLoading -> Loading()
                     state.list.isEmpty() -> DogListEmpty()
@@ -148,6 +144,7 @@ fun DogListScreen(
                         scrollState = scrollState,
                         list = state.list,
                         showDog = { showDog(it) },
+                        modifier = Modifier.padding(padding)
                     )
                 }
             }
@@ -170,13 +167,12 @@ fun DogListEmpty(modifier: Modifier = Modifier) {
 @Composable
 fun DogList(scrollState: LazyListState, list: List<Dog>, showDog: (Dog) -> Unit, modifier: Modifier = Modifier) {
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 4.dp),
         state = scrollState,
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .testTag("dogList")
     ) {
-        items(list) { dog ->
+        items(list, key = { it.id }) { dog ->
             DogItem(dog) {
                 showDog(it)
             }

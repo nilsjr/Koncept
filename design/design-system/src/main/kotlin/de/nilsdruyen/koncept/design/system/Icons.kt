@@ -6,18 +6,21 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Web
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Web
 import androidx.compose.ui.graphics.vector.ImageVector
 
 object KonceptIcons {
 
-    val BreedList = Icons.Default.List
+    val BreedList = Icons.Outlined.List
     val BreedListFilled = Icons.Filled.List
-    val Favorites = Icons.Default.Favorite
+    val Favorites = Icons.Outlined.Favorite
     val FavoritesFilled = Icons.Filled.Favorite
-    val Web = Icons.Default.Web
+    val Web = Icons.Outlined.Web
     val WebFilled = Icons.Filled.Web
 
-    val FilterList = Icons.Filled.FilterList
+    val FilterList = Icons.Default.FilterList
 }
 
 sealed class Icon {

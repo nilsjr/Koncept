@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.ui
+package de.nilsdruyen.koncept.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

@@ -2,7 +2,6 @@ package de.nilsdruyen.koncept.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -24,10 +23,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -40,6 +37,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.nilsdruyen.koncept.base.navigation.TopLevelDestination
 import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.navigation.KonceptNavigation
+import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 
 @OptIn(
@@ -119,8 +117,6 @@ fun KonceptBottomBar(
         ) {
             destinations.forEach { item ->
                 val isSelected = currentDestination?.hierarchy?.any { it.route == item.route } == true
-                val alpha by animateFloatAsState(targetValue = if (isSelected) 1f else .7f)
-
                 BottomNavigationItem(
                     selected = isSelected,
                     onClick = { onNavigateToDestination(item) },
@@ -142,8 +138,9 @@ fun KonceptBottomBar(
                             )
                         }
                     },
+                    alwaysShowLabel = false,
                     label = {
-                        Text(text = stringResource(id = item.iconTextId), modifier = Modifier.alpha(alpha))
+                        Text(text = stringResource(id = item.iconTextId))
                     },
                     modifier = Modifier.testTag(item.route)
                 )
