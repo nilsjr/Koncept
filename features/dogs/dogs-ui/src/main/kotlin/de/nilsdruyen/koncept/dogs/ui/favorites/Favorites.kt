@@ -1,7 +1,6 @@
 package de.nilsdruyen.koncept.dogs.ui.favorites
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,6 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -41,11 +39,9 @@ fun Favorites(viewModel: FavoritesViewModel) {
 fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
     val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
-    val scrollBehavior = remember {
-        TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
-    }
-    val color =
-        TopAppBarDefaults.smallTopAppBarColors().containerColor(appBarScrollState.contentOffset)
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
+//    val color =
+//        TopAppBarDefaults.smallTopAppBarColors().containerColor(appBarScrollState.contentOffset)
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -53,7 +49,7 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
             SmallTopAppBar(
                 title = { Text("Favoriten") },
                 modifier = Modifier
-                    .background(color.value)
+//                    .background(color.value)
                     .statusBarsPadding()
                     .testTag("fav_appbar"),
                 scrollBehavior = scrollBehavior

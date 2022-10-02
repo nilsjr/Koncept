@@ -35,6 +35,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.Dimension.Companion.value
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -49,9 +50,7 @@ fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
     val composeScope = rememberCoroutineScope()
     val state = viewModel.state.collectAsState()
     val scrollState = rememberTopAppBarState()
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior(scrollState) }
-    val color =
-        TopAppBarDefaults.centerAlignedTopAppBarColors().containerColor(scrollState.contentOffset)
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(scrollState)
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(BreedDetailIntent.LoadImages)
@@ -80,10 +79,7 @@ fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
                             contentDescription = "Set Favorite"
                         )
                     }
-                },
-                modifier = Modifier
-                    .background(color.value)
-                    .statusBarsPadding()
+                }
             )
         },
         content = {

@@ -2,12 +2,10 @@ package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -32,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,11 +86,7 @@ fun DogListScreen(
 ) {
     val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
-    val scrollBehavior = remember {
-        TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
-    }
-    val color =
-        TopAppBarDefaults.smallTopAppBarColors().containerColor(appBarScrollState.contentOffset)
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
 
     Scaffold(
         modifier = modifier
@@ -101,10 +94,7 @@ fun DogListScreen(
         topBar = {
             SmallTopAppBar(
                 title = { Text("Doggo List") },
-                modifier = Modifier
-                    .background(color.value)
-                    .statusBarsPadding()
-                    .testTag("appbar"),
+                modifier = Modifier.testTag("appbar"),
                 actions = {
                     IconButton(onClick = {}) {
                         BadgedBox(badge = { Badge { Text("1") } }) {
