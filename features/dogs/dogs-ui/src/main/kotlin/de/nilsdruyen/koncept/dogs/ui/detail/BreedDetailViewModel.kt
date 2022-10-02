@@ -7,6 +7,7 @@ import de.nilsdruyen.koncept.dogs.domain.usecase.GetBreedImageListUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.UpdateFavoriteBreedUseCase
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
+import de.nilsdruyen.koncept.dogs.ui.navigation.BreedDetailsDestination
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class BreedDetailViewModel @Inject constructor(
     private val isFavoriteFlowUseCase: IsFavoriteFlowUseCase,
 ) : BaseViewModel<BreedDetailState, BreedDetailIntent, Nothing>(BreedDetailState(isLoading = true)) {
 
-    private val breedId = propertyProvider.get("breedId") { -1 }
+    private val breedId = propertyProvider.get(BreedDetailsDestination.breedIdArg) { -1 }
 
     override fun initalize() {
         listenFavorite()

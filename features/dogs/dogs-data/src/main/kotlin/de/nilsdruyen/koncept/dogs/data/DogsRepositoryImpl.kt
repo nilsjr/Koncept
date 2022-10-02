@@ -1,7 +1,6 @@
 package de.nilsdruyen.koncept.dogs.data
 
 import arrow.core.Either
-import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.domain.BreedImages
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.dogs.entity.Dog
@@ -25,8 +24,13 @@ class DogsRepositoryImpl @Inject constructor(
     override fun getList(): Flow<Either<DataSourceError, List<Dog>>> {
         return flow {
             emit(dogsCacheDataSource.getDogList().first())
-            dogsRemoteDataSource.getList().also {
-                dogsCacheDataSource.setDogList(it.bind())
+            dogsRemoteDataSource.getList().also { result ->
+                result.fold(
+                    ifLeft = {},
+                    ifRight = {
+                        dogsCacheDataSource.setDogList(it)
+                    }
+                )
             }
             emitAll(dogsCacheDataSource.getDogList())
         }.distinctUntilChanged().flowOn(dispatcher)

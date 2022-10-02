@@ -3,7 +3,7 @@
  * Copyright © 2021 Nils Druyen. All rights reserved.
  */
 
-package de.nilsdruyen.koncept.common.ui
+package de.nilsdruyen.koncept.design.system
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MaterialCard(
     modifier: Modifier = Modifier,
-    shape: Shape = androidx.compose.material.MaterialTheme.shapes.medium,
+    shape: Shape = MaterialTheme.shapes.medium,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
     contentColor: Color = contentColorFor(backgroundColor),
     border: BorderStroke? = null,

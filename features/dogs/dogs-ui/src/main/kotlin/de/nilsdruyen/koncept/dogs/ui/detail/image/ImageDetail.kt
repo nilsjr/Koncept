@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
-import de.nilsdruyen.koncept.common.ui.KonceptTheme
+import de.nilsdruyen.koncept.design.system.KonceptTheme
 
 @Composable
 fun ImageDetail(id: String) {

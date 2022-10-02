@@ -29,8 +29,12 @@ fun LoadingDoggo(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Loading(modifier: Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
+fun Loading(modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .then(modifier)
+    ) {
         LoadingDoggo(
             Modifier
                 .fillMaxSize(fraction = 0.5f)

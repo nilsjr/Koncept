@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.common.ui
+package de.nilsdruyen.koncept.design.system
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

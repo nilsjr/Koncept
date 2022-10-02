@@ -1,188 +1,153 @@
 package de.nilsdruyen.koncept.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumedWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
-import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
-import de.nilsdruyen.koncept.dogs.ui.favorites.Favorites
-import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
-import soup.compose.material.motion.materialElevationScaleIn
-import soup.compose.material.motion.materialElevationScaleOut
-import soup.compose.material.motion.materialFadeThroughIn
-import soup.compose.material.motion.materialFadeThroughOut
-import soup.compose.material.motion.materialSharedAxisXIn
-import soup.compose.material.motion.materialSharedAxisXOut
-import soup.compose.material.motion.navigation.MaterialMotionNavHost
-import soup.compose.material.motion.navigation.composable
+import de.nilsdruyen.koncept.base.navigation.TopLevelDestination
+import de.nilsdruyen.koncept.design.system.Icon
+import de.nilsdruyen.koncept.navigation.KonceptNavigation
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 
-val showBottomBarFor = listOf(
-    "breedList",
-    "favorites",
-    "web",
+@OptIn(
+    ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
+    ExperimentalComposeUiApi::class
 )
-
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun KonceptApp() {
     val navController = rememberMaterialMotionNavController()
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = !isSystemInDarkTheme()
+    val state = rememberKonceptAppState(navController)
 
     SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons
-        )
-    }
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-    val showBottomBar = derivedStateOf {
-        val dest = currentDestination ?: NavDestination("breedList")
-        dest.route in showBottomBarFor
+        systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = useDarkIcons)
     }
 
     Scaffold(
-        bottomBar = {
-            AnimatedVisibility(
-                visible = showBottomBar.value,
-                enter = expandVertically(),
-                exit = shrinkVertically(),
-            ) {
-                BottomNavigation(
-                    modifier = Modifier.navigationBarsPadding(),
-                    backgroundColor = MaterialTheme.colorScheme.surface,
-                ) {
-                    BottomBarItem.values().forEach { item ->
-                        val isSelected = currentDestination?.hierarchy?.any { it.route == item.route } == true
-                        val alpha by animateFloatAsState(targetValue = if (isSelected) 1f else .7f)
-                        BottomNavigationItem(
-                            selected = isSelected,
-                            onClick = {
-                                navController.navigate(item.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            icon = {
-                                Icon(
-                                    imageVector = item.icon,
-                                    contentDescription = null,
-                                    tint = contentColorFor(backgroundColor = MaterialTheme.colorScheme.background).copy(
-                                        alpha = alpha
-                                    ),
-                                )
-                            },
-                            label = {
-                                Text(text = stringResource(id = item.labelRes), modifier = Modifier.alpha(alpha))
-                            },
-                            modifier = Modifier.testTag(item.route)
-                        )
-                    }
-                }
-            }
+        modifier = Modifier.semantics {
+            testTagsAsResourceId = true
         },
-        modifier = Modifier,
-    ) {
-        KonceptNavigation(navController = navController, Modifier.padding(it))
-    }
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun KonceptNavigation(navController: NavHostController, modifier: Modifier) {
-    MaterialMotionNavHost(navController = navController, startDestination = "breedList", modifier = modifier) {
-        composable(
-            route = "breedList",
-            enterMotionSpec = { materialFadeThroughIn() },
-            exitMotionSpec = { materialFadeThroughOut() },
-        ) {
-            DogListScreen(viewModel = hiltViewModel(), navController = navController)
-        }
-        composable(
-            route = "favorites",
-            enterMotionSpec = { materialFadeThroughIn() },
-            exitMotionSpec = { materialFadeThroughOut() },
-        ) {
-            Favorites(viewModel = hiltViewModel())
-        }
-        composable(
-            route = "breedDetail/{breedId}",
-            enterMotionSpec = { materialSharedAxisXIn() },
-            exitMotionSpec = { materialSharedAxisXOut() },
-            arguments = listOf(
-                navArgument("breedId") {
-                    type = NavType.IntType
-                }
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        bottomBar = {
+            KonceptBottomBar(
+                destinations = state.topLevelDestinations,
+                onNavigateToDestination = state::navigate,
+                currentDestination = state.currentDestination,
             )
+        },
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .windowInsetsPadding(
+                    WindowInsets.safeDrawing.only(
+                        WindowInsetsSides.Horizontal
+                    )
+                )
         ) {
-            BreedDetail(hiltViewModel(), navController)
-        }
-        composable(
-            route = "image/{id}",
-            enterMotionSpec = { materialElevationScaleIn() },
-            exitMotionSpec = { materialElevationScaleOut() },
-            arguments = listOf(navArgument("id") { type = NavType.StringType }),
-        ) { backStackEntry ->
-            ImageDetail(backStackEntry.arguments?.getString("id") ?: "")
-        }
-        composable(
-            route = "web",
-            enterMotionSpec = { materialElevationScaleIn() },
-            exitMotionSpec = { materialElevationScaleOut() },
-        ) {
-            WebScreen()
+            KonceptNavigation(
+                navController = navController,
+                modifier = Modifier
+                    .padding(padding)
+                    .consumedWindowInsets(padding),
+                onBackClick = state::onBackClick,
+                onNavigate = {
+                    state.navigate(it.first, it.second)
+                },
+            )
         }
     }
 }
 
-enum class BottomBarItem(
-    val route: String,
-    val icon: ImageVector,
-    @StringRes val labelRes: Int,
+@Composable
+fun KonceptBottomBar(
+    destinations: List<TopLevelDestination>,
+    onNavigateToDestination: (TopLevelDestination) -> Unit,
+    currentDestination: NavDestination?,
 ) {
-    BreedList("breedList", Icons.Default.List, de.nilsdruyen.koncept.dogs.ui.R.string.dog_list_all),
-    BreedFavorites("favorites", Icons.Default.Favorite, de.nilsdruyen.koncept.dogs.ui.R.string.dog_list_favorites),
-    Web("web", Icons.Default.Favorite, de.nilsdruyen.koncept.dogs.ui.R.string.dog_list_favorites),
+//    val navBackStackEntry by navController.currentBackStackEntryAsState()
+//    val showBottomBar = remember(navBackStackEntry) {
+//        derivedStateOf {
+//            val currentDestination = navBackStackEntry?.destination
+//            val dest = currentDestination ?: NavDestination("breedList")
+//            dest.route in showBottomBarFor
+//        }
+//    }
+
+    AnimatedVisibility(
+        visible = true,
+        enter = expandVertically(),
+        exit = shrinkVertically(),
+    ) {
+        BottomNavigation(
+            modifier = Modifier,
+            backgroundColor = MaterialTheme.colorScheme.surface,
+        ) {
+            destinations.forEach { item ->
+                val isSelected = currentDestination?.hierarchy?.any { it.route == item.route } == true
+                val alpha by animateFloatAsState(targetValue = if (isSelected) 1f else .7f)
+
+                BottomNavigationItem(
+                    selected = isSelected,
+                    onClick = { onNavigateToDestination(item) },
+                    icon = {
+                        val icon = if (isSelected) {
+                            item.selectedIcon
+                        } else {
+                            item.unselectedIcon
+                        }
+                        when (icon) {
+                            is Icon.ImageVectorIcon -> androidx.compose.material3.Icon(
+                                imageVector = icon.imageVector,
+                                contentDescription = null
+                            )
+
+                            is Icon.DrawableResourceIcon -> androidx.compose.material3.Icon(
+                                painter = painterResource(id = icon.id),
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    label = {
+                        Text(text = stringResource(id = item.iconTextId), modifier = Modifier.alpha(alpha))
+                    },
+                    modifier = Modifier.testTag(item.route)
+                )
+            }
+        }
+    }
 }

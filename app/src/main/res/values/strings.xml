@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Koncept</string>
+
+    <string name="breed_list_title">Breeds</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="web_title">Web</string>
 </resources>

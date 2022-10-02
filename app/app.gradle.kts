@@ -112,6 +112,8 @@ dependencies {
     implementation(projects.commonDomain)
     implementation(projects.commonRemote)
     implementation(projects.commonUi)
+    implementation(projects.baseNavigation)
+    implementation(projects.designSystem)
 
     implementation(projects.dogsData)
     implementation(projects.dogsDomain)

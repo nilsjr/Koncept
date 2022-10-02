@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.common.ui
+package de.nilsdruyen.koncept.design.system
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

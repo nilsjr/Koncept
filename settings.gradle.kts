@@ -41,6 +41,12 @@ include(":common-remote")
 include(":common-ui")
 include(":common-test")
 
+// base modules
+include(":base-navigation")
+
+// design
+include(":design-system")
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 val skipConfiguration = listOf("app", "buildSrc")
@@ -48,9 +54,18 @@ rootProject.children.forEach {
     it.buildFileName = "${it.name}.gradle.kts"
     if (skipConfiguration.contains(it.name)) return@forEach
     val feature = it.name.split("-").first()
-    if (it.name.contains("common")) {
-        it.projectDir = File(rootDir, "common/${it.name}")
-    } else {
-        it.projectDir = File(rootDir, "features/$feature/${it.name}")
+    when {
+        it.name.startsWith("common") -> {
+            it.projectDir = File(rootDir, "common/${it.name}")
+        }
+        it.name.startsWith("base") -> {
+            it.projectDir = File(rootDir, "base/${it.name}")
+        }
+        it.name.startsWith("design") -> {
+            it.projectDir = File(rootDir, "design/${it.name}")
+        }
+        else -> {
+            it.projectDir = File(rootDir, "features/$feature/${it.name}")
+        }
     }
 }

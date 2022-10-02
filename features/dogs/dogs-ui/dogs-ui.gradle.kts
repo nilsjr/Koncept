@@ -5,23 +5,22 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id("shot")
 }
-
 android {
     defaultConfig {
         testApplicationId = "de.nilsdruyen.koncept.dogs.test"
         testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
     }
 }
-
 shot {
     applicationId = "de.nilsdruyen.koncept.dogs.test"
 }
-
 dependencies {
     implementation(libs.bundles.common)
 
     implementation(projects.commonDomain)
     implementation(projects.commonUi)
+    implementation(projects.baseNavigation)
+    implementation(projects.designSystem)
 
     implementation(projects.dogsDomain)
     implementation(projects.dogsEntity)
@@ -29,18 +28,13 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.androidx.compose.viewmodel)
-    implementation(libs.androidx.compose.activity)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material.icons)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.navigation)
-    implementation(libs.androidx.compose.constraint)
-    implementation(libs.coilCompose)
+    implementation(libs.androidx.lifecycle.compose)
 
-    implementation(libs.androidx.compose.uiToolingPreview)
-    debugImplementation(libs.androidx.compose.uiTooling)
+    implementation(libs.bundles.compose)
+    implementation(libs.androidx.compose.viewmodel)
+    implementation(libs.androidx.compose.constraint)
+
+    implementation(libs.coilCompose)
 
     implementation(platform(libs.arrow.bom))
     implementation(libs.arrow.core)

@@ -1,7 +1,6 @@
 package de.nilsdruyen.koncept.dogs.ui.detail
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -27,7 +25,6 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,18 +32,22 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.Dimension.Companion.value
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
+import de.nilsdruyen.koncept.base.navigation.OnNavigate
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
+import de.nilsdruyen.koncept.dogs.ui.navigation.ImageDetailDestination
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
+fun BreedDetail(
+    onNavigate: OnNavigate,
+    viewModel: BreedDetailViewModel = hiltViewModel(),
+) {
     val composeScope = rememberCoroutineScope()
     val state = viewModel.state.collectAsState()
     val scrollState = rememberTopAppBarState()
@@ -87,7 +88,7 @@ fun BreedDetail(viewModel: BreedDetailViewModel, navController: NavController) {
                 BreedDetailContainer(
                     uiState = state.value,
                     onImageClick = { url ->
-                        navController.navigate("image/$url")
+                        onNavigate(ImageDetailDestination.buildRoute(url))
                     },
                     modifier = Modifier
                         .padding(it)
@@ -110,6 +111,7 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
                 )
             }
         }
+
         uiState.images.isEmpty() -> {
             Box(modifier = modifier) {
                 Text(
@@ -120,6 +122,7 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
                 )
             }
         }
+
         else -> BreedImageList(list = uiState.images, onImageClick, modifier)
     }
 }
