@@ -255,7 +255,7 @@ android-test = ["turbine", "kotlinx.coroutines.test"]
 common = ["javaxInject", "kotlinx.coroutines"]
 compose = ["androidx-compose-runtime", "androidx-compose-material", "androidx-compose-material3", "androidx-compose-animation"]
 mockito = ["mockito.core", "mockito.kotlin"]
-test = ["turbine", "kotlinx.coroutines.test"]
+test = ["turbine", "kotlinx.coroutines.test", "assertJ"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }

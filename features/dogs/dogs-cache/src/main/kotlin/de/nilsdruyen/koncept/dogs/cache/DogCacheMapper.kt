@@ -7,13 +7,27 @@ import de.nilsdruyen.koncept.dogs.entity.Dog
 fun DogCacheEntity.toModel() = Dog(
     id = id,
     name = name,
-    isFavorite = isFavorite
+    isFavorite = isFavorite,
+    temperament = temperament,
+    lifeSpan = lifeSpan,
+    weight = weight,
+    height = height,
+    bredFor = bredFor,
+    origin = origin,
+    group = group
 )
 
 fun Dog.toEntity() = DogCacheEntity(
     id = id,
     name = name,
-    isFavorite = isFavorite
+    isFavorite = isFavorite,
+    temperament = temperament,
+    lifeSpan = lifeSpan,
+    weight = weight,
+    height = height,
+    bredFor = bredFor,
+    origin = origin,
+    group = group
 )
 
 fun Dog.toMinimalEntity() = MinimalDogCacheEntity(

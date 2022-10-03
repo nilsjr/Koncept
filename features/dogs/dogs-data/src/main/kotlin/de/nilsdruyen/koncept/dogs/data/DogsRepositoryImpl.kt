@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -23,10 +24,13 @@ class DogsRepositoryImpl @Inject constructor(
 
     override fun getList(): Flow<Either<DataSourceError, List<Dog>>> {
         return flow {
-            emit(dogsCacheDataSource.getDogList().first())
+            val cache = dogsCacheDataSource.getDogList().firstOrNull()
+            if (cache != null) emit(cache)
             dogsRemoteDataSource.getList().also { result ->
                 result.fold(
-                    ifLeft = {},
+                    ifLeft = {
+
+                    },
                     ifRight = {
                         dogsCacheDataSource.setDogList(it)
                     }

@@ -30,7 +30,8 @@ class DogsCacheDataSourceImpl @Inject constructor(
     }
 
     override suspend fun setDogList(list: List<Dog>) = withContext(ioDispatcher) {
-        dogDao.upsertList(list.map(Dog::toMinimalEntity))
+//        dogDao.upsertMinimalList(list.map(Dog::toMinimalEntity))
+        dogDao.upsertList(list.map(Dog::toEntity))
     }
 
     override suspend fun setFavorite(breedId: Int) {

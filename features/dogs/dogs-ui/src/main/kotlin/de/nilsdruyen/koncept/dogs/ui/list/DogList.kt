@@ -2,11 +2,8 @@ package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.consumedWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,10 +27,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,9 +43,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.nilsdruyen.koncept.base.navigation.OnNavigate
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
 import de.nilsdruyen.koncept.dogs.ui.navigation.BreedDetailsDestination
+import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListSortDialog
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -57,6 +56,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DogListScreen(
     onNavigate: OnNavigate,
+    sortTypeState: State<Int>,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.state.collectAsStateWithLifecycle()
@@ -68,6 +68,10 @@ fun DogListScreen(
                 is DogListEvent.NavigateToDetail -> onNavigate(BreedDetailsDestination.buildRoute(it.breedId))
             }
         }.collect()
+    }
+
+    LaunchedEffect(sortTypeState.value) {
+        viewModel.intent.send(DogListIntent.SortTypeChanged(BreedSortType.values()[sortTypeState.value]))
     }
 
     DogListScreen(
@@ -82,6 +86,9 @@ fun DogListScreen(
                 viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
             }
         },
+        showSortDialog = {
+            onNavigate(BreedListSortDialog.createRoute(uiState.value.selectedType))
+        }
     )
 }
 
@@ -92,6 +99,7 @@ fun DogListScreen(
     modifier: Modifier = Modifier,
     startTask: () -> Unit = {},
     showDog: (Dog) -> Unit = {},
+    showSortDialog: () -> Unit = {},
 ) {
     val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
@@ -101,13 +109,12 @@ fun DogListScreen(
         modifier = modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-//        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             TopAppBar(
                 title = { Text("Doggo List") },
                 modifier = Modifier.testTag("appbar"),
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = showSortDialog) {
                         BadgedBox(badge = { Badge { Text("1") } }) {
                             Icon(
                                 imageVector = KonceptIcons.FilterList,
@@ -136,7 +143,7 @@ fun DogListScreen(
         },
         floatingActionButtonPosition = FabPosition.End,
         content = { padding ->
-            Crossfade(targetState = state, modifier = Modifier.background(Color.Yellow)) { state ->
+            Crossfade(targetState = state, Modifier.padding(padding)) { state ->
                 when {
                     state.isLoading -> Loading()
                     state.list.isEmpty() -> DogListEmpty()
@@ -144,7 +151,6 @@ fun DogListScreen(
                         scrollState = scrollState,
                         list = state.list,
                         showDog = { showDog(it) },
-                        modifier = Modifier.padding(padding)
                     )
                 }
             }
@@ -164,6 +170,7 @@ fun DogListEmpty(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DogList(scrollState: LazyListState, list: List<Dog>, showDog: (Dog) -> Unit, modifier: Modifier = Modifier) {
     LazyColumn(
@@ -173,9 +180,11 @@ fun DogList(scrollState: LazyListState, list: List<Dog>, showDog: (Dog) -> Unit,
             .testTag("dogList")
     ) {
         items(list, key = { it.id }) { dog ->
-            DogItem(dog) {
-                showDog(it)
-            }
+            DogItem(
+                dog = dog,
+                modifier = Modifier.animateItemPlacement(),
+                showDog = showDog,
+            )
         }
     }
 }

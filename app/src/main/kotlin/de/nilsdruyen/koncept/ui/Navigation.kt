@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumedWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -33,6 +34,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.nilsdruyen.koncept.base.navigation.TopLevelDestination
 import de.nilsdruyen.koncept.design.system.Icon
@@ -42,51 +46,57 @@ import soup.compose.material.motion.navigation.rememberMaterialMotionNavControll
 
 @OptIn(
     ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalComposeUiApi::class, ExperimentalMaterialNavigationApi::class
 )
 @Composable
 fun KonceptApp() {
-    val navController = rememberMaterialMotionNavController()
-    val systemUiController = rememberSystemUiController()
     val useDarkIcons = !isSystemInDarkTheme()
+    val systemUiController = rememberSystemUiController()
+
+    val bottomSheetNavigator = rememberBottomSheetNavigator()
+    val navController = rememberMaterialMotionNavController(bottomSheetNavigator)
     val state = rememberKonceptAppState(navController)
 
     SideEffect {
         systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = useDarkIcons)
     }
 
-    Scaffold(
-        modifier = Modifier.semantics {
-            testTagsAsResourceId = true
-        },
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        bottomBar = {
-            KonceptBottomBar(
-                destinations = state.topLevelDestinations,
-                onNavigateToDestination = state::navigate,
-                currentDestination = state.currentDestination,
-            )
-        },
-    ) { padding ->
-        Box(
+    ModalBottomSheetLayout(bottomSheetNavigator) {
+        Scaffold(
             modifier = Modifier
-                .fillMaxSize()
-                .windowInsetsPadding(
-                    WindowInsets.safeDrawing.only(
-                        WindowInsetsSides.Horizontal
-                    )
-                )
-        ) {
-            KonceptNavigation(
-                navController = navController,
-                modifier = Modifier
-                    .padding(padding)
-                    .consumedWindowInsets(padding),
-                onBackClick = state::onBackClick,
-                onNavigate = {
-                    state.navigate(it.first, it.second)
+                .navigationBarsPadding()
+                .semantics {
+                    testTagsAsResourceId = true
                 },
-            )
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            bottomBar = {
+                KonceptBottomBar(
+                    destinations = state.topLevelDestinations,
+                    onNavigateToDestination = state::navigate,
+                    currentDestination = state.currentDestination,
+                )
+            },
+        ) { padding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(
+                        WindowInsets.safeDrawing.only(
+                            WindowInsetsSides.Horizontal
+                        )
+                    )
+            ) {
+                KonceptNavigation(
+                    navController = navController,
+                    modifier = Modifier
+                        .padding(padding)
+                        .consumedWindowInsets(padding),
+                    onBackClick = state::onBackClick,
+                    onNavigate = {
+                        state.navigate(it.first, it.second)
+                    },
+                )
+            }
         }
     }
 }

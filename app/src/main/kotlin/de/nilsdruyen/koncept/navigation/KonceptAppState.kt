@@ -17,7 +17,6 @@ import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListDestination
 import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesDestination
-import de.nilsdruyen.koncept.navigation.WebDestination
 
 @Composable
 fun rememberKonceptAppState(

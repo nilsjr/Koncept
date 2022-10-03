@@ -27,7 +27,16 @@ fun KonceptNavigation(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        dogGraph(onNavigate)
+        dogGraph(
+            onNavigate = onNavigate,
+            getPreviousEntry = {
+                navController.previousBackStackEntry ?: error("no prev backstack entry")
+            },
+            setSortResult = {
+                navController.previousBackStackEntry?.savedStateHandle?.set(BreedListDestination.sortTypeResult, it.ordinal)
+                onBackClick()
+            }
+        )
         composable(
             route = WebDestination.route,
             enterMotionSpec = { materialElevationScaleIn() },

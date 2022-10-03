@@ -1,6 +1,7 @@
 package de.nilsdruyen.koncept.di
 
 import android.app.Application
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +16,8 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(application: Application): KonceptDatabase =
-        KonceptDatabase.getInstance(application)
+    fun provideAppDatabase(application: Application, moshi: Moshi): KonceptDatabase =
+        KonceptDatabase.getInstance(application, moshi)
 }
 
 @Module

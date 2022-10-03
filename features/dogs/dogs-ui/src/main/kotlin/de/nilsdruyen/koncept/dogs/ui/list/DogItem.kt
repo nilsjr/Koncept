@@ -26,9 +26,9 @@ import de.nilsdruyen.koncept.design.system.MaterialCard
 import de.nilsdruyen.koncept.dogs.entity.Dog
 
 @Composable
-fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}) {
+fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}, modifier: Modifier = Modifier) {
     MaterialCard(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable { showDog(dog) }
@@ -40,7 +40,7 @@ fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}) {
         ConstraintLayout(
             modifier = Modifier.padding(8.dp)
         ) {
-            val (name, isFavorite) = createRefs()
+            val (name, isFavorite, lifeSpan) = createRefs()
             Text(
                 text = dog.name,
                 style = MaterialTheme.typography.headlineLarge,
@@ -50,16 +50,22 @@ fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}) {
                     .constrainAs(name) {
                         width = Dimension.fillToConstraints
                         linkTo(parent.start, isFavorite.start, bias = 0f)
-                        linkTo(parent.top, parent.bottom)
+                        top.linkTo(parent.top)
                     }
             )
             Icon(
                 imageVector = Icons.Default.Favorite,
                 contentDescription = null,
                 modifier = Modifier.constrainAs(isFavorite) {
-                    linkTo(parent.top, parent.bottom)
+                    top.linkTo(parent.top)
                     end.linkTo(parent.end)
                     visibility = if (dog.isFavorite) Visibility.Visible else Visibility.Gone
+                }
+            )
+            Text(
+                text = "age: ${dog.lifeSpan} years - ${dog.weight.last}/${dog.height.last}",
+                modifier = Modifier.constrainAs(lifeSpan) {
+                    top.linkTo(name.bottom, 8.dp)
                 }
             )
         }
@@ -77,7 +83,18 @@ fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog: Dog) {
 
 class DogItemPreviewProvider : PreviewParameterProvider<Dog> {
     override val values: Sequence<Dog> = sequenceOf(
-        Dog(1, "Lassie", isFavorite = false),
+        Dog(
+            id = 1,
+            name = "Lassie",
+            isFavorite = false,
+            temperament = listOf("aggressive"),
+            lifeSpan = 12..14,
+            weight = 20..21,
+            height = 21..25,
+            bredFor = "Toy",
+            origin = listOf("sport"),
+            group = "smallies"
+        ),
         Dog(2, "Thea", isFavorite = true),
         Dog(2, "Thea dakad lm lakd alkw lak mldaw", isFavorite = true),
     )

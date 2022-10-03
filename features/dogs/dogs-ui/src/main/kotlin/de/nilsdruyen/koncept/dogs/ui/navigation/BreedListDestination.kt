@@ -4,6 +4,8 @@ import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
 
 object BreedListDestination : KonceptNavDestination {
 
+    const val sortTypeResult = "sortType"
+
     override val route = "breed/list"
     override val destination = "breed_list_dest"
 }

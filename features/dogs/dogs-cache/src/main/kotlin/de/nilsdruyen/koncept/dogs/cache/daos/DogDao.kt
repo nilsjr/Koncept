@@ -19,14 +19,17 @@ interface DogDao {
     @Query("SELECT * from dog_table WHERE id=:id")
     fun getDogById(id: Int): Flow<DogCacheEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addList(list: List<DogCacheEntity>): List<Long>
 
     @Insert(entity = DogCacheEntity::class, onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMinimalList(list: List<MinimalDogCacheEntity>): List<Long>
 
+    @Update
+    suspend fun updateList(list: List<DogCacheEntity>)
+
     @Update(entity = DogCacheEntity::class)
-    suspend fun updateList(list: List<MinimalDogCacheEntity>)
+    suspend fun updateMinimalList(list: List<MinimalDogCacheEntity>)
 
     @Query("SELECT * from dog_table WHERE isFavorite = 1")
     fun getAllFavorites(): Flow<List<DogCacheEntity>>
@@ -38,8 +41,19 @@ interface DogDao {
     suspend fun removeFavorite(breedId: Int)
 
     @Transaction
-    suspend fun upsertList(list: List<MinimalDogCacheEntity>) {
+    suspend fun upsertMinimalList(list: List<MinimalDogCacheEntity>) {
         val results = addMinimalList(list)
+        val updateList = results.mapIndexedNotNull { index, result ->
+            if (result == -1L) {
+                list[index]
+            } else null
+        }
+        updateMinimalList(updateList)
+    }
+
+    @Transaction
+    suspend fun upsertList(list: List<DogCacheEntity>) {
+        val results = addList(list)
         val updateList = results.mapIndexedNotNull { index, result ->
             if (result == -1L) {
                 list[index]
