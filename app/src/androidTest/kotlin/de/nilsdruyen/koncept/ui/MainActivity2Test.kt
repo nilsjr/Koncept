@@ -84,7 +84,6 @@ class MainActivity2Test {
             override fun isFavoriteFlow(breedId: Int): Flow<Boolean> {
                 TODO("Not yet implemented")
             }
-
         }
     }
 }

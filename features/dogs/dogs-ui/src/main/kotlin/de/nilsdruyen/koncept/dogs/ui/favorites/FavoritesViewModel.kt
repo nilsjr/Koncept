@@ -19,11 +19,7 @@ class FavoritesViewModel @Inject constructor(
 
     override fun handleIntent(intent: FavoritesIntent) {
         when (intent) {
-            is FavoritesIntent.Remove -> {
-                launchOnUi {
-                    // TODO: implement
-                }
-            }
+            is FavoritesIntent.Remove -> { }
         }
     }
 
@@ -43,7 +39,6 @@ class FavoritesViewModel @Inject constructor(
         Logger.log(dataSourceError.toString())
     }
 }
-
 data class FavoritesState(
     val isLoading: Boolean = false,
     val list: List<Dog> = emptyList(),

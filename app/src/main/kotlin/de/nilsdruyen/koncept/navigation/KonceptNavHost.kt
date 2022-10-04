@@ -29,11 +29,11 @@ fun KonceptNavigation(
     ) {
         dogGraph(
             onNavigate = onNavigate,
-            getPreviousEntry = {
-                navController.previousBackStackEntry ?: error("no prev backstack entry")
-            },
             setSortResult = {
-                navController.previousBackStackEntry?.savedStateHandle?.set(BreedListDestination.sortTypeResult, it.ordinal)
+                navController.previousBackStackEntry?.savedStateHandle?.set(
+                    BreedListDestination.sortTypeResult,
+                    it.ordinal
+                )
                 onBackClick()
             }
         )

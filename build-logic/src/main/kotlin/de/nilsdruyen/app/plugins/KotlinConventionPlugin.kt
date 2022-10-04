@@ -12,7 +12,7 @@ internal class KotlinConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager){
+            with(pluginManager) {
                 apply("kotlin")
                 apply(DetektPlugin::class)
             }

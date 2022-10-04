@@ -2,18 +2,17 @@ package de.nilsdruyen.koncept.dogs.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.collectAsState
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
 import de.nilsdruyen.koncept.base.navigation.OnNavigate
+import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
 import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
 import de.nilsdruyen.koncept.dogs.ui.favorites.Favorites
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
-import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.ui.list.DogListSortDialog
 import soup.compose.material.motion.materialElevationScaleIn
 import soup.compose.material.motion.materialElevationScaleOut
@@ -26,7 +25,6 @@ import soup.compose.material.motion.navigation.composable
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 fun NavGraphBuilder.dogGraph(
     onNavigate: OnNavigate,
-    getPreviousEntry: () -> NavBackStackEntry,
     setSortResult: (BreedSortType) -> Unit,
 ) {
     composable(
@@ -44,7 +42,7 @@ fun NavGraphBuilder.dogGraph(
         enterMotionSpec = { materialFadeThroughIn() },
         exitMotionSpec = { materialFadeThroughOut() },
     ) {
-        Favorites(onNavigate)
+        Favorites()
     }
     composable(
         route = BreedDetailsDestination.route,

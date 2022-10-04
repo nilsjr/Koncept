@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+@Suppress("LongParameterList")
 @Composable
 fun MaterialCard(
     modifier: Modifier = Modifier,

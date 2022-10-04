@@ -5,12 +5,12 @@ import de.nilsdruyen.koncept.dogs.domain.BreedImages
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
+import de.nilsdruyen.koncept.domain.Logger.Companion.e
 import de.nilsdruyen.koncept.domain.annotations.MainDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -29,7 +29,7 @@ class DogsRepositoryImpl @Inject constructor(
             dogsRemoteDataSource.getList().also { result ->
                 result.fold(
                     ifLeft = {
-
+                        e("$it - ${it.message}")
                     },
                     ifRight = {
                         dogsCacheDataSource.setDogList(it)

@@ -23,7 +23,7 @@ interface Logger {
         }
     }
 }
-
+@Suppress("EmptyFunctionBlock")
 object StubLogger : Logger {
 
     override fun log(text: String) {}

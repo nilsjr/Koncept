@@ -1,51 +1,6 @@
-package de.nilsdruyen.koncept.dogs.ui.list
+@file:Suppress("CommentSpacing")
 
-import app.cash.turbine.test
-import arrow.core.Either
-import arrow.core.right
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.HiltTestApplication
-import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
-import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
-import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
-import de.nilsdruyen.koncept.dogs.cache.entities.MinimalDogCacheEntity
-import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
-import de.nilsdruyen.koncept.dogs.remote.DogsApi
-import de.nilsdruyen.koncept.dogs.remote.DogsRemoteStaticModule
-import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
-import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
-import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.domain.DispatchersModule
-import de.nilsdruyen.koncept.domain.annotations.DefaultDispatcher
-import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
-import de.nilsdruyen.koncept.domain.annotations.MainDispatcher
-import de.nilsdruyen.koncept.test.utils.parseList
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestCoroutineScheduler
-import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnit
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
-import javax.inject.Inject
-import javax.inject.Singleton
+package de.nilsdruyen.koncept.dogs.ui.list
 
 //@UninstallModules(DogsRemoteStaticModule::class)
 //@HiltAndroidTest

@@ -175,7 +175,7 @@ fun DogListEmpty(modifier: Modifier = Modifier) {
 fun DogList(scrollState: LazyListState, list: List<Dog>, showDog: (Dog) -> Unit, modifier: Modifier = Modifier) {
     LazyColumn(
         state = scrollState,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .testTag("dogList")
     ) {
@@ -205,7 +205,7 @@ class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
         DogListState(
             List(15) {
                 Dog(it, "Breed $it")
-            }
+            }.toImmutable()
         ),
     )
 }

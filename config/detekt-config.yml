@@ -3,6 +3,15 @@ build:
   weights:
     formatting: 6 # maxIssues + 1 so formatting issues will always fail
 
+console-reports:
+  exclude:
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+    #  - 'FindingsReport'
+    - 'FileBasedFindingsReport'
+    - 'LiteFindingsReport'
+
 formatting:
   ImportOrdering:
     active: true

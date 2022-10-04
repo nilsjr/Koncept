@@ -31,9 +31,7 @@ fun DogFavoriteItem(dog: Dog) {
                 color = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(4.dp)
             )
-            .clickable {
-
-            }
+            .clickable { }
             .padding(8.dp)
     ) {
         Text(text = dog.name)

@@ -77,7 +77,7 @@ class MainActivityTest {
     @Test
     fun testWeb() {
         with(composeRule) {
-            val MACCHIATO = "Macchiato"
+            val macchiato = "Macchiato"
 
             onNodeWithTag("web").performClick()
 
@@ -87,7 +87,7 @@ class MainActivityTest {
                 // Clear previous input
                 .perform(clearElement())
                 // Enter text into the input element
-                .perform(DriverAtoms.webKeys(MACCHIATO))
+                .perform(DriverAtoms.webKeys(macchiato))
                 // Find the submit button
                 .withElement(findElement(Locator.ID, "submitBtn"))
                 // Simulate a click via javascript
@@ -95,7 +95,7 @@ class MainActivityTest {
                 // Find the response element by ID
                 .withElement(findElement(Locator.ID, "response"))
                 // Verify that the response page contains the entered text
-                .check(webMatches(getText(), containsString(MACCHIATO)))
+                .check(webMatches(getText(), containsString(macchiato)))
         }
     }
 }

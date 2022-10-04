@@ -10,6 +10,7 @@ import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
 import de.nilsdruyen.koncept.dogs.cache.entities.MinimalDogCacheEntity
 import kotlinx.coroutines.flow.Flow
 
+@Suppress("TooManyFunctions")
 @Dao
 interface DogDao {
 

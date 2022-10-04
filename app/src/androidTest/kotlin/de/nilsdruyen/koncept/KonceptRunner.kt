@@ -19,8 +19,8 @@ class KonceptRunner : AndroidJUnitRunner() {
 
     override fun onCreate(arguments: Bundle?) {
         super.onCreate(arguments)
-        isRobolectricRun =
-            false//If the runner is used, this means that Espresso run has been triggered, otherwise is Robolectric JVM run
+        // If the runner is used, this means that Espresso run has been triggered, otherwise is Robolectric JVM run
+        isRobolectricRun = false
     }
 
     override fun newApplication(

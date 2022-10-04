@@ -7,6 +7,7 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 
 internal fun Project.configureDetekt(vararg paths: String) {
@@ -22,6 +23,34 @@ internal fun Project.configureDetekt(vararg paths: String) {
     }
     tasks.withType<Detekt>().configureEach {
         this.jvmTarget = "11"
+        reports {
+            xml {
+                required.set(true)
+                outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
+            }
+            html.required.set(false)
+            txt.required.set(true)
+        }
+    }
+    dependencies {
+        "detektPlugins"("io.gitlab.arturbosch.detekt:detekt-formatting:$version")
+    }
+}
+
+internal fun Project.configureDetektRoot() {
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+    val version = libs.findVersion("detekt").get().toString()
+    tasks.register<Detekt>("detektAll") {
+        description = "Runs a custom detekt build."
+        parallel = true
+        buildUponDefaultConfig = true
+        jvmTarget = "11"
+        setSource(files(projectDir))
+        config.setFrom(files("$rootDir/config/detekt-config.yml"))
+        include("**/*.kt")
+        include("**/*.kts")
+        exclude("**/resources/**")
+        exclude("**/build/**")
         reports {
             xml {
                 required.set(true)

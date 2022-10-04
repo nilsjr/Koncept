@@ -7,7 +7,7 @@ dependencies {
 
     implementation(platform(libs.junit5.bom))
     implementation(libs.junit5.api)
-    
+
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutines.test)
 

@@ -17,6 +17,7 @@ import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListDestination
 import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesDestination
+import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable
 fun rememberKonceptAppState(
@@ -94,7 +95,7 @@ class KonceptAppState(
 private fun NavigationTrackingSideEffect(navController: NavHostController) {
     DisposableEffect(navController) {
         val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-            // TODO: implement logging, tracking whatever
+            log("${destination.route} - ${destination.displayName}")
         }
 
         navController.addOnDestinationChangedListener(listener)
