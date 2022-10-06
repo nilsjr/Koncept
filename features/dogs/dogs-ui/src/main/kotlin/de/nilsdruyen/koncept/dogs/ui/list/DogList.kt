@@ -41,6 +41,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.nilsdruyen.koncept.base.navigation.OnNavigate
+import de.nilsdruyen.koncept.common.ui.ImmutableList
+import de.nilsdruyen.koncept.common.ui.isEmpty
+import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
@@ -172,14 +175,19 @@ fun DogListEmpty(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DogList(scrollState: LazyListState, list: List<Dog>, showDog: (Dog) -> Unit, modifier: Modifier = Modifier) {
+fun DogList(
+    scrollState: LazyListState,
+    list: ImmutableList<Dog>,
+    showDog: (Dog) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         state = scrollState,
         modifier = modifier
             .fillMaxSize()
             .testTag("dogList")
     ) {
-        items(list, key = { it.id }) { dog ->
+        items(list.items, key = { it.id }) { dog ->
             DogItem(
                 dog = dog,
                 modifier = Modifier.animateItemPlacement(),

@@ -2,7 +2,10 @@ package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
+import de.nilsdruyen.koncept.common.ui.emptyImmutableList
+import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
@@ -55,7 +58,7 @@ class DogListViewModel @Inject constructor(
                 result.fold(this@DogListViewModel::handleError) {
                     log("set list ${it.size}")
                     updateState {
-                        copy(isLoading = false, list = it)
+                        copy(isLoading = false, list = it.toImmutable())
                     }
                 }
             }
@@ -85,7 +88,7 @@ class DogListViewModel @Inject constructor(
 }
 
 data class DogListState(
-    val list: List<Dog> = emptyList(),
+    val list: ImmutableList<Dog> = emptyImmutableList(),
     val isLoading: Boolean = false,
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
 )

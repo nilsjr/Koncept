@@ -37,6 +37,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import de.nilsdruyen.koncept.base.navigation.OnNavigate
+import de.nilsdruyen.koncept.common.ui.ImmutableList
+import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
 import de.nilsdruyen.koncept.dogs.ui.navigation.ImageDetailDestination
@@ -128,9 +130,9 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
 }
 
 @Composable
-fun BreedImageList(list: List<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier) {
+fun BreedImageList(list: ImmutableList<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
-        items(list) {
+        items(list.items) {
             BreedImage(it.url) {
                 onImageClick(it.id)
             }

@@ -1,7 +1,10 @@
 package de.nilsdruyen.koncept.dogs.ui.favorites
 
+import androidx.compose.runtime.Stable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
+import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetFavoritesUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
@@ -28,7 +31,7 @@ class FavoritesViewModel @Inject constructor(
             getFavoritesUseCase.execute().collect {
                 it.fold(::handleError) {
                     updateState {
-                        copy(isLoading = false, list = it)
+                        copy(isLoading = false, list = ImmutableList(it))
                     }
                 }
             }
@@ -41,7 +44,7 @@ class FavoritesViewModel @Inject constructor(
 }
 data class FavoritesState(
     val isLoading: Boolean = false,
-    val list: List<Dog> = emptyList(),
+    val list: ImmutableList<Dog> = emptyImmutableList(),
 )
 
 sealed interface FavoritesIntent {

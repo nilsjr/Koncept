@@ -25,13 +25,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import de.nilsdruyen.koncept.base.navigation.OnNavigate
+import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
 
 @Composable
 fun Favorites(
-    onNavigate: OnNavigate,
     viewModel: FavoritesViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -62,7 +61,7 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
         Crossfade(targetState = state, modifier = Modifier.padding(it)) { state ->
             when {
                 state.isLoading -> Loading()
-                state.list.isEmpty() -> {
+                state.list.items.isEmpty() -> {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -80,9 +79,6 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
                     FavoriteList(
                         scrollState = scrollState,
                         list = state.list,
-                        showDog = {
-                            // TODO: implement
-                        },
                     )
                 }
             }
@@ -93,8 +89,7 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
 @Composable
 fun FavoriteList(
     scrollState: LazyListState,
-    list: List<Dog>,
-    showDog: (Dog) -> Unit,
+    list: ImmutableList<Dog>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -102,7 +97,7 @@ fun FavoriteList(
         state = scrollState,
         modifier = modifier.fillMaxSize()
     ) {
-        items(list) { dog ->
+        items(list.items) { dog ->
             DogFavoriteItem(dog)
         }
     }
