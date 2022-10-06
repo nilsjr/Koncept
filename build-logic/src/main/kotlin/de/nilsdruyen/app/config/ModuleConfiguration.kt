@@ -13,6 +13,8 @@ internal fun Project.configure() {
         targetCompatibility = JavaVersion.VERSION_11.toString()
     }
     val isEntityModule = name.endsWith("-entity")
+    val isUiModule = name.endsWith("-ui")
+    val composeCompilerReportEnabled = findProperty("composeCompilerReports") == "true"
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_11.toString()
@@ -22,7 +24,18 @@ internal fun Project.configure() {
                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-opt-in=kotlinx.coroutines.FlowPreview",
                 "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { !isEntityModule },
-            )
+            ).toMutableList().apply {
+                if (isUiModule && composeCompilerReportEnabled) {
+                    addAll(
+                        listOf(
+                            "-P",
+                            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${buildDir.absolutePath}/compose_compiler",
+                            "-P",
+                            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${buildDir.absolutePath}/compose_compiler",
+                        )
+                    )
+                }
+            }
         }
     }
     tasks.withType<Test> {

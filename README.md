@@ -94,4 +94,11 @@ gradle debugExecuteScreenshotTests
 # ToDos
 - kover usage
 - moshix usage
-- 
+
+# Compose compiler reports & metrics
+see [Compose Compiler Metrics](https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md)
+
+1. run gradle task
+`gradle dogs-ui:compileReleaseKotlin -PcomposeCompilerReports=true -Pandroidx.enableComposeCompilerReports=true -Pandroidx.enableComposeCompilerMetrics=true --rerun-tasks`
+2. go to build/compose_compiler directory
+3. check x_release-classes.txt & other files for more detailed info
