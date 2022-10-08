@@ -2,7 +2,6 @@ package de.nilsdruyen.koncept.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -31,7 +30,6 @@ fun rememberKonceptAppState(
     }
 }
 
-@Stable
 class KonceptAppState(
     val navController: NavHostController,
 ) {
