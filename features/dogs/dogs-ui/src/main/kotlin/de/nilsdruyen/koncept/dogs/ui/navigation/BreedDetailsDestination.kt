@@ -8,11 +8,15 @@ object BreedDetailsDestination : KonceptNavDestination {
 
     const val breedIdArg = "breedId"
 
-    override val route: String = "breed/details/{$breedIdArg}"
+    override val route: String = "details/{$breedIdArg}"
     override val destination: String = "breed_details_dest"
 
+    fun navigate(root: String, id: Int): NavigationDestination {
+        return Pair(BreedDetailsDestination, "$root/details/$id")
+    }
+
     fun buildRoute(id: Int): NavigationDestination {
-        return Pair(BreedDetailsDestination, "breed/details/$id")
+        return Pair(BreedDetailsDestination, "details/$id")
     }
 
     fun fromSavedState(savedStateHandle: SavedStateHandle): Int {

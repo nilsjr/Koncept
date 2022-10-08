@@ -16,6 +16,8 @@ import de.nilsdruyen.koncept.base.navigation.TopLevelDestination
 import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListDestination
+import de.nilsdruyen.koncept.dogs.ui.navigation.BreedTopLevel
+import de.nilsdruyen.koncept.dogs.ui.navigation.FavoriteTopLevel
 import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesDestination
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
@@ -43,22 +45,25 @@ class KonceptAppState(
      */
     val topLevelDestinations: List<TopLevelDestination> = listOf(
         TopLevelDestination(
-            route = BreedListDestination.route,
+            route = BreedListDestination.createRoute(BreedTopLevel.root),
             destination = BreedListDestination.destination,
+            root = BreedTopLevel.root,
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedList),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedListFilled),
             iconTextId = R.string.breed_list_title
         ),
         TopLevelDestination(
-            route = FavoritesDestination.route,
+            route = FavoritesDestination.createRoute(FavoriteTopLevel.root),
             destination = FavoritesDestination.destination,
+            root = FavoriteTopLevel.root,
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Favorites),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.FavoritesFilled),
             iconTextId = R.string.favorites_title
         ),
         TopLevelDestination(
-            route = WebDestination.route,
+            route = WebDestination.createRoute(WebTopLevel.root),
             destination = WebDestination.destination,
+            root = WebTopLevel.root,
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Web),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.WebFilled),
             iconTextId = R.string.web_title

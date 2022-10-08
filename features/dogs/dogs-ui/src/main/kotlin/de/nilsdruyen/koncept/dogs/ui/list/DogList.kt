@@ -58,6 +58,7 @@ import kotlinx.coroutines.launch
 fun DogListScreen(
     onNavigate: OnNavigate,
     sortTypeState: State<Int>,
+    showDetail: (Int) -> Unit,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.state.collectAsStateWithLifecycle()
@@ -66,7 +67,8 @@ fun DogListScreen(
     LaunchedEffect(Unit) {
         viewModel.events.onEach {
             when (it) {
-                is DogListEvent.NavigateToDetail -> onNavigate(BreedDetailsDestination.buildRoute(it.breedId))
+                is DogListEvent.NavigateToDetail -> showDetail(it.breedId)
+//                is DogListEvent.NavigateToDetail -> onNavigate(BreedDetailsDestination.buildRoute(it.breedId))
             }
         }.collect()
     }

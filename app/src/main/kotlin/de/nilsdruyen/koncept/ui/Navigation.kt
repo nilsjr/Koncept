@@ -32,6 +32,7 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.nilsdruyen.koncept.base.navigation.TopLevelDestination
 import de.nilsdruyen.koncept.design.system.Icon
+import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import de.nilsdruyen.koncept.navigation.KonceptNavigation
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
@@ -96,7 +97,6 @@ fun KonceptBottomBar(
 //            dest.route in showBottomBarFor
 //        }
 //    }
-
     AnimatedVisibility(
         visible = true,
         enter = expandVertically(),
@@ -106,8 +106,10 @@ fun KonceptBottomBar(
             backgroundColor = MaterialTheme.colorScheme.surface,
             modifier = Modifier.navigationBarsPadding()
         ) {
+            val routes = currentDestination?.hierarchy?.mapNotNull { it.route }?.toList() ?: emptyList()
+            log("nav stack $routes")
             destinations.forEach { item ->
-                val isSelected = currentDestination?.hierarchy?.any { it.route == item.route } == true
+                val isSelected = routes.any { it == item.root }
                 BottomNavigationItem(
                     selected = isSelected,
                     onClick = { onNavigateToDestination(item) },
