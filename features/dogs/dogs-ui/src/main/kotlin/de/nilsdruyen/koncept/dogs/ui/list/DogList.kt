@@ -12,6 +12,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,6 +53,7 @@ import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
 import de.nilsdruyen.koncept.dogs.ui.navigation.BreedDetailsDestination
 import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListSortDialog
+import de.nilsdruyen.koncept.domain.sendIn
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -68,7 +73,6 @@ fun DogListScreen(
         viewModel.events.onEach {
             when (it) {
                 is DogListEvent.NavigateToDetail -> showDetail(it.breedId)
-//                is DogListEvent.NavigateToDetail -> onNavigate(BreedDetailsDestination.buildRoute(it.breedId))
             }
         }.collect()
     }
@@ -86,6 +90,9 @@ fun DogListScreen(
         },
         showSortDialog = {
             onNavigate(BreedListSortDialog.createRoute(uiState.value.selectedType))
+        },
+        reloadList = {
+            viewModel.intent.sendIn(coroutineScope, DogListIntent.Reload)
         }
     )
 }
@@ -96,10 +103,12 @@ fun DogListScreen(
     state: DogListState,
     showDog: (Dog) -> Unit = {},
     showSortDialog: () -> Unit = {},
+    reloadList: () -> Unit = {},
 ) {
     val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
+    val pullRefreshState = rememberPullRefreshState(refreshing = state.isLoading, onRefresh = reloadList)
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -139,10 +148,12 @@ fun DogListScreen(
         content = { padding ->
             Crossfade(targetState = state, Modifier.padding(padding.dropBottomPadding())) { state ->
                 when {
-                    state.isLoading -> Loading()
+                    state.isLoading && state.list.isEmpty() -> Loading()
                     state.list.isEmpty() -> DogListEmpty()
                     else -> DogList(
                         scrollState = scrollState,
+                        pullRefreshState = pullRefreshState,
+                        isRefreshing = state.isLoading,
                         list = state.list,
                         showDog = { showDog(it) },
                     )
@@ -168,23 +179,31 @@ fun DogListEmpty(modifier: Modifier = Modifier) {
 @Composable
 fun DogList(
     scrollState: LazyListState,
+    pullRefreshState: PullRefreshState,
+    isRefreshing: Boolean,
     list: ImmutableList<Dog>,
     showDog: (Dog) -> Unit,
-    modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        state = scrollState,
-        modifier = modifier
-            .fillMaxSize()
-            .testTag("dogList")
-    ) {
-        items(list.items, key = { it.id }) { dog ->
-            DogItem(
-                dog = dog,
-                modifier = Modifier.animateItemPlacement(),
-                showDog = showDog,
-            )
+    Box(Modifier.pullRefresh(pullRefreshState)) {
+        LazyColumn(
+            state = scrollState,
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag("dogList")
+        ) {
+            items(list.items, key = { it.id }) { dog ->
+                DogItem(
+                    dog = dog,
+                    modifier = Modifier.animateItemPlacement(),
+                    showDog = showDog,
+                )
+            }
         }
+        PullRefreshIndicator(
+            refreshing = isRefreshing,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 

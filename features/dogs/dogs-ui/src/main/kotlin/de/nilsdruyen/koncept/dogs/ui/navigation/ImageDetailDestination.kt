@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavBackStackEntry
 import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
 import de.nilsdruyen.koncept.base.navigation.NavigationDestination
-import de.nilsdruyen.koncept.dogs.ui.navigation.FavoriteTopLevel.root
 
 object ImageDetailDestination : KonceptNavDestination {
 
@@ -13,7 +12,7 @@ object ImageDetailDestination : KonceptNavDestination {
     override val route: String = "image/{$urlArg}"
     override val destination: String = "image_dest"
 
-    fun buildRoute(url: String): NavigationDestination {
+    fun navigate(root: String, url: String): NavigationDestination {
         return Pair(ImageDetailDestination, "$root/image/$url")
     }
 

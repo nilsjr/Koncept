@@ -11,9 +11,11 @@ import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +36,14 @@ class DogListViewModel @Inject constructor(
                 sortTypeState.value = intent.type
                 updateState {
                     copy(selectedType = intent.type)
+                }
+            }
+            DogListIntent.Reload -> {
+                viewModelScope.launch {
+                    // TODO: implement reload data
+                    updateState { copy(isLoading = true) }
+                    delay(2000L)
+                    updateState { copy(isLoading = false) }
                 }
             }
         }
@@ -94,6 +104,8 @@ sealed interface DogListIntent {
     data class ShowDetailAndSaveListPosition(val id: Int) : DogListIntent
 
     data class SortTypeChanged(val type: BreedSortType) : DogListIntent
+
+    object Reload : DogListIntent
 }
 
 sealed interface DogListEvent {

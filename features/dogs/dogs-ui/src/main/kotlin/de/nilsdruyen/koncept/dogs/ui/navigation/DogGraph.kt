@@ -83,7 +83,9 @@ fun NavGraphBuilder.addBreedDetail(
             }
         )
     ) {
-        BreedDetail(onNavigate)
+        BreedDetail(showImageDetail = {
+            onNavigate(ImageDetailDestination.navigate(root, it))
+        })
     }
 }
 

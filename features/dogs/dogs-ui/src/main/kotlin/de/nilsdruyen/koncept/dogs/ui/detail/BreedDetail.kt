@@ -31,6 +31,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
@@ -43,24 +45,23 @@ import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
 import de.nilsdruyen.koncept.dogs.ui.navigation.ImageDetailDestination
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
 @Composable
 fun BreedDetail(
-    onNavigate: OnNavigate,
+    showImageDetail: (url: String) -> Unit,
     viewModel: BreedDetailViewModel = hiltViewModel(),
 ) {
     val composeScope = rememberCoroutineScope()
-    val state = viewModel.state.collectAsState()
     val scrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(scrollState)
+    val state = viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(BreedDetailIntent.LoadImages)
     }
 
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Breed Detail") },
@@ -86,9 +87,7 @@ fun BreedDetail(
         content = {
             BreedDetailContainer(
                 uiState = state.value,
-                onImageClick = { url ->
-                    onNavigate(ImageDetailDestination.buildRoute(url))
-                },
+                onImageClick = showImageDetail,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it.dropBottomPadding())
