@@ -2,7 +2,7 @@ package de.nilsdruyen.koncept.dogs.ui.favorites
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.common.ui.ImmutableList
-import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
+import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetFavoritesUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
@@ -13,13 +13,13 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val getFavoritesUseCase: GetFavoritesUseCase,
-) : BaseViewModel<FavoritesState, FavoritesIntent, Nothing>(FavoritesState(true)) {
+) : MviViewModel<FavoritesState, FavoritesIntent>(FavoritesState(true)) {
 
-    override fun initalize() {
+    override fun initialize() {
         loadFavorites()
     }
 
-    override fun handleIntent(intent: FavoritesIntent) {
+    override suspend fun onIntent(intent: FavoritesIntent) {
         when (intent) {
             is FavoritesIntent.Remove -> {}
         }

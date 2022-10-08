@@ -4,7 +4,6 @@ import androidx.navigation.NavBackStackEntry
 import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
 import de.nilsdruyen.koncept.base.navigation.NavigationDestination
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
-import de.nilsdruyen.koncept.dogs.ui.navigation.FavoriteTopLevel.root
 
 object BreedListSortDialog : KonceptNavDestination {
 
@@ -13,7 +12,7 @@ object BreedListSortDialog : KonceptNavDestination {
     override val route = "sort/{$selectedTypeArg}"
     override val destination = "breed_list_sort_dest"
 
-    fun createRoute(type: BreedSortType): NavigationDestination {
+    fun navigate(root: String, type: BreedSortType): NavigationDestination {
         return Pair(BreedListSortDialog, "$root/sort/${type.ordinal}")
     }
 

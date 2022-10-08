@@ -3,7 +3,8 @@
 package de.nilsdruyen.koncept.dogs.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -23,11 +24,6 @@ import soup.compose.material.motion.materialFadeThroughOut
 import soup.compose.material.motion.materialSharedAxisXIn
 import soup.compose.material.motion.materialSharedAxisXOut
 import soup.compose.material.motion.navigation.composable
-
-object BreedTopLevel {
-
-    const val root = "breed"
-}
 
 fun NavGraphBuilder.dogTopLevelGraph(
     onNavigate: OnNavigate,
@@ -51,6 +47,7 @@ fun NavGraphBuilder.dogDetailGraph(root: String, onNavigate: OnNavigate) {
     addImageDetail(root)
 }
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 fun NavGraphBuilder.addBreedList(
     root: String,
     onNavigate: OnNavigate,
@@ -62,10 +59,14 @@ fun NavGraphBuilder.addBreedList(
     ) {
         val sortTypeState =
             it.savedStateHandle.getStateFlow(BreedListDestination.sortTypeResult, 0)
-                .collectAsState()
-        DogListScreen(onNavigate = onNavigate, sortTypeState = sortTypeState, showDetail = { id ->
-            onNavigate(BreedDetailsDestination.navigate(root, id))
-        })
+                .collectAsStateWithLifecycle()
+        DogListScreen(
+            sortTypeState = sortTypeState,
+            showDetail = { id ->
+                onNavigate(BreedDetailsDestination.navigate(root, id))
+            },
+            showSortDialog = { onNavigate(BreedListSortDialog.navigate(root, it)) }
+        )
     }
 }
 

@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.nilsdruyen.koncept.base.navigation.OnNavigate
 import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.dropBottomPadding
 import de.nilsdruyen.koncept.common.ui.isEmpty
@@ -51,30 +50,26 @@ import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedDetailsDestination
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListSortDialog
 import de.nilsdruyen.koncept.domain.sendIn
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DogListScreen(
-    onNavigate: OnNavigate,
     sortTypeState: State<Int>,
     showDetail: (Int) -> Unit,
+    showSortDialog: (BreedSortType) -> Unit,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.state.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(Unit) {
-        viewModel.events.onEach {
-            when (it) {
-                is DogListEvent.NavigateToDetail -> showDetail(it.breedId)
-            }
-        }.collect()
+    LaunchedEffect(uiState.value.navigateTo) {
+        val id = uiState.value.navigateTo
+        if (id != null) {
+            viewModel.sendIntent(DogListIntent.NavigationConsumed)
+            showDetail(id)
+        }
     }
 
     LaunchedEffect(sortTypeState.value) {
@@ -88,9 +83,7 @@ fun DogListScreen(
                 viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
             }
         },
-        showSortDialog = {
-            onNavigate(BreedListSortDialog.createRoute(uiState.value.selectedType))
-        },
+        showSortDialog = { showSortDialog(uiState.value.selectedType) },
         reloadList = {
             viewModel.intent.sendIn(coroutineScope, DogListIntent.Reload)
         }

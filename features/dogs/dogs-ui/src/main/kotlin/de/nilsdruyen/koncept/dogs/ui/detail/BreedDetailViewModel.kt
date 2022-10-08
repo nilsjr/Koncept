@@ -2,7 +2,7 @@ package de.nilsdruyen.koncept.dogs.ui.detail
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.common.ui.ImmutableList
-import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
+import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.common.ui.providers.PropertyProvider
 import de.nilsdruyen.koncept.common.ui.toImmutable
@@ -21,20 +21,17 @@ class BreedDetailViewModel @Inject constructor(
     private val getBreedImageListUseCase: GetBreedImageListUseCase,
     private val updateFavoriteBreedUseCase: UpdateFavoriteBreedUseCase,
     private val isFavoriteFlowUseCase: IsFavoriteFlowUseCase,
-) : BaseViewModel<BreedDetailState, BreedDetailIntent, Nothing>(BreedDetailState(isLoading = true)) {
+) : MviViewModel<BreedDetailState, BreedDetailIntent>(BreedDetailState(isLoading = true)) {
 
     private val breedId = propertyProvider.get(BreedDetailsDestination.breedIdArg) { -1 }
 
-    override fun initalize() {
+    override fun initialize() {
         listenFavorite()
     }
 
-    override fun handleIntent(intent: BreedDetailIntent) {
+    override suspend fun onIntent(intent: BreedDetailIntent) {
         when (intent) {
-            BreedDetailIntent.LoadImages -> launchOnUi {
-                loadImages()
-            }
-
+            BreedDetailIntent.LoadImages -> loadImages()
             BreedDetailIntent.ToggleFavorite -> toggleFavorite()
         }
     }

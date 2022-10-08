@@ -3,6 +3,7 @@ package de.nilsdruyen.koncept.common.ui.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.nilsdruyen.koncept.domain.sendIn
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -53,4 +54,10 @@ abstract class MviViewModel<State, Intent>(initialState: State) : ViewModel() {
     abstract fun initialize()
 
     abstract suspend fun onIntent(intent: Intent)
+
+    protected fun launchOnUi(block: suspend CoroutineScope.() -> Unit) {
+        viewModelScope.launch {
+            block()
+        }
+    }
 }

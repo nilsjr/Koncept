@@ -3,7 +3,7 @@ package de.nilsdruyen.koncept.dogs.ui.list
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.common.ui.ImmutableList
-import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
+import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
@@ -21,15 +21,15 @@ import javax.inject.Inject
 @HiltViewModel
 class DogListViewModel @Inject constructor(
     private val getDogListUseCase: GetDogListUseCase,
-) : BaseViewModel<DogListState, DogListIntent, DogListEvent>(DogListState(isLoading = true)) {
+) : MviViewModel<DogListState, DogListIntent>(DogListState(isLoading = true)) {
 
     private val sortTypeState = MutableStateFlow(BreedSortType.Name)
 
-    override fun initalize() {
+    override fun initialize() {
         loadList()
     }
 
-    override fun handleIntent(intent: DogListIntent) {
+    override suspend fun onIntent(intent: DogListIntent) {
         when (intent) {
             is DogListIntent.ShowDetailAndSaveListPosition -> navigateToDetail(intent.id)
             is DogListIntent.SortTypeChanged -> {
@@ -38,13 +38,18 @@ class DogListViewModel @Inject constructor(
                     copy(selectedType = intent.type)
                 }
             }
+
             DogListIntent.Reload -> {
                 viewModelScope.launch {
-                    // TODO: implement reload data
+                    // implement reload data
                     updateState { copy(isLoading = true) }
                     delay(2000L)
                     updateState { copy(isLoading = false) }
                 }
+            }
+
+            DogListIntent.NavigationConsumed -> updateState {
+                copy(navigateTo = null)
             }
         }
     }
@@ -86,7 +91,9 @@ class DogListViewModel @Inject constructor(
 //    }
 
     private fun navigateToDetail(id: Int) {
-        emitEvent(DogListEvent.NavigateToDetail(id))
+        updateState {
+            copy(navigateTo = id)
+        }
     }
 
     private fun handleError(error: DataSourceError) {
@@ -98,6 +105,7 @@ data class DogListState(
     val list: ImmutableList<Dog> = emptyImmutableList(),
     val isLoading: Boolean = false,
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
+    val navigateTo: Int? = null,
 )
 
 sealed interface DogListIntent {
@@ -106,8 +114,6 @@ sealed interface DogListIntent {
     data class SortTypeChanged(val type: BreedSortType) : DogListIntent
 
     object Reload : DogListIntent
-}
 
-sealed interface DogListEvent {
-    data class NavigateToDetail(val breedId: Int) : DogListEvent
+    object NavigationConsumed : DogListIntent
 }
