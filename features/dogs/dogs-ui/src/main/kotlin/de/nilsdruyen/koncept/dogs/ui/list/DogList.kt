@@ -11,13 +11,10 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -42,6 +39,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.nilsdruyen.koncept.base.navigation.OnNavigate
 import de.nilsdruyen.koncept.common.ui.ImmutableList
+import de.nilsdruyen.koncept.common.ui.dropBottomPadding
 import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptIcons
@@ -79,11 +77,6 @@ fun DogListScreen(
 
     DogListScreen(
         state = uiState.value,
-        startTask = {
-            coroutineScope.launch {
-                viewModel.intent.send(DogListIntent.StartLongTask)
-            }
-        },
         showDog = { dog ->
             coroutineScope.launch {
                 viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
@@ -99,8 +92,6 @@ fun DogListScreen(
 @Composable
 fun DogListScreen(
     state: DogListState,
-    modifier: Modifier = Modifier,
-    startTask: () -> Unit = {},
     showDog: (Dog) -> Unit = {},
     showSortDialog: () -> Unit = {},
 ) {
@@ -109,9 +100,7 @@ fun DogListScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
 
     Scaffold(
-        modifier = modifier
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 title = { Text("Doggo List") },
@@ -135,18 +124,18 @@ fun DogListScreen(
                 scrollBehavior = scrollBehavior
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    startTask()
-                }
-            ) {
-                Icon(Icons.Filled.Add, contentDescription = "Localized description")
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
+//        floatingActionButton = {
+//            FloatingActionButton(
+//                onClick = {
+//                    startTask()
+//                }
+//            ) {
+//                Icon(Icons.Filled.Add, contentDescription = "Localized description")
+//            }
+//        },
+//        floatingActionButtonPosition = FabPosition.End,
         content = { padding ->
-            Crossfade(targetState = state, Modifier.padding(padding)) { state ->
+            Crossfade(targetState = state, Modifier.padding(padding.dropBottomPadding())) { state ->
                 when {
                     state.isLoading -> Loading()
                     state.list.isEmpty() -> DogListEmpty()

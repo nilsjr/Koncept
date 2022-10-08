@@ -5,17 +5,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.consumedWindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,7 +37,7 @@ import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 
 @OptIn(
-    ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
+    ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class,
     ExperimentalComposeUiApi::class, ExperimentalMaterialNavigationApi::class
 )
 @Composable
@@ -61,13 +53,14 @@ fun KonceptApp() {
         systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = useDarkIcons)
     }
 
-    ModalBottomSheetLayout(bottomSheetNavigator) {
+    ModalBottomSheetLayout(
+        bottomSheetNavigator = bottomSheetNavigator,
+        modifier = Modifier.semantics {
+            testTagsAsResourceId = true
+        }
+    ) {
         Scaffold(
-            modifier = Modifier
-                .navigationBarsPadding()
-                .semantics {
-                    testTagsAsResourceId = true
-                },
+            modifier = Modifier,
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
             bottomBar = {
                 KonceptBottomBar(
@@ -77,26 +70,14 @@ fun KonceptApp() {
                 )
             },
         ) { padding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .windowInsetsPadding(
-                        WindowInsets.safeDrawing.only(
-                            WindowInsetsSides.Horizontal
-                        )
-                    )
-            ) {
-                KonceptNavigation(
-                    navController = navController,
-                    modifier = Modifier
-                        .padding(padding)
-                        .consumedWindowInsets(padding),
-                    onBackClick = state::onBackClick,
-                    onNavigate = {
-                        state.navigate(it.first, it.second)
-                    },
-                )
-            }
+            KonceptNavigation(
+                navController = navController,
+                modifier = Modifier.padding(padding),
+                onBackClick = state::onBackClick,
+                onNavigate = {
+                    state.navigate(it.first, it.second)
+                },
+            )
         }
     }
 }
@@ -122,8 +103,8 @@ fun KonceptBottomBar(
         exit = shrinkVertically(),
     ) {
         BottomNavigation(
-            modifier = Modifier,
             backgroundColor = MaterialTheme.colorScheme.surface,
+            modifier = Modifier.navigationBarsPadding()
         ) {
             destinations.forEach { item ->
                 val isSelected = currentDestination?.hierarchy?.any { it.route == item.route } == true

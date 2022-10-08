@@ -1,12 +1,10 @@
 package de.nilsdruyen.koncept.dogs.ui.detail
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -38,6 +36,7 @@ import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import de.nilsdruyen.koncept.base.navigation.OnNavigate
 import de.nilsdruyen.koncept.common.ui.ImmutableList
+import de.nilsdruyen.koncept.common.ui.dropBottomPadding
 import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
@@ -61,8 +60,7 @@ fun BreedDetail(
 
     Scaffold(
         modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .navigationBarsPadding(),
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Breed Detail") },
@@ -86,17 +84,15 @@ fun BreedDetail(
             )
         },
         content = {
-            Crossfade(targetState = state) { state ->
-                BreedDetailContainer(
-                    uiState = state.value,
-                    onImageClick = { url ->
-                        onNavigate(ImageDetailDestination.buildRoute(url))
-                    },
-                    modifier = Modifier
-                        .padding(it)
-                        .fillMaxSize()
-                )
-            }
+            BreedDetailContainer(
+                uiState = state.value,
+                onImageClick = { url ->
+                    onNavigate(ImageDetailDestination.buildRoute(url))
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it.dropBottomPadding())
+            )
         }
     )
 }

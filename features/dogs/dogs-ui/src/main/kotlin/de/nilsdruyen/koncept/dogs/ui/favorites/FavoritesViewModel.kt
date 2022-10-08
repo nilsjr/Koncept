@@ -1,6 +1,5 @@
 package de.nilsdruyen.koncept.dogs.ui.favorites
 
-import androidx.compose.runtime.Stable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.base.BaseViewModel
@@ -22,7 +21,7 @@ class FavoritesViewModel @Inject constructor(
 
     override fun handleIntent(intent: FavoritesIntent) {
         when (intent) {
-            is FavoritesIntent.Remove -> { }
+            is FavoritesIntent.Remove -> {}
         }
     }
 
@@ -42,6 +41,7 @@ class FavoritesViewModel @Inject constructor(
         Logger.log(dataSourceError.toString())
     }
 }
+
 data class FavoritesState(
     val isLoading: Boolean = false,
     val list: ImmutableList<Dog> = emptyImmutableList(),
