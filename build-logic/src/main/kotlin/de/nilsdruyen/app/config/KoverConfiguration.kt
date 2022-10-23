@@ -11,7 +11,6 @@ import org.gradle.kotlin.dsl.configure
 internal fun Project.applyKover() {
     pluginManager.apply(KoverPlugin::class)
     configure<KoverProjectConfig> {
-        engine.set(DefaultJacocoEngine)
         isDisabled.set(false)
         filters {
             classes {
@@ -19,7 +18,7 @@ internal fun Project.applyKover() {
                 excludes += listOf("*Impl_Factory.*", "*_*Factory", "*_Factory*")
             }
             annotations {
-                excludes += listOf("*Generated", "*Composable")
+                excludes += listOf("*Generated", "androidx.compose.runtime.Composable")
             }
         }
         instrumentation {
@@ -36,6 +35,14 @@ internal fun Project.applyKoverRoot() {
             projects {
                 excludes.add("common-test")
                 excludes.add("dogs-test")
+            }
+        }
+        verify {
+            rule {
+                bound {
+                    minValue = 35
+                    maxValue = 75
+                }
             }
         }
     }
