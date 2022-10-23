@@ -2,6 +2,7 @@ package de.nilsdruyen.koncept.dogs.ui.list
 
 import app.cash.turbine.test
 import arrow.core.Either
+import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.test.CoroutineTest

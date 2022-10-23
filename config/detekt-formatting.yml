@@ -1,0 +1,30 @@
+build:
+  maxIssues: 0
+
+console-reports:
+  exclude:
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+    #  - 'FindingsReport'
+    - 'FileBasedFindingsReport'
+    - 'LiteFindingsReport'
+
+formatting:
+  AnnotationOnSeparateLine:
+    active: false
+  ArgumentListWrapping:
+    active: false
+  Filename:
+    active: false
+  ImportOrdering:
+    layout: '*'
+  MaximumLineLength:
+    active: false
+  NoEmptyFirstLineInMethodBlock:
+    active: false
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: false
+
+TwitterCompose:
+  active: false
