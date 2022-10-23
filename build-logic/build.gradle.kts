@@ -45,9 +45,5 @@ gradlePlugin {
             id = "de.nilsdruyen.plugin.android.library.compose"
             implementationClass = "de.nilsdruyen.app.plugins.LibraryComposeConventionPlugin"
         }
-        register("de.nilsdruyen.plugin.jacoco") {
-            id = "de.nilsdruyen.plugin.jacoco"
-            implementationClass = "de.nilsdruyen.app.plugins.JacocoConfigPlugin"
-        }
     }
 }
