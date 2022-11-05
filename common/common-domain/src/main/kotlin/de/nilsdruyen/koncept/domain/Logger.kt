@@ -23,6 +23,7 @@ interface Logger {
         }
     }
 }
+
 @Suppress("EmptyFunctionBlock")
 object StubLogger : Logger {
 

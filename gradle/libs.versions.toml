@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.25.1"
+accompanist = "0.27.0"
 adjust = "4.30.1"
 adjustAdobeEx = "1.0.2"
 adobeMarketingAnalytics = "1.2.10"
@@ -18,7 +18,7 @@ androidxConstraintLayout = "2.1.4"
 androidxCore = "1.9.0"
 androidxDataStore = "1.0.0"
 androidxFragmentKtx = "1.5.0"
-androidxLifecycle = "2.6.0-alpha02"
+androidxLifecycle = "2.6.0-alpha03"
 androidxNavigation = "2.5.1"
 androidxPaging = "3.1.1"
 androidxRecyclerview = "1.2.1"
@@ -32,22 +32,23 @@ arrow = "1.1.3"
 assertJ = "3.23.1"
 balloon = "1.4.6"
 composeActivity = "1.6.0"
-composeAnimation = "1.3.0-rc01"
+composeAnimation = "1.3.0"
 composeCompiler = "1.3.2"
 composeConstraintLayout = "1.0.1"
-composeFoundation = "1.3.0-rc01"
-composeMaterial = "1.3.0-rc01"
-composeMaterial3 = "1.0.0-rc01"
+composeFoundation = "1.3.0"
+composeMaterial = "1.3.0"
+composeMaterial3 = "1.0.0"
 composeNavigation = "2.5.2"
 composePaging = "1.0.0-alpha15"
 composeRuntime = "1.3.0-beta02"
-composeUiManifestTest = "1.3.0-rc01"
-composeUiTest = "1.3.0-rc01"
-composeUiTooling = "1.3.0-rc01"
+composeUiManifestTest = "1.3.0"
+composeUiTest = "1.3.0"
+composeUiTooling = "1.3.0"
 composeUiViewBinding = "1.2.0-rc03"
 coroutines = "1.6.4"
 cucumber = "7.6.0"
-detekt = "1.21.0"
+detekt = "1.22.0-RC1" # update once https://github.com/detekt/detekt/issues/5427 is fixed
+detektTwitterComposeRules = "0.0.22"
 emarsys = "3.2.5"
 espresso = "3.4.0"
 firebaseAppDistributionPlugin = "3.0.2"
@@ -58,7 +59,7 @@ flipper = "0.153.0"
 glide = "4.13.2"
 googleServicesBase = "18.1.0"
 googleServicesPlugin = "4.3.13"
-gradleVersionsPlugin = "0.42.0"
+gradleVersionsPlugin = "0.43.0"
 hilt = "2.44"
 hiltCompiler = "1.0.0"
 imageCropper = "4.3.0"
@@ -72,9 +73,7 @@ junit5 = "5.9.1"
 junitPlatform = "1.9.0"
 kotlin = "1.7.20"
 koverPlugin = "0.5.1"
-kspPlugin = "1.7.20-1.0.6"
-ktlint = "0.47.1"
-ktlintPlugin = "11.0.0"
+kspPlugin = "1.7.20-1.0.8"
 landscapist = "1.5.3"
 leakCanary = "2.9.1"
 lottie = "5.2.0"
@@ -176,7 +175,9 @@ balloon = { module = "com.github.skydoves:balloon", version.ref = "balloon" }
 coilCompose = "io.coil-kt:coil-compose:2.2.2"
 cucumber-java = { module = "io.cucumber:cucumber-java", version.ref = "cucumber" }
 cucumber-junitPlatformEngine = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+detekt-twitterComposeRules = { module = "com.twitter.compose.rules:detekt", version.ref = "detektTwitterComposeRules" }
 emarsys-core = { module = "com.emarsys:emarsys-sdk", version.ref = "emarsys" }
 emarsys-firebase = { module = "com.emarsys:emarsys-firebase", version.ref = "emarsys" }
 facebook-flipper = { module = "com.facebook.flipper:flipper", version.ref = "flipper" }
@@ -220,7 +221,6 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 kotlinx-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover", version.ref = "koverPlugin" }
-ktlint-plugin = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlintPlugin" }
 landscapist-glide = { module = "com.github.skydoves:landscapist-glide", version.ref = "landscapist" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
@@ -275,6 +275,5 @@ kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kot
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
 shot = { id = "shot", version.ref = "shotPlugin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqubePlugin" }

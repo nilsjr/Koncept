@@ -75,7 +75,7 @@ fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}, modifier: Modifier = Modifier
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog: Dog) {
+private fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog: Dog) {
     KonceptTheme {
         DogItem(dog)
     }

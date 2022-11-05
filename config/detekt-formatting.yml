@@ -1,0 +1,32 @@
+build:
+  maxIssues: 0
+  excludeCorrectable: true
+
+console-reports:
+  exclude:
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+    #  - 'FindingsReport'
+    - 'FileBasedFindingsReport'
+    - 'LiteFindingsReport'
+
+formatting:
+  ArgumentListWrapping:
+    active: false
+  Filename:
+    active: false
+  MaximumLineLength:
+    active: false
+  ImportOrdering:
+    active: true
+  Indentation:
+    active: false
+  FinalNewline:
+    insertFinalNewLine: false
+  ParameterListWrapping:
+    indentSize: 4
+
+TwitterCompose:
+  active: false
+

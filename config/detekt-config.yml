@@ -12,15 +12,7 @@ console-reports:
     - 'FileBasedFindingsReport'
     - 'LiteFindingsReport'
 
-formatting:
-  ImportOrdering:
-    active: true
-  Indentation:
-    active: false
-  FinalNewline:
-    insertFinalNewLine: false
-  ParameterListWrapping:
-    indentSize: 4
+
 
 performance:
   SpreadOperator:
