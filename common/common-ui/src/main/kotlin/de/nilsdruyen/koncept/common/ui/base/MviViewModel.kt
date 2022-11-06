@@ -46,9 +46,7 @@ abstract class MviViewModel<State, Intent>(initialState: State) : ViewModel() {
     }
 
     protected fun updateState(producer: State.() -> State) {
-        mutableState.getAndUpdate(producer).also {
-//            logVerbose { "State: $it" }
-        }
+        mutableState.getAndUpdate(producer)
     }
 
     abstract fun initialize()
