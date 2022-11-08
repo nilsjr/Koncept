@@ -47,7 +47,9 @@ interface DogDao {
         val updateList = results.mapIndexedNotNull { index, result ->
             if (result == -1L) {
                 list[index]
-            } else null
+            } else {
+                null
+            }
         }
         updateMinimalList(updateList)
     }
@@ -58,7 +60,9 @@ interface DogDao {
         val updateList = results.mapIndexedNotNull { index, result ->
             if (result == -1L) {
                 list[index]
-            } else null
+            } else {
+                null
+            }
         }
         updateList(updateList)
     }
