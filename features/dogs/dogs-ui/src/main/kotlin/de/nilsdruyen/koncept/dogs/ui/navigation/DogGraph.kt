@@ -17,17 +17,18 @@ import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
 import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
 import de.nilsdruyen.koncept.dogs.ui.list.DogListSortDialog
-import soup.compose.material.motion.materialElevationScaleIn
-import soup.compose.material.motion.materialElevationScaleOut
-import soup.compose.material.motion.materialFadeThroughIn
-import soup.compose.material.motion.materialFadeThroughOut
-import soup.compose.material.motion.materialSharedAxisXIn
-import soup.compose.material.motion.materialSharedAxisXOut
+import soup.compose.material.motion.animation.materialElevationScaleIn
+import soup.compose.material.motion.animation.materialElevationScaleOut
+import soup.compose.material.motion.animation.materialFadeThroughIn
+import soup.compose.material.motion.animation.materialFadeThroughOut
+import soup.compose.material.motion.animation.materialSharedAxisXIn
+import soup.compose.material.motion.animation.materialSharedAxisXOut
 import soup.compose.material.motion.navigation.composable
 
 fun NavGraphBuilder.dogTopLevelGraph(
     onNavigate: OnNavigate,
     setSortResult: (BreedSortType) -> Unit,
+    slideDistance: Int,
 ) {
     navigation(
         route = BreedTopLevel.root,
@@ -35,15 +36,15 @@ fun NavGraphBuilder.dogTopLevelGraph(
     ) {
         val root = BreedTopLevel.root
         addBreedList(root, onNavigate)
-        addBreedDetail(root, onNavigate)
+        addBreedDetail(root, onNavigate, slideDistance)
         addImageDetail(root)
         addFavorite(root, onNavigate)
         addBreedSortBottomSheet(root, setSortResult)
     }
 }
 
-fun NavGraphBuilder.dogDetailGraph(root: String, onNavigate: OnNavigate) {
-    addBreedDetail(root, onNavigate)
+fun NavGraphBuilder.dogDetailGraph(root: String, onNavigate: OnNavigate, slideDistance: Int) {
+    addBreedDetail(root, onNavigate, slideDistance)
     addImageDetail(root)
 }
 
@@ -54,8 +55,8 @@ fun NavGraphBuilder.addBreedList(
 ) {
     composable(
         route = BreedListDestination.createRoute(root),
-        enterMotionSpec = { materialFadeThroughIn() },
-        exitMotionSpec = { materialFadeThroughOut() },
+        enterTransition = { materialFadeThroughIn() },
+        exitTransition = { materialFadeThroughOut() },
     ) {
         val sortTypeState =
             it.savedStateHandle.getStateFlow(BreedListDestination.sortTypeResult, 0)
@@ -73,11 +74,12 @@ fun NavGraphBuilder.addBreedList(
 fun NavGraphBuilder.addBreedDetail(
     root: String,
     onNavigate: OnNavigate,
+    slideDistance: Int,
 ) {
     composable(
         route = BreedDetailsDestination.createRoute(root),
-        enterMotionSpec = { materialSharedAxisXIn() },
-        exitMotionSpec = { materialSharedAxisXOut() },
+        enterTransition = { materialSharedAxisXIn(true, slideDistance) },
+        exitTransition = { materialSharedAxisXOut(false, slideDistance) },
         arguments = listOf(
             navArgument(BreedDetailsDestination.breedIdArg) {
                 type = NavType.IntType
@@ -93,8 +95,8 @@ fun NavGraphBuilder.addBreedDetail(
 fun NavGraphBuilder.addImageDetail(root: String) {
     composable(
         route = ImageDetailDestination.createRoute(root),
-        enterMotionSpec = { materialElevationScaleIn() },
-        exitMotionSpec = { materialElevationScaleOut() },
+        enterTransition = { materialElevationScaleIn() },
+        exitTransition = { materialElevationScaleOut() },
         arguments = listOf(
             navArgument(ImageDetailDestination.urlArg) {
                 type = NavType.StringType

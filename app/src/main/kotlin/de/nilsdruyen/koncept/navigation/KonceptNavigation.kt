@@ -14,8 +14,9 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.BreedTopLevel
 import de.nilsdruyen.koncept.dogs.ui.navigation.dogTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.ui.WebScreen
-import soup.compose.material.motion.materialElevationScaleIn
-import soup.compose.material.motion.materialElevationScaleOut
+import soup.compose.material.motion.animation.materialElevationScaleIn
+import soup.compose.material.motion.animation.materialElevationScaleOut
+import soup.compose.material.motion.animation.rememberSlideDistance
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.composable
 
@@ -28,6 +29,7 @@ fun KonceptNavigation(
     modifier: Modifier = Modifier,
     startDestination: String = BreedTopLevel.root,
 ) {
+    val slideDistance = rememberSlideDistance()
     MaterialMotionNavHost(
         navController = navController,
         startDestination = startDestination,
@@ -41,9 +43,10 @@ fun KonceptNavigation(
                     it.ordinal
                 )
                 onBackClick()
-            }
+            },
+            slideDistance
         )
-        favoriteTopLevelGraph(onNavigate = onNavigate)
+        favoriteTopLevelGraph(onNavigate = onNavigate, slideDistance)
         webTopLevelGraph()
     }
 }
@@ -55,8 +58,8 @@ fun NavGraphBuilder.webTopLevelGraph() {
     ) {
         composable(
             route = WebDestination.createRoute(WebTopLevel.root),
-            enterMotionSpec = { materialElevationScaleIn() },
-            exitMotionSpec = { materialElevationScaleOut() },
+            enterTransition = { materialElevationScaleIn() },
+            exitTransition = { materialElevationScaleOut() },
         ) {
             WebScreen()
         }
