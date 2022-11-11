@@ -5,9 +5,17 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -49,6 +57,7 @@ import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.DogGroup
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
 import de.nilsdruyen.koncept.domain.sendIn
 import kotlinx.coroutines.launch
@@ -98,7 +107,7 @@ fun DogListScreen(
     showSortDialog: () -> Unit = {},
     reloadList: () -> Unit = {},
 ) {
-    val scrollState = rememberLazyListState()
+    val scrollState = rememberLazyGridState()
     val appBarScrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
     val pullRefreshState = rememberPullRefreshState(refreshing = state.isLoading, onRefresh = reloadList)
@@ -171,26 +180,44 @@ fun DogListEmpty(modifier: Modifier = Modifier) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DogList(
-    scrollState: LazyListState,
+    scrollState: LazyGridState,
     pullRefreshState: PullRefreshState,
     isRefreshing: Boolean,
-    list: ImmutableList<Dog>,
+    list: ImmutableList<DogGroup>,
     showDog: (Dog) -> Unit,
 ) {
     Box(Modifier.pullRefresh(pullRefreshState)) {
-        LazyColumn(
-            state = scrollState,
-            modifier = Modifier
-                .fillMaxSize()
-                .testTag("dogList")
-        ) {
-            items(list.items, key = { it.id }) { dog ->
-                DogItem(
-                    dog = dog,
-                    modifier = Modifier.animateItemPlacement(),
-                    showDog = showDog,
-                )
+//        LazyColumn(
+//            state = scrollState,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .testTag("dogList")
+//        ) {
+//            items(list.items, key = { it.id }) { dog ->
+//                DogItem(
+//                    dog = dog,
+//                    modifier = Modifier.animateItemPlacement(),
+//                    showDog = showDog,
+//                )
+//            }
+//        }
+        LazyVerticalGrid(columns = GridCells.Fixed(2), state = scrollState) {
+            list.items.forEach {
+                item(span = { GridItemSpan(2) }) {
+                    LazyRow(Modifier.fillMaxWidth()) {
+                        items(it.breed, key = { it.id }) {
+                            DogGridItem(it)
+                        }
+                    }
+                }
             }
+//            items(list.items, key = { it.name }) {
+//                LazyRow(Modifier.fillMaxWidth()) {
+//                    items(it.breed, key = { it.id }) {
+//                        DogGridItem(it)
+//                    }
+//                }
+//            }
         }
         PullRefreshIndicator(
             refreshing = isRefreshing,
@@ -214,8 +241,13 @@ class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
     override val values: Sequence<DogListState> = sequenceOf(
         DogListState(),
         DogListState(
-            List(15) {
-                Dog(it, "Breed $it")
+            List(4) {
+                DogGroup(
+                    name = "A$it",
+                    breed = List(6) {
+                        Dog(it, "Breed $it")
+                    }
+                )
             }.toImmutable()
         ),
     )
