@@ -8,7 +8,7 @@ import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
-import de.nilsdruyen.koncept.dogs.entity.DogGroup
+import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import kotlinx.coroutines.delay
@@ -68,11 +68,12 @@ class DogListViewModel @Inject constructor(
                     }
                 }
             }.map {
-                it.map { list ->
-                    list.groupBy { dog -> dog.name.first() }
-                }.map { dogMap ->
-                    dogMap.map { entry -> DogGroup(entry.key.toString(), entry.value) }
-                }
+                it
+//                it.map { list ->
+//                    list.groupBy { dog -> dog.name.first() }
+//                }.map { dogMap ->
+//                    dogMap.map { entry -> DogGroup(entry.key.toString(), entry.value) }
+//                }
             }.stateIn(viewModelScope).collect { result ->
                 result.fold(this@DogListViewModel::handleError) {
                     log("set list ${it.size}")
@@ -109,7 +110,8 @@ class DogListViewModel @Inject constructor(
 }
 
 data class DogListState(
-    val list: ImmutableList<DogGroup> = emptyImmutableList(),
+    val list: ImmutableList<Dog> = emptyImmutableList(),
+//    val list: ImmutableList<DogGroup> = emptyImmutableList(),
     val isLoading: Boolean = false,
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
     val navigateTo: Int? = null,
