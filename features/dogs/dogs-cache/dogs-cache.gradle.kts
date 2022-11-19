@@ -5,10 +5,15 @@ plugins {
     id(libs.plugins.google.ksp.get().pluginId)
 }
 
+android {
+    namespace = "de.nilsdruyen.koncept.dogs"
+}
+
 dependencies {
     implementation(libs.bundles.common)
 
     implementation(projects.commonDomain)
+    implementation(projects.commonCache)
     implementation(projects.dogsData)
     implementation(projects.dogsEntity)
 
