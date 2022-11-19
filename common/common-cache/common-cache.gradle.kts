@@ -7,6 +7,10 @@ plugins {
 dependencies {
     implementation(projects.commonDomain)
 
+    implementation(libs.kotlinx.coroutines)
+
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
 
