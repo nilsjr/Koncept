@@ -1,5 +1,5 @@
 package de.nilsdruyen.koncept.base.navigation
 
-typealias OnNavigate = (destination: NavigationDestination) -> Unit
+typealias NavigateTo = (KonceptNavDestination) -> Unit
 
-typealias NavigationDestination = Pair<KonceptNavDestination, String>
+typealias NestedGraph = (baseRoute: String) -> Unit

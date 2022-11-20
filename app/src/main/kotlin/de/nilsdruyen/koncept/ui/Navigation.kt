@@ -30,7 +30,8 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.nilsdruyen.koncept.base.navigation.TopLevelDestination
+import de.nilsdruyen.koncept.base.navigation.NavigateTo
+import de.nilsdruyen.koncept.base.navigation.TopLevelRoute
 import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import de.nilsdruyen.koncept.navigation.KonceptNavigation
@@ -75,9 +76,7 @@ fun KonceptApp() {
                 navController = navController,
                 modifier = Modifier.padding(padding),
                 onBackClick = state::onBackClick,
-                onNavigate = {
-                    state.navigate(it.first, it.second)
-                },
+                onNavigate = state::navigate,
             )
         }
     }
@@ -85,8 +84,8 @@ fun KonceptApp() {
 
 @Composable
 fun KonceptBottomBar(
-    destinations: List<TopLevelDestination>,
-    onNavigateToDestination: (TopLevelDestination) -> Unit,
+    destinations: List<TopLevelRoute>,
+    onNavigateToDestination: NavigateTo,
     currentDestination: NavDestination?,
 ) {
 //    val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -109,10 +108,10 @@ fun KonceptBottomBar(
             val routes = currentDestination?.hierarchy?.mapNotNull { it.route }?.toList() ?: emptyList()
             log("nav stack $routes")
             destinations.forEach { item ->
-                val isSelected = routes.any { it == item.root }
+                val isSelected = routes.any { it == item.route }
                 BottomNavigationItem(
                     selected = isSelected,
-                    onClick = { onNavigateToDestination(item) },
+                    onClick = { onNavigateToDestination(item.navigate()) },
                     icon = {
                         val icon = if (isSelected) {
                             item.selectedIcon

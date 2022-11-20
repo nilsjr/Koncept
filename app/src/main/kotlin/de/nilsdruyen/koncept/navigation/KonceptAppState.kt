@@ -11,13 +11,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import de.nilsdruyen.koncept.R
 import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
-import de.nilsdruyen.koncept.base.navigation.TopLevelDestination
+import de.nilsdruyen.koncept.base.navigation.TopLevelRoute
 import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.design.system.KonceptIcons
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListDestination
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedTopLevel
-import de.nilsdruyen.koncept.dogs.ui.navigation.FavoriteTopLevel
-import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesDestination
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.FavoritesRoute
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable
@@ -30,9 +28,7 @@ fun rememberKonceptAppState(
     }
 }
 
-class KonceptAppState(
-    val navController: NavHostController,
-) {
+class KonceptAppState(private val navController: NavHostController) {
 
     val currentDestination: NavDestination?
         @Composable get() = navController
@@ -41,51 +37,48 @@ class KonceptAppState(
     /**
      * Top level destinations to be used in the BottomBar and NavRail
      */
-    val topLevelDestinations: List<TopLevelDestination> = listOf(
-        TopLevelDestination(
-            route = BreedListDestination.createRoute(BreedTopLevel.root),
-            destination = BreedListDestination.destination,
-            root = BreedTopLevel.root,
+    val topLevelDestinations: List<TopLevelRoute> = listOf(
+        TopLevelRoute(
+            route = BreedListRoute.getGraphRoute(),
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedList),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedListFilled),
             iconTextId = R.string.breed_list_title
         ),
-        TopLevelDestination(
-            route = FavoritesDestination.createRoute(FavoriteTopLevel.root),
-            destination = FavoritesDestination.destination,
-            root = FavoriteTopLevel.root,
+        TopLevelRoute(
+            route = FavoritesRoute.getGraphRoute(),
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Favorites),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.FavoritesFilled),
             iconTextId = R.string.favorites_title
         ),
-        TopLevelDestination(
-            route = WebDestination.createRoute(WebTopLevel.root),
-            destination = WebDestination.destination,
-            root = WebTopLevel.root,
+        TopLevelRoute(
+            route = WebRoute.getGraphRoute(),
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Web),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.WebFilled),
             iconTextId = R.string.web_title
         ),
     )
 
-    fun navigate(destination: KonceptNavDestination, route: String? = null) {
-        if (destination is TopLevelDestination) {
-            if (destination.route != navController.currentDestination?.route) {
-                navController.navigate(route ?: destination.route) {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
+    fun navigate(destination: KonceptNavDestination) {
+        when (destination) {
+            is KonceptNavDestination.TopLevelGraphDestination -> {
+                if (destination.route != navController.currentDestination?.route) {
+                    navController.navigate(destination.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
                     }
-                    // Avoid multiple copies of the same destination when
-                    // reselecting the same item
-                    launchSingleTop = true
-                    // Restore state when reselecting a previously selected item
-                    restoreState = true
+                } else {
+                    // same top level destination do nothing
                 }
-            } else {
-                // same top level destination do nothing
             }
-        } else {
-            navController.navigate(route ?: destination.route)
+            is KonceptNavDestination.GraphDestination -> navController.navigate(destination.route)
+            is KonceptNavDestination.NestedGraphDestination -> navController.navigate(destination.route)
+            is KonceptNavDestination.NestedNavDestination -> navController.navigate(destination.route)
         }
     }
 

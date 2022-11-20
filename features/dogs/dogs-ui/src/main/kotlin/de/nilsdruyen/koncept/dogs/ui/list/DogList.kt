@@ -201,13 +201,13 @@ fun DogList(
 //                    }
 //                }
 //            }
-////            items(list.items, key = { it.name }) {
-////                LazyRow(Modifier.fillMaxWidth()) {
-////                    items(it.breed, key = { it.id }) {
-////                        DogGridItem(it)
-////                    }
-////                }
-////            }
+//            items(list.items, key = { it.name }) {
+//                LazyRow(Modifier.fillMaxWidth()) {
+//                    items(it.breed, key = { it.id }) {
+//                        DogGridItem(it)
+//                    }
+//                }
+//            }
 //        }
         PullRefreshIndicator(
             refreshing = isRefreshing,

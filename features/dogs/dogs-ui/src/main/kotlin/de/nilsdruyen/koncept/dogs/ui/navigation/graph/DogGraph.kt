@@ -1,6 +1,9 @@
-@file:OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
+@file:OptIn(
+    ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class,
+    ExperimentalLifecycleComposeApi::class
+)
 
-package de.nilsdruyen.koncept.dogs.ui.navigation
+package de.nilsdruyen.koncept.dogs.ui.navigation.graph
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
@@ -11,12 +14,18 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
-import de.nilsdruyen.koncept.base.navigation.OnNavigate
+import de.nilsdruyen.koncept.base.navigation.NavigateTo
+import de.nilsdruyen.koncept.base.navigation.NestedGraph
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
 import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
 import de.nilsdruyen.koncept.dogs.ui.list.DogListSortDialog
+import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListNavigation
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListSortDialogRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.ImageDetailRoute
 import soup.compose.material.motion.animation.materialElevationScaleIn
 import soup.compose.material.motion.animation.materialElevationScaleOut
 import soup.compose.material.motion.animation.materialFadeThroughIn
@@ -26,97 +35,96 @@ import soup.compose.material.motion.animation.materialSharedAxisXOut
 import soup.compose.material.motion.navigation.composable
 
 fun NavGraphBuilder.dogTopLevelGraph(
-    onNavigate: OnNavigate,
+    onNavigate: NavigateTo,
     setSortResult: (BreedSortType) -> Unit,
     slideDistance: Int,
+    nestedGraphs: NestedGraph = {},
 ) {
     navigation(
-        route = BreedTopLevel.root,
-        startDestination = BreedListDestination.createRoute(BreedTopLevel.root),
+        route = BreedListRoute.getGraphRoute(),
+        startDestination = BreedListRoute.getStartDestination(),
     ) {
-        val root = BreedTopLevel.root
-        addBreedList(root, onNavigate)
-        addBreedDetail(root, onNavigate, slideDistance)
-        addImageDetail(root)
-        addFavorite(root, onNavigate)
-        addBreedSortBottomSheet(root, setSortResult)
+        val baseRoute = BreedListRoute.getGraphRoute()
+        addBreedList(onNavigate)
+        addBreedDetail(baseRoute, onNavigate, slideDistance)
+        addImageDetail(baseRoute)
+        addBreedSortBottomSheet(setSortResult)
+        nestedGraphs(baseRoute)
     }
 }
 
-fun NavGraphBuilder.dogDetailGraph(root: String, onNavigate: OnNavigate, slideDistance: Int) {
-    addBreedDetail(root, onNavigate, slideDistance)
-    addImageDetail(root)
+fun NavGraphBuilder.dogDetailGraph(baseRoute: String, onNavigate: NavigateTo, slideDistance: Int) {
+    addBreedDetail(baseRoute, onNavigate, slideDistance)
+    addImageDetail(baseRoute)
 }
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
-fun NavGraphBuilder.addBreedList(
-    root: String,
-    onNavigate: OnNavigate,
-) {
+fun NavGraphBuilder.addBreedList(onNavigate: NavigateTo) {
     composable(
-        route = BreedListDestination.createRoute(root),
+        route = BreedListRoute.getStartDestination(),
         enterTransition = { materialFadeThroughIn() },
         exitTransition = { materialFadeThroughOut() },
     ) {
         val sortTypeState =
-            it.savedStateHandle.getStateFlow(BreedListDestination.sortTypeResult, 0)
+            it.savedStateHandle.getStateFlow(BreedListRoute.sortTypeResult, 0)
                 .collectAsStateWithLifecycle()
         DogListScreen(
             sortTypeState = sortTypeState,
             showDetail = { id ->
-                onNavigate(BreedDetailsDestination.navigate(root, id))
+                onNavigate(BreedListNavigation.Destination.detail(id))
             },
-            showSortDialog = { onNavigate(BreedListSortDialog.navigate(root, it)) }
+            showSortDialog = { type ->
+                onNavigate(BreedListNavigation.Destination.sortDialog(type))
+            }
         )
     }
 }
 
 fun NavGraphBuilder.addBreedDetail(
-    root: String,
-    onNavigate: OnNavigate,
+    baseRoute: String,
+    onNavigate: NavigateTo,
     slideDistance: Int,
 ) {
     composable(
-        route = BreedDetailsDestination.createRoute(root),
+        route = BreedListNavigation.Route.detail(),
         enterTransition = { materialSharedAxisXIn(true, slideDistance) },
         exitTransition = { materialSharedAxisXOut(false, slideDistance) },
         arguments = listOf(
-            navArgument(BreedDetailsDestination.breedIdArg) {
+            navArgument(BreedDetailsRoute.breedIdArg) {
                 type = NavType.IntType
             }
         )
     ) {
         BreedDetail(showImageDetail = {
-            onNavigate(ImageDetailDestination.navigate(root, it))
+            onNavigate(BreedListNavigation.Destination.imageDetail(it))
         })
     }
 }
 
-fun NavGraphBuilder.addImageDetail(root: String) {
+fun NavGraphBuilder.addImageDetail(baseRoute: String) {
     composable(
-        route = ImageDetailDestination.createRoute(root),
+        route = BreedListNavigation.Route.imageDetail(),
         enterTransition = { materialElevationScaleIn() },
         exitTransition = { materialElevationScaleOut() },
         arguments = listOf(
-            navArgument(ImageDetailDestination.urlArg) {
+            navArgument(ImageDetailRoute.breedIdArg) {
                 type = NavType.StringType
             }
         ),
     ) { backStackEntry ->
-        ImageDetail(ImageDetailDestination.fromBackStackEntry(backStackEntry))
+        ImageDetail(ImageDetailRoute.fromBackStackEntry(backStackEntry).breedId)
     }
 }
 
-fun NavGraphBuilder.addBreedSortBottomSheet(root: String, setSortResult: (BreedSortType) -> Unit) {
+fun NavGraphBuilder.addBreedSortBottomSheet(setSortResult: (BreedSortType) -> Unit) {
     bottomSheet(
-        route = BreedListSortDialog.createRoute(root),
+        route = BreedListNavigation.Route.sortDialog(),
         arguments = listOf(
-            navArgument(BreedListSortDialog.selectedTypeArg) {
+            navArgument(BreedListSortDialogRoute.selectedTypeArg) {
                 type = NavType.IntType
                 defaultValue = 0
             }
         )
     ) {
-        DogListSortDialog(BreedListSortDialog.fromNavBackStackEntry(it), setSortResult)
+        DogListSortDialog(BreedListSortDialogRoute.fromNavBackStackEntry(it), setSortResult)
     }
 }

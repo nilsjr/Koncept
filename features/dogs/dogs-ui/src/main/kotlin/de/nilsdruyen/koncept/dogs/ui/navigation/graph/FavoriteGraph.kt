@@ -1,40 +1,32 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
-package de.nilsdruyen.koncept.dogs.ui.navigation
+package de.nilsdruyen.koncept.dogs.ui.navigation.graph
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import de.nilsdruyen.koncept.base.navigation.OnNavigate
+import de.nilsdruyen.koncept.base.navigation.NavigateTo
 import de.nilsdruyen.koncept.dogs.ui.favorites.Favorites
+import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesNavigation
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.FavoritesRoute
 import soup.compose.material.motion.animation.materialFadeThroughIn
 import soup.compose.material.motion.animation.materialFadeThroughOut
 import soup.compose.material.motion.navigation.composable
 
-object FavoriteTopLevel {
-
-    const val root = "favorite"
-}
-
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.favoriteTopLevelGraph(
-    onNavigate: OnNavigate,
-    slideDistance: Int,
+    onNavigate: NavigateTo,
+    nestedGraph: (baseRoute: String) -> Unit
 ) {
     navigation(
-        route = FavoriteTopLevel.root,
-        startDestination = FavoritesDestination.createRoute(FavoriteTopLevel.root),
+        route = FavoritesRoute.getGraphRoute(),
+        startDestination = FavoritesRoute.getStartDestination(),
     ) {
-        addFavorite(FavoriteTopLevel.root, onNavigate)
-        dogDetailGraph(FavoriteTopLevel.root, onNavigate, slideDistance)
-    }
-}
-
-fun NavGraphBuilder.addFavorite(root: String, onNavigate: OnNavigate) {
-    composable(
-        route = FavoritesDestination.createRoute(root),
-        enterTransition = { materialFadeThroughIn() },
-        exitTransition = { materialFadeThroughOut() },
-    ) {
-        Favorites()
+        composable(
+            route = FavoritesRoute.getStartDestination(),
+            enterTransition = { materialFadeThroughIn() },
+            exitTransition = { materialFadeThroughOut() },
+        ) {
+            Favorites(showBreed = { onNavigate(FavoritesNavigation.Destination.breedDetail(id)) })
+        }
+        nestedGraph(FavoritesRoute.getGraphRoute())
     }
 }
