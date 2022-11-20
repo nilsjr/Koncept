@@ -3,7 +3,7 @@
  * Copyright © 2021 Nils Druyen. All rights reserved.
  */
 
-package de.nilsdruyen.koncept.design.system
+package de.nilsdruyen.koncept.design.system.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.MaterialTheme

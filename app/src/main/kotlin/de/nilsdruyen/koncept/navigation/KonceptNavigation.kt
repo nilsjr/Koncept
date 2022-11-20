@@ -7,12 +7,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import de.nilsdruyen.koncept.base.navigation.NavigateTo
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogDetailGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
+import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
 import soup.compose.material.motion.animation.materialElevationScaleIn
 import soup.compose.material.motion.animation.materialElevationScaleOut
@@ -43,12 +47,29 @@ fun KonceptNavigation(
                 )
                 onBackClick()
             },
-            slideDistance
+            slideDistance,
         )
         favoriteTopLevelGraph(onNavigate) {
             dogDetailGraph(it, onNavigate, slideDistance)
         }
         webTopLevelGraph()
+        composable(
+            route = "deeplink/{rawDate}",
+            arguments = listOf(
+                navArgument("rawDate") {
+                    type = NavType.StringType
+                },
+                navArgument("rawDate2") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            ),
+            deepLinks = listOf(navDeepLink {
+                uriPattern = "koncept://deeplink/{rawDate}?rawDate2={rawDate2}"
+            })
+        ) {
+            DeeplinkSample()
+        }
     }
 }
 
