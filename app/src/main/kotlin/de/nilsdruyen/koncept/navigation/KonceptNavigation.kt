@@ -12,7 +12,6 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import de.nilsdruyen.koncept.base.navigation.NavigateTo
-import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogDetailGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute

@@ -1,12 +1,17 @@
 package de.nilsdruyen.koncept.base.navigation
 
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavDeepLink
+
 sealed interface KonceptNavRoute {
 
     val route: String
 
-    fun pathParameters(): List<String> = emptyList()
+    fun pathParameters(): List<NamedNavArgument> = emptyList()
 
-    fun queryParameters(): List<String> = emptyList()
+    fun queryParameters(): List<NamedNavArgument> = emptyList()
+
+    fun deepLinks(): List<NavDeepLink> = emptyList()
 
     interface GraphNavRoute : KonceptNavRoute {
 
@@ -18,14 +23,16 @@ sealed interface KonceptNavRoute {
             KonceptNavDestination.TopLevelGraphDestination("$route$params")
     }
 
-    abstract class NestedNavRoute(private val baseRoute: String) : KonceptNavRoute {
+    interface NestedNavRoute : KonceptNavRoute {
 
-        val routePrefix
-            get() = "$baseRoute/$route"
-
-        fun getNestedRoute(): String = "$baseRoute/$route${appendParams()}"
+//        val routePrefix
+//            get() = "$baseRoute/$route"
+//
+//        fun getNestedRoute(): String = "$baseRoute/$route${appendParams()}"
     }
 }
+
+fun KonceptNavRoute.arguments() = pathParameters() + queryParameters()
 
 sealed interface KonceptNavDestination {
 

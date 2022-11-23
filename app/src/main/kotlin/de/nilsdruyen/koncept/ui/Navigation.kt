@@ -76,7 +76,7 @@ fun KonceptApp() {
                 navController = navController,
                 modifier = Modifier.padding(padding),
                 onBackClick = state::onBackClick,
-                onNavigate = state::navigate,
+                onNavigate = { state.navigate(it) },
             )
         }
     }
