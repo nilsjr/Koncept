@@ -2,8 +2,7 @@ package de.nilsdruyen.koncept.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -30,19 +29,12 @@ fun rememberKonceptAppState(
     }
 }
 
+@Stable
 class KonceptAppState(private val navController: NavHostController) {
 
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
-
-//    val currentTopLevelDestination: TopLevelRoute?
-//        @Composable get() = when (currentDestination?.route) {
-//            forYouNavigationRoute -> FOR_YOU
-//            bookmarksRoute -> BOOKMARKS
-//            interestsRoute -> INTERESTS
-//            else -> null
-//        }
 
     /**
      * Top level destinations to be used in the BottomBar and NavRail

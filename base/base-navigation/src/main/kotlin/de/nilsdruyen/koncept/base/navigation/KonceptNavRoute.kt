@@ -25,10 +25,15 @@ sealed interface KonceptNavRoute {
 
     interface NestedNavRoute : KonceptNavRoute {
 
-//        val routePrefix
-//            get() = "$baseRoute/$route"
-//
-//        fun getNestedRoute(): String = "$baseRoute/$route${appendParams()}"
+        fun getNestedRoute(base: GraphNavRoute?): String = if (base != null) {
+            "${base.route}/$route${appendParams()}"
+        } else {
+            "$route${appendParams()}"
+        }
+
+        fun buildRoute(graph: GraphNavRoute, params: String): KonceptNavDestination.NestedNavDestination {
+            return KonceptNavDestination.NestedNavDestination("${graph.route}/$route/$params")
+        }
     }
 }
 
@@ -47,8 +52,8 @@ sealed interface KonceptNavDestination {
 
 fun KonceptNavRoute.appendParams(): String {
     return buildString {
-        pathParameters().forEach { append("/{$it}") }
-        val queryParameters = queryParameters()
+        pathParameters().map { it.name }.forEach { append("/{$it}") }
+        val queryParameters = queryParameters().map { it.name }
         if (queryParameters.isNotEmpty()) {
             append("?")
             queryParameters.forEach { paramName ->

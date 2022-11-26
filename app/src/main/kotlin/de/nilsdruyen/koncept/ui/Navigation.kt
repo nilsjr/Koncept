@@ -34,7 +34,7 @@ import de.nilsdruyen.koncept.base.navigation.NavigateTo
 import de.nilsdruyen.koncept.base.navigation.TopLevelRoute
 import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
-import de.nilsdruyen.koncept.navigation.KonceptNavigation
+import de.nilsdruyen.koncept.navigation.KonceptNavHost
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 
@@ -72,11 +72,11 @@ fun KonceptApp() {
                 )
             },
         ) { padding ->
-            KonceptNavigation(
+            KonceptNavHost(
                 navController = navController,
-                modifier = Modifier.padding(padding),
                 onBackClick = state::onBackClick,
                 onNavigate = { state.navigate(it) },
+                modifier = Modifier.padding(padding),
             )
         }
     }

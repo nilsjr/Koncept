@@ -6,22 +6,10 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
 import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListNavigation
 
 object BreedDetailsRoute : KonceptNavRoute.NestedNavRoute {
 
-//    companion object {
-
-//        fun detail() = de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute(BreedListNavigation.baseRoute).getNestedRoute()
-//
-//        fun detail(id: Int) = de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute(BreedListNavigation.baseRoute)
-//            .navigate(id)
-//    }
-    const val breedIdArg = "breedId"
-
-    fun fromSavedState(savedStateHandle: SavedStateHandle): Int {
-        return savedStateHandle[breedIdArg] ?: -1
-    }
+    private const val breedIdArg = "breedId"
 
     override val route: String = "breed_detail"
 
@@ -30,8 +18,10 @@ object BreedDetailsRoute : KonceptNavRoute.NestedNavRoute {
             type = NavType.IntType
         }
     )
-}
 
-//fun BreedDetailsRoute.navigate(id: Int): KonceptNavDestination {
-//    return KonceptNavDestination.NestedNavDestination("$routePrefix/$id")
-//}
+    fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: Int): KonceptNavDestination.NestedNavDestination {
+        return KonceptNavDestination.NestedNavDestination("${graph.route}/$route/$id")
+    }
+
+    fun fromSavedState(savedStateHandle: SavedStateHandle): Int = savedStateHandle[breedIdArg] ?: -1
+}
