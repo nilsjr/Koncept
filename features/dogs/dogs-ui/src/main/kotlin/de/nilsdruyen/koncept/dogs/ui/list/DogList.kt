@@ -44,7 +44,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.dropBottomPadding
 import de.nilsdruyen.koncept.common.ui.isEmpty
-import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
@@ -192,6 +191,24 @@ fun DogList(
                 )
             }
         }
+//        LazyVerticalGrid(columns = GridCells.Fixed(2), state = scrollState) {
+//            list.items.forEach {
+//                item(span = { GridItemSpan(2) }) {
+//                    LazyRow(Modifier.fillMaxWidth()) {
+//                        items(it.breed, key = { it.id }) {
+//                            DogGridItem(it)
+//                        }
+//                    }
+//                }
+//            }
+//            items(list.items, key = { it.name }) {
+//                LazyRow(Modifier.fillMaxWidth()) {
+//                    items(it.breed, key = { it.id }) {
+//                        DogGridItem(it)
+//                    }
+//                }
+//            }
+//        }
         PullRefreshIndicator(
             refreshing = isRefreshing,
             state = pullRefreshState,
@@ -213,10 +230,14 @@ fun PreviewDogList(@PreviewParameter(DogListPreviewProvider::class) listState: D
 class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
     override val values: Sequence<DogListState> = sequenceOf(
         DogListState(),
-        DogListState(
-            List(15) {
-                Dog(it, "Breed $it")
-            }.toImmutable()
-        ),
+//        DogListState(
+//            List(4) {
+//                DogGroup(
+//                    name = "A$it",
+//                    breed = List(6) {
+//                        Dog(it, "Breed $it")
+//                    }
+//                )
+//            }.toImmutable()
     )
 }

@@ -12,9 +12,6 @@ console-reports:
     - 'FileBasedFindingsReport'
     - 'LiteFindingsReport'
 
-formatting:
-  active: false
-
 performance:
   SpreadOperator:
     active: false

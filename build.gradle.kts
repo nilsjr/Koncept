@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.ksp) apply false
     alias(libs.plugins.hilt.android) apply false
 
+    alias(libs.plugins.detekt) apply false
     alias(libs.plugins.gradleVersions)
     alias(libs.plugins.shot) apply false
 

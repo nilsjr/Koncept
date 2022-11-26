@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
 @Composable
 fun BreedDetail(
-    showImageDetail: (url: String) -> Unit,
+    showImageDetail: (id: String) -> Unit,
     viewModel: BreedDetailViewModel = hiltViewModel(),
 ) {
     val composeScope = rememberCoroutineScope()

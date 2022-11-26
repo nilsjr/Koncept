@@ -1,5 +1,6 @@
 build:
   maxIssues: 0
+  excludeCorrectable: true
 
 console-reports:
   exclude:
@@ -11,20 +12,21 @@ console-reports:
     - 'LiteFindingsReport'
 
 formatting:
-  AnnotationOnSeparateLine:
-    active: false
   ArgumentListWrapping:
     active: false
   Filename:
     active: false
-  ImportOrdering:
-    layout: '*'
   MaximumLineLength:
     active: false
-  NoEmptyFirstLineInMethodBlock:
+  ImportOrdering:
+    active: true
+  Indentation:
     active: false
-  SpacingBetweenDeclarationsWithAnnotations:
-    active: false
+  FinalNewline:
+    insertFinalNewLine: false
+  ParameterListWrapping:
+    indentSize: 4
 
 TwitterCompose:
   active: false
+

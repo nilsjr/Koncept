@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
 import de.nilsdruyen.koncept.design.system.KonceptTheme
-import de.nilsdruyen.koncept.design.system.MaterialCard
+import de.nilsdruyen.koncept.design.system.components.MaterialCard
 import de.nilsdruyen.koncept.dogs.entity.Dog
 
 @Composable
@@ -75,7 +75,7 @@ fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}, modifier: Modifier = Modifier
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog: Dog) {
+private fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog: Dog) {
     KonceptTheme {
         DogItem(dog)
     }

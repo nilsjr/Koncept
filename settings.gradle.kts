@@ -38,6 +38,7 @@ include(":dogs-test")
 // common modules
 include(":common-domain")
 include(":common-remote")
+include(":common-cache")
 include(":common-ui")
 include(":common-test")
 

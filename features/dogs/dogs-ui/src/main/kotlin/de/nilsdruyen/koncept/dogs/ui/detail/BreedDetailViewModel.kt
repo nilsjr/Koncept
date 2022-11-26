@@ -1,29 +1,29 @@
 package de.nilsdruyen.koncept.dogs.ui.detail
 
+import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
-import de.nilsdruyen.koncept.common.ui.providers.PropertyProvider
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetBreedImageListUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.UpdateFavoriteBreedUseCase
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedDetailsDestination
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import javax.inject.Inject
 
 @HiltViewModel
 class BreedDetailViewModel @Inject constructor(
-    propertyProvider: PropertyProvider,
+    savedStateHandle: SavedStateHandle,
     private val getBreedImageListUseCase: GetBreedImageListUseCase,
     private val updateFavoriteBreedUseCase: UpdateFavoriteBreedUseCase,
     private val isFavoriteFlowUseCase: IsFavoriteFlowUseCase,
 ) : MviViewModel<BreedDetailState, BreedDetailIntent>(BreedDetailState(isLoading = true)) {
 
-    private val breedId = propertyProvider.get(BreedDetailsDestination.breedIdArg) { -1 }
+    private val breedId = BreedDetailsRoute.fromSavedState(savedStateHandle)
 
     override fun initialize() {
         listenFavorite()

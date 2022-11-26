@@ -17,8 +17,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DogsCacheDataSourceImpl @Inject constructor(
-    private val dogDao: DogDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val dogDao: DogDao,
 ) : DogsCacheDataSource {
 
     override fun getDogList(): Flow<Either<DataSourceError, List<Dog>>> {

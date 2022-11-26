@@ -14,6 +14,7 @@ import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -66,6 +67,13 @@ class DogListViewModel @Inject constructor(
                         BreedSortType.Height -> it.sortedBy { dog -> dog.height.last }
                     }
                 }
+            }.map {
+                it
+//                it.map { list ->
+//                    list.groupBy { dog -> dog.name.first() }
+//                }.map { dogMap ->
+//                    dogMap.map { entry -> DogGroup(entry.key.toString(), entry.value) }
+//                }
             }.stateIn(viewModelScope).collect { result ->
                 result.fold(this@DogListViewModel::handleError) {
                     log("set list ${it.size}")
@@ -103,6 +111,7 @@ class DogListViewModel @Inject constructor(
 
 data class DogListState(
     val list: ImmutableList<Dog> = emptyImmutableList(),
+//    val list: ImmutableList<DogGroup> = emptyImmutableList(),
     val isLoading: Boolean = false,
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
     val navigateTo: Int? = null,

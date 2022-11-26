@@ -17,6 +17,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,9 +34,18 @@ import de.nilsdruyen.koncept.dogs.ui.components.Loading
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun Favorites(
-    viewModel: FavoritesViewModel = hiltViewModel()
+    showBreed: (Int) -> Unit,
+    viewModel: FavoritesViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.showBreed) {
+        state.showBreed?.let {
+            showBreed(it)
+            viewModel.sendIntent(FavoritesIntent.NavigationConsumed)
+        }
+    }
+
     Favorites(state)
 }
 

@@ -1,9 +1,9 @@
 package de.nilsdruyen.app.plugins
 
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import de.nilsdruyen.app.config.applyKover
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
-import de.nilsdruyen.app.config.applyKover
 import de.nilsdruyen.app.config.configure
 import de.nilsdruyen.app.config.configureKotlinAndroid
 import org.gradle.api.Plugin

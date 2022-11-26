@@ -41,6 +41,8 @@ dependencies {
 
     implementation(libs.lottie.compose)
 
+    implementation("androidx.palette:palette-ktx:1.0.0")
+
     // testing
     testImplementation(libs.bundles.test)
     testImplementation(libs.junit4)

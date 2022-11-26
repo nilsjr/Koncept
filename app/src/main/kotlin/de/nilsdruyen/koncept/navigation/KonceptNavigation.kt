@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalAnimationApi::class)
+@file:OptIn(ExperimentalAnimationApi::class, ExperimentalAnimationApi::class)
 
 package de.nilsdruyen.koncept.navigation
 
@@ -7,27 +7,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
-import de.nilsdruyen.koncept.base.navigation.NavigationDestination
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedListDestination
-import de.nilsdruyen.koncept.dogs.ui.navigation.BreedTopLevel
-import de.nilsdruyen.koncept.dogs.ui.navigation.dogTopLevelGraph
-import de.nilsdruyen.koncept.dogs.ui.navigation.favoriteTopLevelGraph
+import de.nilsdruyen.koncept.base.navigation.NavigateTo
+import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogDetailGraph
+import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogTopLevelGraph
+import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
+import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
-import soup.compose.material.motion.materialElevationScaleIn
-import soup.compose.material.motion.materialElevationScaleOut
+import soup.compose.material.motion.animation.materialElevationScaleIn
+import soup.compose.material.motion.animation.materialElevationScaleOut
+import soup.compose.material.motion.animation.rememberSlideDistance
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.composable
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun KonceptNavigation(
     navController: NavHostController,
-    onNavigate: (NavigationDestination) -> Unit,
+    onNavigate: NavigateTo,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    startDestination: String = BreedTopLevel.root,
+    startDestination: String = BreedListRoute.getGraphRoute(),
 ) {
+    val slideDistance = rememberSlideDistance()
     MaterialMotionNavHost(
         navController = navController,
         startDestination = startDestination,
@@ -37,26 +42,46 @@ fun KonceptNavigation(
             onNavigate = onNavigate,
             setSortResult = {
                 navController.previousBackStackEntry?.savedStateHandle?.set(
-                    BreedListDestination.sortTypeResult,
+                    BreedListRoute.sortTypeResult,
                     it.ordinal
                 )
                 onBackClick()
-            }
+            },
+            slideDistance,
         )
-        favoriteTopLevelGraph(onNavigate = onNavigate)
+        favoriteTopLevelGraph(onNavigate) {
+            dogDetailGraph(it, onNavigate, slideDistance)
+        }
         webTopLevelGraph()
+        composable(
+            route = "deeplink/{rawDate}",
+            arguments = listOf(
+                navArgument("rawDate") {
+                    type = NavType.StringType
+                },
+                navArgument("rawDate2") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            ),
+            deepLinks = listOf(navDeepLink {
+                uriPattern = "koncept://deeplink/{rawDate}?rawDate2={rawDate2}"
+            })
+        ) {
+            DeeplinkSample()
+        }
     }
 }
 
 fun NavGraphBuilder.webTopLevelGraph() {
     navigation(
-        route = WebTopLevel.root,
-        startDestination = WebDestination.createRoute(WebTopLevel.root),
+        route = WebRoute.getGraphRoute(),
+        startDestination = WebRoute.getStartDestination(),
     ) {
         composable(
-            route = WebDestination.createRoute(WebTopLevel.root),
-            enterMotionSpec = { materialElevationScaleIn() },
-            exitMotionSpec = { materialElevationScaleOut() },
+            route = WebRoute.getStartDestination(),
+            enterTransition = { materialElevationScaleIn() },
+            exitTransition = { materialElevationScaleOut() },
         ) {
             WebScreen()
         }

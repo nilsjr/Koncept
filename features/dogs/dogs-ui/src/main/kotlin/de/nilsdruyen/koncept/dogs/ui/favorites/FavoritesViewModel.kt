@@ -22,6 +22,12 @@ class FavoritesViewModel @Inject constructor(
     override suspend fun onIntent(intent: FavoritesIntent) {
         when (intent) {
             is FavoritesIntent.Remove -> {}
+            FavoritesIntent.NavigationConsumed -> updateState {
+                copy(showBreed = null)
+            }
+            is FavoritesIntent.ShowBreed -> updateState {
+                copy(showBreed = intent.id)
+            }
         }
     }
 
@@ -45,9 +51,12 @@ class FavoritesViewModel @Inject constructor(
 data class FavoritesState(
     val isLoading: Boolean = false,
     val list: ImmutableList<Dog> = emptyImmutableList(),
+    val showBreed: Int? = null,
 )
 
 sealed interface FavoritesIntent {
 
     data class Remove(val dogId: String) : FavoritesIntent
+    data class ShowBreed(val id: Int) : FavoritesIntent
+    object NavigationConsumed : FavoritesIntent
 }
