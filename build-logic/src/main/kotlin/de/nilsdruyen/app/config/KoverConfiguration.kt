@@ -1,7 +1,6 @@
 package de.nilsdruyen.app.config
 
 import kotlinx.kover.KoverPlugin
-import kotlinx.kover.api.DefaultJacocoEngine
 import kotlinx.kover.api.KoverMergedConfig
 import kotlinx.kover.api.KoverProjectConfig
 import org.gradle.api.Project
