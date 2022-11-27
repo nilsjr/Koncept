@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.nilsdruyen.koncept.common.ui.ImmutableList
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
 
@@ -46,12 +47,21 @@ fun Favorites(
         }
     }
 
-    Favorites(state)
+    Favorites(
+        state = state,
+        showBreed = {
+            viewModel.sendIntent(FavoritesIntent.ShowBreed(it.value))
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
+fun Favorites(
+    state: FavoritesState,
+    showBreed: (BreedId) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
@@ -91,6 +101,7 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
                     FavoriteList(
                         scrollState = scrollState,
                         list = state.list,
+                        showBreed = showBreed,
                     )
                 }
             }
@@ -102,6 +113,7 @@ fun Favorites(state: FavoritesState, modifier: Modifier = Modifier) {
 fun FavoriteList(
     scrollState: LazyListState,
     list: ImmutableList<Dog>,
+    showBreed: (BreedId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -110,7 +122,7 @@ fun FavoriteList(
         modifier = modifier.fillMaxSize()
     ) {
         items(list.items) { dog ->
-            DogFavoriteItem(dog)
+            DogFavoriteItem(dog, showBreed)
         }
     }
 }

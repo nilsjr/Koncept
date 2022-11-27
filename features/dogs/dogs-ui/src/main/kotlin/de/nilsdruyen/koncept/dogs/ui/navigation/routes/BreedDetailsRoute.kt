@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
 import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 
 object BreedDetailsRoute : KonceptNavRoute.NestedNavRoute {
 
@@ -19,9 +20,9 @@ object BreedDetailsRoute : KonceptNavRoute.NestedNavRoute {
         }
     )
 
-    fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: Int): KonceptNavDestination.NestedNavDestination {
-        return KonceptNavDestination.NestedNavDestination("${graph.route}/$route/$id")
+    fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: BreedId): KonceptNavDestination.NestedNavDestination {
+        return KonceptNavDestination.NestedNavDestination("${graph.route}/$route/${id.value}")
     }
 
-    fun fromSavedState(savedStateHandle: SavedStateHandle): Int = savedStateHandle[breedIdArg] ?: -1
+    fun fromSavedState(savedStateHandle: SavedStateHandle): BreedId = BreedId(savedStateHandle[breedIdArg] ?: -1)
 }

@@ -6,6 +6,7 @@ import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
 import de.nilsdruyen.koncept.base.navigation.NavigateTo
 import de.nilsdruyen.koncept.base.navigation.konceptComposable
 import de.nilsdruyen.koncept.base.navigation.navigation
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.ui.favorites.Favorites
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.FavoritesRoute
@@ -22,7 +23,7 @@ fun NavGraphBuilder.favoriteTopLevelGraph(
         enterTransition = { materialFadeThroughIn() },
         exitTransition = { materialFadeThroughOut() },
     ) {
-        Favorites(showBreed = { onNavigate(BreedDetailsRoute.createRoute(FavoritesRoute, it)) })
+        Favorites(showBreed = { onNavigate(BreedDetailsRoute.createRoute(FavoritesRoute, BreedId(it))) })
     }
     nestedGraph(FavoritesRoute)
 }
