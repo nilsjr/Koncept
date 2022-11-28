@@ -43,7 +43,7 @@ internal class BreedDetailViewModelTest : CoroutineTest {
     @BeforeEach
     fun setup() {
         viewModel = BreedDetailViewModel(
-            propertyProvider = PropertyProviderImpl(SavedStateHandle(mapOf("breedId" to 1))),
+            savedStateHandle = SavedStateHandle(mapOf("breedId" to 1)),
             getBreedImageListUseCase = getBreedImageListUseCase,
             updateFavoriteBreedUseCase = updateFavoriteBreedUseCase,
             isFavoriteFlowUseCase = isFavoriteFlowUseCase
