@@ -46,6 +46,7 @@ import de.nilsdruyen.koncept.common.ui.dropBottomPadding
 import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
@@ -56,7 +57,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DogListScreen(
     sortTypeState: State<Int>,
-    showDetail: (Int) -> Unit,
+    showDetail: (BreedId) -> Unit,
     showSortDialog: (BreedSortType) -> Unit,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
@@ -183,7 +184,7 @@ fun DogList(
                 .fillMaxSize()
                 .testTag("dogList")
         ) {
-            items(list.items, key = { it.id }) { dog ->
+            items(list.items, key = { it.id.value }) { dog ->
                 DogItem(
                     dog = dog,
                     modifier = Modifier.animateItemPlacement(),

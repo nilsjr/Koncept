@@ -23,7 +23,7 @@ class BreedDetailViewModel @Inject constructor(
     private val isFavoriteFlowUseCase: IsFavoriteFlowUseCase,
 ) : MviViewModel<BreedDetailState, BreedDetailIntent>(BreedDetailState(isLoading = true)) {
 
-    private val breedId = BreedDetailsRoute.fromSavedState(savedStateHandle)
+    private val breedId = BreedDetailsRoute.fromSavedState(savedStateHandle).value
 
     override fun initialize() {
         listenFavorite()

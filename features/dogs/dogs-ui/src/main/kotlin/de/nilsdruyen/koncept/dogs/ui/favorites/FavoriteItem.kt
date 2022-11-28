@@ -14,10 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
 
 @Composable
-fun DogFavoriteItem(dog: Dog) {
+fun DogFavoriteItem(dog: Dog, showBreed: (BreedId) -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,7 +32,9 @@ fun DogFavoriteItem(dog: Dog) {
                 color = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(4.dp)
             )
-            .clickable { }
+            .clickable {
+                showBreed(dog.id)
+            }
             .padding(8.dp)
     ) {
         Text(text = dog.name)
@@ -42,6 +45,6 @@ fun DogFavoriteItem(dog: Dog) {
 @Composable
 fun PreviewDogFavoriteItem() {
     KonceptTheme {
-        DogFavoriteItem(dog = Dog(1, "Nils", false))
+        DogFavoriteItem(dog = Dog(BreedId(1), "Nils", false))
     }
 }
