@@ -23,10 +23,15 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.design.system.components.MaterialCard
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
 
 @Composable
-fun DogItem(dog: Dog, showDog: (Dog) -> Unit = {}, modifier: Modifier = Modifier) {
+fun DogItem(
+    dog: Dog,
+    modifier: Modifier = Modifier,
+    showDog: (Dog) -> Unit = {},
+) {
     MaterialCard(
         modifier = modifier
             .fillMaxWidth()
@@ -84,7 +89,7 @@ private fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog:
 class DogItemPreviewProvider : PreviewParameterProvider<Dog> {
     override val values: Sequence<Dog> = sequenceOf(
         Dog(
-            id = 1,
+            id = BreedId(1),
             name = "Lassie",
             isFavorite = false,
             temperament = listOf("aggressive"),
@@ -95,7 +100,7 @@ class DogItemPreviewProvider : PreviewParameterProvider<Dog> {
             origin = listOf("sport"),
             group = "smallies"
         ),
-        Dog(2, "Thea", isFavorite = true),
-        Dog(2, "Thea dakad lm lakd alkw lak mldaw", isFavorite = true),
+        Dog(BreedId(2), "Thea", isFavorite = true),
+        Dog(BreedId(2), "Thea dakad lm lakd alkw lak mldaw", isFavorite = true),
     )
 }

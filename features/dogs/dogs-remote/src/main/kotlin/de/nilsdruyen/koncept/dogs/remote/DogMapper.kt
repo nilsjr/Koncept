@@ -1,5 +1,6 @@
 package de.nilsdruyen.koncept.dogs.remote
 
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
@@ -8,7 +9,7 @@ import de.nilsdruyen.koncept.dogs.remote.entities.MeasureWebEntity
 
 fun DogWebEntity.toModel(): Dog {
     return Dog(
-        id = id,
+        id = BreedId(id),
         name = name,
         isFavorite = false,
         temperament = temperament?.split(",")?.map { it.trim() }.orEmpty(),

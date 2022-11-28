@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.palette.graphics.Palette
 import androidx.palette.graphics.Target
@@ -36,6 +35,7 @@ import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.design.system.annotations.KonceptPreview
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import kotlinx.coroutines.delay
 
@@ -142,7 +142,7 @@ fun ImageDetail(id: String) {
     }
 }
 
-@Preview
+@KonceptPreview
 @Composable
 fun PreviewEmptyImageDetail() {
     KonceptTheme {
@@ -150,7 +150,7 @@ fun PreviewEmptyImageDetail() {
     }
 }
 
-@Preview
+@KonceptPreview
 @Composable
 fun PreviewImageDetail() {
     KonceptTheme {

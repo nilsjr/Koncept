@@ -7,6 +7,7 @@ import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
@@ -98,7 +99,7 @@ class DogListViewModel @Inject constructor(
 //        }
 //    }
 
-    private fun navigateToDetail(id: Int) {
+    private fun navigateToDetail(id: BreedId) {
         updateState {
             copy(navigateTo = id)
         }
@@ -114,15 +115,12 @@ data class DogListState(
 //    val list: ImmutableList<DogGroup> = emptyImmutableList(),
     val isLoading: Boolean = false,
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
-    val navigateTo: Int? = null,
+    val navigateTo: BreedId? = null,
 )
 
 sealed interface DogListIntent {
-    data class ShowDetailAndSaveListPosition(val id: Int) : DogListIntent
-
+    data class ShowDetailAndSaveListPosition(val id: BreedId) : DogListIntent
     data class SortTypeChanged(val type: BreedSortType) : DogListIntent
-
-    object Reload : DogListIntent
-
-    object NavigationConsumed : DogListIntent
+    data object Reload : DogListIntent
+    data object NavigationConsumed : DogListIntent
 }

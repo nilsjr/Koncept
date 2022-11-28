@@ -10,10 +10,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import androidx.navigation.navigation
 import de.nilsdruyen.koncept.base.navigation.NavigateTo
-import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogDetailGraph
-import de.nilsdruyen.koncept.dogs.ui.navigation.graph.dogTopLevelGraph
+import de.nilsdruyen.koncept.base.navigation.konceptComposable
+import de.nilsdruyen.koncept.base.navigation.navigation
+import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedDetailGraph
+import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
 import de.nilsdruyen.koncept.ui.DeeplinkSample
@@ -25,7 +26,7 @@ import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.composable
 
 @Composable
-fun KonceptNavigation(
+fun KonceptNavHost(
     navController: NavHostController,
     onNavigate: NavigateTo,
     onBackClick: () -> Unit,
@@ -38,7 +39,7 @@ fun KonceptNavigation(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        dogTopLevelGraph(
+        breedTopLevelGraph(
             onNavigate = onNavigate,
             setSortResult = {
                 navController.previousBackStackEntry?.savedStateHandle?.set(
@@ -50,7 +51,7 @@ fun KonceptNavigation(
             slideDistance,
         )
         favoriteTopLevelGraph(onNavigate) {
-            dogDetailGraph(it, onNavigate, slideDistance)
+            breedDetailGraph(it, onNavigate, slideDistance)
         }
         webTopLevelGraph()
         composable(
@@ -64,26 +65,23 @@ fun KonceptNavigation(
                     defaultValue = ""
                 }
             ),
-            deepLinks = listOf(navDeepLink {
-                uriPattern = "koncept://deeplink/{rawDate}?rawDate2={rawDate2}"
-            })
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "koncept://deeplink/{rawDate}?rawDate2={rawDate2}"
+                }
+            )
         ) {
             DeeplinkSample()
         }
     }
 }
 
-fun NavGraphBuilder.webTopLevelGraph() {
-    navigation(
-        route = WebRoute.getGraphRoute(),
-        startDestination = WebRoute.getStartDestination(),
+fun NavGraphBuilder.webTopLevelGraph() = navigation(navRoute = WebRoute) {
+    konceptComposable(
+        navRoute = WebRoute,
+        enterTransition = { materialElevationScaleIn() },
+        exitTransition = { materialElevationScaleOut() },
     ) {
-        composable(
-            route = WebRoute.getStartDestination(),
-            enterTransition = { materialElevationScaleIn() },
-            exitTransition = { materialElevationScaleOut() },
-        ) {
-            WebScreen()
-        }
+        WebScreen()
     }
 }

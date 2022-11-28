@@ -1,27 +1,31 @@
 package de.nilsdruyen.koncept.dogs.ui.navigation.routes
 
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
 import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
 
-class ImageDetailRoute(baseRoute: String) : KonceptNavRoute.NestedNavRoute(baseRoute) {
+object ImageDetailRoute : KonceptNavRoute.NestedNavRoute {
 
-    companion object {
-
-        const val breedIdArg = "breedId"
-
-        fun fromBackStackEntry(backStackEntry: NavBackStackEntry): ImageDetailArgs {
-            return ImageDetailArgs(backStackEntry.arguments?.getString(breedIdArg) ?: "")
-        }
-    }
+    private const val imageIdArg = "imageId"
 
     override val route: String = "image"
 
-    override fun pathParameters(): List<String> = listOf(breedIdArg)
+    override fun pathParameters(): List<NamedNavArgument> = listOf(
+        navArgument(imageIdArg) {
+            type = NavType.StringType
+        }
+    )
+
+    fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: String): KonceptNavDestination.NestedNavDestination {
+        return buildRoute(graph, id)
+    }
+
+    fun fromBackStackEntry(backStackEntry: NavBackStackEntry): ImageDetailArgs {
+        return ImageDetailArgs(backStackEntry.arguments?.getString(imageIdArg) ?: "")
+    }
 }
 
-data class ImageDetailArgs(val breedId: String)
-
-fun ImageDetailRoute.navigate(id: String): KonceptNavDestination {
-    return KonceptNavDestination.NestedNavDestination("$routePrefix/$id")
-}
+data class ImageDetailArgs(val imageId: String)
