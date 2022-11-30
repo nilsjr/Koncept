@@ -43,7 +43,7 @@ internal class DogsRemoteDataSourceImplTest : CoroutineTest {
 
         assert(result.size == dogEntityList.size)
         dogEntityList.forEachIndexed { index, dog ->
-            assert(dog.id == result[index].id)
+            assert(dog.id == result[index].id.value)
         }
     }
 }
