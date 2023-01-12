@@ -1,4 +1,5 @@
 import de.nilsdruyen.app.ProjectConfig
+import de.nilsdruyen.app.utils.CiUtils
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -23,7 +24,7 @@ android {
         buildConfigField(
             "String",
             "DOG_API_KEY",
-            "\"${findStringProperty("dogApiKey")}\""
+            "\"${findStringProperty("dogApiKey", "DOG_API_KEY")}\""
         )
     }
     signingConfigs {
@@ -222,9 +223,13 @@ dependencies {
     androidTestImplementation(libs.robolectric.annotations)
 }
 
-fun Project.findStringProperty(propertyName: String): String? {
-    return findProperty(propertyName) as String? ?: run {
-        println("$propertyName missing in gradle.properties")
-        null
+fun Project.findStringProperty(propertyName: String, ciPropertyName: String = propertyName): String? {
+    return if (CiUtils.isCI) {
+        System.getenv(ciPropertyName)
+    } else {
+        findProperty(propertyName) as String? ?: run {
+            println("$propertyName missing in gradle.properties")
+            null
+        }
     }
 }
