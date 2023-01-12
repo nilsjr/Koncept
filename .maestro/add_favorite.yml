@@ -1,0 +1,7 @@
+appId: de.nilsdruyen.koncept
+---
+- launchApp
+- assertVisible:
+    text: "Doggo List"
+
+TODO: implement flow
