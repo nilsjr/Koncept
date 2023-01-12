@@ -26,6 +26,7 @@ androidxRoom = "2.5.0"
 androidxSecurityCrypto = "1.1.0-alpha03" # emarsys sdk uses alpha version
 androidxSwipeRefreshlayout = "1.1.0"
 androidxTestRules = "1.5.0"
+androidxTestCore = "1.5.0"
 androidxTest = "1.5.1"
 androidxVectorDrawable = "1.1.0"
 androidxWebkit = "1.4.0"
@@ -161,7 +162,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxRoom" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "androidxSecurityCrypto" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidxSwipeRefreshlayout" }
-androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTest" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTestCore" }
 androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 androidx-test-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espresso" }
 androidx-test-espresso-web = { module = "androidx.test.espresso:espresso-web", version.ref = "espresso" }
