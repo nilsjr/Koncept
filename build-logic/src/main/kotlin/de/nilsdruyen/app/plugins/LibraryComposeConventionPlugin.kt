@@ -23,6 +23,8 @@ internal class LibraryComposeConventionPlugin : Plugin<Project> {
                 }
             }
             dependencies {
+                val bom = libs.findLibrary("compose.bom").get()
+                add("implementation", platform(bom))
                 add("implementation", libs.findLibrary("androidx.compose.uiToolingPreview").get())
                 add("debugImplementation", libs.findLibrary("androidx.compose.uiTooling").get())
             }

@@ -130,12 +130,13 @@ dependencies {
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.compose.activity)
 
+    implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material.icons)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.navigation)
-    implementation(libs.androidx.compose.constraint)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTooling)

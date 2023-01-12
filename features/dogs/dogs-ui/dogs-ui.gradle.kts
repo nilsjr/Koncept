@@ -30,9 +30,10 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.compose)
 
+    implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.androidx.compose.viewmodel)
-    implementation(libs.androidx.compose.constraint)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.coilCompose)
 
