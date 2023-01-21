@@ -7,7 +7,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.karumi.shot.ScreenshotTest
 import de.nilsdruyen.koncept.common.ui.toImmutable
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.dogs.ui.list.DogListState
 import de.nilsdruyen.koncept.dogs.ui.list.PreviewDogItem

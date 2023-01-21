@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +26,6 @@ import javax.inject.Inject
  * adb shell am start -W -a android.intent.action.VIEW -d "koncept://deeplink/2022-11-10T10%3A53%3A19.000Z?rawDate2=2022-11-10T10%3A53%3A19.000Z"
  */
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DeeplinkSample(viewModel: DeeplinkViewModel = hiltViewModel()) {
     val date = viewModel.dateState.collectAsStateWithLifecycle()

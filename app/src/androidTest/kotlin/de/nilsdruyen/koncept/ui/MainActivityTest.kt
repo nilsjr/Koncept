@@ -19,9 +19,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import de.nilsdruyen.koncept.KonceptTestApplication
-import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
-import de.nilsdruyen.koncept.dogs.ui.navigation.routes.FavoritesRoute
-import de.nilsdruyen.koncept.navigation.WebRoute
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Before
 import org.junit.Rule
