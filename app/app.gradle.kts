@@ -98,7 +98,10 @@ android {
     }
     packagingOptions {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "META-INF/LICENSE*"
+            )
         }
     }
     ksp {
@@ -196,6 +199,7 @@ dependencies {
     testImplementation(libs.hilt.test)
     kaptTest(libs.hilt.compiler)
 
+    testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
     debugImplementation(libs.androidx.compose.uiManifestTest)
 
@@ -206,6 +210,7 @@ dependencies {
 
     androidTestImplementation(projects.dogsTest)
 
+    androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.rules)

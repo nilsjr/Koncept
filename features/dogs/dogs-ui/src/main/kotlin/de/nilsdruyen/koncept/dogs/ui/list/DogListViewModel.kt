@@ -121,6 +121,6 @@ data class DogListState(
 sealed interface DogListIntent {
     data class ShowDetailAndSaveListPosition(val id: BreedId) : DogListIntent
     data class SortTypeChanged(val type: BreedSortType) : DogListIntent
-    data object Reload : DogListIntent
-    data object NavigationConsumed : DogListIntent
+    object Reload : DogListIntent
+    object NavigationConsumed : DogListIntent
 }

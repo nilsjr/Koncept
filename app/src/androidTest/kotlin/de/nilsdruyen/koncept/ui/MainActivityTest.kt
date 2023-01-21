@@ -19,6 +19,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import de.nilsdruyen.koncept.KonceptTestApplication
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.FavoritesRoute
+import de.nilsdruyen.koncept.navigation.WebRoute
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Before
 import org.junit.Rule
@@ -53,8 +56,8 @@ class MainActivityTest {
                 onAllNodesWithTag("loading").fetchSemanticsNodes().isEmpty()
             }
 
-            onNodeWithTag("breedList").assertIsDisplayed()
-            onNodeWithTag("breedList").assertIsSelected()
+            onNodeWithTag("breed_list_graph").assertIsDisplayed()
+            onNodeWithTag("breed_list_graph").assertIsSelected()
         }
     }
 
@@ -64,7 +67,7 @@ class MainActivityTest {
             composeRule.onAllNodesWithTag("loading").fetchSemanticsNodes().isEmpty()
         }
 
-        composeRule.onNodeWithTag("favorites").performClick()
+        composeRule.onNodeWithTag("favorites_graph").performClick()
 
         composeRule.waitUntil {
             composeRule.onAllNodesWithTag("loading").fetchSemanticsNodes().isEmpty()
@@ -79,7 +82,11 @@ class MainActivityTest {
         with(composeRule) {
             val macchiato = "Macchiato"
 
-            onNodeWithTag("web").performClick()
+            waitUntil {
+                onAllNodesWithTag("web_graph").fetchSemanticsNodes().size == 1
+            }
+
+            onNodeWithTag("web_graph").performClick()
 
             onWebView()
                 // Find the input element by ID
