@@ -9,7 +9,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
-                "shot" -> useModule("com.karumi:shot:${requested.version}")
+                "app.cash.paparazzi" -> useModule("app.cash.paparazzi:paparazzi-gradle-plugin:${requested.version}")
             }
         }
     }

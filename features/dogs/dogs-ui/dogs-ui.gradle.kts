@@ -3,17 +3,10 @@ plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
     id(libs.plugins.kotlin.kapt.get().pluginId)
-    id("shot")
+    id(libs.plugins.paparazzi.get().pluginId)
 }
 android {
     namespace = "de.nilsdruyen.koncept.dogs.ui"
-    defaultConfig {
-        testApplicationId = "de.nilsdruyen.koncept.dogs.test"
-        testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
-    }
-}
-shot {
-    applicationId = "de.nilsdruyen.koncept.dogs.test"
 }
 dependencies {
     implementation(libs.bundles.common)

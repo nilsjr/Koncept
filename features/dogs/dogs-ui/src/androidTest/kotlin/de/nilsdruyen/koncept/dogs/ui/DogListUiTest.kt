@@ -5,7 +5,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.karumi.shot.ScreenshotTest
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.dogs.ui.list.DogListState
@@ -14,7 +13,7 @@ import de.nilsdruyen.koncept.dogs.ui.list.PreviewDogList
 import org.junit.Rule
 import org.junit.Test
 
-class DogListUiTest : ScreenshotTest {
+class DogListUiTest : PaparazziTest() {
 
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -30,8 +29,6 @@ class DogListUiTest : ScreenshotTest {
 
         val list = composeTestRule.onNodeWithTag("dogList", useUnmergedTree = true)
         list.assertIsDisplayed()
-
-        compareScreenshot(composeTestRule)
     }
 
     @ExperimentalMaterial3Api
@@ -45,7 +42,5 @@ class DogListUiTest : ScreenshotTest {
 
         val list = composeTestRule.onNodeWithText(dog.name, useUnmergedTree = true)
         list.assertIsDisplayed()
-
-        compareScreenshot(composeTestRule)
     }
 }

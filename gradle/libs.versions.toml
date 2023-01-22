@@ -95,12 +95,12 @@ protoBuf = "3.21.2"
 protoBufPlugin = "0.8.19"
 retrofit = "2.9.0"
 robolectric = "4.9.2"
-shotPlugin = "5.14.1"
 soloader = "0.10.4"
 sonarqubePlugin = "3.4.0.2513"
 turbine = "0.12.1"
 versionCompare = "1.5.0"
 zxing = "3.5.0"
+paparazzi = "1.2.0"
 
 [libraries]
 #chrisbanes-compose-bom = { module = "dev.chrisbanes.compose:compose-bom", version.ref = "composeBom" }
@@ -280,5 +280,5 @@ kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kot
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
-shot = { id = "shot", version.ref = "shotPlugin" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqubePlugin" }
