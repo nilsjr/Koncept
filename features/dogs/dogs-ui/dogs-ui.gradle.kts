@@ -6,6 +6,7 @@ plugins {
     id("shot")
 }
 android {
+    namespace = "de.nilsdruyen.koncept.dogs.ui"
     defaultConfig {
         testApplicationId = "de.nilsdruyen.koncept.dogs.test"
         testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"

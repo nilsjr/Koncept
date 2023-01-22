@@ -4,7 +4,9 @@ plugins {
     id("de.nilsdruyen.plugin.android.library.compose")
     id(libs.plugins.kotlin.kapt.get().pluginId)
 }
-
+android {
+    namespace = "de.nilsdruyen.koncept.common.ui"
+}
 dependencies {
     implementation(projects.common.commonDomain)
 

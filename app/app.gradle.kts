@@ -9,6 +9,7 @@ plugins {
     id(libs.plugins.hilt.android.get().pluginId)
 }
 android {
+    namespace = "de.nilsdruyen.koncept"
     compileSdk = ProjectConfig.compileSdkVersion
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
