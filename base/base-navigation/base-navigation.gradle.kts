@@ -7,7 +7,7 @@ android {
     namespace = "de.nilsdruyen.koncept.base.navigation"
 }
 dependencies {
-    implementation(projects.designSystem)
+    implementation(projects.design.designSystem)
 
     api(libs.androidx.compose.navigation)
     api(libs.hilt.navigation.compose)

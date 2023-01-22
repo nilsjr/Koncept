@@ -17,13 +17,13 @@ shot {
 dependencies {
     implementation(libs.bundles.common)
 
-    implementation(projects.commonDomain)
-    implementation(projects.commonUi)
-    implementation(projects.baseNavigation)
-    implementation(projects.designSystem)
+    implementation(projects.common.commonDomain)
+    implementation(projects.common.commonUi)
+    implementation(projects.base.baseNavigation)
+    implementation(projects.design.designSystem)
 
-    implementation(projects.dogsDomain)
-    implementation(projects.dogsEntity)
+    implementation(projects.features.dogs.dogsDomain)
+    implementation(projects.features.dogs.dogsEntity)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
@@ -56,13 +56,13 @@ dependencies {
     testImplementation(libs.bundles.mockito)
     testImplementation(libs.mockito.jupiter)
 
-    testImplementation(projects.commonTest)
-    testImplementation(projects.commonRemote)
+    testImplementation(projects.common.commonTest)
+    testImplementation(projects.common.commonRemote)
 
-    testImplementation(projects.dogsTest)
-    testImplementation(projects.dogsData)
-    testImplementation(projects.dogsRemote)
-    testImplementation(projects.dogsCache)
+    testImplementation(projects.features.dogs.dogsTest)
+    testImplementation(projects.features.dogs.dogsData)
+    testImplementation(projects.features.dogs.dogsRemote)
+    testImplementation(projects.features.dogs.dogsCache)
 
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.robolectric)
@@ -86,5 +86,5 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.uiTest)
     debugImplementation(libs.androidx.compose.uiManifestTest)
 
-    androidTestImplementation(projects.dogsTest)
+    androidTestImplementation(projects.features.dogs.dogsTest)
 }

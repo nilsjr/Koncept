@@ -8,10 +8,10 @@ plugins {
 dependencies {
     implementation(libs.bundles.common)
 
-    implementation(projects.commonDomain)
-    implementation(projects.commonRemote)
-    implementation(projects.dogsData)
-    implementation(projects.dogsEntity)
+    implementation(projects.common.commonDomain)
+    implementation(projects.common.commonRemote)
+    implementation(projects.features.dogs.dogsData)
+    implementation(projects.features.dogs.dogsEntity)
 
     implementation(platform(libs.arrow.bom))
     implementation(libs.arrow.core)
@@ -24,8 +24,8 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     // testing
-    testImplementation(projects.commonTest)
-    testImplementation(projects.dogsTest)
+    testImplementation(projects.common.commonTest)
+    testImplementation(projects.features.dogs.dogsTest)
 
     testImplementation(libs.bundles.test)
 

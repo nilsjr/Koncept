@@ -17,9 +17,9 @@ tasks.withType<Test> {
 dependencies {
     implementation(libs.bundles.common)
 
-    implementation(projects.commonDomain)
-    implementation(projects.dogsDomain)
-    implementation(projects.dogsEntity)
+    implementation(projects.common.commonDomain)
+    implementation(projects.features.dogs.dogsDomain)
+    implementation(projects.features.dogs.dogsEntity)
 
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
@@ -30,8 +30,8 @@ dependencies {
     implementation(libs.arrow.core)
 
     testImplementation(libs.bundles.test)
-    testImplementation(projects.dogsTest)
-    testImplementation(projects.commonTest)
+    testImplementation(projects.features.dogs.dogsTest)
+    testImplementation(projects.common.commonTest)
 
     testImplementation(platform(libs.junit5.bom))
     testImplementation(libs.junit5.api)

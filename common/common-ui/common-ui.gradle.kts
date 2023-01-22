@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.commonDomain)
+    implementation(projects.common.commonDomain)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.foundation)

@@ -108,22 +108,22 @@ android {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
     testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
 }
 
 dependencies {
-    implementation(projects.commonDomain)
-    implementation(projects.commonRemote)
-    implementation(projects.commonUi)
-    implementation(projects.baseNavigation)
-    implementation(projects.designSystem)
+    implementation(projects.common.commonDomain)
+    implementation(projects.common.commonRemote)
+    implementation(projects.common.commonUi)
+    implementation(projects.base.baseNavigation)
+    implementation(projects.design.designSystem)
 
-    implementation(projects.dogsData)
-    implementation(projects.dogsDomain)
-    implementation(projects.dogsRemote)
-    implementation(projects.dogsCache)
-    implementation(projects.dogsUi)
+    implementation(projects.features.dogs.dogsData)
+    implementation(projects.features.dogs.dogsDomain)
+    implementation(projects.features.dogs.dogsRemote)
+    implementation(projects.features.dogs.dogsCache)
+    implementation(projects.features.dogs.dogsUi)
 
     implementation(libs.androidx.core)
     implementation(libs.kotlinx.coroutines)
@@ -183,7 +183,7 @@ dependencies {
 
     // testing
 
-    testImplementation(projects.dogsTest)
+    testImplementation(projects.features.dogs.dogsTest)
 
     testImplementation(libs.bundles.test)
     testImplementation(libs.bundles.mockito)
@@ -208,7 +208,7 @@ dependencies {
 
     // android testing
 
-    androidTestImplementation(projects.dogsTest)
+    androidTestImplementation(projects.features.dogs.dogsTest)
 
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.test.junit)

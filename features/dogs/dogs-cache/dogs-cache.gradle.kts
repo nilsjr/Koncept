@@ -12,10 +12,10 @@ android {
 dependencies {
     implementation(libs.bundles.common)
 
-    implementation(projects.commonDomain)
-    implementation(projects.commonCache)
-    implementation(projects.dogsData)
-    implementation(projects.dogsEntity)
+    implementation(projects.common.commonDomain)
+    implementation(projects.common.commonCache)
+    implementation(projects.features.dogs.dogsData)
+    implementation(projects.features.dogs.dogsEntity)
 
     implementation(platform(libs.arrow.bom))
     implementation(libs.arrow.core)

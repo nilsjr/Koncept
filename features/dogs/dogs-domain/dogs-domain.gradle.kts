@@ -7,8 +7,8 @@ plugins {
 dependencies {
     implementation(libs.bundles.common)
 
-    implementation(projects.commonDomain)
-    api(projects.dogsEntity)
+    implementation(projects.common.commonDomain)
+    api(projects.features.dogs.dogsEntity)
 
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
@@ -19,8 +19,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
 
     testImplementation(libs.bundles.test)
-    testImplementation(projects.dogsTest)
-    testImplementation(projects.commonTest)
+    testImplementation(projects.common.commonTest)
+    testImplementation(projects.features.dogs.dogsTest)
 
     testImplementation(platform(libs.junit5.bom))
     testImplementation(libs.junit5.api)
