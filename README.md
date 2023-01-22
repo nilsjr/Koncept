@@ -76,7 +76,7 @@ Here what is interesting:
 3. Shot for compose screenshot testing
 
 ## ui tests
-
+with paparazzi: [https://github.com/cashapp/paparazzi](https://github.com/cashapp/paparazzi)
 with shot: [https://github.com/pedrovgs/Shot](https://github.com/pedrovgs/Shot)
 
 For android 10 or higher
@@ -92,6 +92,8 @@ gradle debugExecuteScreenshotTests -Precord
 gradle debugExecuteScreenshotTests
 
 # ToDos
+- test pyramid implementation
+- offline first poc
 - kover usage
 - moshix usage
 
