@@ -13,7 +13,7 @@ import de.nilsdruyen.koncept.dogs.ui.list.PreviewDogList
 import org.junit.Rule
 import org.junit.Test
 
-class DogListUiTest : PaparazziTest() {
+class DogListUiTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()

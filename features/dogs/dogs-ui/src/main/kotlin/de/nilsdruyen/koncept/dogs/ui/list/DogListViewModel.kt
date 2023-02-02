@@ -75,7 +75,7 @@ class DogListViewModel @Inject constructor(
 //                }.map { dogMap ->
 //                    dogMap.map { entry -> DogGroup(entry.key.toString(), entry.value) }
 //                }
-            }.stateIn(viewModelScope).collect { result ->
+            }.collect { result ->
                 result.fold(this@DogListViewModel::handleError) {
                     log("set list ${it.size}")
                     updateState {

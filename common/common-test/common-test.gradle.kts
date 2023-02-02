@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.common.commonDomain)
+    
     implementation(libs.junit4)
 
     implementation(platform(libs.junit5.bom))
