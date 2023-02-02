@@ -6,6 +6,7 @@ import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.test.CoroutineTest
+import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher
@@ -20,7 +21,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-@ExtendWith(MockitoExtension::class)
+@ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
 internal class DogListViewModelTest : CoroutineTest {
 
     override lateinit var testScope: TestScope

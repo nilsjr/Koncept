@@ -18,9 +18,6 @@ dependencies {
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.constraintlayout.compose)
 
-    implementation(libs.androidx.compose.uiToolingPreview)
-    debugImplementation(libs.androidx.compose.uiTooling)
-
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }

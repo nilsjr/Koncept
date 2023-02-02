@@ -1,3 +1,6 @@
 package de.nilsdruyen.koncept
 
-class KonceptTestApplication : KonceptApplication()
+import dagger.hilt.android.testing.CustomTestApplication
+
+@CustomTestApplication(BaseKonceptApplication::class)
+interface KonceptTestApplication

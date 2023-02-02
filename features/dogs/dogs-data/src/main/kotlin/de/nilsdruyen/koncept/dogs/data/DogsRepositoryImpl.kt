@@ -19,7 +19,6 @@ import javax.inject.Inject
 class DogsRepositoryImpl @Inject constructor(
     private val dogsRemoteDataSource: DogsRemoteDataSource,
     private val dogsCacheDataSource: DogsCacheDataSource,
-    @MainDispatcher private val dispatcher: CoroutineDispatcher,
 ) : DogsRepository {
 
     override fun getList(): Flow<Either<DataSourceError, List<Dog>>> {
@@ -37,7 +36,7 @@ class DogsRepositoryImpl @Inject constructor(
                 )
             }
             emitAll(dogsCacheDataSource.getDogList())
-        }.distinctUntilChanged().flowOn(dispatcher)
+        }.distinctUntilChanged()
     }
 
     override suspend fun getImagesForBreed(breedId: Int): BreedImages {

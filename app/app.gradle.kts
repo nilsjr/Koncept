@@ -207,17 +207,21 @@ dependencies {
     testImplementation(platform(libs.square.okhttp.bom))
     testImplementation(libs.square.okhttp.mockwebserver)
 
+    testImplementation(libs.androidx.room.testing)
+
     // android testing
 
     androidTestImplementation(projects.features.dogs.dogsTest)
 
-    androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.rules)
+
     androidTestImplementation(libs.androidx.test.espresso)
     androidTestImplementation(libs.androidx.test.espresso.intents)
     androidTestImplementation(libs.androidx.test.espresso.web)
+
+    androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.compose.uiTest)
 
     androidTestImplementation(libs.hilt.test)
