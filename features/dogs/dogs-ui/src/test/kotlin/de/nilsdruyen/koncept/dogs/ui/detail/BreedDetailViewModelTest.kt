@@ -6,11 +6,8 @@ import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetBreedImageListUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.UpdateFavoriteBreedUseCase
-import de.nilsdruyen.koncept.test.CoroutineTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,12 +18,8 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 
-@ExperimentalCoroutinesApi
-@ExtendWith(MockitoExtension::class)
-internal class BreedDetailViewModelTest : CoroutineTest {
-
-    override lateinit var testScope: TestScope
-    override lateinit var dispatcher: TestDispatcher
+@ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
+internal class BreedDetailViewModelTest {
 
     @Mock
     lateinit var getBreedImageListUseCase: GetBreedImageListUseCase
@@ -50,7 +43,7 @@ internal class BreedDetailViewModelTest : CoroutineTest {
     }
 
     @Test
-    fun `Load empty breed image without error`() = testScope.runTest {
+    fun `Load empty breed image without error`() = runTest {
         whenever(getBreedImageListUseCase.execute(any())) doReturn Either.Right(emptyList())
         whenever(isFavoriteFlowUseCase.execute(any())) doReturn flowOf(true)
 

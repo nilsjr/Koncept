@@ -57,14 +57,15 @@ dependencies {
     testImplementation(projects.features.dogs.dogsData)
     testImplementation(projects.features.dogs.dogsRemote)
     testImplementation(projects.features.dogs.dogsCache)
+    testImplementation(projects.features.dogs.dogsTesting)
 
-    testImplementation(libs.androidx.test.core)
+//    testImplementation(libs.androidx.test.core)
     testImplementation(libs.robolectric)
-    testImplementation(libs.hilt.test)
-    kaptTest(libs.hilt.compiler)
+    testImplementation(libs.hilt.android.test)
+//    kaptTest(libs.hilt.compiler)
+    kaptTest(libs.hilt.android.compiler)
 
     testImplementation(libs.square.retrofit)
-
     testImplementation(platform(libs.square.okhttp.bom))
     testImplementation(libs.square.okhttp)
     testImplementation(libs.square.okhttp.interceptor)
@@ -74,7 +75,7 @@ dependencies {
     androidTestImplementation(libs.bundles.android.test)
     androidTestImplementation(libs.androidx.test.runner)
 
-    androidTestImplementation(libs.hilt.test)
+    androidTestImplementation(libs.hilt.android.test)
     kaptAndroidTest(libs.hilt.compiler)
 
     androidTestImplementation(libs.androidx.compose.uiTest)

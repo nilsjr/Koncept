@@ -1,26 +1,26 @@
 package de.nilsdruyen.koncept.dogs.remote
 
 import arrow.core.Either
-import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.test.CoroutineTest
+import de.nilsdruyen.koncept.domain.DispatcherProvider
+import de.nilsdruyen.koncept.test.CoroutinesTestExtension
+import de.nilsdruyen.koncept.test.InjectTestDispatcherProvider
 import de.nilsdruyen.koncept.test.utils.parseList
-import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 
-@ExtendWith(MockitoExtension::class)
-internal class DogsRemoteDataSourceImplTest : CoroutineTest {
+@ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
+internal class DogsRemoteDataSourceImplTest {
 
-    override lateinit var testScope: TestScope
-    override lateinit var dispatcher: TestDispatcher
+    @InjectTestDispatcherProvider
+    lateinit var dispatcherProvider: DispatcherProvider
 
     @Mock
     lateinit var api: DogsApi
@@ -29,7 +29,7 @@ internal class DogsRemoteDataSourceImplTest : CoroutineTest {
 
     @BeforeEach
     fun setup() {
-        tested = DogsRemoteDataSourceImpl(api, dispatcher)
+        tested = DogsRemoteDataSourceImpl(api, dispatcherProvider.io)
     }
 
     @Test
@@ -37,13 +37,17 @@ internal class DogsRemoteDataSourceImplTest : CoroutineTest {
         val dogEntityList = "/dog-list.json".parseList(DogWebEntity::class.java)
         val response: Either<DataSourceError, List<DogWebEntity>> = Either.Right(dogEntityList)
 
-        whenever(api.getBreeds()).thenReturn(response)
+        whenever(api.getBreeds()) doReturn response
 
-        val result = tested.getList().bind()
-
-        assert(result.size == dogEntityList.size)
-        dogEntityList.forEachIndexed { index, dog ->
-            assert(dog.id == result[index].id.value)
-        }
+        tested.getList()
+            .onRight {
+                assert(it.size == dogEntityList.size)
+                dogEntityList.forEachIndexed { index, dog ->
+                    assert(dog.id == it[index].id.value)
+                }
+            }
+            .onLeft {
+                error("error $it not expected")
+            }
     }
 }

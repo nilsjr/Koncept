@@ -1,16 +1,7 @@
 package de.nilsdruyen.koncept.data
 
-import androidx.room.testing.MigrationTestHelper
-import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
-import java.io.IOException
-
-//@RunWith(Parameterized::class)
-//internal class KonceptDatabaseTest(val startVersion: Int, val endVersion: Int) {
+// @RunWith(Parameterized::class)
+// internal class KonceptDatabaseTest(val startVersion: Int, val endVersion: Int) {
 //
 //    private val name = "migration-test"
 //
@@ -45,4 +36,4 @@ import java.io.IOException
 //            }
 //        }
 //    }
-//}
+// }

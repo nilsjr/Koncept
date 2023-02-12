@@ -16,7 +16,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -76,12 +75,17 @@ class DogListViewModel @Inject constructor(
 //                    dogMap.map { entry -> DogGroup(entry.key.toString(), entry.value) }
 //                }
             }.collect { result ->
-                result.fold(this@DogListViewModel::handleError) {
-                    log("set list ${it.size}")
-                    updateState {
-                        copy(isLoading = false, list = it.toImmutable())
+                result
+                    .onLeft {
+                        handleError(it)
                     }
-                }
+                    .onRight {
+                        log("set list ${it.size}")
+                        println("set list ${it.size}")
+                        updateState {
+                            copy(isLoading = false, list = it.toImmutable())
+                        }
+                    }
             }
         }
     }

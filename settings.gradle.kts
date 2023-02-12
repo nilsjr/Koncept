@@ -34,6 +34,7 @@ include(":features:dogs:dogs-cache")
 include(":features:dogs:dogs-remote")
 include(":features:dogs:dogs-ui")
 include(":features:dogs:dogs-test")
+include(":features:dogs:dogs-testing")
 
 // common modules
 include(":common:common-domain")

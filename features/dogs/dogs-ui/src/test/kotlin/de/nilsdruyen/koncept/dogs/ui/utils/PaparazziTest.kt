@@ -1,9 +1,9 @@
 package de.nilsdruyen.koncept.dogs.ui.utils
 
 import app.cash.paparazzi.DeviceConfig
-import org.junit.Rule
 import app.cash.paparazzi.Paparazzi
 import com.android.ide.common.rendering.api.SessionParams
+import org.junit.Rule
 
 open class PaparazziTest {
 

@@ -4,11 +4,8 @@ import app.cash.turbine.test
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.dogs.test.DogFactory
-import de.nilsdruyen.koncept.test.CoroutineTest
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -16,13 +13,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 
 @ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
-internal class DogsRepositoryImplTest : CoroutineTest {
-
-    override lateinit var testScope: TestScope
-    override lateinit var dispatcher: TestDispatcher
+internal class DogsRepositoryImplTest {
 
     @Mock
     lateinit var dogsRemoteDataSource: DogsRemoteDataSource
@@ -34,7 +29,7 @@ internal class DogsRepositoryImplTest : CoroutineTest {
 
     @BeforeEach
     fun setup() {
-        tested = DogsRepositoryImpl(dogsRemoteDataSource, dogsCacheDataSource, dispatcher)
+        tested = DogsRepositoryImpl(dogsRemoteDataSource, dogsCacheDataSource)
     }
 
     @Nested
@@ -44,8 +39,9 @@ internal class DogsRepositoryImplTest : CoroutineTest {
         fun `Given cache is empty & remote not Then it should return an empty list & a filled list`() = runTest {
             // given
             val remote = Either.Right(List(2) { DogFactory.build() })
-            whenever(dogsCacheDataSource.getDogList()).thenReturn(flowOf(Either.Right(emptyList()), remote))
-            whenever(dogsRemoteDataSource.getList()).thenReturn(remote)
+
+            whenever(dogsCacheDataSource.getDogList()) doReturn flowOf(Either.Right(emptyList()), remote)
+            whenever(dogsRemoteDataSource.getList()) doReturn remote
 
             // when
             tested.getList().test {
@@ -75,8 +71,8 @@ internal class DogsRepositoryImplTest : CoroutineTest {
         fun `Given cache & remote returns same values Then it should emit only once`() = runTest {
             val dogList = DogFactory.buildList(4)
 
-            whenever(dogsCacheDataSource.getDogList()).thenReturn(flowOf(Either.Right(dogList)))
-            whenever(dogsRemoteDataSource.getList()).thenReturn(Either.Right(dogList))
+            whenever(dogsCacheDataSource.getDogList()) doReturn flowOf(Either.Right(dogList))
+            whenever(dogsRemoteDataSource.getList()) doReturn Either.Right(dogList)
 
             tested.getList().test {
                 with(awaitItem()) {

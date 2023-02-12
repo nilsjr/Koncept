@@ -3,17 +3,6 @@ plugins {
     id("de.nilsdruyen.plugin.kotlin")
     id(libs.plugins.kotlin.kapt.get().pluginId)
 }
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-    failFast = true
-    testLogging {
-        events = setOfNotNull(
-            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-        )
-    }
-}
-
 dependencies {
     implementation(libs.bundles.common)
 

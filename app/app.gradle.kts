@@ -197,7 +197,7 @@ dependencies {
 
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)
-    testImplementation(libs.hilt.test)
+    testImplementation(libs.hilt.android.test)
     kaptTest(libs.hilt.compiler)
 
     testImplementation(platform(libs.compose.bom))
@@ -224,7 +224,7 @@ dependencies {
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.compose.uiTest)
 
-    androidTestImplementation(libs.hilt.test)
+    androidTestImplementation(libs.hilt.android.test)
     kaptAndroidTest(libs.hilt.compiler)
 
     androidTestUtil(libs.androidx.test.orchestrator)

@@ -16,8 +16,6 @@ dependencies {
     implementation(platform(libs.arrow.bom))
     implementation(libs.arrow.core)
 
-    implementation(libs.kotlinx.coroutines)
-
     testImplementation(libs.bundles.test)
     testImplementation(projects.common.commonTest)
     testImplementation(projects.features.dogs.dogsTest)
