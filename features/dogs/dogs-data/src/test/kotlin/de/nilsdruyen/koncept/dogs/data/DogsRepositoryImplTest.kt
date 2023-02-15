@@ -2,7 +2,9 @@ package de.nilsdruyen.koncept.dogs.data
 
 import app.cash.turbine.test
 import arrow.core.Either
+import arrow.core.right
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
+import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
@@ -40,7 +42,7 @@ internal class DogsRepositoryImplTest {
             // given
             val remote = Either.Right(List(2) { DogFactory.build() })
 
-            whenever(dogsCacheDataSource.getDogList()) doReturn flowOf(Either.Right(emptyList()), remote)
+            whenever(dogsCacheDataSource.getDogList()) doReturn flowOf(emptyList<Dog>().right()) doReturn flowOf(remote)
             whenever(dogsRemoteDataSource.getList()) doReturn remote
 
             // when
@@ -50,7 +52,7 @@ internal class DogsRepositoryImplTest {
                     println("item $this")
 
                     assert(this.isRight())
-                    fold({}) {
+                    onRight {
                         assert(it.isEmpty())
                     }
                 }
@@ -58,7 +60,7 @@ internal class DogsRepositoryImplTest {
                     println("item $this")
 
                     assert(this.isRight())
-                    fold({}) {
+                    onRight {
                         assert(it.isNotEmpty())
                         assert(it.size == 2)
                     }

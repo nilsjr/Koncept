@@ -24,8 +24,8 @@ class DogsRepositoryImpl @Inject constructor(
             if (cache != null) emit(cache)
             emit(
                 dogsRemoteDataSource.getList().onRight {
-                dogsCacheDataSource.setDogList(it)
-            }
+                    dogsCacheDataSource.setDogList(it)
+                }
             )
             emitAll(dogsCacheDataSource.getDogList())
         }.map {
