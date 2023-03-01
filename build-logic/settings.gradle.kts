@@ -1,11 +1,19 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-dependencyResolutionManagement {
+pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         google()
         mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositories {
         mavenLocal()
+        gradlePluginPortal()
+        google()
+        mavenCentral()
     }
     versionCatalogs {
         create("libs") {

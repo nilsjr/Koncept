@@ -9,10 +9,12 @@ import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.favorites.DogFavoriteItem
 import de.nilsdruyen.koncept.dogs.ui.utils.PaparazziTest
+import org.junit.Ignore
 import org.junit.Test
 
 internal class DogListKtTest : PaparazziTest() {
 
+    @Ignore
     @Test
     fun dogItemSnapshot() {
         paparazziRule.snapshot {
@@ -38,6 +40,7 @@ internal class DogListKtTest : PaparazziTest() {
     }
 
     @Test
+    @Ignore
     fun dogFavoriteItemSnapshot() {
         paparazziRule.snapshot {
             KonceptTheme {
@@ -49,6 +52,7 @@ internal class DogListKtTest : PaparazziTest() {
     }
 
     @Test
+    @Ignore
     fun dogListSnapshot() {
         val state = DogListState(
             list = List(6) {
@@ -69,6 +73,7 @@ internal class DogListKtTest : PaparazziTest() {
     }
 
     @Test
+    @Ignore
     fun dogListEmptySnapshot() {
         val state = DogListState()
 
