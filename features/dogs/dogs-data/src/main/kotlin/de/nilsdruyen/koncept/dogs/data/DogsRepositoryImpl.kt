@@ -5,39 +5,33 @@ import de.nilsdruyen.koncept.dogs.domain.BreedImages
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
-import de.nilsdruyen.koncept.domain.Logger.Companion.e
-import de.nilsdruyen.koncept.domain.annotations.MainDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DogsRepositoryImpl @Inject constructor(
     private val dogsRemoteDataSource: DogsRemoteDataSource,
     private val dogsCacheDataSource: DogsCacheDataSource,
-    @MainDispatcher private val dispatcher: CoroutineDispatcher,
 ) : DogsRepository {
 
     override fun getList(): Flow<Either<DataSourceError, List<Dog>>> {
         return flow {
             val cache = dogsCacheDataSource.getDogList().firstOrNull()
             if (cache != null) emit(cache)
-            dogsRemoteDataSource.getList().also { result ->
-                result.fold(
-                    ifLeft = {
-                        e("$it - ${it.message}")
-                    },
-                    ifRight = {
-                        dogsCacheDataSource.setDogList(it)
-                    }
-                )
-            }
+            emit(
+                dogsRemoteDataSource.getList().onRight {
+                    dogsCacheDataSource.setDogList(it)
+                }
+            )
             emitAll(dogsCacheDataSource.getDogList())
-        }.distinctUntilChanged().flowOn(dispatcher)
+        }.map {
+            println("emit $it")
+            it
+        }.distinctUntilChanged()
     }
 
     override suspend fun getImagesForBreed(breedId: Int): BreedImages {

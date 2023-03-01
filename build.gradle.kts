@@ -7,7 +7,7 @@ plugins {
 
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.gradleVersions)
-    alias(libs.plugins.shot) apply false
+    alias(libs.plugins.paparazzi) apply false
 
     id("de.nilsdruyen.plugin.root")
 }

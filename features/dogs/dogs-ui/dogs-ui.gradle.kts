@@ -3,36 +3,31 @@ plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
     id(libs.plugins.kotlin.kapt.get().pluginId)
-    id("shot")
+    id(libs.plugins.paparazzi.get().pluginId)
 }
 android {
-    defaultConfig {
-        testApplicationId = "de.nilsdruyen.koncept.dogs.test"
-        testInstrumentationRunner = "de.nilsdruyen.koncept.dogs.ui.CustomTestRunner"
-    }
-}
-shot {
-    applicationId = "de.nilsdruyen.koncept.dogs.test"
+    namespace = "de.nilsdruyen.koncept.dogs.ui"
 }
 dependencies {
     implementation(libs.bundles.common)
 
-    implementation(projects.commonDomain)
-    implementation(projects.commonUi)
-    implementation(projects.baseNavigation)
-    implementation(projects.designSystem)
+    implementation(projects.common.commonDomain)
+    implementation(projects.common.commonUi)
+    implementation(projects.base.baseNavigation)
+    implementation(projects.design.designSystem)
 
-    implementation(projects.dogsDomain)
-    implementation(projects.dogsEntity)
+    implementation(projects.features.dogs.dogsDomain)
+    implementation(projects.features.dogs.dogsEntity)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.lifecycle.compose)
 
+    implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.androidx.compose.viewmodel)
-    implementation(libs.androidx.compose.constraint)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.coilCompose)
 
@@ -55,21 +50,22 @@ dependencies {
     testImplementation(libs.bundles.mockito)
     testImplementation(libs.mockito.jupiter)
 
-    testImplementation(projects.commonTest)
-    testImplementation(projects.commonRemote)
+    testImplementation(projects.common.commonTest)
+    testImplementation(projects.common.commonRemote)
 
-    testImplementation(projects.dogsTest)
-    testImplementation(projects.dogsData)
-    testImplementation(projects.dogsRemote)
-    testImplementation(projects.dogsCache)
+    testImplementation(projects.features.dogs.dogsTest)
+    testImplementation(projects.features.dogs.dogsData)
+    testImplementation(projects.features.dogs.dogsRemote)
+    testImplementation(projects.features.dogs.dogsCache)
+    testImplementation(projects.features.dogs.dogsTesting)
 
-    testImplementation(libs.androidx.test.core)
+//    testImplementation(libs.androidx.test.core)
     testImplementation(libs.robolectric)
-    testImplementation(libs.hilt.test)
-    kaptTest(libs.hilt.compiler)
+    testImplementation(libs.hilt.android.test)
+//    kaptTest(libs.hilt.compiler)
+    kaptTest(libs.hilt.android.compiler)
 
     testImplementation(libs.square.retrofit)
-
     testImplementation(platform(libs.square.okhttp.bom))
     testImplementation(libs.square.okhttp)
     testImplementation(libs.square.okhttp.interceptor)
@@ -79,11 +75,12 @@ dependencies {
     androidTestImplementation(libs.bundles.android.test)
     androidTestImplementation(libs.androidx.test.runner)
 
-    androidTestImplementation(libs.hilt.test)
+    androidTestImplementation(libs.hilt.android.test)
     kaptAndroidTest(libs.hilt.compiler)
 
     androidTestImplementation(libs.androidx.compose.uiTest)
     debugImplementation(libs.androidx.compose.uiManifestTest)
 
-    androidTestImplementation(projects.dogsTest)
+    androidTestImplementation(projects.features.dogs.dogsTest)
+    androidTestImplementation(libs.paparazzi)
 }

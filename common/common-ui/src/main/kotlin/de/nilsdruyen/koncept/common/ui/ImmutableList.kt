@@ -6,8 +6,7 @@ import androidx.compose.runtime.Immutable
 @Deprecated("use kotlinx.collections.immutable @see https://github.com/Kotlin/kotlinx.collections.immutable")
 data class ImmutableList<T>(val items: List<T>) {
 
-    val size
-        get() = items.size
+    val size = items.size
 }
 
 fun <T> emptyImmutableList(): ImmutableList<T> = ImmutableList(emptyList())

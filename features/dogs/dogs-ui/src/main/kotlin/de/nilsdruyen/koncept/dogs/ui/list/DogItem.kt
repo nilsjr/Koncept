@@ -80,7 +80,7 @@ fun DogItem(
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-private fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog: Dog) {
+fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog: Dog) {
     KonceptTheme {
         DogItem(dog)
     }

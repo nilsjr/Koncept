@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.common.commonDomain)
+
     implementation(libs.junit4)
 
     implementation(platform(libs.junit5.bom))
@@ -10,6 +12,7 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutines.test)
+    implementation(libs.turbine)
 
     implementation(libs.square.moshi)
     implementation(libs.square.moshi.kotlin)

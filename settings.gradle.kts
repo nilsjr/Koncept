@@ -9,7 +9,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
-                "shot" -> useModule("com.karumi:shot:${requested.version}")
+                "app.cash.paparazzi" -> useModule("app.cash.paparazzi:paparazzi-gradle-plugin:${requested.version}")
             }
         }
     }
@@ -19,6 +19,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -27,46 +28,36 @@ includeBuild("build-logic")
 include(":app")
 
 // dogs feature
-include(":dogs-domain")
-include(":dogs-entity")
-include(":dogs-data")
-include(":dogs-cache")
-include(":dogs-remote")
-include(":dogs-ui")
-include(":dogs-test")
+include(":features:dogs:dogs-domain")
+include(":features:dogs:dogs-entity")
+include(":features:dogs:dogs-data")
+include(":features:dogs:dogs-cache")
+include(":features:dogs:dogs-remote")
+include(":features:dogs:dogs-ui")
+include(":features:dogs:dogs-test")
+include(":features:dogs:dogs-testing")
 
 // common modules
-include(":common-domain")
-include(":common-remote")
-include(":common-cache")
-include(":common-ui")
-include(":common-test")
+include(":common:common-domain")
+include(":common:common-remote")
+include(":common:common-cache")
+include(":common:common-ui")
+include(":common:common-test")
 
 // base modules
-include(":base-navigation")
+include(":base:base-navigation")
 
 // design
-include(":design-system")
+include(":design:design-system")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-val skipConfiguration = listOf("app", "buildSrc")
-rootProject.children.forEach {
-    it.buildFileName = "${it.name}.gradle.kts"
-    if (skipConfiguration.contains(it.name)) return@forEach
-    val feature = it.name.split("-").first()
-    when {
-        it.name.startsWith("common") -> {
-            it.projectDir = File(rootDir, "common/${it.name}")
-        }
-        it.name.startsWith("base") -> {
-            it.projectDir = File(rootDir, "base/${it.name}")
-        }
-        it.name.startsWith("design") -> {
-            it.projectDir = File(rootDir, "design/${it.name}")
-        }
-        else -> {
-            it.projectDir = File(rootDir, "features/$feature/${it.name}")
-        }
-    }
+tailrec fun Collection<ProjectDescriptor>.traverse(action: (ProjectDescriptor) -> Unit) {
+    if (isEmpty()) return
+    flatMap {
+        action(it)
+        it.children
+    }.traverse(action)
 }
+
+rootProject.children.traverse { it.buildFileName = "${it.name}.gradle.kts" }

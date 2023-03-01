@@ -3,23 +3,12 @@ plugins {
     id("de.nilsdruyen.plugin.kotlin")
     id(libs.plugins.kotlin.kapt.get().pluginId)
 }
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-    failFast = true
-    testLogging {
-        events = setOfNotNull(
-            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-        )
-    }
-}
-
 dependencies {
     implementation(libs.bundles.common)
 
-    implementation(projects.commonDomain)
-    implementation(projects.dogsDomain)
-    implementation(projects.dogsEntity)
+    implementation(projects.common.commonDomain)
+    implementation(projects.features.dogs.dogsDomain)
+    implementation(projects.features.dogs.dogsEntity)
 
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
@@ -30,8 +19,8 @@ dependencies {
     implementation(libs.arrow.core)
 
     testImplementation(libs.bundles.test)
-    testImplementation(projects.dogsTest)
-    testImplementation(projects.commonTest)
+    testImplementation(projects.features.dogs.dogsTest)
+    testImplementation(projects.common.commonTest)
 
     testImplementation(platform(libs.junit5.bom))
     testImplementation(libs.junit5.api)

@@ -30,15 +30,12 @@ object RemoteModule {
     fun provideHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
             chain.run {
-                val request = if (BuildConfig.DOG_API_KEY == "null") {
-                    request()
-                } else {
+                proceed(
                     request()
                         .newBuilder()
                         .addHeader("x-api-key", BuildConfig.DOG_API_KEY)
                         .build()
-                }
-                proceed(request)
+                )
             }
         }
     }

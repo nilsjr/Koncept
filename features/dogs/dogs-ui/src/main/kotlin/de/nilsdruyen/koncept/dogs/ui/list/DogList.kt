@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Badge
@@ -39,11 +37,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.dropBottomPadding
 import de.nilsdruyen.koncept.common.ui.isEmpty
+import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedId
@@ -53,7 +50,6 @@ import de.nilsdruyen.koncept.dogs.ui.components.Loading
 import de.nilsdruyen.koncept.domain.sendIn
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DogListScreen(
     sortTypeState: State<Int>,
@@ -98,10 +94,8 @@ fun DogListScreen(
     showSortDialog: () -> Unit = {},
     reloadList: () -> Unit = {},
 ) {
-    val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
-    val pullRefreshState = rememberPullRefreshState(refreshing = state.isLoading, onRefresh = reloadList)
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -139,16 +133,16 @@ fun DogListScreen(
 //        },
 //        floatingActionButtonPosition = FabPosition.End,
         content = { padding ->
-            Crossfade(targetState = state, Modifier.padding(padding.dropBottomPadding())) { state ->
+            val containerModifier = Modifier.padding(padding.dropBottomPadding())
+            Crossfade(targetState = state) { state ->
                 when {
-                    state.isLoading && state.list.isEmpty() -> Loading()
-                    state.list.isEmpty() -> DogListEmpty()
+                    state.isLoading && state.list.isEmpty() -> Loading(containerModifier)
+                    state.list.isEmpty() -> DogListEmpty(containerModifier)
                     else -> DogList(
-                        scrollState = scrollState,
-                        pullRefreshState = pullRefreshState,
-                        isRefreshing = state.isLoading,
-                        list = state.list,
+                        state = state,
                         showDog = { showDog(it) },
+                        reloadList = reloadList,
+                        modifier = containerModifier,
                     )
                 }
             }
@@ -171,20 +165,22 @@ fun DogListEmpty(modifier: Modifier = Modifier) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DogList(
-    scrollState: LazyListState,
-    pullRefreshState: PullRefreshState,
-    isRefreshing: Boolean,
-    list: ImmutableList<Dog>,
+    state: DogListState,
     showDog: (Dog) -> Unit,
+    reloadList: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    Box(Modifier.pullRefresh(pullRefreshState)) {
+    val scrollState = rememberLazyListState()
+    val pullRefreshState = rememberPullRefreshState(refreshing = state.isLoading, onRefresh = reloadList)
+
+    Box(modifier.pullRefresh(pullRefreshState)) {
         LazyColumn(
             state = scrollState,
             modifier = Modifier
                 .fillMaxSize()
                 .testTag("dogList")
         ) {
-            items(list.items, key = { it.id.value }) { dog ->
+            items(state.list.items, key = { it.id.value }) { dog ->
                 DogItem(
                     dog = dog,
                     modifier = Modifier.animateItemPlacement(),
@@ -211,7 +207,7 @@ fun DogList(
 //            }
 //        }
         PullRefreshIndicator(
-            refreshing = isRefreshing,
+            refreshing = state.isLoading,
             state = pullRefreshState,
             modifier = Modifier.align(Alignment.TopCenter)
         )
@@ -231,6 +227,11 @@ fun PreviewDogList(@PreviewParameter(DogListPreviewProvider::class) listState: D
 class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
     override val values: Sequence<DogListState> = sequenceOf(
         DogListState(),
+        DogListState(
+            list = List(6) {
+                Dog(BreedId(it), "Breed $it")
+            }.toImmutable()
+        )
 //        DogListState(
 //            List(4) {
 //                DogGroup(
@@ -240,5 +241,6 @@ class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
 //                    }
 //                )
 //            }.toImmutable()
+//        )
     )
 }

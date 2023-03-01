@@ -1,4 +1,5 @@
 import de.nilsdruyen.app.ProjectConfig
+import de.nilsdruyen.app.utils.CiUtils
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -8,6 +9,7 @@ plugins {
     id(libs.plugins.hilt.android.get().pluginId)
 }
 android {
+    namespace = "de.nilsdruyen.koncept"
     compileSdk = ProjectConfig.compileSdkVersion
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
@@ -23,7 +25,7 @@ android {
         buildConfigField(
             "String",
             "DOG_API_KEY",
-            "\"${findStringProperty("dogApiKey")}\""
+            "\"${findStringProperty("dogApiKey", "DOG_API_KEY")}\""
         )
     }
     signingConfigs {
@@ -97,29 +99,32 @@ android {
     }
     packagingOptions {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "META-INF/LICENSE*"
+            )
         }
     }
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
     testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
 }
 
 dependencies {
-    implementation(projects.commonDomain)
-    implementation(projects.commonRemote)
-    implementation(projects.commonUi)
-    implementation(projects.baseNavigation)
-    implementation(projects.designSystem)
+    implementation(projects.common.commonDomain)
+    implementation(projects.common.commonRemote)
+    implementation(projects.common.commonUi)
+    implementation(projects.base.baseNavigation)
+    implementation(projects.design.designSystem)
 
-    implementation(projects.dogsData)
-    implementation(projects.dogsDomain)
-    implementation(projects.dogsRemote)
-    implementation(projects.dogsCache)
-    implementation(projects.dogsUi)
+    implementation(projects.features.dogs.dogsData)
+    implementation(projects.features.dogs.dogsDomain)
+    implementation(projects.features.dogs.dogsRemote)
+    implementation(projects.features.dogs.dogsCache)
+    implementation(projects.features.dogs.dogsUi)
 
     implementation(libs.androidx.core)
     implementation(libs.kotlinx.coroutines)
@@ -130,12 +135,13 @@ dependencies {
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.compose.activity)
 
+    implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material.icons)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.navigation)
-    implementation(libs.androidx.compose.constraint)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTooling)
@@ -178,7 +184,7 @@ dependencies {
 
     // testing
 
-    testImplementation(projects.dogsTest)
+    testImplementation(projects.features.dogs.dogsTest)
 
     testImplementation(libs.bundles.test)
     testImplementation(libs.bundles.mockito)
@@ -191,28 +197,34 @@ dependencies {
 
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)
-    testImplementation(libs.hilt.test)
+    testImplementation(libs.hilt.android.test)
     kaptTest(libs.hilt.compiler)
 
+    testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
     debugImplementation(libs.androidx.compose.uiManifestTest)
 
     testImplementation(platform(libs.square.okhttp.bom))
     testImplementation(libs.square.okhttp.mockwebserver)
 
+    testImplementation(libs.androidx.room.testing)
+
     // android testing
 
-    androidTestImplementation(projects.dogsTest)
+    androidTestImplementation(projects.features.dogs.dogsTest)
 
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.rules)
+
     androidTestImplementation(libs.androidx.test.espresso)
     androidTestImplementation(libs.androidx.test.espresso.intents)
     androidTestImplementation(libs.androidx.test.espresso.web)
+
+    androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.compose.uiTest)
 
-    androidTestImplementation(libs.hilt.test)
+    androidTestImplementation(libs.hilt.android.test)
     kaptAndroidTest(libs.hilt.compiler)
 
     androidTestUtil(libs.androidx.test.orchestrator)
@@ -221,9 +233,13 @@ dependencies {
     androidTestImplementation(libs.robolectric.annotations)
 }
 
-fun Project.findStringProperty(propertyName: String): String? {
-    return findProperty(propertyName) as String? ?: run {
-        println("$propertyName missing in gradle.properties")
-        null
+fun Project.findStringProperty(propertyName: String, ciPropertyName: String = propertyName): String? {
+    return if (CiUtils.isCI) {
+        System.getenv(ciPropertyName)
+    } else {
+        findProperty(propertyName) as String? ?: run {
+            println("$propertyName missing in gradle.properties")
+            null
+        }
     }
 }

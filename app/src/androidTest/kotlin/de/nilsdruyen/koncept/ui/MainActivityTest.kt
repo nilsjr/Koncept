@@ -18,19 +18,14 @@ import androidx.test.espresso.web.webdriver.Locator
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import de.nilsdruyen.koncept.KonceptTestApplication
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.annotation.LooperMode
 
-@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [24], application = KonceptTestApplication::class)
-@LooperMode(LooperMode.Mode.PAUSED)
+@HiltAndroidTest
 class MainActivityTest {
 
     @get:Rule(order = 0)
@@ -53,8 +48,8 @@ class MainActivityTest {
                 onAllNodesWithTag("loading").fetchSemanticsNodes().isEmpty()
             }
 
-            onNodeWithTag("breedList").assertIsDisplayed()
-            onNodeWithTag("breedList").assertIsSelected()
+            onNodeWithTag("breed_list_graph").assertIsDisplayed()
+            onNodeWithTag("breed_list_graph").assertIsSelected()
         }
     }
 
@@ -64,7 +59,7 @@ class MainActivityTest {
             composeRule.onAllNodesWithTag("loading").fetchSemanticsNodes().isEmpty()
         }
 
-        composeRule.onNodeWithTag("favorites").performClick()
+        composeRule.onNodeWithTag("favorites_graph").performClick()
 
         composeRule.waitUntil {
             composeRule.onAllNodesWithTag("loading").fetchSemanticsNodes().isEmpty()
@@ -79,7 +74,11 @@ class MainActivityTest {
         with(composeRule) {
             val macchiato = "Macchiato"
 
-            onNodeWithTag("web").performClick()
+            waitUntil {
+                onAllNodesWithTag("web_graph").fetchSemanticsNodes().size == 1
+            }
+
+            onNodeWithTag("web_graph").performClick()
 
             onWebView()
                 // Find the input element by ID

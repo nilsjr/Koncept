@@ -16,7 +16,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -75,13 +74,18 @@ class DogListViewModel @Inject constructor(
 //                }.map { dogMap ->
 //                    dogMap.map { entry -> DogGroup(entry.key.toString(), entry.value) }
 //                }
-            }.stateIn(viewModelScope).collect { result ->
-                result.fold(this@DogListViewModel::handleError) {
-                    log("set list ${it.size}")
-                    updateState {
-                        copy(isLoading = false, list = it.toImmutable())
+            }.collect { result ->
+                result
+                    .onLeft {
+                        handleError(it)
                     }
-                }
+                    .onRight {
+                        log("set list ${it.size}")
+                        println("set list ${it.size}")
+                        updateState {
+                            copy(isLoading = false, list = it.toImmutable())
+                        }
+                    }
             }
         }
     }
@@ -121,6 +125,6 @@ data class DogListState(
 sealed interface DogListIntent {
     data class ShowDetailAndSaveListPosition(val id: BreedId) : DogListIntent
     data class SortTypeChanged(val type: BreedSortType) : DogListIntent
-    data object Reload : DogListIntent
-    data object NavigationConsumed : DogListIntent
+    object Reload : DogListIntent
+    object NavigationConsumed : DogListIntent
 }

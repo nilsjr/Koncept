@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.commonDomain)
+    implementation(projects.common.commonDomain)
 
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)

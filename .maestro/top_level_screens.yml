@@ -1,0 +1,15 @@
+appId: de.nilsdruyen.koncept
+---
+- launchApp
+- assertVisible:
+    text: "Doggo List"
+- assertVisible:
+    text: "Breeds"
+- tapOn:
+    id: "favorites_graph"
+- assertVisible:
+    text: "Favoriten"
+- tapOn:
+    id: "web_graph"
+- assertVisible:
+    text: "Hello Espresso Web"
