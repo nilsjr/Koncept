@@ -9,8 +9,9 @@ open class PaparazziTest {
 
     @get:Rule
     val paparazziRule: Paparazzi = Paparazzi(
-        theme = "android:Theme.Material.Light.NoActionBa",
-        deviceConfig = DeviceConfig.PIXEL.copy(softButtons = false, screenHeight = 1),
-        renderingMode = SessionParams.RenderingMode.V_SCROLL
+        theme = "android:Theme.Material.Light.NoActionBar",
+        deviceConfig = DeviceConfig.PIXEL.copy(softButtons = false),
+        renderingMode = SessionParams.RenderingMode.V_SCROLL,
+        showSystemUi = false,
     )
 }

@@ -16,6 +16,9 @@ internal fun Project.configureKotlinAndroid() {
             unitTests {
                 isIncludeAndroidResources = true
                 isReturnDefaultValues = true
+                all {
+                    it.maxHeapSize = "1G"
+                }
             }
         }
         sourceSets {
