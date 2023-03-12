@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
@@ -39,6 +40,7 @@ import de.nilsdruyen.koncept.common.ui.dropBottomPadding
 import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.ui.components.LoadingDoggo
+import de.nilsdruyen.koncept.dogs.ui.recommendation.RecoSlider
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,14 +88,20 @@ fun BreedDetail(
                 onImageClick = showImageDetail,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(it.dropBottomPadding())
+                    .padding(it.dropBottomPadding()),
+                recoBlock = { RecoSlider(viewModel = viewModel) }
             )
         }
     )
 }
 
 @Composable
-fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Unit, modifier: Modifier = Modifier) {
+fun BreedDetailContainer(
+    uiState: BreedDetailState,
+    onImageClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    recoBlock: @Composable () -> Unit
+) {
     when {
         uiState.isLoading -> {
             Box(modifier = modifier) {
@@ -116,14 +124,27 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
             }
         }
 
-        else -> BreedImageList(list = uiState.images, onImageClick, modifier)
+        else -> BreedImageList(list = uiState.images, onImageClick, modifier, recoBlock)
     }
 }
 
 @Composable
-fun BreedImageList(list: ImmutableList<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier) {
+fun BreedImageList(
+    list: ImmutableList<BreedImage>,
+    onImageClick: (String) -> Unit,
+    modifier: Modifier,
+    recoBlock: @Composable () -> Unit
+) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
-        items(list.items) {
+        items(list.items.take(2)) {
+            BreedImage(it.url) {
+                onImageClick(it.id)
+            }
+        }
+        item(span = { GridItemSpan(2) }) {
+            recoBlock()
+        }
+        items(list.items.drop(2)) {
             BreedImage(it.url) {
                 onImageClick(it.id)
             }
