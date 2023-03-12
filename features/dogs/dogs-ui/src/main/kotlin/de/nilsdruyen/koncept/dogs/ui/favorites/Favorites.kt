@@ -30,6 +30,7 @@ import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
+import de.nilsdruyen.koncept.dogs.ui.recommendation.RecoSlider
 
 @Composable
 fun Favorites(
@@ -49,7 +50,8 @@ fun Favorites(
         state = state,
         showBreed = {
             viewModel.sendIntent(FavoritesIntent.ShowBreed(it.value))
-        }
+        },
+        recoBlock = { RecoSlider(viewModel = viewModel) }
     )
 }
 
@@ -58,7 +60,8 @@ fun Favorites(
 fun Favorites(
     state: FavoritesState,
     showBreed: (BreedId) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    recoBlock: @Composable () -> Unit
 ) {
     val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
@@ -100,6 +103,7 @@ fun Favorites(
                         scrollState = scrollState,
                         list = state.list,
                         showBreed = showBreed,
+                        recoBlock = recoBlock,
                     )
                 }
             }
@@ -113,6 +117,8 @@ fun FavoriteList(
     list: ImmutableList<Dog>,
     showBreed: (BreedId) -> Unit,
     modifier: Modifier = Modifier,
+    recoBlock: @Composable () -> Unit,
+
 ) {
     LazyColumn(
         contentPadding = PaddingValues(),
@@ -121,6 +127,9 @@ fun FavoriteList(
     ) {
         items(list.items) { dog ->
             DogFavoriteItem(dog, showBreed)
+        }
+        item {
+            recoBlock()
         }
     }
 }
