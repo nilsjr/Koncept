@@ -26,4 +26,6 @@ data class DogCacheEntity(
     val bredFor: String,
     @ColumnInfo(name = "group", defaultValue = "0")
     val group: String,
+    @ColumnInfo(name = "imageId", defaultValue = "")
+    val imageId: String,
 )

@@ -15,7 +15,8 @@ fun DogCacheEntity.toModel() = Dog(
     height = height,
     bredFor = bredFor,
     origin = origin,
-    group = group
+    group = group,
+    imageId = imageId,
 )
 
 fun Dog.toEntity() = DogCacheEntity(
@@ -28,7 +29,8 @@ fun Dog.toEntity() = DogCacheEntity(
     height = height,
     bredFor = bredFor,
     origin = origin,
-    group = group
+    group = group,
+    imageId = imageId,
 )
 
 fun Dog.toMinimalEntity() = MinimalDogCacheEntity(

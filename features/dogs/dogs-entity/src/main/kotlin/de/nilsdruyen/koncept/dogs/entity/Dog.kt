@@ -11,4 +11,5 @@ data class Dog(
     val bredFor: String = "",
     val origin: List<String> = emptyList(),
     val group: String = "",
+    val imageId: String = "",
 )

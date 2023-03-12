@@ -19,6 +19,7 @@ fun DogWebEntity.toModel(): Dog {
         bredFor = bredFor.orEmpty(),
         origin = origin?.split(",")?.map { it.trim() }.orEmpty(),
         group = group.orEmpty(),
+        imageId = imageId.orEmpty(),
     )
 }
 
