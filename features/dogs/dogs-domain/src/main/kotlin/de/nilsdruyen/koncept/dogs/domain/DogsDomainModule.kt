@@ -10,6 +10,8 @@ import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCaseImpl
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetFavoritesUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetFavoritesUseCaseImpl
+import de.nilsdruyen.koncept.dogs.domain.usecase.GetRecoUseCase
+import de.nilsdruyen.koncept.dogs.domain.usecase.GetRecoUseCaseImpl
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCaseImpl
 import de.nilsdruyen.koncept.dogs.domain.usecase.UpdateFavoriteBreedUseCase
@@ -33,4 +35,7 @@ internal interface DogsDomainModule {
 
     @Binds
     fun GetFavoritesUseCaseImpl.bindGetFavoritesUseCase(): GetFavoritesUseCase
+
+    @Binds
+    fun GetRecoUseCaseImpl.bindGetRecoUseCase(): GetRecoUseCase
 }
