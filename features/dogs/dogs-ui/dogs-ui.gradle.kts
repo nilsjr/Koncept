@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.coilCompose)
+    implementation(libs.accompanist.placeholder)
 
     implementation(platform(libs.arrow.bom))
     implementation(libs.arrow.core)
