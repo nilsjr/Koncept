@@ -60,10 +60,8 @@ dependencies {
     testImplementation(projects.features.dogs.dogsCache)
     testImplementation(projects.features.dogs.dogsTesting)
 
-//    testImplementation(libs.androidx.test.core)
     testImplementation(libs.robolectric)
     testImplementation(libs.hilt.android.test)
-//    kaptTest(libs.hilt.compiler)
     kaptTest(libs.hilt.android.compiler)
 
     testImplementation(libs.square.retrofit)
@@ -71,6 +69,9 @@ dependencies {
     testImplementation(libs.square.okhttp)
     testImplementation(libs.square.okhttp.interceptor)
     testImplementation(libs.square.moshi)
+
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.rule)
 
     // android testing
     androidTestImplementation(libs.bundles.android.test)
