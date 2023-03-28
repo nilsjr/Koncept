@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.nilsdruyen.koncept.design.system.KonceptTheme
@@ -37,7 +38,7 @@ fun DogFavoriteItem(dog: Dog, showBreed: (BreedId) -> Unit = {}) {
             }
             .padding(8.dp)
     ) {
-        Text(text = dog.name)
+        Text(text = dog.name, modifier = Modifier.testTag("dog_favorite_name"))
     }
 }
 
