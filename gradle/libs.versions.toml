@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.29.2-rc"
+accompanist = "0.30.0"
 adjust = "4.30.1"
 adjustAdobeEx = "1.0.2"
 adobeMarketingAnalytics = "1.2.10"
@@ -10,19 +10,19 @@ adobeMarketingTarget = "1.2.8"
 adobeMarketingUserProfile = "1.1.0"
 androidDesugarJdkLibs = "1.2.2"
 androidOrchestrator = "1.4.2"
-androidPlugin = "7.4.2"
+androidPlugin = "8.0.0-rc01"
 androidxActivity = "1.4.0"
 androidxAnnotation = "1.3.0"
 androidxAppCompat = "1.4.2"
 androidxConstraintLayout = "2.1.4"
-androidxCore = "1.9.0"
+androidxCore = "1.10.0-rc01"
 androidxDataStore = "1.1.0-dev01"
 androidxFragmentKtx = "1.5.0"
-androidxLifecycle = "2.6.0-alpha05"
+androidxLifecycle = "2.6.1"
 androidxNavigation = "2.5.1"
 androidxPaging = "3.1.1"
 androidxRecyclerview = "1.2.1"
-androidxRoom = "2.5.0"
+androidxRoom = "2.5.1"
 androidxSecurityCrypto = "1.1.0-alpha03" # emarsys sdk uses alpha version
 androidxSwipeRefreshlayout = "1.1.0"
 androidxTestRules = "1.5.0"
@@ -35,11 +35,11 @@ assertJ = "3.24.2"
 balloon = "1.4.6"
 composeBom = "2023.03.00"
 #composeBom = "2023.02.00-alpha01"
-composeActivity = "1.6.1"
+composeActivity = "1.7.0"
 composeCompiler = "1.4.4"
 composeConstraintLayout = "1.0.1"
 composeMaterial3 = "1.0.1"
-composeNavigation = "2.5.3"
+composeNavigation = "2.6.0-alpha08"
 composePaging = "1.0.0-alpha15"
 composeUiViewBinding = "1.2.0-rc03"
 coroutines = "1.6.4"
@@ -95,7 +95,7 @@ sonarqubePlugin = "3.4.0.2513"
 turbine = "0.12.1"
 versionCompare = "1.5.0"
 zxing = "3.5.0"
-roborazzi = "1.0.0-beta-1"
+roborazzi = "1.0.0-rc-1"
 
 [libraries]
 #chrisbanes-compose-bom = { module = "dev.chrisbanes.compose:compose-bom", version.ref = "composeBom" }
@@ -173,7 +173,7 @@ arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-retrofit = { module = "io.arrow-kt:arrow-core-retrofit" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
 balloon = { module = "com.github.skydoves:balloon", version.ref = "balloon" }
-coilCompose = "io.coil-kt:coil-compose:2.2.2"
+coilCompose = "io.coil-kt:coil-compose:2.3.0"
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 cucumber-java = { module = "io.cucumber:cucumber-java", version.ref = "cucumber" }
 cucumber-junitPlatformEngine = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
