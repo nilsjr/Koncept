@@ -28,11 +28,16 @@ dependencies {
     testImplementation(projects.features.dogs.dogsTest)
 
     testImplementation(libs.bundles.test)
+    testImplementation(libs.bundles.mockito)
+    testImplementation(libs.mockito.jupiter)
 
     testImplementation(platform(libs.junit5.bom))
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
 
-    testImplementation(libs.bundles.mockito)
-    testImplementation(libs.mockito.jupiter)
+    testImplementation(platform(libs.square.okhttp.bom))
+    testImplementation(libs.square.okhttp.mockwebserver)
+    testImplementation(libs.square.retrofit)
+    testImplementation(libs.square.retrofit.moshi)
+    testImplementation(libs.square.moshi)
 }

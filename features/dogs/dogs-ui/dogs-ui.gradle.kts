@@ -40,17 +40,6 @@ dependencies {
     implementation("androidx.palette:palette-ktx:1.0.0")
 
     // testing
-    testImplementation(libs.bundles.test)
-    testImplementation(libs.junit4)
-
-    testImplementation(platform(libs.junit5.bom))
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
-    testRuntimeOnly(libs.junit5.vintage.engine)
-
-    testImplementation(libs.bundles.mockito)
-    testImplementation(libs.mockito.jupiter)
-
     testImplementation(projects.common.commonTest)
     testImplementation(projects.common.commonRemote)
 
@@ -60,11 +49,25 @@ dependencies {
     testImplementation(projects.features.dogs.dogsCache)
     testImplementation(projects.features.dogs.dogsTesting)
 
-//    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.bundles.test)
+    testImplementation(libs.bundles.mockito)
+    testImplementation(libs.mockito.jupiter)
+    testImplementation(libs.junit4)
+
+    testImplementation(platform(libs.junit5.bom))
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
+    testRuntimeOnly(libs.junit5.vintage.engine)
+
     testImplementation(libs.robolectric)
+
     testImplementation(libs.hilt.android.test)
-//    kaptTest(libs.hilt.compiler)
     kaptTest(libs.hilt.android.compiler)
+
+    testImplementation(libs.androidx.compose.uiTest)
+    testImplementation(libs.androidx.compose.uiManifestTest)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.rule)
 
     testImplementation(libs.square.retrofit)
     testImplementation(platform(libs.square.okhttp.bom))
