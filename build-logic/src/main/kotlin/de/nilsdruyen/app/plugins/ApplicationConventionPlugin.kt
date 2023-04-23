@@ -1,7 +1,6 @@
 package de.nilsdruyen.app.plugins
 
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import de.nilsdruyen.app.config.applyKoverAndroid
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
 import de.nilsdruyen.app.config.configure
@@ -24,7 +23,7 @@ internal class ApplicationConventionPlugin : Plugin<Project> {
             configure()
             applyDetekt()
             applyDetektFormatting()
-            applyKoverAndroid()
+//            applyKoverAndroid()
         }
     }
 }

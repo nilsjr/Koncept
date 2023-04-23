@@ -2,7 +2,6 @@ package de.nilsdruyen.app.plugins
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.nilsdruyen.app.config.applyDetektFormatting
-import de.nilsdruyen.app.config.applyKoverRoot
 import de.nilsdruyen.app.utils.isIgnoredDependency
 import de.nilsdruyen.app.utils.releaseType
 import org.gradle.api.Plugin
@@ -21,7 +20,7 @@ internal class ProjectConventionPlugin : Plugin<Project> {
                 }
             }
             applyDetektFormatting()
-            applyKoverRoot()
+//            applyKoverRoot()
         }
     }
 }

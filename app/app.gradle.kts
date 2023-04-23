@@ -7,6 +7,7 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
+    id(libs.plugins.kover.get().pluginId)
 }
 android {
     namespace = "de.nilsdruyen.koncept"
@@ -97,7 +98,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += setOf(
                 "/META-INF/{AL2.0,LGPL2.1}",
@@ -210,11 +211,11 @@ dependencies {
     testImplementation(libs.androidx.room.testing)
 
     // kover
-    kover(projects.features.dogs.dogsDomain)
-    kover(projects.features.dogs.dogsUi)
-    kover(projects.features.dogs.dogsData)
-    kover(projects.features.dogs.dogsCache)
-    kover(projects.features.dogs.dogsRemote)
+//    kover(projects.features.dogs.dogsDomain)
+//    kover(projects.features.dogs.dogsUi)
+//    kover(projects.features.dogs.dogsData)
+//    kover(projects.features.dogs.dogsCache)
+//    kover(projects.features.dogs.dogsRemote)
 
     // android testing
 
@@ -247,6 +248,34 @@ fun Project.findStringProperty(propertyName: String, ciPropertyName: String = pr
         findProperty(propertyName) as String? ?: run {
             println("$propertyName missing in gradle.properties")
             null
+        }
+    }
+}
+
+configure<kotlinx.kover.gradle.plugin.dsl.KoverReportExtension> {
+    filters {
+        excludes {
+            classes(
+                "*Impl_Factory.*",
+                "*_*Factory",
+                "*_Factory*",
+            )
+            annotatedBy(
+                "*Generated*",
+                "*Generated",
+                "androidx.compose.runtime.Composable",
+            )
+        }
+    }
+    defaults {
+        mergeWith("debug")
+    }
+    androidReports("debug") {
+        filters {
+            excludes {
+                classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
+                annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
+            }
         }
     }
 }
