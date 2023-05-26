@@ -85,7 +85,7 @@ robolectric = "4.9.2"
 #robolectric = "4.10-alpha-1"
 turbine = "0.12.3"
 versionCompare = "1.5.0"
-zxing = "3.5.0"
+zxing = "3.5.1"
 roborazzi = "1.1.0-rc-1"
 
 [libraries]
