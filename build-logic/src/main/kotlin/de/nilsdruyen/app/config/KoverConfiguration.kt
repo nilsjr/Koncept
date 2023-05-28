@@ -19,7 +19,7 @@ internal fun Project.applyKover() {
             println("kover disabled for ${this@applyKover.name}")
             disable()
         }
-        useJacocoTool()
+        useJacoco()
     }
     configure<KoverReportExtension> {
         filters {
@@ -38,12 +38,29 @@ internal fun Project.applyKoverAndroid() {
     pluginManager.apply(KoverGradlePlugin::class)
     configure<KoverProjectExtension> {
         if (excludeModules.contains(this@applyKoverAndroid.name)) disable()
-        useJacocoTool()
+        useJacoco()
 //        excludeTests {
 //            tasks("testReleaseUnitTest")
 //        }
     }
     configure<KoverReportExtension> {
+        filters {
+            excludes {
+                classes(
+                    "*Impl_Factory.*",
+                    "*_*Factory",
+                    "*_Factory*",
+                )
+                annotatedBy(
+                    "*Generated*",
+                    "*Generated",
+                    "androidx.compose.runtime.Composable",
+                )
+            }
+        }
+        defaults {
+            mergeWith("debug")
+        }
         androidReports("debug") {
             filters {
                 excludes {

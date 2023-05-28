@@ -7,7 +7,6 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
-    id(libs.plugins.kover.get().pluginId)
 }
 android {
     namespace = "de.nilsdruyen.koncept"
@@ -252,30 +251,30 @@ fun Project.findStringProperty(propertyName: String, ciPropertyName: String = pr
     }
 }
 
-configure<kotlinx.kover.gradle.plugin.dsl.KoverReportExtension> {
-    filters {
-        excludes {
-            classes(
-                "*Impl_Factory.*",
-                "*_*Factory",
-                "*_Factory*",
-            )
-            annotatedBy(
-                "*Generated*",
-                "*Generated",
-                "androidx.compose.runtime.Composable",
-            )
-        }
-    }
-    defaults {
-        mergeWith("debug")
-    }
-    androidReports("debug") {
-        filters {
-            excludes {
-                classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
-                annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
-            }
-        }
-    }
-}
+//configure<kotlinx.kover.gradle.plugin.dsl.KoverReportExtension> {
+//    filters {
+//        excludes {
+//            classes(
+//                "*Impl_Factory.*",
+//                "*_*Factory",
+//                "*_Factory*",
+//            )
+//            annotatedBy(
+//                "*Generated*",
+//                "*Generated",
+//                "androidx.compose.runtime.Composable",
+//            )
+//        }
+//    }
+//    defaults {
+//        mergeWith("debug")
+//    }
+//    androidReports("debug") {
+//        filters {
+//            excludes {
+//                classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
+//                annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
+//            }
+//        }
+//    }
+//}

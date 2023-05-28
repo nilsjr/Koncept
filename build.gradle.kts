@@ -19,7 +19,7 @@ tasks.register<Delete>("clean") {
 }
 
 configure<kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension> {
-    useJacocoTool()
+    useJacoco()
 }
 dependencies {
     kover(project(":app"))
