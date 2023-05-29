@@ -15,10 +15,10 @@ internal class ProjectConventionPlugin : Plugin<Project> {
         with(target) {
             tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
                 gradleReleaseChannel = "current"
-                rejectVersionIf {
-                    releaseType(candidate.version) < releaseType(currentVersion) ||
-                        isIgnoredDependency(candidate.group, candidate.module)
-                }
+//                rejectVersionIf {
+//                    releaseType(candidate.version) < releaseType(currentVersion) ||
+//                        isIgnoredDependency(candidate.group, candidate.module)
+//                }
             }
             applyDetektFormatting()
         }

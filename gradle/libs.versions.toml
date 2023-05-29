@@ -1,13 +1,5 @@
 [versions]
 accompanist = "0.30.1"
-adjust = "4.30.1"
-adjustAdobeEx = "1.0.2"
-adobeMarketingAnalytics = "1.2.10"
-adobeMarketingAssurance = "1.0.4"
-adobeMarketingAudience = "1.1.0"
-adobeMarketingMobileCore = "1.11.1"
-adobeMarketingTarget = "1.2.8"
-adobeMarketingUserProfile = "1.1.0"
 androidDesugarJdkLibs = "1.2.3"
 androidOrchestrator = "1.4.2"
 androidPlugin = "8.0.2"
@@ -23,38 +15,35 @@ androidxNavigation = "2.5.3"
 androidxPaging = "3.1.1"
 androidxRecyclerview = "1.2.1"
 androidxRoom = "2.5.1"
-androidxSecurityCrypto = "1.1.0-alpha03" # emarsys sdk uses alpha version
 androidxSwipeRefreshlayout = "1.1.0"
-androidxTestRules = "1.5.0"
 androidxTestCore = "1.5.0"
+androidxTestRules = "1.5.0"
 androidxTestRunner = "1.5.2"
 androidxVectorDrawable = "1.1.0"
 androidxWebkit = "1.4.0"
 arrow = "1.1.5"
 assertJ = "3.24.2"
 balloon = "1.4.6"
-composeBom = "2023.05.01"
 composeActivity = "1.7.2"
+composeBom = "2023.05.01"
 composeCompiler = "1.4.7"
 composeConstraintLayout = "1.0.1"
-composeNavigation = "2.6.0-rc01"
+composeNavigation = "2.6.0-rc02"
 composePaging = "1.0.0-alpha15"
 composeUiViewBinding = "1.2.0-rc03"
-coroutines = "1.6.4"
+coroutines = "1.7.1"
 cucumber = "7.6.0"
 detekt = "1.22.0"
 detektTwitterComposeRules = "0.0.26"
 emarsys = "3.2.5"
 espresso = "3.5.1"
 glide = "4.13.2"
-googleServicesBase = "18.1.0"
-googleServicesPlugin = "4.3.13"
 gradleVersionsPlugin = "0.46.0"
 hilt = "2.46.1"
 hiltCompiler = "1.0.0"
+hiltNavigationCompose = "1.0.0"
 imageCropper = "4.3.0"
 installReferrer = "2.2"
-jUnit = "4.13.2"
 jUnitExt = "1.1.5"
 jacocoPlugin = "0.8.8"
 javaxInject = "1"
@@ -72,24 +61,18 @@ materialMotionCompose = "0.12.1"
 mockito = "5.3.1"
 mockitoKotlin = "4.1.0"
 mockk = "1.13.5"
-moshi = "1.14.0"
+moshi = "1.15.0"
 okhttp = "4.11.0"
 paparazzi = "1.2.0"
-playCore = "1.10.3"
-playCoreKtx = "1.8.1"
-playServicesLocation = "20.0.0"
 protoBuf = "3.21.2"
 protoBufPlugin = "0.8.19"
 retrofit = "2.9.0"
 robolectric = "4.9.2"
-#robolectric = "4.10-alpha-1"
-turbine = "0.12.3"
+roborazzi = "1.2.0-rc-1"
+turbine = "0.13.0"
 versionCompare = "1.5.0"
-zxing = "3.5.0"
-roborazzi = "1.1.0-rc-1"
 
 [libraries]
-#chrisbanes-compose-bom = { module = "dev.chrisbanes.compose:compose-bom", version.ref = "composeBom" }
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 accompanist-nav-anim = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-nav-material = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "accompanist" }
@@ -97,15 +80,6 @@ accompanist-pager = { module = "com.google.accompanist:accompanist-pager", versi
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-adjust-adobeextension = { module = "com.adjust.adobeextension:adobeextension", version.ref = "adjustAdobeEx" }
-adjust-android = { module = "com.adjust.sdk:adjust-android", version.ref = "adjust" }
-adjust-android-webbridge = { module = "com.adjust.sdk:adjust-android-webbridge", version.ref = "adjust" }
-adobe-analytics = { module = "com.adobe.marketing.mobile:analytics", version.ref = "adobeMarketingAnalytics" }
-adobe-assurance = { module = "com.adobe.marketing.mobile:assurance", version.ref = "adobeMarketingAssurance" }
-adobe-audience = { module = "com.adobe.marketing.mobile:audience", version.ref = "adobeMarketingAudience" }
-adobe-sdk-core = { module = "com.adobe.marketing.mobile:sdk-core", version.ref = "adobeMarketingMobileCore" }
-adobe-target = { module = "com.adobe.marketing.mobile:target", version.ref = "adobeMarketingTarget" }
-adobe-userprofile = { module = "com.adobe.marketing.mobile:userprofile", version.ref = "adobeMarketingUserProfile" }
 android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 android-material = { module = "com.google.android.material:material", version.ref = "material" }
 android-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidPlugin" }
@@ -147,7 +121,6 @@ androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidxRoom
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxRoom" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "androidxRoom" }
-androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "androidxSecurityCrypto" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidxSwipeRefreshlayout" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTestCore" }
 androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
@@ -164,7 +137,7 @@ arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-retrofit = { module = "io.arrow-kt:arrow-core-retrofit" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
 balloon = { module = "com.github.skydoves:balloon", version.ref = "balloon" }
-coilCompose = "io.coil-kt:coil-compose:2.3.0"
+coilCompose = "io.coil-kt:coil-compose:2.4.0"
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 cucumber-java = { module = "io.cucumber:cucumber-java", version.ref = "cucumber" }
 cucumber-junitPlatformEngine = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
@@ -177,10 +150,6 @@ faker = "io.github.serpro69:kotlin-faker:1.14.0"
 fornewid-compose-motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "materialMotionCompose" }
 fornewid-compose-motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "materialMotionCompose" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-google-play-core = { module = "com.google.android.play:core", version.ref = "playCore" }
-google-play-core-ktx = { module = "com.google.android.play:core-ktx", version.ref = "playCoreKtx" }
-google-play-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
-google-play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "googleServicesBase" }
 google-protobuf = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protoBuf" }
 google-protobuf-artifact = { module = "com.google.protobuf:protoc", version.ref = "protoBuf" }
 gradleVersions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
@@ -189,7 +158,7 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 hilt-android-test = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 imagecropper = { module = "com.github.CanHub:Android-Image-Cropper", version.ref = "imageCropper" }
 installReferrer = { module = "com.android.installreferrer:installreferrer", version.ref = "installReferrer" }
 javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
@@ -217,6 +186,8 @@ mockk = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-annotations = { module = "org.robolectric:annotations", version.ref = "robolectric" }
+roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
+roborazzi-rule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
 square-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 square-leakcanary-plumber = { module = "com.squareup.leakcanary:plumber-android", version.ref = "leakCanary" }
 square-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
@@ -233,9 +204,6 @@ square-retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", ver
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 versionCompare = { module = "io.github.g00fy2:versioncompare", version.ref = "versionCompare" }
-zxing = { module = "com.google.zxing:core", version.ref = "zxing" }
-roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
-roborazzi-rule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
 
 [bundles]
 android-test = ["turbine", "kotlinx.coroutines.test"]
@@ -251,7 +219,6 @@ androidx-navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", vers
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "protoBufPlugin" }
-google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
