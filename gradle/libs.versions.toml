@@ -59,6 +59,9 @@ robolectric = "4.10.3"
 roborazzi = "1.2.0"
 turbine = "1.0.0"
 versionCompare = "1.5.0"
+uiautomator = "2.2.0"
+benchmark-macro-junit4 = "1.2.0-alpha15"
+androidx-baselineprofile = "1.2.0-alpha15"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
@@ -175,6 +178,8 @@ square-retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", ver
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 versionCompare = { module = "io.github.g00fy2:versioncompare", version.ref = "versionCompare" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 
 [bundles]
 android-test = ["turbine", "kotlinx.coroutines.test"]
@@ -199,3 +204,5 @@ kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
+androidTest = { id = "com.android.test", version.ref = "androidPlugin" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
