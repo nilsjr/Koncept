@@ -134,6 +134,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.compose)
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.webkit)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.foundation)

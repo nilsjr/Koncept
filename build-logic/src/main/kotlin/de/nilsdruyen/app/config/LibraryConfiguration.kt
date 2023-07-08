@@ -9,7 +9,6 @@ import org.gradle.kotlin.dsl.configure
 internal fun Project.configureAndroidLibrary() {
     configure<LibraryExtension> {
         compileSdk = ProjectConfig.compileSdkVersion
-        buildToolsVersion = ProjectConfig.buildToolsVersion
         defaultConfig {
             targetSdk = ProjectConfig.targetSdkVersion
             minSdk = ProjectConfig.minSdkVersion
