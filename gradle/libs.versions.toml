@@ -19,10 +19,10 @@ androidxVectorDrawable = "1.1.0"
 androidxWebkit = "1.7.0"
 arrow = "1.1.5"
 assertJ = "3.24.2"
-balloon = "1.4.6"
 composeActivity = "1.7.2"
 composeBom = "2023.06.01"
-composeCompiler = "1.4.8"
+composeCompiler = "1.5.0-dev-k1.9.0-6a60475e07f"
+composeCompilerReportGenerator = "1.0.1"
 composeConstraintLayout = "1.0.1"
 composeNavigation = "2.6.0"
 composePaging = "1.0.0-alpha15"
@@ -30,7 +30,6 @@ composeUiViewBinding = "1.2.0-rc03"
 coroutines = "1.7.2"
 detekt = "1.23.0"
 detektTwitterComposeRules = "0.0.26"
-emarsys = "3.2.5"
 espresso = "3.5.1"
 gradleVersionsPlugin = "0.47.0"
 hilt = "2.46.1"
@@ -44,9 +43,9 @@ javaxInject = "1"
 junit4 = "4.13.2"
 junit5 = "5.9.3"
 junitPlatform = "1.9.3"
-kotlin = "1.8.22"
+kotlin = "1.9.0"
 koverPlugin = "0.6.1" # 0.7.0-Alpha
-kspPlugin = "1.8.22-1.0.11"
+kspPlugin = "1.9.0-1.0.11"
 leakCanary = "2.9.1"
 lottie = "6.0.1"
 material = "1.6.1"
@@ -122,14 +121,11 @@ arrow-bom = { module = "io.arrow-kt:arrow-stack", version.ref = "arrow" }
 arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-retrofit = { module = "io.arrow-kt:arrow-core-retrofit" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
-balloon = { module = "com.github.skydoves:balloon", version.ref = "balloon" }
 coilCompose = "io.coil-kt:coil-compose:2.4.0"
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detekt-twitterComposeRules = { module = "com.twitter.compose.rules:detekt", version.ref = "detektTwitterComposeRules" }
-emarsys-core = { module = "com.emarsys:emarsys-sdk", version.ref = "emarsys" }
-emarsys-firebase = { module = "com.emarsys:emarsys-firebase", version.ref = "emarsys" }
 faker = "io.github.serpro69:kotlin-faker:1.14.0"
 fornewid-compose-motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "materialMotionCompose" }
 fornewid-compose-motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "materialMotionCompose" }
@@ -196,6 +192,7 @@ test = ["turbine", "kotlinx.coroutines.test", "assertJ"]
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 androidx-navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
