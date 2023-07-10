@@ -1,9 +1,9 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.paparazzi.get().pluginId)
+    alias(libs.plugins.compose.compiler.report)
 }
 android {
     namespace = "de.nilsdruyen.koncept.dogs.ui"

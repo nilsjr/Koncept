@@ -23,7 +23,7 @@ internal fun Project.applyDetekt() {
         buildUponDefaultConfig = true
     }
     tasks.withType<Detekt>().configureEach {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
         reports {
             xml {
                 required.set(true)
