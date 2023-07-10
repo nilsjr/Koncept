@@ -1,0 +1,15 @@
+default-scenarios = ["without_k2", "with_k2"]
+
+without_k2 {
+    title = "Without K2 compiler"
+    cleanup-tasks = ["clean"]
+    tasks = [":app:assembleDebug"]
+    gradle-args = ["--no-build-cache"]
+}
+
+with_k2 {
+    title = "With K2 compiler"
+    cleanup-tasks = ["clean"]
+    tasks = [":app:assembleDebug"]
+    gradle-args = ["--no-build-cache", "-Pkotlin.experimental.tryK2=true"]
+}
