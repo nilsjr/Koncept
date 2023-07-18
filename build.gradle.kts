@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.gradleVersions)
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.roborazzi) apply false
+    alias(libs.plugins.compose.compiler.report) apply false
     alias(libs.plugins.kover)
 
     id("de.nilsdruyen.plugin.root")

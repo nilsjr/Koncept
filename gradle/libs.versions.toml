@@ -1,44 +1,36 @@
 [versions]
 accompanist = "0.30.1"
-androidDesugarJdkLibs = "1.2.3"
+androidDesugarJdkLibs = "2.0.3"
 androidOrchestrator = "1.4.2"
-androidPlugin = "8.0.2"
+androidPlugin = "8.1.0-rc01"
 androidxActivity = "1.4.0"
-androidxAnnotation = "1.3.0"
-androidxAppCompat = "1.4.2"
 androidxConstraintLayout = "2.1.4"
 androidxCore = "1.10.1"
 androidxDataStore = "1.1.0-alpha04"
-androidxFragmentKtx = "1.5.7"
 androidxLifecycle = "2.6.1"
-androidxNavigation = "2.5.3"
+androidxNavigation = "2.6.0"
 androidxPaging = "3.1.1"
-androidxRecyclerview = "1.2.1"
-androidxRoom = "2.5.1"
+androidxRoom = "2.5.2"
 androidxSwipeRefreshlayout = "1.1.0"
 androidxTestCore = "1.5.0"
 androidxTestRules = "1.5.0"
 androidxTestRunner = "1.5.2"
 androidxVectorDrawable = "1.1.0"
-androidxWebkit = "1.4.0"
-arrow = "1.1.5"
+androidxWebkit = "1.7.0"
+arrow = "1.2.0"
 assertJ = "3.24.2"
-balloon = "1.4.6"
 composeActivity = "1.7.2"
-composeBom = "2023.05.01"
-composeCompiler = "1.4.7"
+composeBom = "2023.06.01"
+composeCompiler = "1.4.8"
 composeConstraintLayout = "1.0.1"
-composeNavigation = "2.6.0-rc02"
+composeNavigation = "2.6.0"
 composePaging = "1.0.0-alpha15"
 composeUiViewBinding = "1.2.0-rc03"
-coroutines = "1.7.1"
-cucumber = "7.6.0"
-detekt = "1.22.0"
+coroutines = "1.7.2"
+detekt = "1.23.0"
 detektTwitterComposeRules = "0.0.26"
-emarsys = "3.2.5"
 espresso = "3.5.1"
-glide = "4.13.2"
-gradleVersionsPlugin = "0.46.0"
+gradleVersionsPlugin = "0.47.0"
 hilt = "2.46.1"
 hiltCompiler = "1.0.0"
 hiltNavigationCompose = "1.0.0"
@@ -50,27 +42,24 @@ javaxInject = "1"
 junit4 = "4.13.2"
 junit5 = "5.9.3"
 junitPlatform = "1.9.3"
-kotlin = "1.8.21"
+kotlin = "1.8.22"
 koverPlugin = "0.7.1"
-kspPlugin = "1.8.21-1.0.11"
-landscapist = "1.5.3"
+kspPlugin = "1.8.22-1.0.11"
 leakCanary = "2.9.1"
-lottie = "6.0.0"
-material = "1.6.1"
-materialMotionCompose = "0.12.1"
-mockito = "5.3.1"
-mockitoKotlin = "4.1.0"
+lottie = "6.0.1"
+materialMotionCompose = "0.12.3"
+mockito = "5.4.0"
+mockitoKotlin = "5.0.0"
 mockk = "1.13.5"
 moshi = "1.15.0"
 okhttp = "4.11.0"
-paparazzi = "1.2.0"
-protoBuf = "3.21.2"
-protoBufPlugin = "0.8.19"
+paparazzi = "1.3.0"
 retrofit = "2.9.0"
-robolectric = "4.9.2"
-roborazzi = "1.2.0-rc-1"
-turbine = "0.13.0"
+robolectric = "4.10.3"
+roborazzi = "1.2.0"
+turbine = "1.0.0"
 versionCompare = "1.5.0"
+composeCompilerReportGenerator = "1.0.1"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
@@ -81,11 +70,8 @@ accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pa
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 android-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidPlugin" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
-androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics" }
@@ -107,16 +93,13 @@ androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constr
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "androidxDataStore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDataStore" }
-androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
-androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
 androidx-paging = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
-androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerview" }
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxRoom" }
@@ -136,22 +119,14 @@ arrow-bom = { module = "io.arrow-kt:arrow-stack", version.ref = "arrow" }
 arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-retrofit = { module = "io.arrow-kt:arrow-core-retrofit" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
-balloon = { module = "com.github.skydoves:balloon", version.ref = "balloon" }
 coilCompose = "io.coil-kt:coil-compose:2.4.0"
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-cucumber-java = { module = "io.cucumber:cucumber-java", version.ref = "cucumber" }
-cucumber-junitPlatformEngine = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detekt-twitterComposeRules = { module = "com.twitter.compose.rules:detekt", version.ref = "detektTwitterComposeRules" }
-emarsys-core = { module = "com.emarsys:emarsys-sdk", version.ref = "emarsys" }
-emarsys-firebase = { module = "com.emarsys:emarsys-firebase", version.ref = "emarsys" }
 faker = "io.github.serpro69:kotlin-faker:1.14.0"
 fornewid-compose-motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "materialMotionCompose" }
 fornewid-compose-motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "materialMotionCompose" }
-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-google-protobuf = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protoBuf" }
-google-protobuf-artifact = { module = "com.google.protobuf:protoc", version.ref = "protoBuf" }
 gradleVersions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
@@ -175,7 +150,6 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 kotlinx-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "koverPlugin" }
-landscapist-glide = { module = "com.github.skydoves:landscapist-glide", version.ref = "landscapist" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
@@ -218,7 +192,6 @@ android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 androidx-navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
-google-protobuf = { id = "com.google.protobuf", version.ref = "protoBufPlugin" }
 gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
@@ -227,4 +200,5 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
+compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }

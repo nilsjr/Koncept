@@ -8,5 +8,15 @@
   ],
   "schedule": [
     "before 5am every saturday"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^org.jetbrains.kotlin",
+        "^com.google.devtools.ksp",
+        "^androidx.compose.compiler"
+      ],
+      "groupName": "kotlin"
+    }
   ]
 }
