@@ -27,7 +27,7 @@ internal fun Project.configure() {
                     "-Xcontext-receivers",
                     "-opt-in=kotlin.RequiresOptIn",
                     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi".takeIf { !isEntityModule },
-                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { !isEntityModule },
+                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { isUiModule },
                 ).toMutableList().apply {
                     if (isUiModule && composeCompilerReportEnabled) {
                         addAll(
