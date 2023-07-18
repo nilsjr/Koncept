@@ -1,6 +1,6 @@
 package de.nilsdruyen.app.utils
 
-import java.util.*
+import java.util.Locale
 
 public object CiUtils {
 
