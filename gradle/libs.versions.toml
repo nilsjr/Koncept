@@ -60,7 +60,6 @@ robolectric = "4.10.3"
 roborazzi = "1.2.0"
 turbine = "1.0.0"
 versionCompare = "1.5.0"
-composeCompilerReportGenerator = "1.0.1"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
@@ -202,5 +201,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
-compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
