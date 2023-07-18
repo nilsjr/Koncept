@@ -17,7 +17,7 @@ androidxTestRules = "1.5.0"
 androidxTestRunner = "1.5.2"
 androidxVectorDrawable = "1.1.0"
 androidxWebkit = "1.7.0"
-arrow = "1.1.5"
+arrow = "1.2.0"
 assertJ = "3.24.2"
 composeActivity = "1.7.2"
 composeBom = "2023.06.01"
@@ -48,7 +48,6 @@ koverPlugin = "0.6.1" # 0.7.0-Alpha
 kspPlugin = "1.9.0-1.0.11"
 leakCanary = "2.9.1"
 lottie = "6.0.1"
-material = "1.6.1"
 materialMotionCompose = "0.12.3"
 mockito = "5.4.0"
 mockitoKotlin = "5.0.0"
@@ -61,6 +60,7 @@ robolectric = "4.10.3"
 roborazzi = "1.2.0"
 turbine = "1.0.0"
 versionCompare = "1.5.0"
+composeCompilerReportGenerator = "1.0.1"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
@@ -71,7 +71,6 @@ accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pa
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 android-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidPlugin" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
@@ -203,4 +202,5 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
+compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
