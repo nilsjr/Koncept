@@ -3,6 +3,7 @@ accompanist = "0.30.1"
 androidDesugarJdkLibs = "2.0.3"
 androidOrchestrator = "1.4.2"
 androidPlugin = "8.1.0-rc01"
+androidx-baselineprofile = "1.2.0-beta01"
 androidxActivity = "1.7.2"
 androidxConstraintLayout = "2.1.4"
 androidxCore = "1.10.1"
@@ -19,6 +20,7 @@ androidxVectorDrawable = "1.1.0"
 androidxWebkit = "1.7.0"
 arrow = "1.2.0"
 assertJ = "3.24.2"
+benchmark-macro-junit4 = "1.2.0-beta01"
 composeActivity = "1.7.2"
 composeBom = "2023.06.01"
 composeCompiler = "1.5.0"
@@ -58,13 +60,12 @@ retrofit = "2.9.0"
 robolectric = "4.10.3"
 roborazzi = "1.2.0"
 turbine = "1.0.0"
+uiautomator = "2.2.0"
 versionCompare = "1.5.0"
 
 [libraries]
-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 accompanist-nav-anim = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-nav-material = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "accompanist" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
@@ -118,6 +119,7 @@ arrow-bom = { module = "io.arrow-kt:arrow-stack", version.ref = "arrow" }
 arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-retrofit = { module = "io.arrow-kt:arrow-core-retrofit" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 coilCompose = "io.coil-kt:coil-compose:2.4.0"
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
@@ -174,6 +176,7 @@ square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "r
 square-retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 versionCompare = { module = "io.github.g00fy2:versioncompare", version.ref = "versionCompare" }
 
 [bundles]
@@ -186,6 +189,8 @@ test = ["turbine", "kotlinx.coroutines.test", "assertJ"]
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
+androidTest = { id = "com.android.test", version.ref = "androidPlugin" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
 androidx-navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
 compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
