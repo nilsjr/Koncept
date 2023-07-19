@@ -20,14 +20,14 @@ internal fun Project.configure() {
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
-            languageVersion.set(KotlinVersion.KOTLIN_1_8)
+            languageVersion.set(KotlinVersion.KOTLIN_1_9)
             freeCompilerArgs.addAll(
                 listOfNotNull(
                     "-progressive", // https://kotlinlang.org/docs/whatsnew13.html#progressive-mode
                     "-Xcontext-receivers",
                     "-opt-in=kotlin.RequiresOptIn",
                     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi".takeIf { !isEntityModule },
-                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { !isEntityModule },
+                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { isUiModule },
                 ).toMutableList().apply {
                     if (isUiModule && composeCompilerReportEnabled) {
                         addAll(

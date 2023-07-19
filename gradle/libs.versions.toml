@@ -21,7 +21,8 @@ arrow = "1.2.0"
 assertJ = "3.24.2"
 composeActivity = "1.7.2"
 composeBom = "2023.06.01"
-composeCompiler = "1.4.8"
+composeCompiler = "1.5.0"
+composeCompilerReportGenerator = "1.0.1"
 composeConstraintLayout = "1.0.1"
 composeNavigation = "2.6.0"
 composePaging = "1.0.0-alpha15"
@@ -42,9 +43,9 @@ javaxInject = "1"
 junit4 = "4.13.2"
 junit5 = "5.9.3"
 junitPlatform = "1.9.3"
-kotlin = "1.8.22"
-koverPlugin = "0.6.1" # 0.7.0-Alpha
-kspPlugin = "1.8.22-1.0.11"
+kotlin = "1.9.0"
+koverPlugin = "0.7.2"
+kspPlugin = "1.9.0-1.0.11"
 lottie = "6.1.0"
 materialMotionCompose = "1.0.4"
 mockito = "5.4.0"
@@ -58,7 +59,6 @@ robolectric = "4.10.3"
 roborazzi = "1.2.0"
 turbine = "1.0.0"
 versionCompare = "1.5.0"
-composeCompilerReportGenerator = "1.0.1"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
@@ -148,7 +148,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover", version.ref = "koverPlugin" }
+kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "koverPlugin" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
@@ -187,6 +187,7 @@ test = ["turbine", "kotlinx.coroutines.test", "assertJ"]
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 androidx-navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
@@ -197,5 +198,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
-compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
