@@ -60,3 +60,4 @@ tailrec fun Collection<ProjectDescriptor>.traverse(action: (ProjectDescriptor) -
 }
 
 rootProject.children.traverse { it.buildFileName = "${it.name}.gradle.kts" }
+include(":baselineprofile")
