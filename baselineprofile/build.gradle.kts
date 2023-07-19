@@ -1,6 +1,3 @@
-import com.android.build.api.dsl.ManagedVirtualDevice
-
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidTest)
     alias(libs.plugins.kotlin.androidGradle)
@@ -8,8 +5,8 @@ plugins {
 }
 
 android {
-    namespace = "de.nilsdruyen.koncept.baselineprofile"
-    compileSdk = 33
+    namespace = "de.nilsdruyen"
+    compileSdk = 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -21,7 +18,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
         targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -29,20 +26,12 @@ android {
 
     targetProjectPath = ":app"
 
-    testOptions.managedDevices.devices {
-        create<ManagedVirtualDevice>("pixel6Api31") {
-            device = "Pixel 6"
-            apiLevel = 31
-            systemImageSource = "aosp"
-        }
-    }
 }
 
 // This is the configuration block for the Baseline Profile plugin.
 // You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
-    managedDevices += "pixel6Api31"
-    useConnectedDevices = false
+    useConnectedDevices = true
 }
 
 dependencies {

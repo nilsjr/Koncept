@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.baselineprofile
+package de.nilsdruyen
 
 import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode

@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.baselineprofile
+package de.nilsdruyen
 
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -35,7 +35,7 @@ class BaselineProfileGenerator {
 
     @Test
     fun generate() {
-        rule.collectBaselineProfile("de.nilsdruyen.koncept") {
+        rule.collect("de.nilsdruyen.koncept") {
             // This block defines the app's critical user journey. Here we are interested in
             // optimizing for app startup. But you can also navigate and scroll
             // through your most important UI.
