@@ -44,7 +44,7 @@ junit4 = "4.13.2"
 junit5 = "5.9.3"
 junitPlatform = "1.9.3"
 kotlin = "1.9.0"
-koverPlugin = "0.6.1" # 0.7.0-Alpha
+koverPlugin = "0.7.2"
 kspPlugin = "1.9.0-1.0.11"
 lottie = "6.1.0"
 materialMotionCompose = "1.0.4"
@@ -148,7 +148,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover", version.ref = "koverPlugin" }
+kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "koverPlugin" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
