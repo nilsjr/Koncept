@@ -4016,7 +4016,7 @@ HSPLandroidx/compose/runtime/Composer;-><clinit>()V
 Landroidx/compose/runtime/Composer$Companion;
 HSPLandroidx/compose/runtime/Composer$Companion;-><clinit>()V
 HSPLandroidx/compose/runtime/Composer$Companion;-><init>()V
-HPLandroidx/compose/runtime/Composer$Companion;->getEmpty()Ljava/lang/Object;
+HSPLandroidx/compose/runtime/Composer$Companion;->getEmpty()Ljava/lang/Object;
 Landroidx/compose/runtime/Composer$Companion$Empty$1;
 HSPLandroidx/compose/runtime/Composer$Companion$Empty$1;-><init>()V
 Landroidx/compose/runtime/ComposerImpl;
@@ -4194,6 +4194,7 @@ Landroidx/compose/runtime/ComposerImpl$realizeMovement$1;
 HSPLandroidx/compose/runtime/ComposerImpl$realizeMovement$1;-><init>(II)V
 HSPLandroidx/compose/runtime/ComposerImpl$realizeMovement$1;->invoke(Landroidx/compose/runtime/Applier;Landroidx/compose/runtime/SlotWriter;Landroidx/compose/runtime/RememberManager;)V
 HSPLandroidx/compose/runtime/ComposerImpl$realizeMovement$1;->invoke(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+Landroidx/compose/runtime/ComposerImpl$realizeMovement$2;
 Landroidx/compose/runtime/ComposerImpl$realizeOperationLocation$2;
 HSPLandroidx/compose/runtime/ComposerImpl$realizeOperationLocation$2;-><init>(I)V
 HSPLandroidx/compose/runtime/ComposerImpl$realizeOperationLocation$2;->invoke(Landroidx/compose/runtime/Applier;Landroidx/compose/runtime/SlotWriter;Landroidx/compose/runtime/RememberManager;)V
@@ -4921,7 +4922,7 @@ HSPLandroidx/compose/runtime/SlotTableKt;->updateNodeCount([III)V
 HSPLandroidx/compose/runtime/SlotTableKt;->updateParentAnchor([III)V
 Landroidx/compose/runtime/SlotWriter;
 HSPLandroidx/compose/runtime/SlotWriter;-><clinit>()V
-HSPLandroidx/compose/runtime/SlotWriter;-><init>(Landroidx/compose/runtime/SlotTable;)V
+HPLandroidx/compose/runtime/SlotWriter;-><init>(Landroidx/compose/runtime/SlotTable;)V
 HSPLandroidx/compose/runtime/SlotWriter;->access$containsAnyGroupMarks(Landroidx/compose/runtime/SlotWriter;I)Z
 HSPLandroidx/compose/runtime/SlotWriter;->access$dataIndex(Landroidx/compose/runtime/SlotWriter;I)I
 HSPLandroidx/compose/runtime/SlotWriter;->access$dataIndex(Landroidx/compose/runtime/SlotWriter;[II)I
@@ -5639,6 +5640,7 @@ HSPLandroidx/compose/runtime/snapshots/GlobalSnapshot;->dispose()V
 HSPLandroidx/compose/runtime/snapshots/GlobalSnapshot;->notifyObjectsInitialized$runtime_release()V
 HSPLandroidx/compose/runtime/snapshots/GlobalSnapshot;->takeNestedMutableSnapshot(Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Landroidx/compose/runtime/snapshots/MutableSnapshot;
 HSPLandroidx/compose/runtime/snapshots/GlobalSnapshot;->takeNestedSnapshot(Lkotlin/jvm/functions/Function1;)Landroidx/compose/runtime/snapshots/Snapshot;
+Landroidx/compose/runtime/snapshots/GlobalSnapshot$1$1$1;
 Landroidx/compose/runtime/snapshots/GlobalSnapshot$takeNestedMutableSnapshot$1;
 HSPLandroidx/compose/runtime/snapshots/GlobalSnapshot$takeNestedMutableSnapshot$1;-><init>(Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
 HSPLandroidx/compose/runtime/snapshots/GlobalSnapshot$takeNestedMutableSnapshot$1;->invoke(Landroidx/compose/runtime/snapshots/SnapshotIdSet;)Landroidx/compose/runtime/snapshots/MutableSnapshot;
@@ -13608,10 +13610,14 @@ HSPLcom/airbnb/lottie/LottieCompositionFactory;->fromRawRes(Landroid/content/Con
 HSPLcom/airbnb/lottie/LottieCompositionFactory;->fromRawResSync(Landroid/content/Context;ILjava/lang/String;)Lcom/airbnb/lottie/LottieResult;
 HSPLcom/airbnb/lottie/LottieCompositionFactory;->isNightMode(Landroid/content/Context;)Z
 HSPLcom/airbnb/lottie/LottieCompositionFactory;->isZipCompressed(Lokio/BufferedSource;)Ljava/lang/Boolean;
+HSPLcom/airbnb/lottie/LottieCompositionFactory;->lambda$cache$15(Lcom/airbnb/lottie/LottieComposition;)Lcom/airbnb/lottie/LottieResult;
 HSPLcom/airbnb/lottie/LottieCompositionFactory;->lambda$cache$16(Ljava/lang/String;Ljava/util/concurrent/atomic/AtomicBoolean;Lcom/airbnb/lottie/LottieComposition;)V
 HSPLcom/airbnb/lottie/LottieCompositionFactory;->lambda$fromRawRes$2(Ljava/lang/ref/WeakReference;Landroid/content/Context;ILjava/lang/String;)Lcom/airbnb/lottie/LottieResult;
 HSPLcom/airbnb/lottie/LottieCompositionFactory;->notifyTaskCacheIdleListeners(Z)V
 HSPLcom/airbnb/lottie/LottieCompositionFactory;->rawResCacheKey(Landroid/content/Context;I)Ljava/lang/String;
+Lcom/airbnb/lottie/LottieCompositionFactory$$ExternalSyntheticLambda4;
+HSPLcom/airbnb/lottie/LottieCompositionFactory$$ExternalSyntheticLambda4;-><init>(Lcom/airbnb/lottie/LottieComposition;)V
+HSPLcom/airbnb/lottie/LottieCompositionFactory$$ExternalSyntheticLambda4;->call()Ljava/lang/Object;
 Lcom/airbnb/lottie/LottieCompositionFactory$$ExternalSyntheticLambda5;
 HSPLcom/airbnb/lottie/LottieCompositionFactory$$ExternalSyntheticLambda5;-><init>(Ljava/lang/String;Ljava/util/concurrent/atomic/AtomicBoolean;)V
 HSPLcom/airbnb/lottie/LottieCompositionFactory$$ExternalSyntheticLambda5;->onResult(Ljava/lang/Object;)V
@@ -13654,6 +13660,7 @@ HSPLcom/airbnb/lottie/LottieDrawable$OnVisibleAction;-><init>(Ljava/lang/String;
 Lcom/airbnb/lottie/LottieListener;
 Lcom/airbnb/lottie/LottieResult;
 HSPLcom/airbnb/lottie/LottieResult;-><init>(Ljava/lang/Object;)V
+HSPLcom/airbnb/lottie/LottieResult;->getException()Ljava/lang/Throwable;
 HSPLcom/airbnb/lottie/LottieResult;->getValue()Ljava/lang/Object;
 Lcom/airbnb/lottie/LottieTask;
 HSPLcom/airbnb/lottie/LottieTask;-><clinit>()V
@@ -16009,7 +16016,6 @@ HSPLkotlin/collections/ArraysKt__ArraysJVMKt;->copyOfRangeToIndexCheck(II)V
 Lkotlin/collections/ArraysKt__ArraysKt;
 Lkotlin/collections/ArraysKt___ArraysJvmKt;
 HSPLkotlin/collections/ArraysKt___ArraysJvmKt;->asList([Ljava/lang/Object;)Ljava/util/List;
-HSPLkotlin/collections/ArraysKt___ArraysJvmKt;->copyInto$default([B[BIIIILjava/lang/Object;)[B
 HSPLkotlin/collections/ArraysKt___ArraysJvmKt;->copyInto$default([F[FIIIILjava/lang/Object;)[F
 HSPLkotlin/collections/ArraysKt___ArraysJvmKt;->copyInto$default([I[IIIIILjava/lang/Object;)[I
 HSPLkotlin/collections/ArraysKt___ArraysJvmKt;->copyInto$default([Ljava/lang/Object;[Ljava/lang/Object;IIIILjava/lang/Object;)[Ljava/lang/Object;
@@ -16290,7 +16296,7 @@ HSPLkotlin/coroutines/CombinedContext;->contains(Lkotlin/coroutines/CoroutineCon
 HSPLkotlin/coroutines/CombinedContext;->containsAll(Lkotlin/coroutines/CombinedContext;)Z
 HSPLkotlin/coroutines/CombinedContext;->equals(Ljava/lang/Object;)Z
 HSPLkotlin/coroutines/CombinedContext;->fold(Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
-HPLkotlin/coroutines/CombinedContext;->get(Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext$Element;
+HSPLkotlin/coroutines/CombinedContext;->get(Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext$Element;
 HSPLkotlin/coroutines/CombinedContext;->minusKey(Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext;
 HSPLkotlin/coroutines/CombinedContext;->plus(Lkotlin/coroutines/CoroutineContext;)Lkotlin/coroutines/CoroutineContext;
 HSPLkotlin/coroutines/CombinedContext;->size()I
@@ -16469,7 +16475,7 @@ HSPLkotlin/jvm/internal/Intrinsics;->checkParameterIsNotNull(Ljava/lang/Object;L
 HSPLkotlin/jvm/internal/Intrinsics;->compare(II)I
 HSPLkotlin/jvm/internal/Intrinsics;->stringPlus(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/String;
 Lkotlin/jvm/internal/Lambda;
-HSPLkotlin/jvm/internal/Lambda;-><init>(I)V
+HPLkotlin/jvm/internal/Lambda;-><init>(I)V
 HSPLkotlin/jvm/internal/Lambda;->getArity()I
 Lkotlin/jvm/internal/PropertyReference;
 HSPLkotlin/jvm/internal/PropertyReference;-><init>(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;I)V
@@ -16945,6 +16951,7 @@ Lkotlinx/coroutines/Delay;
 Lkotlinx/coroutines/DispatchedCoroutine;
 HSPLkotlinx/coroutines/DispatchedCoroutine;-><clinit>()V
 HSPLkotlinx/coroutines/DispatchedCoroutine;-><init>(Lkotlin/coroutines/CoroutineContext;Lkotlin/coroutines/Continuation;)V
+HSPLkotlinx/coroutines/DispatchedCoroutine;->afterCompletion(Ljava/lang/Object;)V
 HSPLkotlinx/coroutines/DispatchedCoroutine;->afterResume(Ljava/lang/Object;)V
 HSPLkotlinx/coroutines/DispatchedCoroutine;->getResult$kotlinx_coroutines_core()Ljava/lang/Object;
 HSPLkotlinx/coroutines/DispatchedCoroutine;->tryResume()Z
