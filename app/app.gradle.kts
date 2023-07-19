@@ -7,6 +7,7 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
+    alias(libs.plugins.androidx.baselineprofile)
 }
 android {
     namespace = "de.nilsdruyen.koncept"
@@ -209,6 +210,8 @@ dependencies {
     testImplementation(libs.square.okhttp.mockwebserver)
 
     testImplementation(libs.androidx.room.testing)
+
+    baselineProfile(projects.baselineprofile)
 
     // kover
 //    kover(projects.features.dogs.dogsDomain)

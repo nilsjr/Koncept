@@ -13,6 +13,8 @@ plugins {
     alias(libs.plugins.kover)
 
     id("de.nilsdruyen.plugin.root")
+    alias(libs.plugins.androidTest) apply false
+    alias(libs.plugins.androidx.baselineprofile) apply false
 }
 
 tasks.register<Delete>("clean") {
