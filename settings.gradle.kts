@@ -49,6 +49,9 @@ include(":base:base-navigation")
 // design
 include(":design:design-system")
 
+// tooling
+include(":baselineprofile")
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 tailrec fun Collection<ProjectDescriptor>.traverse(action: (ProjectDescriptor) -> Unit) {
@@ -60,4 +63,3 @@ tailrec fun Collection<ProjectDescriptor>.traverse(action: (ProjectDescriptor) -
 }
 
 rootProject.children.traverse { it.buildFileName = "${it.name}.gradle.kts" }
-include(":baselineprofile")

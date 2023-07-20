@@ -10,10 +10,10 @@ plugins {
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.compose.compiler.report) apply false
-
-    id("de.nilsdruyen.plugin.root")
     alias(libs.plugins.androidTest) apply false
     alias(libs.plugins.androidx.baselineprofile) apply false
+
+    id("de.nilsdruyen.plugin.root")
 }
 
 tasks.register<Delete>("clean") {
