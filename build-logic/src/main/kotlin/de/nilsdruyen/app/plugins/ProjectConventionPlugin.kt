@@ -14,7 +14,7 @@ internal class ProjectConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
-                gradleReleaseChannel = "current"
+                gradleReleaseChannel = "release-candidate"
                 rejectVersionIf {
                     releaseType(candidate.version) < releaseType(currentVersion) ||
                         isIgnoredDependency(candidate.group, candidate.module)
