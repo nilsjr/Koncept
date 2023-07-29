@@ -2,11 +2,11 @@ package de.nilsdruyen.app.plugins
 
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
+import de.nilsdruyen.app.config.applyKover
 import de.nilsdruyen.app.config.configure
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-@Suppress("unused")
 internal class KotlinConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
@@ -17,6 +17,7 @@ internal class KotlinConventionPlugin : Plugin<Project> {
             configure()
             applyDetekt()
             applyDetektFormatting()
+            applyKover()
         }
     }
 }

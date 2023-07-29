@@ -12,10 +12,7 @@ internal fun releaseType(version: String): Int {
 
 internal fun isNonStable(version: String): Boolean = releaseType(version) < sortedReleaseQualifiers.size
 
-private val ignoredDependencies = listOf(
-    // https://github.com/ben-manes/gradle-versions-plugin/issues/534
-    Pair("org.jacoco", "org.jacoco.ant"),
-)
+private val ignoredDependencies = emptyList<Pair<String, String>>()
 
 internal fun isIgnoredDependency(group: String, module: String) =
     ignoredDependencies.any { it.first == group && it.second == module }

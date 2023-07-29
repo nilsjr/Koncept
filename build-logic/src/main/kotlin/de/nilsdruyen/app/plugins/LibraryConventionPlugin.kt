@@ -3,6 +3,7 @@ package de.nilsdruyen.app.plugins
 import com.android.build.gradle.LibraryExtension
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
+import de.nilsdruyen.app.config.applyKoverAndroid
 import de.nilsdruyen.app.config.configure
 import de.nilsdruyen.app.config.configureAndroidLibrary
 import de.nilsdruyen.app.config.configureKotlinAndroid
@@ -26,6 +27,7 @@ internal class LibraryConventionPlugin : Plugin<Project> {
             configure()
             applyDetekt()
             applyDetektFormatting()
+            applyKoverAndroid()
         }
     }
 }

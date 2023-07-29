@@ -8,7 +8,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.named
 
-@Suppress("unused")
 internal class ProjectConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
@@ -21,6 +20,7 @@ internal class ProjectConventionPlugin : Plugin<Project> {
                 }
             }
             applyDetektFormatting()
+//            applyKoverRoot()
         }
     }
 }
