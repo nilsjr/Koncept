@@ -1,0 +1,17 @@
+default-scenarios = ["g_8_2", "g_8_3"]
+
+g_8_2 {
+    title = "with gradle 8.2.x"
+    cleanup-tasks = ["clean"]
+    versions = ["8.2.1"]
+    tasks = [":app:assembleDebug"]
+    gradle-args = ["--no-build-cache"]
+}
+
+g_8_3 {
+    title = "with gradle 8.3-rc-1"
+    cleanup-tasks = ["clean"]
+    versions = ["8.3-rc-1"]
+    tasks = [":app:assembleDebug"]
+    gradle-args = ["--no-build-cache"]
+}
