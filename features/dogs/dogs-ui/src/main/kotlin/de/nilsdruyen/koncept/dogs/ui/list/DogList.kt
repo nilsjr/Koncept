@@ -27,7 +27,6 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -47,8 +46,6 @@ import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
-import de.nilsdruyen.koncept.domain.sendIn
-import kotlinx.coroutines.launch
 
 @Composable
 fun DogListScreen(
@@ -58,7 +55,6 @@ fun DogListScreen(
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.state.collectAsStateWithLifecycle()
-    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(uiState.value.navigateTo) {
         val id = uiState.value.navigateTo
@@ -75,13 +71,11 @@ fun DogListScreen(
     DogListScreen(
         state = uiState.value,
         showDog = { dog ->
-            coroutineScope.launch {
-                viewModel.intent.send(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
-            }
+            viewModel.sendIntent(DogListIntent.ShowDetailAndSaveListPosition(dog.id))
         },
         showSortDialog = { showSortDialog(uiState.value.selectedType) },
         reloadList = {
-            viewModel.intent.sendIn(coroutineScope, DogListIntent.Reload)
+            viewModel.sendIntent(DogListIntent.Reload)
         }
     )
 }

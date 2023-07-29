@@ -30,7 +30,7 @@ This is an sample project to experiment with architectures, modules structures, 
 ## Used APIs
 
 Consuming following api: https://www.thedogapi.com/
-- [The Dog API docs](https://docs.thedogapi.com/)
+- [The Dog API docs](https://portal.thatapicompany.com/pages/dog-api)
 
 ## Android Jetpack
 

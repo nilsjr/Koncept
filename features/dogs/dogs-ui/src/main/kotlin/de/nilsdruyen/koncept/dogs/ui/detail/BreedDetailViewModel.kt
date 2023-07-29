@@ -11,6 +11,7 @@ import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.UpdateFavoriteBreedUseCase
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
+import de.nilsdruyen.koncept.dogs.ui.recommendation.RecoDelegate
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import javax.inject.Inject
@@ -21,7 +22,8 @@ class BreedDetailViewModel @Inject constructor(
     private val getBreedImageListUseCase: GetBreedImageListUseCase,
     private val updateFavoriteBreedUseCase: UpdateFavoriteBreedUseCase,
     private val isFavoriteFlowUseCase: IsFavoriteFlowUseCase,
-) : MviViewModel<BreedDetailState, BreedDetailIntent>(BreedDetailState(isLoading = true)) {
+    private val recoViewModel: RecoDelegate,
+) : MviViewModel<BreedDetailState, BreedDetailIntent>(BreedDetailState(isLoading = true)), RecoDelegate by recoViewModel {
 
     private val breedId = BreedDetailsRoute.fromSavedState(savedStateHandle).value
 

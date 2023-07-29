@@ -6,6 +6,7 @@ import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetFavoritesUseCase
 import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.ui.recommendation.RecoDelegate
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import javax.inject.Inject
@@ -13,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val getFavoritesUseCase: GetFavoritesUseCase,
-) : MviViewModel<FavoritesState, FavoritesIntent>(FavoritesState(true)) {
+    private val recoViewModel: RecoDelegate,
+) : MviViewModel<FavoritesState, FavoritesIntent>(FavoritesState(true)), RecoDelegate by recoViewModel {
 
     override fun initialize() {
         loadFavorites()
