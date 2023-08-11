@@ -5,7 +5,6 @@ import de.nilsdruyen.app.ProjectConfig
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
-@Suppress("UnstableApiUsage")
 internal fun Project.configureAndroidLibrary() {
     configure<LibraryExtension> {
         compileSdk = ProjectConfig.compileSdkVersion
