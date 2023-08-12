@@ -64,6 +64,7 @@ dependencies {
     testImplementation(libs.hilt.android.test)
     kaptTest(libs.hilt.android.compiler)
 
+    testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
     testImplementation(libs.androidx.compose.uiManifestTest)
     testImplementation(libs.roborazzi)
@@ -82,6 +83,7 @@ dependencies {
     androidTestImplementation(libs.hilt.android.test)
     kaptAndroidTest(libs.hilt.compiler)
 
+    androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.compose.uiTest)
     debugImplementation(libs.androidx.compose.uiManifestTest)
 

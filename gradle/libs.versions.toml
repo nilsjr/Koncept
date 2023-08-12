@@ -3,13 +3,12 @@ accompanist = "0.31.6-rc"
 androidDesugarJdkLibs = "2.0.3"
 androidOrchestrator = "1.4.2"
 androidPlugin = "8.1.0"
-androidx-baselineprofile = "1.2.0-beta02"
+androidx-baselineprofile = "1.2.0-beta03"
 androidxActivity = "1.7.2"
 androidxConstraintLayout = "2.1.4"
 androidxCore = "1.10.1"
 androidxDataStore = "1.1.0-alpha04"
 androidxLifecycle = "2.6.1"
-androidxNavigation = "2.6.0"
 androidxPaging = "3.2.0"
 androidxRoom = "2.5.2"
 androidxSwipeRefreshlayout = "1.1.0"
@@ -44,7 +43,7 @@ jacocoPlugin = "0.8.10"
 javaxInject = "1"
 junit4 = "4.13.2"
 junit5 = "5.10.0"
-junitPlatform = "1.9.3"
+junitPlatform = "1.10.0"
 kotlin = "1.9.0"
 koverPlugin = "0.7.3"
 kspPlugin = "1.9.0-1.0.13"
@@ -98,7 +97,6 @@ androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-co
 androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
-androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
 androidx-paging = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
@@ -191,7 +189,6 @@ android-application = { id = "com.android.application", version.ref = "androidPl
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 androidTest = { id = "com.android.test", version.ref = "androidPlugin" }
 androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
-androidx-navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
 compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
