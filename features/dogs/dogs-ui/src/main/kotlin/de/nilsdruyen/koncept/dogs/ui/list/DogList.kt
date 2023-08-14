@@ -14,8 +14,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -105,12 +103,10 @@ fun DogListScreen(
                 modifier = Modifier.testTag("appbar"),
                 actions = {
                     IconButton(onClick = showSortDialog) {
-                        BadgedBox(badge = { Badge { Text("1") } }) {
-                            Icon(
-                                imageVector = KonceptIcons.FilterList,
-                                contentDescription = "Filter Games"
-                            )
-                        }
+                        Icon(
+                            imageVector = KonceptIcons.FilterList,
+                            contentDescription = "Filter Games"
+                        )
                     }
                     IconButton(onClick = { }) {
                         Icon(

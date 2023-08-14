@@ -8,10 +8,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -101,24 +100,16 @@ fun KonceptBottomBar(
         enter = expandVertically(),
         exit = shrinkVertically(),
     ) {
-        BottomNavigation(
-            backgroundColor = MaterialTheme.colorScheme.surface,
-            modifier = Modifier.navigationBarsPadding()
-        ) {
+        NavigationBar {
             val routes = currentDestination?.hierarchy?.mapNotNull { it.route }?.toList() ?: emptyList()
             log("nav stack $routes")
             destinations.forEach { item ->
                 val isSelected = routes.any { it == item.route }
-                BottomNavigationItem(
+                NavigationBarItem(
                     selected = isSelected,
                     onClick = { onNavigateToDestination(item.navigate()) },
                     icon = {
-                        val icon = if (isSelected) {
-                            item.selectedIcon
-                        } else {
-                            item.unselectedIcon
-                        }
-                        when (icon) {
+                        when (val icon = if (isSelected) item.selectedIcon else item.unselectedIcon) {
                             is Icon.ImageVectorIcon -> androidx.compose.material3.Icon(
                                 imageVector = icon.imageVector,
                                 contentDescription = null

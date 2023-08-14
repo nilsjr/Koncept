@@ -127,9 +127,10 @@ dependencies {
     implementation(projects.features.dogs.dogsCache)
     implementation(projects.features.dogs.dogsUi)
 
-    implementation(libs.androidx.core)
     implementation(libs.kotlinx.coroutines)
 
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.activity)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewModel)
     implementation(libs.androidx.lifecycle.compose)
