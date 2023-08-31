@@ -11,5 +11,5 @@ import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 interface DogsDataModule {
 
     @Binds
-    fun DogsRepositoryImpl.bindDogsRepository(): DogsRepository
+    fun bindDogsRepository(dogsRepositoryImpl: DogsRepositoryImpl): DogsRepository
 }

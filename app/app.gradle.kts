@@ -4,7 +4,6 @@ import de.nilsdruyen.app.utils.CiUtils
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.application")
-    id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
     alias(libs.plugins.androidx.baselineprofile)
@@ -153,8 +152,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.androidx.hilt.compiler)
-    kapt(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.room)
     ksp(libs.androidx.room.compiler)
@@ -201,7 +200,7 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.hilt.android.test)
-    kaptTest(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
 
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
@@ -230,7 +229,7 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.uiTest)
 
     androidTestImplementation(libs.hilt.android.test)
-    kaptAndroidTest(libs.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
 
     androidTestUtil(libs.androidx.test.orchestrator)
 

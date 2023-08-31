@@ -3,7 +3,7 @@ accompanist = "0.32.0"
 androidDesugarJdkLibs = "2.0.3"
 androidOrchestrator = "1.4.2"
 androidPlugin = "8.1.1"
-androidx-baselineprofile = "1.2.0-beta04"
+androidx-baselineprofile = "1.2.0-beta05"
 androidxActivity = "1.8.0-alpha07"
 androidxConstraintLayout = "2.1.4"
 androidxCore = "1.10.1"
@@ -19,7 +19,7 @@ androidxVectorDrawable = "1.1.0"
 androidxWebkit = "1.7.0"
 arrow = "1.2.0"
 assertJ = "3.24.2"
-benchmark-macro-junit4 = "1.2.0-beta04"
+benchmark-macro-junit4 = "1.2.0-beta05"
 composeActivity = "1.7.2"
 composeBom = "2023.08.00"
 composeCompiler = "1.5.3-dev-k1.9.10-593b4c95fce"
@@ -33,7 +33,7 @@ detekt = "1.23.1"
 detektTwitterComposeRules = "0.0.26"
 espresso = "3.5.1"
 gradleVersionsPlugin = "0.47.0"
-hilt = "2.47"
+hilt = "2.48"
 hiltCompiler = "1.0.0"
 hiltNavigationCompose = "1.0.0"
 imageCropper = "4.3.0"
@@ -196,7 +196,6 @@ gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVe
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
 kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }

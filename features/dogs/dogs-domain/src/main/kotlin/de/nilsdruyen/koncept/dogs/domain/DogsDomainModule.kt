@@ -23,14 +23,14 @@ internal interface DogsDomainModule {
     fun bindsGetDogListUseCase(useCase: GetDogListUseCaseImpl): GetDogListUseCase
 
     @Binds
-    fun GetBreedImageListUseCaseImpl.bindGetBreedImageListUseCase(): GetBreedImageListUseCase
+    fun bindGetBreedImageListUseCase(getBreedImageListUseCaseImpl: GetBreedImageListUseCaseImpl): GetBreedImageListUseCase
 
     @Binds
-    fun UpdateFavoriteBreedUseCaseImpl.bindUpdateFavoriteBreedUseCase(): UpdateFavoriteBreedUseCase
+    fun bindUpdateFavoriteBreedUseCase(updateFavoriteBreedUseCaseImpl: UpdateFavoriteBreedUseCaseImpl): UpdateFavoriteBreedUseCase
 
     @Binds
-    fun IsFavoriteFlowUseCaseImpl.bindIsFavoriteFlowUseCase(): IsFavoriteFlowUseCase
+    fun bindIsFavoriteFlowUseCase(isFavoriteFlowUseCaseImpl: IsFavoriteFlowUseCaseImpl): IsFavoriteFlowUseCase
 
     @Binds
-    fun GetFavoritesUseCaseImpl.bindGetFavoritesUseCase(): GetFavoritesUseCase
+    fun bindGetFavoritesUseCase(getFavoritesUseCaseImpl: GetFavoritesUseCaseImpl): GetFavoritesUseCase
 }
