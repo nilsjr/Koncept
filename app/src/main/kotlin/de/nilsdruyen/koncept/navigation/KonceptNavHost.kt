@@ -31,7 +31,7 @@ fun KonceptNavHost(
     onNavigate: NavigateTo,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    startDestination: String = BreedListRoute.getGraphRoute(),
+    startDestination: String = WebRoute.getGraphRoute(),
 ) {
     val slideDistance = rememberSlideDistance()
     MaterialMotionNavHost(

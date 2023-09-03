@@ -20,24 +20,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppRoot()
+            KonceptTheme {
+                KonceptApp()
+            }
         }
-    }
-}
-
-@Composable
-fun AppRoot() {
-    KonceptTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            KonceptApp()
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    KonceptTheme {
-        KonceptApp()
     }
 }
