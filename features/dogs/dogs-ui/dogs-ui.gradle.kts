@@ -1,7 +1,7 @@
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
-    id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.paparazzi.get().pluginId)
     alias(libs.plugins.compose.compiler.report)
 }
@@ -20,7 +20,7 @@ dependencies {
     implementation(projects.features.dogs.dogsEntity)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.lifecycle.compose)
 
@@ -62,7 +62,7 @@ dependencies {
     testImplementation(libs.robolectric)
 
     testImplementation(libs.hilt.android.test)
-    kaptTest(libs.hilt.android.compiler)
+    kspTest(libs.hilt.android.compiler)
 
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
@@ -81,7 +81,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.runner)
 
     androidTestImplementation(libs.hilt.android.test)
-    kaptAndroidTest(libs.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
 
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.compose.uiTest)

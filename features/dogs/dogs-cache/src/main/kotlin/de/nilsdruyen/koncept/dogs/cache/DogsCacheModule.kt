@@ -11,5 +11,5 @@ import de.nilsdruyen.koncept.dogs.data.DogsCacheDataSource
 interface DogsCacheModule {
 
     @Binds
-    fun DogsCacheDataSourceImpl.bindDogsCacheDataSource(): DogsCacheDataSource
+    fun bindDogsCacheDataSource(dogsCacheDataSourceImpl:DogsCacheDataSourceImpl): DogsCacheDataSource
 }
