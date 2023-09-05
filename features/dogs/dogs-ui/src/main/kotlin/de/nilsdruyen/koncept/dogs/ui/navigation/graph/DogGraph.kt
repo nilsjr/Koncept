@@ -1,10 +1,9 @@
 @file:OptIn(
-    ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class,
+    ExperimentalMaterialNavigationApi::class,
 )
 
 package de.nilsdruyen.koncept.dogs.ui.navigation.graph
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi

@@ -7,13 +7,9 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.isImeVisible
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -46,7 +42,7 @@ import soup.compose.material.motion.navigation.rememberMaterialMotionNavControll
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalComposeUiApi::class,
-    ExperimentalMaterialNavigationApi::class,
+    ExperimentalMaterialNavigationApi::class, ExperimentalLayoutApi::class,
 )
 @Composable
 fun KonceptApp() {
@@ -61,46 +57,37 @@ fun KonceptApp() {
         systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = useDarkIcons)
     }
 
-//    ModalBottomSheetLayout(
-//        bottomSheetNavigator = bottomSheetNavigator,
-//        modifier = Modifier.fillMaxSize().semantics {
-//            testTagsAsResourceId = true
-//        }
-//    ) {
-    Scaffold(
-        modifier = Modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { /*TODO*/ },
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Default.AccountCircle,
-                            contentDescription = null
-                        )
-                    }
-                )
+    ModalBottomSheetLayout(
+        bottomSheetNavigator = bottomSheetNavigator,
+        modifier = Modifier
+            .fillMaxSize()
+            .semantics {
+                testTagsAsResourceId = true
             }
-//                KonceptBottomBar(
-//                    destinations = state.topLevelDestinations,
-//                    onNavigateToDestination = state::navigate,
-//                    currentDestination = state.currentDestination,
-//                )
-        },
-    ) { padding ->
-        KonceptNavHost(
-            navController = navController,
-            onBackClick = state::onBackClick,
-            onNavigate = { state.navigate(it) },
-            modifier = Modifier.padding(padding),
-        )
+    ) {
+        Scaffold(
+            modifier = Modifier,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            bottomBar = {
+                KonceptBottomBar(
+                    destinations = state.topLevelDestinations,
+                    onNavigateToDestination = state::navigate,
+                    currentDestination = state.currentDestination,
+                )
+            },
+        ) { padding ->
+            KonceptNavHost(
+                navController = navController,
+                onBackClick = state::onBackClick,
+                onNavigate = { state.navigate(it) },
+                modifier = Modifier
+                    .padding(padding)
+                    .consumeWindowInsets(padding),
+            )
+        }
     }
-//    }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun KonceptBottomBar(
     destinations: List<TopLevelRoute>,
@@ -115,39 +102,39 @@ fun KonceptBottomBar(
 //            dest.route in showBottomBarFor
 //        }
 //    }
-//    AnimatedVisibility(
-//        visible = true,
-//        enter = expandVertically(),
-//        exit = shrinkVertically(),
-//    ) {
-    NavigationBar {
-        val routes = currentDestination?.hierarchy?.mapNotNull { it.route }?.toList() ?: emptyList()
-        log("nav stack $routes")
-        destinations.forEach { item ->
-            val isSelected = routes.any { it == item.route }
-            NavigationBarItem(
-                selected = isSelected,
-                onClick = { onNavigateToDestination(item.navigate()) },
-                icon = {
-                    when (val icon = if (isSelected) item.selectedIcon else item.unselectedIcon) {
-                        is Icon.ImageVectorIcon -> Icon(
-                            imageVector = icon.imageVector,
-                            contentDescription = null
-                        )
+    AnimatedVisibility(
+        visible = true,
+        enter = expandVertically(),
+        exit = shrinkVertically(),
+    ) {
+        NavigationBar {
+            val routes = currentDestination?.hierarchy?.mapNotNull { it.route }?.toList() ?: emptyList()
+            log("nav stack $routes")
+            destinations.forEach { item ->
+                val isSelected = routes.any { it == item.route }
+                NavigationBarItem(
+                    selected = isSelected,
+                    onClick = { onNavigateToDestination(item.navigate()) },
+                    icon = {
+                        when (val icon = if (isSelected) item.selectedIcon else item.unselectedIcon) {
+                            is Icon.ImageVectorIcon -> Icon(
+                                imageVector = icon.imageVector,
+                                contentDescription = null
+                            )
 
-                        is Icon.DrawableResourceIcon -> Icon(
-                            painter = painterResource(id = icon.id),
-                            contentDescription = null
-                        )
-                    }
-                },
-                alwaysShowLabel = false,
-                label = {
-                    Text(text = stringResource(id = item.iconTextId))
-                },
-                modifier = Modifier.testTag(item.route)
-            )
+                            is Icon.DrawableResourceIcon -> Icon(
+                                painter = painterResource(id = icon.id),
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    alwaysShowLabel = false,
+                    label = {
+                        Text(text = stringResource(id = item.iconTextId))
+                    },
+                    modifier = Modifier.testTag(item.route)
+                )
+            }
         }
     }
-//    }
 }

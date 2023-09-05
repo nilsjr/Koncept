@@ -3,14 +3,11 @@ package de.nilsdruyen.koncept.ui
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.FrameLayout
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -21,15 +18,13 @@ fun WebScreen() {
 //    AccompanistWebView(modifier)
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun OwnWebView(modifier: Modifier) {
     AndroidView(
         modifier = modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .imePadding()
-            .imeNestedScroll(),
+            .imePadding(),
         factory = { context ->
             WebView(context).apply {
                 layoutParams = ViewGroup.LayoutParams(
@@ -40,8 +35,7 @@ fun OwnWebView(modifier: Modifier) {
                 settings.javaScriptEnabled = true
             }
         },
-        update = { webView -> webView.loadUrl("https://www.google.de") }
-//        update = { webView -> webView.loadUrl("file:///android_asset/index.html") }
+        update = { webView -> webView.loadUrl("file:///android_asset/index.html") }
     )
 }
 
