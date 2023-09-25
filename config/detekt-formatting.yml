@@ -27,6 +27,6 @@ formatting:
   ParameterListWrapping:
     indentSize: 4
 
-TwitterCompose:
+Compose:
   active: false
 
