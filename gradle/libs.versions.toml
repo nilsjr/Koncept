@@ -116,7 +116,7 @@ arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-retrofit = { module = "io.arrow-kt:arrow-core-retrofit" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
-coilCompose = "io.coil-kt:coil-compose:2.4.0"
+coilCompose = "io.coil-kt:coil-compose:2.5.0"
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
