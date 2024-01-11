@@ -10,7 +10,7 @@ This is an sample project to experiment with architectures, modules structures, 
 1. Checkout repository
 2. Open with Android Studio Arctic Fox (current stable)
 3. Have a :coffee: and wait for Android Studio to finish syncing
-4. Create free account at [https://www.thedogapi.com/] for api token
+4. Create free account at [https://www.thedogapi.com/](https://www.thedogapi.com/) for api token
 5. add x-api-key from mail as property dogApiKey to your local gradle.properties Example:
    dogApiKey=XXXX
 

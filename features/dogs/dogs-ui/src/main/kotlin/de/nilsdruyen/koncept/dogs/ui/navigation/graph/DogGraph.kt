@@ -61,7 +61,7 @@ fun NavGraphBuilder.breedTopLevelGraph(
 }
 
 fun NavGraphBuilder.breedDetailGraph(base: KonceptNavRoute.GraphNavRoute, onNavigate: NavigateTo, slideDistance: Int) {
-    addBreedDetail(base, onNavigate, slideDistance)
+//    addBreedDetail(base, onNavigate, slideDistance)
     addImageDetail(base)
 }
 
@@ -89,6 +89,7 @@ fun NavGraphBuilder.addImageDetail(base: KonceptNavRoute.GraphNavRoute) {
     }
 }
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 fun NavGraphBuilder.addBreedSortBottomSheet(
     base: KonceptNavRoute.GraphNavRoute,
     setSortResult: (BreedSortType) -> Unit

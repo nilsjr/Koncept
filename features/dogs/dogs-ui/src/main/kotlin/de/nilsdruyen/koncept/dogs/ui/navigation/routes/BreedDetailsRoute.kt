@@ -21,7 +21,8 @@ object BreedDetailsRoute : KonceptNavRoute.NestedNavRoute {
     )
 
     fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: BreedId): KonceptNavDestination.NestedNavDestination {
-        return KonceptNavDestination.NestedNavDestination("${graph.route}/$route/${id.value}")
+//        return KonceptNavDestination.NestedNavDestination("${graph.route}/$route/${id.value}")
+        return KonceptNavDestination.NestedNavDestination("$route/${id.value}")
     }
 
     fun fromSavedState(savedStateHandle: SavedStateHandle): BreedId = BreedId(savedStateHandle[breedIdArg] ?: -1)
