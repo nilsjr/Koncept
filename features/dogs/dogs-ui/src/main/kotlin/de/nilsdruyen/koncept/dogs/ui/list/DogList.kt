@@ -67,7 +67,7 @@ fun DogListScreen(
     }
 
     LaunchedEffect(sortTypeState.value) {
-        viewModel.intent.send(DogListIntent.SortTypeChanged(BreedSortType.values()[sortTypeState.value]))
+        viewModel.intent.send(DogListIntent.SortTypeChanged(BreedSortType.entries[sortTypeState.value]))
     }
 
     DogListScreen(
