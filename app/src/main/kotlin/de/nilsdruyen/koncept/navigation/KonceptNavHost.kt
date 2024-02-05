@@ -7,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import de.nilsdruyen.koncept.base.navigation.NavigateTo
@@ -19,13 +18,11 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
-import de.nilsdruyen.koncept.dogs.ui.navigation.routes.ImageDetailRoute
 import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
 import soup.compose.material.motion.animation.materialElevationScaleIn
 import soup.compose.material.motion.animation.materialElevationScaleOut
 import soup.compose.material.motion.animation.rememberSlideDistance
-
 
 @Composable
 fun RootNavHost(
@@ -54,7 +51,6 @@ fun RootNavHost(
             )
         }
         composable("login") {
-
         }
     }
 }
