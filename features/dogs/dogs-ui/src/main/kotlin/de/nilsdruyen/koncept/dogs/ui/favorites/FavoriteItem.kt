@@ -44,7 +44,7 @@ fun DogFavoriteItem(dog: Dog, showBreed: (BreedId) -> Unit = {}) {
 
 @Preview
 @Composable
-fun PreviewDogFavoriteItem() {
+private fun PreviewDogFavoriteItem() {
     KonceptTheme {
         DogFavoriteItem(dog = Dog(BreedId(1), "Nils", false))
     }

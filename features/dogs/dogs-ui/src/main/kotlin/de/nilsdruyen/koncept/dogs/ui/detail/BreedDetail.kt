@@ -138,7 +138,7 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
 }
 
 @Composable
-fun BreedImageList(list: ImmutableList<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier) {
+fun BreedImageList(list: ImmutableList<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier = Modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
         items(list.items) {
             BreedImage(it.url) {
@@ -176,7 +176,7 @@ fun BreedImage(url: String, onImageClick: () -> Unit) {
 }
 
 @Composable
-private fun ImagePlaceholder(modifier: Modifier) {
+private fun ImagePlaceholder(modifier: Modifier = Modifier) {
     Box(
         modifier
             .clip(RoundedCornerShape(16.dp))

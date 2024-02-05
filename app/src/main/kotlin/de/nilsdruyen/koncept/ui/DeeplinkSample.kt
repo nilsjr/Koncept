@@ -23,7 +23,8 @@ import javax.inject.Inject
  * Deeplink sample
  *
  * send via terminal:
- * adb shell am start -W -a android.intent.action.VIEW -d "koncept://deeplink/2022-11-10T10%3A53%3A19.000Z?rawDate2=2022-11-10T10%3A53%3A19.000Z"
+ * adb shell am start -W -a android.intent.action.VIEW
+ * -d "koncept://deeplink/2022-11-10T10%3A53%3A19.000Z?rawDate2=2022-11-10T10%3A53%3A19.000Z"
  */
 
 @Composable

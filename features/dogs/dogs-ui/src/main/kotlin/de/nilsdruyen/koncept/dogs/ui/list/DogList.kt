@@ -214,7 +214,7 @@ fun DogList(
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewDogList(@PreviewParameter(DogListPreviewProvider::class) listState: DogListState) {
+private fun PreviewDogList(@PreviewParameter(DogListPreviewProvider::class) listState: DogListState) {
     KonceptTheme {
         DogListScreen(listState)
     }

@@ -144,7 +144,7 @@ fun ImageDetail(id: String) {
 
 @KonceptPreview
 @Composable
-fun PreviewEmptyImageDetail() {
+private fun PreviewEmptyImageDetail() {
     KonceptTheme {
         ImageDetail(id = "")
     }
@@ -152,7 +152,7 @@ fun PreviewEmptyImageDetail() {
 
 @KonceptPreview
 @Composable
-fun PreviewImageDetail() {
+private fun PreviewImageDetail() {
     KonceptTheme {
         ImageDetail(id = "123")
     }
