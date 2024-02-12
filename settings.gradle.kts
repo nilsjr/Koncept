@@ -62,5 +62,4 @@ tailrec fun Collection<ProjectDescriptor>.traverse(action: (ProjectDescriptor) -
         it.children
     }.traverse(action)
 }
-
 rootProject.children.traverse { it.buildFileName = "${it.name}.gradle.kts" }

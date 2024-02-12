@@ -13,6 +13,7 @@ android {
     compileSdk = ProjectConfig.compileSdkVersion
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
+
         minSdk = ProjectConfig.minSdkVersion
         targetSdk = ProjectConfig.targetSdkVersion
         versionCode = 1
