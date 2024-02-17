@@ -2,7 +2,7 @@
 accompanist = "0.34.0"
 androidDesugarJdkLibs = "2.0.4"
 androidOrchestrator = "1.4.2"
-androidPlugin = "8.3.0-rc01"
+androidPlugin = "8.3.0-rc02"
 androidx-baselineprofile = "1.2.3"
 androidxActivity = "1.8.2"
 androidxConstraintLayout = "2.1.4"
@@ -21,11 +21,11 @@ assertJ = "3.25.3"
 benchmark-macro-junit4 = "1.2.3"
 composeActivity = "1.8.2"
 composeBom = "2024.02.00"
-composeCompiler = "1.5.8"
+composeCompiler = "1.5.9"
 composeCompilerReportGenerator = "1.1.0"
 composeConstraintLayout = "1.0.1"
 composeNavigation = "2.7.7"
-coroutines = "1.7.3"
+coroutines = "1.8.0"
 detekt = "1.23.5"
 detektComposeRules = "0.3.11"
 espresso = "3.5.1"
@@ -44,7 +44,7 @@ kotlin = "1.9.22"
 koverPlugin = "0.7.5"
 kspPlugin = "1.9.22-1.0.17"
 lottie = "6.3.0"
-materialMotionCompose = "1.1.0"
+materialMotionCompose = "1.2.0"
 mockito = "5.10.0"
 mockitoKotlin = "5.2.1"
 mockk = "1.13.9"
@@ -112,7 +112,7 @@ compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeB
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detekt-composeRules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektComposeRules" }
-faker = "io.github.serpro69:kotlin-faker:1.15.0"
+faker = "io.github.serpro69:kotlin-faker:1.16.0"
 fornewid-compose-motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "materialMotionCompose" }
 fornewid-compose-motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "materialMotionCompose" }
 gradleVersions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
