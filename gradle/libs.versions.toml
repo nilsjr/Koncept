@@ -112,7 +112,7 @@ compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeB
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detekt-composeRules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektComposeRules" }
-faker = "io.github.serpro69:kotlin-faker:1.15.0"
+faker = "io.github.serpro69:kotlin-faker:1.16.0"
 fornewid-compose-motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "materialMotionCompose" }
 fornewid-compose-motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "materialMotionCompose" }
 gradleVersions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
