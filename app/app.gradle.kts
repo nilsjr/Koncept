@@ -102,6 +102,15 @@ android {
     }
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
+        managedDevices {
+            localDevices {
+                create("pixel8api34") {
+                    device = "Pixel 8"
+                    apiLevel = 34
+                    systemImageSource = "google-atd"
+                }
+            }
+        }
     }
 }
 
