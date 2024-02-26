@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: alvrme/alpine-android:android-33-jdk21
 
     steps:
       - name: Enable KVM group perms
@@ -25,6 +24,14 @@ jobs:
 
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
       - name: Build release variant including baseline profile generation
         run: ./gradlew :app:assembleRelease
