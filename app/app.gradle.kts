@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
 import de.nilsdruyen.app.ProjectConfig
 import de.nilsdruyen.app.utils.CiUtils
 
@@ -103,10 +104,10 @@ android {
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
         managedDevices {
-            localDevices {
-                create("pixel8api34") {
-                    device = "Pixel 8"
-                    apiLevel = 34
+            devices {
+                create<ManagedVirtualDevice>("pixel7api33") {
+                    device = "Pixel 7"
+                    apiLevel = 33
                     systemImageSource = "google-atd"
                 }
             }

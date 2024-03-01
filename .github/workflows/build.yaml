@@ -2,7 +2,14 @@ name: Build apk
 
 on:
   push:
-    branches: [ "develop" ]
+    branches:
+      - develop
+      - main
+  pull_request:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -30,6 +37,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
@@ -42,4 +50,11 @@ jobs:
           -Pandroid.experimental.testOptions.managedDevices.maxConcurrentDevices=1
 
       - name: Run android tests
-        run: ./gradlew :app:pixel8api34DebugAndroidTest
+        run: ./gradlew :app:pixel7api33DebugAndroidTest
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ matrix.api-level }}
+          path: '**/build/reports/androidTests'
