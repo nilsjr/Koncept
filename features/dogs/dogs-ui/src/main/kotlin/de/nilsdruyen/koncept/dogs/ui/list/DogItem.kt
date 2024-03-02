@@ -1,11 +1,10 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +21,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
 import de.nilsdruyen.koncept.design.system.KonceptTheme
-import de.nilsdruyen.koncept.design.system.components.MaterialCard
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
 
@@ -32,18 +30,16 @@ fun DogItem(
     modifier: Modifier = Modifier,
     showDog: (Dog) -> Unit = {},
 ) {
-    MaterialCard(
+    Card(
+        onClick = { showDog(dog) },
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { showDog(dog) }
-            .testTag("dogItem"),
-        backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
-        shape = RoundedCornerShape(8.dp),
-        elevation = 2.dp
+            .testTag("dogItem_${dog.id}"),
     ) {
         ConstraintLayout(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
         ) {
             val (name, isFavorite, lifeSpan) = createRefs()
             Text(
@@ -86,7 +82,7 @@ private fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) dog:
     }
 }
 
-class DogItemPreviewProvider : PreviewParameterProvider<Dog> {
+private class DogItemPreviewProvider : PreviewParameterProvider<Dog> {
     override val values: Sequence<Dog> = sequenceOf(
         Dog(
             id = BreedId(1),

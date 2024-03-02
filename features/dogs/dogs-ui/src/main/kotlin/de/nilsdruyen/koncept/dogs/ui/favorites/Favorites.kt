@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,9 +25,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
 
 @Composable
@@ -78,49 +75,41 @@ fun Favorites(
             )
         }
     ) {
-        Crossfade(targetState = state, modifier = Modifier.padding(it)) { state ->
-            when {
-                state.isLoading -> Loading()
-                state.list.items.isEmpty() -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        Text(
-                            text = "No favorites!",
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
+            Crossfade(targetState = state) { state ->
+                when {
+                    state.isLoading -> Loading()
+                    state.list.items.isEmpty() -> {
+                        Box(
                             modifier = Modifier
-                                .padding(16.dp)
-                                .align(Alignment.Center)
-                        )
+                                .fillMaxSize()
+                        ) {
+                            Text(
+                                text = "No favorites!",
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                    }
+
+                    else -> {
+                        LazyColumn(
+                            contentPadding = PaddingValues(),
+                            state = scrollState,
+                            modifier = modifier.fillMaxSize()
+                        ) {
+                            items(state.list.items) { dog ->
+                                DogFavoriteItem(dog, showBreed)
+                            }
+                        }
                     }
                 }
-
-                else -> {
-                    FavoriteList(
-                        scrollState = scrollState,
-                        list = state.list,
-                        showBreed = showBreed,
-                    )
-                }
             }
-        }
-    }
-}
-
-@Composable
-fun FavoriteList(
-    scrollState: LazyListState,
-    list: ImmutableList<Dog>,
-    showBreed: (BreedId) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    LazyColumn(
-        contentPadding = PaddingValues(),
-        state = scrollState,
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(list.items) { dog ->
-            DogFavoriteItem(dog, showBreed)
         }
     }
 }
