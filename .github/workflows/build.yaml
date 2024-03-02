@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v2
 
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
@@ -39,7 +39,10 @@ jobs:
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Build release variant including baseline profile generation
         run: ./gradlew :app:assembleRelease
