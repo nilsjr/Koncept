@@ -1,6 +1,5 @@
 package de.nilsdruyen.koncept.dogs.ui.favorites
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -80,32 +79,30 @@ fun Favorites(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            Crossfade(targetState = state) { state ->
-                when {
-                    state.isLoading -> Loading()
-                    state.list.items.isEmpty() -> {
-                        Box(
+            when {
+                state.isLoading -> Loading()
+                state.list.items.isEmpty() -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Text(
+                            text = "No favorites!",
                             modifier = Modifier
-                                .fillMaxSize()
-                        ) {
-                            Text(
-                                text = "No favorites!",
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .align(Alignment.Center)
-                            )
-                        }
+                                .padding(16.dp)
+                                .align(Alignment.Center)
+                        )
                     }
+                }
 
-                    else -> {
-                        LazyColumn(
-                            contentPadding = PaddingValues(),
-                            state = scrollState,
-                            modifier = modifier.fillMaxSize()
-                        ) {
-                            items(state.list.items) { dog ->
-                                DogFavoriteItem(dog, showBreed)
-                            }
+                else -> {
+                    LazyColumn(
+                        contentPadding = PaddingValues(),
+                        state = scrollState,
+                        modifier = modifier.fillMaxSize()
+                    ) {
+                        items(state.list.items) { dog ->
+                            DogFavoriteItem(dog, showBreed)
                         }
                     }
                 }

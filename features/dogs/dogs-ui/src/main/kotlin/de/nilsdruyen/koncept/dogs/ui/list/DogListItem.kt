@@ -17,17 +17,21 @@ import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
 
 @Composable
-fun DogListItem(dog: Dog, onClick: () -> Unit) {
+fun DogListItem(dog: Dog, onClick: () -> Unit, modifier: Modifier = Modifier) {
     ListItem(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() },
         headlineContent = { Text(dog.name) },
         overlineContent = dog.bredFor.takeIf { it.isNotEmpty() }?.run {
-            { Text(dog.bredFor, maxLines = 1, overflow = TextOverflow.Ellipsis) }
+            {
+                Text(dog.bredFor, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         },
         supportingContent = dog.group.takeIf { it.isNotEmpty() }?.run {
-            { Text(dog.group) }
+            {
+                Text(dog.group)
+            }
         },
         trailingContent = {
             Icon(

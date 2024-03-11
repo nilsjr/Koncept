@@ -252,9 +252,12 @@ fun SearchResult(
         modifier = modifier,
     ) {
         items(searchResult) {
-            DogListItem(dog = it) {
-                onClick(it)
-            }
+            DogListItem(
+                dog = it,
+                onClick = {
+                    onClick(it)
+                }
+            )
         }
     }
 }
