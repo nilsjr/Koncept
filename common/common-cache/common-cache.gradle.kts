@@ -9,7 +9,7 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines)
 
-    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)

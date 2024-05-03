@@ -35,7 +35,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -64,7 +63,6 @@ fun DogListScreen(
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val composeScope = rememberCoroutineScope()
 
     LaunchedEffect(state.navigateTo) {
         val id = state.navigateTo

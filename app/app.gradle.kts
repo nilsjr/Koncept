@@ -167,8 +167,6 @@ dependencies {
     implementation(libs.square.moshi)
     ksp(libs.square.moshi.codegen)
 
-    implementation(libs.accompanist.systemUiController)
-    implementation(libs.accompanist.nav.anim)
     implementation(libs.accompanist.nav.material)
 
     implementation(libs.timber)
@@ -183,9 +181,6 @@ dependencies {
 
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)
-
-    implementation(libs.fornewid.compose.motion.core)
-    implementation(libs.fornewid.compose.motion.navigation)
 
     // testing
 

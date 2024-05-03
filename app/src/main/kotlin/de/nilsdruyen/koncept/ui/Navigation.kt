@@ -34,8 +34,7 @@ import de.nilsdruyen.koncept.navigation.RootNavHost
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 
 @OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalMaterialNavigationApi::class,
+    ExperimentalComposeUiApi::class, ExperimentalMaterialNavigationApi::class,
 )
 @Composable
 fun KonceptApp() {

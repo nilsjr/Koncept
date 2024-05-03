@@ -20,9 +20,6 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
 import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
-import soup.compose.material.motion.animation.materialElevationScaleIn
-import soup.compose.material.motion.animation.materialElevationScaleOut
-import soup.compose.material.motion.animation.rememberSlideDistance
 
 @Composable
 fun RootNavHost(
@@ -63,7 +60,6 @@ fun KonceptNavHost(
     modifier: Modifier = Modifier,
     startDestination: String = BreedListRoute.getGraphRoute(),
 ) {
-    val slideDistance = rememberSlideDistance()
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -78,10 +74,9 @@ fun KonceptNavHost(
                 )
                 onBackClick()
             },
-            slideDistance,
         )
         favoriteTopLevelGraph(onNavigate) {
-            breedDetailGraph(it, onNavigate, slideDistance)
+            breedDetailGraph(it, onNavigate)
         }
         webTopLevelGraph()
         composable(
@@ -109,8 +104,6 @@ fun KonceptNavHost(
 fun NavGraphBuilder.webTopLevelGraph() = navigation(navRoute = WebRoute) {
     konceptComposable(
         navRoute = WebRoute,
-        enterTransition = { materialElevationScaleIn() },
-        exitTransition = { materialElevationScaleOut() },
     ) {
         WebScreen()
     }
