@@ -41,7 +41,7 @@ android {
 // This is the configuration block for the Baseline Profile plugin.
 // You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
-    managedDevices += "pixel7api33"
+    managedDevices += "pixel8api34"
     useConnectedDevices = false
 }
 
