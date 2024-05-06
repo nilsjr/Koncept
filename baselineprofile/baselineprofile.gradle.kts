@@ -30,9 +30,9 @@ android {
     targetProjectPath = ":app"
 
     testOptions.managedDevices.devices {
-        create<ManagedVirtualDevice>("pixel7api33") {
-            device = "Pixel 7"
-            apiLevel = 33
+        create<ManagedVirtualDevice>("pixel8api34") {
+            device = "Pixel 8"
+            apiLevel = 34
             systemImageSource = "google-atd"
         }
     }

@@ -105,10 +105,10 @@ android {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
         managedDevices {
             devices {
-                create<ManagedVirtualDevice>("pixel7api33") {
-                    device = "Pixel 7"
-                    apiLevel = 33
-                    systemImageSource = "google-atd"
+                create<ManagedVirtualDevice>("pixel8api33") {
+                    device = "Pixel 8"
+                    apiLevel = 34
+                    systemImageSource = "google"
                 }
             }
         }
