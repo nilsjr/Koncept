@@ -87,9 +87,6 @@ android {
         resValues = false
         shaders = false
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
     packaging {
         resources {
             excludes += setOf(

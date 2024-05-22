@@ -247,3 +247,5 @@ $RECYCLE.BIN/
 
 /gradle-user-home
 /profile-out
+
+.kotlin/

@@ -13,15 +13,13 @@ internal class LibraryComposeConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+            pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             configure<LibraryExtension> {
                 buildFeatures {
                     compose = true
                 }
-                composeOptions {
-                    kotlinCompilerExtensionVersion = libs.findVersion("composeCompiler").get().toString()
-                }
             }
+            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
                 val bom = libs.findLibrary("compose.bom").get()
                 add("implementation", platform(bom))
