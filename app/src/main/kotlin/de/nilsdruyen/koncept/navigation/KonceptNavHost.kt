@@ -13,11 +13,13 @@ import de.nilsdruyen.koncept.base.navigation.NavigateTo
 import de.nilsdruyen.koncept.base.navigation.konceptComposable
 import de.nilsdruyen.koncept.base.navigation.navigation
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
+import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedDetailGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.ImageDetailRoute
 import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
 
@@ -43,11 +45,21 @@ fun RootNavHost(
         ) {
             BreedDetail(
                 showImageDetail = {
-//                onNavigate(ImageDetailRoute.createRoute(base, it))
+                    navController.navigate("image?imageId=$it")
                 }
             )
         }
         composable("login") {
+        }
+        composable(
+            route = "image?imageId={imageId}",
+            arguments = listOf(
+                navArgument(ImageDetailRoute.imageIdArg) {
+                    type = NavType.StringType
+                }
+            ),
+        ) { backStackEntry ->
+            ImageDetail(ImageDetailRoute.fromBackStackEntry(backStackEntry).imageId)
         }
     }
 }

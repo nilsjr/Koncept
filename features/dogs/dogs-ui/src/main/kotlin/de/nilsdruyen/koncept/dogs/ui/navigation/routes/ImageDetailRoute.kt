@@ -9,7 +9,7 @@ import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
 
 object ImageDetailRoute : KonceptNavRoute.NestedNavRoute {
 
-    private const val imageIdArg = "imageId"
+    const val imageIdArg = "imageId"
 
     override val route: String = "image"
 
