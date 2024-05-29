@@ -27,7 +27,9 @@ fun NavGraphBuilder.breedTopLevelGraph(
         ) {
             val sortTypeState =
                 it.savedStateHandle.getStateFlow(BreedListRoute.sortTypeResult, 0)
-                    .collectAsStateWithLifecycle()
+                    .collectAsStateWithLifecycle(
+                        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+                    )
             DogListScreen(
                 sortTypeState = sortTypeState,
                 showDetail = { id ->

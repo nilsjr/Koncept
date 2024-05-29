@@ -6,7 +6,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -28,7 +27,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -62,7 +60,9 @@ fun DogListScreen(
     showSortDialog: (BreedSortType) -> Unit,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
 
     LaunchedEffect(state.navigateTo) {
         val id = state.navigateTo
@@ -174,7 +174,6 @@ fun DogListScreen(
                         DogList(
                             state = state,
                             showDog = showDog,
-                            pullRefreshState = pullRefreshState,
                         )
                         SearchBar(
                             query = state.input,
@@ -201,6 +200,10 @@ fun DogListScreen(
                         ) {
                             searchResult()
                         }
+                        PullToRefreshContainer(
+                            modifier = Modifier.align(Alignment.TopCenter),
+                            state = pullRefreshState,
+                        )
                     }
                 }
             }
@@ -208,12 +211,11 @@ fun DogListScreen(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun BoxScope.DogList(
+private fun DogList(
     state: DogListState,
     showDog: (Dog) -> Unit,
-    pullRefreshState: PullToRefreshState,
 ) {
     LazyColumn(
         state = rememberLazyListState(),
@@ -233,10 +235,6 @@ private fun BoxScope.DogList(
         }
         item { Spacer(modifier = Modifier.height(0.dp)) }
     }
-    PullToRefreshContainer(
-        modifier = Modifier.align(Alignment.TopCenter),
-        state = pullRefreshState,
-    )
 }
 
 @Composable
