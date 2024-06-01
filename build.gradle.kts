@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.compose.compiler.report) apply false
+    alias(libs.plugins.screenshot) apply false
 
     id("de.nilsdruyen.plugin.root")
 }

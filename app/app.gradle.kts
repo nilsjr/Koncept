@@ -146,7 +146,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.androidx.compose.uiToolingPreview)
-    debugImplementation(libs.androidx.compose.uiTooling)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
     coreLibraryDesugaring(libs.android.desugar)
 

@@ -1,12 +1,15 @@
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
-    id(libs.plugins.google.ksp.get().pluginId)
-    id(libs.plugins.paparazzi.get().pluginId)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.paparazzi)
     alias(libs.plugins.compose.compiler.report)
+    alias(libs.plugins.screenshot)
 }
 android {
     namespace = "de.nilsdruyen.koncept.dogs.ui"
+
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 dependencies {
     implementation(libs.bundles.common)
@@ -89,4 +92,6 @@ dependencies {
 
     androidTestImplementation(projects.features.dogs.dogsTest)
     androidTestImplementation(libs.paparazzi)
+
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

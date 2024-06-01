@@ -44,7 +44,7 @@ fun DogListItem(dog: Dog, onClick: () -> Unit, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun DogListItemPreview() {
+internal fun DogListItemPreview() {
     KonceptTheme {
         DogListItem(
             dog = Dog(
