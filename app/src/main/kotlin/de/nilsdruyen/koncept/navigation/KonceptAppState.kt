@@ -93,7 +93,7 @@ class KonceptAppState(private val navController: NavHostController) {
 private fun NavigationTrackingSideEffect(navController: NavHostController) {
     DisposableEffect(navController) {
         val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-            log("${destination.route} - ${destination.displayName}")
+            log("${destination.route}")
         }
 
         navController.addOnDestinationChangedListener(listener)

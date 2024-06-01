@@ -68,7 +68,7 @@ fun RootNavHost(
 fun KonceptNavHost(
     navController: NavHostController,
     onNavigate: NavigateTo,
-    onBackClick: () -> Unit,
+//    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = BreedListRoute.getGraphRoute(),
 ) {
@@ -79,16 +79,16 @@ fun KonceptNavHost(
     ) {
         breedTopLevelGraph(
             onNavigate = onNavigate,
-            setSortResult = {
-                navController.previousBackStackEntry?.savedStateHandle?.set(
-                    BreedListRoute.sortTypeResult,
-                    it.ordinal
-                )
-                onBackClick()
-            },
+//            setSortResult = {
+//                navController.previousBackStackEntry?.savedStateHandle?.set(
+//                    BreedListRoute.sortTypeResult,
+//                    it.ordinal
+//                )
+//                onBackClick()
+//            },
         )
         favoriteTopLevelGraph(onNavigate) {
-            breedDetailGraph(it, onNavigate)
+            breedDetailGraph(it)
         }
         webTopLevelGraph()
         composable(

@@ -24,13 +24,18 @@ import de.nilsdruyen.koncept.dogs.ui.list.DogListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DogFavoriteItem(dog: Dog, showBreed: (BreedId) -> Unit = {}) {
+fun DogFavoriteItem(
+    dog: Dog,
+    modifier: Modifier = Modifier,
+    showBreed: (BreedId) -> Unit = {},
+) {
     val threshold = LocalConfiguration.current.screenWidthDp * LocalDensity.current.density / 2
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { threshold }
     )
 
     SwipeToDismissBox(
+        modifier = modifier,
         state = dismissState,
         backgroundContent = {
             Box(

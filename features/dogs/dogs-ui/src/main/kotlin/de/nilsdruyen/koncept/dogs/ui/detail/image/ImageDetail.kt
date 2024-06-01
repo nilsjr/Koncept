@@ -35,7 +35,7 @@ import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import de.nilsdruyen.koncept.design.system.KonceptTheme
-import de.nilsdruyen.koncept.design.system.annotations.KonceptPreview
+import de.nilsdruyen.koncept.design.system.annotations.PreviewKoncept
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import kotlinx.coroutines.delay
 
@@ -53,7 +53,7 @@ fun Int.hex() = String.format("#%06X", (0xFFFFFF.and(this)))
 const val duration = 1200L
 
 @Composable
-fun ImageDetail(id: String) {
+fun ImageDetail(id: String, modifier: Modifier = Modifier) {
     var palette: Palette? by remember { mutableStateOf(null) }
     var index by remember { mutableStateOf(0) }
     var bgColor by remember { mutableStateOf(Color.White) }
@@ -91,7 +91,7 @@ fun ImageDetail(id: String) {
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(animatedColor.value)
     ) {
@@ -117,6 +117,7 @@ fun ImageDetail(id: String) {
                             val bitmap = (it.result.drawable as BitmapDrawable).bitmap
                             palette = Palette.from(bitmap).generate()
                         }
+
                         else -> {
                             // do nothing
                         }
@@ -142,7 +143,7 @@ fun ImageDetail(id: String) {
     }
 }
 
-@KonceptPreview
+@PreviewKoncept
 @Composable
 private fun PreviewEmptyImageDetail() {
     KonceptTheme {
@@ -150,7 +151,7 @@ private fun PreviewEmptyImageDetail() {
     }
 }
 
-@KonceptPreview
+@PreviewKoncept
 @Composable
 private fun PreviewImageDetail() {
     KonceptTheme {

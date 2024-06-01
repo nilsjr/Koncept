@@ -75,17 +75,3 @@ fun NavGraphBuilder.konceptComposable(
         content = content,
     )
 }
-
-//@ExperimentalMaterialNavigationApi
-//fun NavGraphBuilder.bottomSheet(
-//    navRoute: KonceptNavRoute.NestedNavRoute,
-//    graphRoute: KonceptNavRoute.GraphNavRoute? = null,
-//    content: @Composable ColumnScope.(backstackEntry: NavBackStackEntry) -> Unit
-//) {
-//    bottomSheet(
-//        route = navRoute.getNestedRoute(graphRoute),
-//        arguments = navRoute.arguments(),
-//        deepLinks = navRoute.deepLinks(),
-//        content = content,
-//    )
-//}

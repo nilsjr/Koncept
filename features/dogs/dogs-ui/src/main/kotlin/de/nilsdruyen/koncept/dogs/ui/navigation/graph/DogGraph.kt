@@ -7,7 +7,6 @@ import de.nilsdruyen.koncept.base.navigation.NavigateTo
 import de.nilsdruyen.koncept.base.navigation.NestedGraph
 import de.nilsdruyen.koncept.base.navigation.konceptComposable
 import de.nilsdruyen.koncept.base.navigation.navigation
-import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
 import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
@@ -18,7 +17,6 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.routes.ImageDetailRoute
 
 fun NavGraphBuilder.breedTopLevelGraph(
     onNavigate: NavigateTo,
-    setSortResult: (BreedSortType) -> Unit,
     nestedGraphs: NestedGraph = {},
 ) {
     navigation(navRoute = BreedListRoute) {
@@ -40,18 +38,18 @@ fun NavGraphBuilder.breedTopLevelGraph(
                 }
             )
         }
-        breedDetailGraph(BreedListRoute, onNavigate)
+        breedDetailGraph(BreedListRoute)
 //        addBreedSortBottomSheet(BreedListRoute, setSortResult)
         nestedGraphs(BreedListRoute)
     }
 }
 
-fun NavGraphBuilder.breedDetailGraph(base: KonceptNavRoute.GraphNavRoute, onNavigate: NavigateTo) {
+fun NavGraphBuilder.breedDetailGraph(base: KonceptNavRoute.GraphNavRoute) {
 //    addBreedDetail(base, onNavigate, slideDistance)
     addImageDetail(base)
 }
 
-fun NavGraphBuilder.addBreedDetail(base: KonceptNavRoute.GraphNavRoute, onNavigate: NavigateTo, slideDistance: Int) {
+fun NavGraphBuilder.addBreedDetail(base: KonceptNavRoute.GraphNavRoute, onNavigate: NavigateTo) {
     konceptComposable(
         navRoute = BreedDetailsRoute,
         graphRoute = base,
@@ -70,11 +68,3 @@ fun NavGraphBuilder.addImageDetail(base: KonceptNavRoute.GraphNavRoute) {
         ImageDetail(ImageDetailRoute.fromBackStackEntry(backStackEntry).imageId)
     }
 }
-
-//@OptIn(ExperimentalMaterialNavigationApi::class)
-//fun NavGraphBuilder.addBreedSortBottomSheet(
-//    base: KonceptNavRoute.GraphNavRoute,
-//    setSortResult: (BreedSortType) -> Unit
-//) = bottomSheet(navRoute = BreedListSortDialogRoute, graphRoute = base) {
-//    DogListSortDialog(BreedListSortDialogRoute.fromNavBackStackEntry(it), setSortResult)
-//}

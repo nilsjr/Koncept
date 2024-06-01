@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build_release_apk:
     runs-on: ubuntu-latest
 
     steps:
@@ -52,12 +52,42 @@ jobs:
           -Pandroid.experimental.androidTest.numManagedDeviceShards=1
           -Pandroid.experimental.testOptions.managedDevices.maxConcurrentDevices=1
 
+  androidTest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      matrix:
+        api-level: [ 26, 30 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v2
+
+      - name: Copy CI gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
       - name: Run android tests
         run: ./gradlew :app:pixel6api33DebugAndroidTest
 
-      - name: Upload test reports
-        if: always()
+      - name: Build projects and run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          disable-animations: true
+          disk-size: 6000M
+          heap-size: 600M
+          script: ./gradlew connectedDebugAndroidTest --daemon
+
+      - name: Upload local coverage reports (XML + HTML) (only API 30)
+        if: matrix.api-level == 30
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports-${{ matrix.api-level }}
-          path: '**/build/reports/androidTests'
+          name: coverage-reports
+          if-no-files-found: error
+          compression-level: 1
+          overwrite: false
+          path: '**/build/reports/jacoco/'

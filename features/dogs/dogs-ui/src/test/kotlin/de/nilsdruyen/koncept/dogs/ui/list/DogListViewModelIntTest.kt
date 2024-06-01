@@ -26,6 +26,7 @@ import de.nilsdruyen.koncept.test.testStateFlow
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
@@ -148,7 +149,7 @@ object TestCacheModule {
         }
 
         override fun getDogById(id: Int): Flow<DogCacheEntity> {
-            TODO("Not yet implemented")
+            return emptyFlow()
         }
 
         override suspend fun addList(list: List<DogCacheEntity>): List<Long> {
@@ -164,17 +165,19 @@ object TestCacheModule {
         }
 
         override suspend fun updateMinimalList(list: List<MinimalDogCacheEntity>) {
-            TODO("Not yet implemented")
+            // do nothing
         }
 
         override fun getAllFavorites(): Flow<List<DogCacheEntity>> {
-            TODO("Not yet implemented")
+            return emptyFlow()
         }
 
         override suspend fun setFavorite(breedId: Int) {
+            // do nothing
         }
 
         override suspend fun removeFavorite(breedId: Int) {
+            // do nothing
         }
     }
 }
