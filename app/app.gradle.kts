@@ -193,13 +193,15 @@ dependencies {
     testRuntimeOnly(libs.junit5.vintage.engine)
 
     testImplementation(libs.robolectric)
+
     testImplementation(libs.androidx.test.core)
+
     testImplementation(libs.hilt.android.test)
     kspTest(libs.hilt.compiler)
 
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
-    debugImplementation(libs.androidx.compose.uiManifestTest)
+    testDebugImplementation(libs.androidx.compose.uiManifestTest)
 
     testImplementation(platform(libs.square.okhttp.bom))
     testImplementation(libs.square.okhttp.mockwebserver)
