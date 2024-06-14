@@ -17,7 +17,9 @@ This is an sample project to experiment with architectures, modules structures, 
 ## custom gradle tasks
 
 `./gradlew dependencyUpdates`
+
 `./gradlew projectDependencyGraph -Pcustom`
+
 `./gradlew connectedDebugAndroidTest`  // run ui tests
 
 Build release apk
