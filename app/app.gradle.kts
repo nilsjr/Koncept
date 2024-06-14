@@ -40,9 +40,9 @@ android {
         if (findProperty("enableReleaseSigning") == "true") {
             create("release") {
                 storeFile = file("../release.keystore", PathValidation.EXISTS)
-                storePassword = findStringProperty("konceptStorePassword")
-                keyAlias = findStringProperty("konceptKeyAlias")
-                keyPassword = findStringProperty("konceptKeyPassword")
+                storePassword = findStringProperty("konceptStorePassword") ?: "android"
+                keyAlias = findStringProperty("konceptKeyAlias") ?: "androiddebugkey"
+                keyPassword = findStringProperty("konceptKeyPassword") ?: "android"
             }
         }
     }

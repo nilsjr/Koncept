@@ -9,3 +9,6 @@
 
 # https://github.com/square/moshi/issues/1663
 -keep,allowobfuscation,allowshrinking class com.squareup.moshi.JsonAdapter
+
+# workaround for https://issuetracker.google.com/issues/346808608
+-keep class androidx.compose.ui.platform.AndroidCompositionLocals_androidKt { *; }

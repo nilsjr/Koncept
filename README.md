@@ -20,6 +20,9 @@ This is an sample project to experiment with architectures, modules structures, 
 `./gradlew projectDependencyGraph -Pcustom`
 `./gradlew connectedDebugAndroidTest`  // run ui tests
 
+Build release apk
+`gradle :app:assembleRelease -PenableReleaseSigning=true`
+
 ## General thoughts
 
 - multimodule project (feature wise)
