@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.common.ui.toImmutable
@@ -52,6 +53,7 @@ import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
+import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable
 fun DogListScreen(
@@ -68,6 +70,11 @@ fun DogListScreen(
             viewModel.sendIntent(DogListIntent.NavigationConsumed)
             showDetail(id)
         }
+    }
+    
+    LifecycleStartEffect(Unit) {
+        log("On Start DogList")
+        onStopOrDispose {  }
     }
 
     LaunchedEffect(sortTypeState.value) {
