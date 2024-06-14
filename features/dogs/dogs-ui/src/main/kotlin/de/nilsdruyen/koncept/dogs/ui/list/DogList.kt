@@ -71,10 +71,10 @@ fun DogListScreen(
             showDetail(id)
         }
     }
-    
+
     LifecycleStartEffect(Unit) {
         log("On Start DogList")
-        onStopOrDispose {  }
+        onStopOrDispose { }
     }
 
     LaunchedEffect(sortTypeState.value) {
