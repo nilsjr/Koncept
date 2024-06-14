@@ -58,9 +58,7 @@ fun BreedDetail(
     val composeScope = rememberCoroutineScope()
     val scrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(scrollState)
-    val state = viewModel.state.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-    )
+    val state = viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.intent.send(BreedDetailIntent.LoadImages)

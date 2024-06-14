@@ -29,9 +29,7 @@ import javax.inject.Inject
 
 @Composable
 fun DeeplinkSample(viewModel: DeeplinkViewModel = hiltViewModel()) {
-    val date = viewModel.dateState.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-    )
+    val date = viewModel.dateState.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Text(date.value, modifier = Modifier.align(Alignment.Center))

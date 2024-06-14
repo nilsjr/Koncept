@@ -60,9 +60,7 @@ fun DogListScreen(
     showSortDialog: (BreedSortType) -> Unit,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-    )
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.navigateTo) {
         val id = state.navigateTo

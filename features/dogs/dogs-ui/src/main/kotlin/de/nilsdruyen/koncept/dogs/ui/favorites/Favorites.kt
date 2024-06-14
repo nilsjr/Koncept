@@ -33,9 +33,7 @@ fun Favorites(
     showBreed: (Int) -> Unit,
     viewModel: FavoritesViewModel = hiltViewModel(),
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-    )
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.showBreed) {
         state.showBreed?.let {
