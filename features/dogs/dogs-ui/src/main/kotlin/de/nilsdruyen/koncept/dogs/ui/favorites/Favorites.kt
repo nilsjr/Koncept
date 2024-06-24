@@ -1,13 +1,12 @@
 package de.nilsdruyen.koncept.dogs.ui.favorites
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,9 +25,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
 
 @Composable
@@ -78,7 +75,11 @@ fun Favorites(
             )
         }
     ) {
-        Crossfade(targetState = state, modifier = Modifier.padding(it)) { state ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
             when {
                 state.isLoading -> Loading()
                 state.list.items.isEmpty() -> {
@@ -96,31 +97,17 @@ fun Favorites(
                 }
 
                 else -> {
-                    FavoriteList(
-                        scrollState = scrollState,
-                        list = state.list,
-                        showBreed = showBreed,
-                    )
+                    LazyColumn(
+                        contentPadding = PaddingValues(),
+                        state = scrollState,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(state.list.items) { dog ->
+                            DogFavoriteItem(dog, Modifier.fillMaxWidth(), showBreed)
+                        }
+                    }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun FavoriteList(
-    scrollState: LazyListState,
-    list: ImmutableList<Dog>,
-    showBreed: (BreedId) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    LazyColumn(
-        contentPadding = PaddingValues(),
-        state = scrollState,
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(list.items) { dog ->
-            DogFavoriteItem(dog, showBreed)
         }
     }
 }

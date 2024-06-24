@@ -1,50 +1,69 @@
 package de.nilsdruyen.koncept.dogs.ui.favorites
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.ui.list.DogListItem
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DogFavoriteItem(dog: Dog, showBreed: (BreedId) -> Unit = {}) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.tertiary,
-                shape = RoundedCornerShape(4.dp)
-            )
-            .background(
-                color = MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(4.dp)
-            )
-            .clickable {
-                showBreed(dog.id)
+fun DogFavoriteItem(
+    dog: Dog,
+    modifier: Modifier = Modifier,
+    showBreed: (BreedId) -> Unit = {},
+) {
+    val threshold = LocalConfiguration.current.screenWidthDp * LocalDensity.current.density / 2
+    val dismissState = rememberSwipeToDismissBoxState(
+        positionalThreshold = { threshold }
+    )
+
+    SwipeToDismissBox(
+        modifier = modifier,
+        state = dismissState,
+        backgroundContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Red)
+            ) {
+                Text(
+                    text = "Delete",
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(16.dp),
+                    color = Color.White,
+                )
             }
-            .padding(8.dp)
+        }
     ) {
-        Text(text = dog.name, modifier = Modifier.testTag("dog_favorite_name"))
+        DogListItem(
+            dog = dog,
+            onClick = { showBreed(dog.id) },
+            modifier = Modifier.testTag("dog_favorite_name"),
+        )
     }
 }
 
 @Preview
 @Composable
-fun PreviewDogFavoriteItem() {
+private fun PreviewDogFavoriteItem() {
     KonceptTheme {
         DogFavoriteItem(dog = Dog(BreedId(1), "Nils", false))
     }

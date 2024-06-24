@@ -1,10 +1,10 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
 import de.nilsdruyen.app.ProjectConfig
 import de.nilsdruyen.app.utils.CiUtils
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.application")
-    id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
     alias(libs.plugins.androidx.baselineprofile)
@@ -14,6 +14,7 @@ android {
     compileSdk = ProjectConfig.compileSdkVersion
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
+
         minSdk = ProjectConfig.minSdkVersion
         targetSdk = ProjectConfig.targetSdkVersion
         versionCode = 1
@@ -39,9 +40,9 @@ android {
         if (findProperty("enableReleaseSigning") == "true") {
             create("release") {
                 storeFile = file("../release.keystore", PathValidation.EXISTS)
-                storePassword = findStringProperty("myBoardGamesStorePassword")
-                keyAlias = findStringProperty("myBoardGamesKeyAlias")
-                keyPassword = findStringProperty("myBoardGamesKeyPassword")
+                storePassword = findStringProperty("konceptStorePassword") ?: "android"
+                keyAlias = findStringProperty("konceptKeyAlias") ?: "androiddebugkey"
+                keyPassword = findStringProperty("konceptKeyPassword") ?: "android"
             }
         }
     }
@@ -70,17 +71,8 @@ android {
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-        kotlinOptions {
-            jvmTarget = "11"
-            freeCompilerArgs = listOf(
-                "-progressive",
-                "-opt-in=kotlin.RequiresOptIn",
-            )
-        }
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
@@ -95,9 +87,6 @@ android {
         resValues = false
         shaders = false
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
     packaging {
         resources {
             excludes += setOf(
@@ -111,6 +100,15 @@ android {
     }
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
+        managedDevices {
+            devices {
+                create<ManagedVirtualDevice>("pixel6api33") {
+                    device = "Pixel 6"
+                    apiLevel = 33
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
     }
 }
 
@@ -127,15 +125,17 @@ dependencies {
     implementation(projects.features.dogs.dogsCache)
     implementation(projects.features.dogs.dogsUi)
 
-    implementation(libs.androidx.core)
     implementation(libs.kotlinx.coroutines)
 
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.activity)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewModel)
     implementation(libs.androidx.lifecycle.compose)
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.webkit)
+    implementation(libs.androidx.splashscreen)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.foundation)
@@ -152,8 +152,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.androidx.hilt.compiler)
-    kapt(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.room)
     ksp(libs.androidx.room.compiler)
@@ -164,8 +164,6 @@ dependencies {
     implementation(libs.square.moshi)
     ksp(libs.square.moshi.codegen)
 
-    implementation(libs.accompanist.systemUiController)
-    implementation(libs.accompanist.nav.anim)
     implementation(libs.accompanist.nav.material)
 
     implementation(libs.timber)
@@ -181,9 +179,6 @@ dependencies {
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)
 
-    implementation(libs.fornewid.compose.motion.core)
-    implementation(libs.fornewid.compose.motion.navigation)
-
     // testing
 
     testImplementation(projects.features.dogs.dogsTest)
@@ -198,13 +193,15 @@ dependencies {
     testRuntimeOnly(libs.junit5.vintage.engine)
 
     testImplementation(libs.robolectric)
+
     testImplementation(libs.androidx.test.core)
+
     testImplementation(libs.hilt.android.test)
-    kaptTest(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
 
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
-    debugImplementation(libs.androidx.compose.uiManifestTest)
+    testDebugImplementation(libs.androidx.compose.uiManifestTest)
 
     testImplementation(platform(libs.square.okhttp.bom))
     testImplementation(libs.square.okhttp.mockwebserver)
@@ -236,7 +233,7 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.uiTest)
 
     androidTestImplementation(libs.hilt.android.test)
-    kaptAndroidTest(libs.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
 
     androidTestUtil(libs.androidx.test.orchestrator)
 

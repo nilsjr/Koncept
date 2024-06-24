@@ -23,10 +23,10 @@ formatting:
   Indentation:
     active: false
   FinalNewline:
-    insertFinalNewLine: false
+    insertFinalNewLine: true
   ParameterListWrapping:
     indentSize: 4
 
-TwitterCompose:
+Compose:
   active: false
 

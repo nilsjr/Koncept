@@ -20,10 +20,10 @@ internal fun Project.configure() {
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
-            languageVersion.set(KotlinVersion.KOTLIN_1_9)
+            languageVersion.set(KotlinVersion.KOTLIN_2_0)
+            progressiveMode.set(true)
             freeCompilerArgs.addAll(
                 listOfNotNull(
-                    "-progressive", // https://kotlinlang.org/docs/whatsnew13.html#progressive-mode
                     "-Xcontext-receivers",
                     "-opt-in=kotlin.RequiresOptIn",
                     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi".takeIf { !isEntityModule },

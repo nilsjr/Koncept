@@ -21,6 +21,7 @@ dependencyResolutionManagement {
         mavenLocal()
         google()
         mavenCentral()
+        maven(url = "https://androidx.dev/storage/compose-compiler/repository/")
     }
 }
 
@@ -63,5 +64,4 @@ tailrec fun Collection<ProjectDescriptor>.traverse(action: (ProjectDescriptor) -
         it.children
     }.traverse(action)
 }
-
 rootProject.children.traverse { it.buildFileName = "${it.name}.gradle.kts" }

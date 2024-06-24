@@ -2,7 +2,7 @@
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
-    id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.google.ksp.get().pluginId)
 }
 android {
     namespace = "de.nilsdruyen.koncept.common.ui"
@@ -19,5 +19,5 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 }

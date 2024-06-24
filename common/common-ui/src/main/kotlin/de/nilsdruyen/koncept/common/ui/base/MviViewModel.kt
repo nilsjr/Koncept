@@ -2,6 +2,7 @@ package de.nilsdruyen.koncept.common.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import de.nilsdruyen.koncept.domain.sendIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
@@ -23,10 +24,8 @@ abstract class MviViewModel<State, Intent>(initialState: State) : ViewModel() {
         check(!stateInitialized) {
             "Accessing state in initialize method is not allowed. Make sure to use currentState."
         }
-//        logVerbose { "Initializing view model" }
         stateInitialized = true
         initialize()
-//        logVerbose { "Initialization finished" }
         mutableState.asStateFlow()
     }
 
@@ -35,7 +34,7 @@ abstract class MviViewModel<State, Intent>(initialState: State) : ViewModel() {
     init {
         viewModelScope.launch {
             intent.consumeAsFlow().collect {
-//                this@MviViewModel.logVerbose { "Intent: $it" }
+                log("Intent: $it")
                 launch { onIntent(it) }
             }
         }
@@ -46,7 +45,9 @@ abstract class MviViewModel<State, Intent>(initialState: State) : ViewModel() {
     }
 
     protected fun updateState(producer: State.() -> State) {
-        mutableState.getAndUpdate(producer)
+        mutableState.getAndUpdate(producer).also {
+            log("State: $it")
+        }
     }
 
     abstract fun initialize()

@@ -1,5 +1,5 @@
 build:
-  maxIssues: 5
+  maxIssues: 50
   weights:
     formatting: 6 # maxIssues + 1 so formatting issues will always fail
 

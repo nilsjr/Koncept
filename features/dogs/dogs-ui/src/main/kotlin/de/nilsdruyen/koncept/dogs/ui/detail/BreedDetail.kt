@@ -138,18 +138,21 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
 }
 
 @Composable
-fun BreedImageList(list: ImmutableList<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier) {
+fun BreedImageList(list: ImmutableList<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier = Modifier) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
         items(list.items) {
-            BreedImage(it.url) {
-                onImageClick(it.id)
-            }
+            BreedImage(
+                url = it.url,
+                onImageClick = {
+                    onImageClick(it.id)
+                }
+            )
         }
     })
 }
 
 @Composable
-fun BreedImage(url: String, onImageClick: () -> Unit) {
+fun BreedImage(url: String, onImageClick: () -> Unit, modifier: Modifier = Modifier) {
     val pxValue = with(LocalDensity.current) { 16.dp.toPx() }
 
     SubcomposeAsyncImage(
@@ -159,7 +162,7 @@ fun BreedImage(url: String, onImageClick: () -> Unit) {
             .transformations(RoundedCornersTransformation(pxValue))
             .build(),
         contentDescription = null,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .aspectRatio(1f)
             .padding(8.dp)
@@ -176,7 +179,7 @@ fun BreedImage(url: String, onImageClick: () -> Unit) {
 }
 
 @Composable
-private fun ImagePlaceholder(modifier: Modifier) {
+private fun ImagePlaceholder(modifier: Modifier = Modifier) {
     Box(
         modifier
             .clip(RoundedCornerShape(16.dp))

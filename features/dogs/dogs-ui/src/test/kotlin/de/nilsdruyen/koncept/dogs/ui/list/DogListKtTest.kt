@@ -1,8 +1,6 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedId
@@ -14,8 +12,8 @@ import org.junit.Test
 
 internal class DogListKtTest : PaparazziTest() {
 
-    @Ignore
     @Test
+    @Ignore("Paparazzi setup currently not working")
     fun dogItemSnapshot() {
         paparazziRule.snapshot {
             KonceptTheme {
@@ -40,7 +38,7 @@ internal class DogListKtTest : PaparazziTest() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Paparazzi setup currently not working")
     fun dogFavoriteItemSnapshot() {
         paparazziRule.snapshot {
             KonceptTheme {
@@ -52,7 +50,7 @@ internal class DogListKtTest : PaparazziTest() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Paparazzi setup currently not working")
     fun dogListSnapshot() {
         val state = DogListState(
             list = List(6) {
@@ -62,29 +60,33 @@ internal class DogListKtTest : PaparazziTest() {
 
         paparazziRule.snapshot {
             KonceptTheme {
-                DogList(
+                DogListScreen(
                     state = state,
                     showDog = {},
+                    showSortDialog = {},
                     reloadList = {},
-                    modifier = Modifier.fillMaxSize()
-                )
+                    inputChange = {},
+                    searchForQuery = {},
+                ) {}
             }
         }
     }
 
     @Test
-    @Ignore
+    @Ignore("Paparazzi setup currently not working")
     fun dogListEmptySnapshot() {
         val state = DogListState()
 
         paparazziRule.snapshot {
             KonceptTheme {
-                DogList(
+                DogListScreen(
                     state = state,
                     showDog = {},
+                    showSortDialog = {},
                     reloadList = {},
-                    modifier = Modifier.fillMaxSize()
-                )
+                    inputChange = {},
+                    searchForQuery = {},
+                ) {}
             }
         }
     }

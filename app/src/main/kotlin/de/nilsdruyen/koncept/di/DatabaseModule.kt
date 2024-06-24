@@ -26,5 +26,5 @@ object DaoModule {
 
     @Provides
     @Singleton
-    fun KonceptDatabase.provideDogDao(): DogDao = dogDao()
+    fun provideDogDao(database: KonceptDatabase): DogDao = database.dogDao()
 }

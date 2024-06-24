@@ -14,5 +14,5 @@ interface ViewModelModule {
 
     @Binds
     @ViewModelScoped
-    fun PropertyProviderImpl.bindPropertyProvider(): PropertyProvider
+    fun bindPropertyProvider(propertyProviderImpl: PropertyProviderImpl): PropertyProvider
 }

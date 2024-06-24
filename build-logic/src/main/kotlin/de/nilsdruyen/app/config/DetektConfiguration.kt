@@ -33,7 +33,7 @@ internal fun Project.applyDetekt() {
             txt.required.set(false)
         }
         dependencies {
-            add("detektPlugins", libs.findLibrary("detekt.twitterComposeRules").get())
+            add("detektPlugins", libs.findLibrary("detekt.composeRules").get())
             add("detektPlugins", libs.findLibrary("detekt.formatting").get())
         }
     }
@@ -67,7 +67,7 @@ internal fun Project.applyDetektFormatting() {
             exclude("build/")
         }
         dependencies {
-            add("detektPlugins", libs.findLibrary("detekt.twitterComposeRules").get())
+            add("detektPlugins", libs.findLibrary("detekt.composeRules").get())
             add("detektPlugins", libs.findLibrary("detekt.formatting").get())
         }
     }

@@ -1,5 +1,8 @@
 package de.nilsdruyen.koncept.dogs.entity
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class Dog(
     val id: BreedId,
     val name: String,

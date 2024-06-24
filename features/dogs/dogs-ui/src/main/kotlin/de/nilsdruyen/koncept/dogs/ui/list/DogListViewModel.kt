@@ -52,6 +52,26 @@ class DogListViewModel @Inject constructor(
             DogListIntent.NavigationConsumed -> updateState {
                 copy(navigateTo = null)
             }
+
+            DogListIntent.BackFromSearch -> {
+                updateState { copy(activeSearch = false, input = "") }
+            }
+
+            DogListIntent.Search -> {
+                val result = currentState.list.items.filter {
+                    it.name.contains(currentState.input)
+                }
+                updateState {
+                    copy(activeSearch = true, searchResult = result)
+                }
+            }
+
+            is DogListIntent.InputChange -> {
+                val result = currentState.list.items.filter {
+                    it.name.contains(currentState.input)
+                }
+                updateState { copy(input = intent.input, searchResult = result) }
+            }
         }
     }
 
@@ -120,11 +140,21 @@ data class DogListState(
     val isLoading: Boolean = false,
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
     val navigateTo: BreedId? = null,
-)
+    val input: String = "",
+    val activeSearch: Boolean = false,
+    val searchResult: List<Dog>? = null,
+) {
+    override fun toString(): String {
+        return "DogListState(${list.size}, isLoading=$isLoading, input=$input, activeSearch=$activeSearch)"
+    }
+}
 
 sealed interface DogListIntent {
     data class ShowDetailAndSaveListPosition(val id: BreedId) : DogListIntent
     data class SortTypeChanged(val type: BreedSortType) : DogListIntent
-    object Reload : DogListIntent
-    object NavigationConsumed : DogListIntent
+    data object Reload : DogListIntent
+    data object NavigationConsumed : DogListIntent
+    data object Search : DogListIntent
+    data class InputChange(val input: String) : DogListIntent
+    data object BackFromSearch : DogListIntent
 }

@@ -1,57 +1,94 @@
-@file:OptIn(ExperimentalAnimationApi::class, ExperimentalAnimationApi::class)
-
 package de.nilsdruyen.koncept.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import de.nilsdruyen.koncept.base.navigation.NavigateTo
 import de.nilsdruyen.koncept.base.navigation.konceptComposable
 import de.nilsdruyen.koncept.base.navigation.navigation
+import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
+import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedDetailGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.routes.ImageDetailRoute
 import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
-import soup.compose.material.motion.animation.materialElevationScaleIn
-import soup.compose.material.motion.animation.materialElevationScaleOut
-import soup.compose.material.motion.animation.rememberSlideDistance
-import soup.compose.material.motion.navigation.MaterialMotionNavHost
-import soup.compose.material.motion.navigation.composable
+
+@Composable
+fun RootNavHost(
+    navController: NavHostController,
+    content: @Composable (navigateRoot: (String) -> Unit) -> Unit,
+) {
+    val navigateRoot = { route: String ->
+        navController.navigate(route)
+    }
+    NavHost(
+        navController = navController,
+        startDestination = "root",
+        modifier = Modifier,
+    ) {
+        composable("root") {
+            content(navigateRoot)
+        }
+        composable(
+            "breed_detail/{breedId}",
+            arguments = BreedDetailsRoute.pathParameters(),
+        ) {
+            BreedDetail(
+                showImageDetail = {
+                    navController.navigate("image?imageId=$it")
+                }
+            )
+        }
+        composable("login") {
+        }
+        composable(
+            route = "image?imageId={imageId}",
+            arguments = listOf(
+                navArgument(ImageDetailRoute.imageIdArg) {
+                    type = NavType.StringType
+                }
+            ),
+        ) { backStackEntry ->
+            ImageDetail(ImageDetailRoute.fromBackStackEntry(backStackEntry).imageId)
+        }
+    }
+}
 
 @Composable
 fun KonceptNavHost(
     navController: NavHostController,
     onNavigate: NavigateTo,
-    onBackClick: () -> Unit,
+//    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = BreedListRoute.getGraphRoute(),
 ) {
-    val slideDistance = rememberSlideDistance()
-    MaterialMotionNavHost(
+    NavHost(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier,
     ) {
         breedTopLevelGraph(
             onNavigate = onNavigate,
-            setSortResult = {
-                navController.previousBackStackEntry?.savedStateHandle?.set(
-                    BreedListRoute.sortTypeResult,
-                    it.ordinal
-                )
-                onBackClick()
-            },
-            slideDistance,
+//            setSortResult = {
+//                navController.previousBackStackEntry?.savedStateHandle?.set(
+//                    BreedListRoute.sortTypeResult,
+//                    it.ordinal
+//                )
+//                onBackClick()
+//            },
         )
         favoriteTopLevelGraph(onNavigate) {
-            breedDetailGraph(it, onNavigate, slideDistance)
+            breedDetailGraph(it)
         }
         webTopLevelGraph()
         composable(
@@ -79,8 +116,6 @@ fun KonceptNavHost(
 fun NavGraphBuilder.webTopLevelGraph() = navigation(navRoute = WebRoute) {
     konceptComposable(
         navRoute = WebRoute,
-        enterTransition = { materialElevationScaleIn() },
-        exitTransition = { materialElevationScaleOut() },
     ) {
         WebScreen()
     }

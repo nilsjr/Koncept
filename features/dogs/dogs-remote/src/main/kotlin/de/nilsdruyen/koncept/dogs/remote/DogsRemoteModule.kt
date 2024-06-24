@@ -14,7 +14,7 @@ import retrofit2.create
 interface DogsRemoteModule {
 
     @Binds
-    fun DogsRemoteDataSourceImpl.bindDogsRemoteDataSource(): DogsRemoteDataSource
+    fun bindDogsRemoteDataSource(dogsRemoteDataSourceImpl: DogsRemoteDataSourceImpl): DogsRemoteDataSource
 }
 
 @Module
@@ -22,5 +22,5 @@ interface DogsRemoteModule {
 object DogsRemoteStaticModule {
 
     @Provides
-    fun Retrofit.provideDogApi(): DogsApi = create()
+    fun provideDogApi(retrofit: Retrofit): DogsApi = retrofit.create()
 }

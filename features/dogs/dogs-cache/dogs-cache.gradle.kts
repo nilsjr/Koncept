@@ -1,7 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.library")
-    id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.google.ksp.get().pluginId)
 }
 
@@ -21,7 +20,7 @@ dependencies {
     implementation(libs.arrow.core)
 
     implementation(libs.hilt.core)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.room)
     ksp(libs.androidx.room.compiler)

@@ -1,6 +1,6 @@
 package de.nilsdruyen.koncept.dogs.ui.components
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,7 +15,17 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import de.nilsdruyen.koncept.dogs.ui.R
 
 @Composable
-fun LoadingDoggo(modifier: Modifier = Modifier) {
+fun BoxScope.Loading() {
+    LoadingDoggo(
+        Modifier
+            .fillMaxSize(fraction = 0.5f)
+            .align(Alignment.Center)
+            .testTag("loading")
+    )
+}
+
+@Composable
+private fun LoadingDoggo(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.dog_walking))
     val progress by animateLottieCompositionAsState(
         composition = composition,
@@ -26,20 +36,4 @@ fun LoadingDoggo(modifier: Modifier = Modifier) {
         progress = { progress },
         modifier = modifier,
     )
-}
-
-@Composable
-fun Loading(modifier: Modifier = Modifier) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .then(modifier)
-    ) {
-        LoadingDoggo(
-            Modifier
-                .fillMaxSize(fraction = 0.5f)
-                .align(Alignment.Center)
-                .testTag("loading")
-        )
-    }
 }
