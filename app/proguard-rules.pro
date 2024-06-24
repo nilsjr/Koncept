@@ -12,3 +12,6 @@
 
 # workaround for https://issuetracker.google.com/issues/346808608
 -keep class androidx.compose.ui.platform.AndroidCompositionLocals_androidKt { *; }
+
+# workaround for https://issuetracker.google.com/issues/346808608
+-keep class androidx.compose.ui.platform.AndroidCompositionLocals_androidKt { *; }

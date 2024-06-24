@@ -33,10 +33,12 @@ dependencies {
     kover(project(":features:dogs:dogs-cache"))
     kover(project(":features:dogs:dogs-data"))
 }
-configure<kotlinx.kover.gradle.plugin.dsl.KoverReportExtension> {
-    defaults {
-        html {
-            title = "Koncept Project Kover Report"
+configure<kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension> {
+    reports {
+        total {
+            html {
+                title = "Koncept Project Kover Report"
+            }
         }
     }
 }

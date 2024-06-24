@@ -2,7 +2,6 @@ package de.nilsdruyen.app.config
 
 import kotlinx.kover.gradle.plugin.KoverGradlePlugin
 import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
-import kotlinx.kover.gradle.plugin.dsl.KoverReportExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
@@ -20,16 +19,16 @@ internal fun Project.applyKover() {
             disable()
         }
         useJacoco()
-    }
-    configure<KoverReportExtension> {
-        filters {
-            excludes {
-                classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
-                annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
-            }
+        reports {
+            filters {
+                excludes {
+                    classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
+                    annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
+                }
 //            includes {
 //                packages("de.nilsdruyen.koncept.*")
 //            }
+            }
         }
     }
 }
@@ -42,34 +41,41 @@ internal fun Project.applyKoverAndroid() {
 //        excludeTests {
 //            tasks("testReleaseUnitTest")
 //        }
-    }
-    configure<KoverReportExtension> {
-        filters {
-            excludes {
-                classes(
-                    "*Impl_Factory.*",
-                    "*_*Factory",
-                    "*_Factory*",
-                )
-                annotatedBy(
-                    "*Generated*",
-                    "*Generated",
-                    "androidx.compose.runtime.Composable",
-                )
-            }
-        }
-        defaults {
-            mergeWith("debug")
-        }
-        androidReports("debug") {
+
+        reports {
             filters {
                 excludes {
-                    classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
-                    annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
+                    classes(
+                        "*Impl_Factory.*",
+                        "*_*Factory",
+                        "*_Factory*",
+                    )
+                    annotatedBy(
+                        "*Generated*",
+                        "*Generated",
+                        "androidx.compose.runtime.Composable",
+                    )
                 }
-//                includes {
-//                    packages("de.nilsdruyen.koncept.*")
+            }
+//            total {
+//                mergeWith("debug")
+//            }
+//            androidReports("debug") {
+//                filters {
+//                    excludes {
+//                        classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
+//                        annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
+//                    }
+////                includes {
+////                    packages("de.nilsdruyen.koncept.*")
+////                }
 //                }
+//            }
+        }
+
+        currentProject {
+            createVariant("custom") {
+                add("debug")
             }
         }
     }
