@@ -3,8 +3,9 @@ name: Build apk
 on:
   push:
     branches:
-      - develop
       - main
+      - develop
+      - renovate/**
   pull_request:
 
 concurrency:
