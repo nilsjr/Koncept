@@ -18,6 +18,7 @@
       "groupName": "kotlin"
     },
     {
+      "description": "Automerge non-major updates",
       "matchUpdateTypes": [
         "patch",
         "minor"
