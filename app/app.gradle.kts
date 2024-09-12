@@ -210,6 +210,13 @@ dependencies {
 
     baselineProfile(projects.baselineprofile)
 
+    // kover
+//    kover(projects.features.dogs.dogsDomain)
+//    kover(projects.features.dogs.dogsUi)
+//    kover(projects.features.dogs.dogsData)
+//    kover(projects.features.dogs.dogsCache)
+//    kover(projects.features.dogs.dogsRemote)
+
     // android testing
 
     androidTestImplementation(projects.features.dogs.dogsTest)
@@ -244,3 +251,31 @@ fun Project.findStringProperty(propertyName: String, ciPropertyName: String = pr
         }
     }
 }
+
+//configure<kotlinx.kover.gradle.plugin.dsl.KoverReportExtension> {
+//    filters {
+//        excludes {
+//            classes(
+//                "*Impl_Factory.*",
+//                "*_*Factory",
+//                "*_Factory*",
+//            )
+//            annotatedBy(
+//                "*Generated*",
+//                "*Generated",
+//                "androidx.compose.runtime.Composable",
+//            )
+//        }
+//    }
+//    defaults {
+//        mergeWith("debug")
+//    }
+//    androidReports("debug") {
+//        filters {
+//            excludes {
+//                classes("*Impl_Factory.*", "*_*Factory", "*_Factory*")
+//                annotatedBy("*Generated*", "*Generated", "androidx.compose.runtime.Composable")
+//            }
+//        }
+//    }
+//}

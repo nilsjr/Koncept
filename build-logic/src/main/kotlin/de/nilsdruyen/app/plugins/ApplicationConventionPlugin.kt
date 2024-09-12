@@ -3,13 +3,13 @@ package de.nilsdruyen.app.plugins
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
+import de.nilsdruyen.app.config.applyKoverAndroid
 import de.nilsdruyen.app.config.configure
 import de.nilsdruyen.app.config.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
-@Suppress("unused")
 internal class ApplicationConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
@@ -25,6 +25,7 @@ internal class ApplicationConventionPlugin : Plugin<Project> {
             configure()
             applyDetekt()
             applyDetektFormatting()
+            applyKoverAndroid()
         }
     }
 }
