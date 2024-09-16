@@ -3,13 +3,12 @@ package de.nilsdruyen.koncept.dogs.ui.list
 import androidx.activity.compose.BackHandler
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -21,13 +20,15 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,6 +36,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
@@ -123,12 +125,7 @@ fun DogListScreen(
     searchResult: @Composable () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-    val pullRefreshState = rememberPullToRefreshState { !state.activeSearch }
     val focusManager = LocalFocusManager.current
-
-    LaunchedEffect(pullRefreshState.isRefreshing) {
-        if (pullRefreshState.isRefreshing) reloadList()
-    }
 
     val searchModifier = if (state.activeSearch) {
         Modifier.systemBarsPadding()
@@ -137,9 +134,7 @@ fun DogListScreen(
     }
 
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(pullRefreshState.nestedScrollConnection)
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             AnimatedVisibility(visible = !state.activeSearch) {
                 TopAppBar(
@@ -159,10 +154,12 @@ fun DogListScreen(
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         content = {
-            Box(
+            PullToRefreshBox(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(it)
+                    .padding(it),
+                isRefreshing = state.isLoading,
+                onRefresh = reloadList,
             ) {
                 when {
                     state.isLoading && state.list.isEmpty() -> Loading()
@@ -181,34 +178,42 @@ fun DogListScreen(
                             showDog = showDog,
                         )
                         SearchBar(
-                            query = state.input,
-                            active = state.activeSearch,
-                            onQueryChange = { query ->
-                                inputChange(query)
-                            },
-                            onSearch = {
-                                searchForQuery()
-                                focusManager.clearFocus()
-                            },
-                            onActiveChange = {},
-                            placeholder = {
-                                Text("Search breed")
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Search,
-                                    contentDescription = "Search breeds"
+                            inputField = {
+                                OutlinedTextField(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        unfocusedBorderColor = Color.Transparent,
+                                        focusedBorderColor = Color.Transparent,
+                                    ),
+                                    value = state.input,
+                                    onValueChange = { query ->
+                                        inputChange(query)
+                                    },
+                                    placeholder = {
+                                        Text("Search breed")
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Filled.Search,
+                                            contentDescription = "Search breeds"
+                                        )
+                                    },
                                 )
                             },
+                            expanded = state.activeSearch,
+                            onExpandedChange = {},
+//                            onSearch = {
+//                                searchForQuery()
+//                                focusManager.clearFocus()
+//                            },
                             windowInsets = WindowInsets(0, 0, 0, 0),
-                            modifier = searchModifier.align(Alignment.TopCenter),
+                            modifier = searchModifier
+                                .align(Alignment.TopCenter)
+                                .padding(horizontal = 16.dp),
                         ) {
                             searchResult()
                         }
-                        PullToRefreshContainer(
-                            modifier = Modifier.align(Alignment.TopCenter),
-                            state = pullRefreshState,
-                        )
                     }
                 }
             }
@@ -216,7 +221,6 @@ fun DogListScreen(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DogList(
     state: DogListState,
@@ -234,7 +238,7 @@ private fun DogList(
         items(state.list.items, key = { it.id.value }) { dog ->
             DogItem(
                 dog = dog,
-                modifier = Modifier.animateItemPlacement(),
+                modifier = Modifier.animateItem(),
                 showDog = showDog,
             )
         }
