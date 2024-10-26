@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui.favorites
+package de.nilsdruyen.koncept.dogs.ui.favorites.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
-import de.nilsdruyen.koncept.dogs.ui.list.DogListItem
+import de.nilsdruyen.koncept.dogs.ui.list.components.DogListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

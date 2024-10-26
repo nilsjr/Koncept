@@ -8,6 +8,7 @@ plugins {
     id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
     alias(libs.plugins.androidx.baselineprofile)
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 android {
     namespace = "de.nilsdruyen.koncept"
@@ -178,6 +179,8 @@ dependencies {
 
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
     // testing
 

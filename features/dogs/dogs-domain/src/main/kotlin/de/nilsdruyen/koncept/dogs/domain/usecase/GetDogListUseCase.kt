@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetDogListUseCase {
 
-    suspend fun execute(): Flow<Either<DataSourceError, List<Dog>>>
+    fun execute(): Flow<Either<DataSourceError, List<Dog>>>
 }

@@ -5,12 +5,13 @@ import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.Dog
-import de.nilsdruyen.koncept.dogs.ui.favorites.DogFavoriteItem
+import de.nilsdruyen.koncept.dogs.ui.favorites.components.DogFavoriteItem
+import de.nilsdruyen.koncept.dogs.ui.list.components.DogItem
 import de.nilsdruyen.koncept.dogs.ui.utils.PaparazziTest
 import org.junit.Ignore
 import org.junit.Test
 
-internal class DogListKtTest : PaparazziTest() {
+internal class DogListScreenKtTest : PaparazziTest() {
 
     @Test
     @Ignore("Paparazzi setup currently not working")

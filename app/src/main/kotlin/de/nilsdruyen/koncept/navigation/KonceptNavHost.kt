@@ -1,31 +1,35 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package de.nilsdruyen.koncept.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import androidx.navigation.toRoute
 import de.nilsdruyen.koncept.base.navigation.NavigateTo
-import de.nilsdruyen.koncept.base.navigation.konceptComposable
-import de.nilsdruyen.koncept.base.navigation.navigation
-import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetail
-import de.nilsdruyen.koncept.dogs.ui.detail.image.ImageDetail
-import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedDetailGraph
+import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetailScreen
+import de.nilsdruyen.koncept.dogs.ui.image.ImageDetailScreen
+import de.nilsdruyen.koncept.dogs.ui.image.ImageRoute
+import de.nilsdruyen.koncept.dogs.ui.list.DogGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
-import de.nilsdruyen.koncept.dogs.ui.navigation.routes.ImageDetailRoute
 import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun RootNavHost(
     navController: NavHostController,
+    sharedTransitionScope: SharedTransitionScope,
     content: @Composable (navigateRoot: (String) -> Unit) -> Unit,
 ) {
     val navigateRoot = { route: String ->
@@ -43,24 +47,42 @@ fun RootNavHost(
             "breed_detail/{breedId}",
             arguments = BreedDetailsRoute.pathParameters(),
         ) {
-            BreedDetail(
-                showImageDetail = {
-                    navController.navigate("image?imageId=$it")
-                }
+            BreedDetailScreen(
+                showImageDetail = { navController.navigate(ImageRoute(it)) },
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = this,
             )
         }
-        composable("login") {
+        composable<ImageRoute> {
+            val imageRoute: ImageRoute = it.toRoute()
+            with(sharedTransitionScope) {
+                ImageDetailScreen(
+                    id = imageRoute.id,
+                    imageModifier = Modifier.sharedElement(
+                        sharedTransitionScope.rememberSharedContentState(key = "image-$id"),
+                        animatedVisibilityScope = this@composable
+                    )
+                )
+            }
         }
-        composable(
-            route = "image?imageId={imageId}",
-            arguments = listOf(
-                navArgument(ImageDetailRoute.imageIdArg) {
-                    type = NavType.StringType
-                }
-            ),
-        ) { backStackEntry ->
-            ImageDetail(ImageDetailRoute.fromBackStackEntry(backStackEntry).imageId)
-        }
+//        composable(
+//            route = "image?imageId={imageId}",
+//            arguments = listOf(
+//                navArgument(ImageDetailRoute.imageIdArg) {
+//                    type = NavType.StringType
+//                }
+//            ),
+//        ) { backStackEntry ->
+//            with(sharedTransitionScope) {
+//                ImageDetailScreen(
+//                    id = ImageDetailRoute.fromBackStackEntry(backStackEntry).imageId,
+//                    imageModifier = Modifier.sharedElement(
+//                        sharedTransitionScope.rememberSharedContentState(key = "image-$id"),
+//                        animatedVisibilityScope = animatedContentScope
+//                    )
+//                )
+//            }
+//        }
     }
 }
 
@@ -69,12 +91,13 @@ fun KonceptNavHost(
     navController: NavHostController,
     onNavigate: NavigateTo,
 //    onBackClick: () -> Unit,
+    sharedTransitionScope: SharedTransitionScope,
     modifier: Modifier = Modifier,
     startDestination: String = BreedListRoute.getGraphRoute(),
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination,
+        startDestination = DogGraph,
         modifier = modifier,
     ) {
         breedTopLevelGraph(
@@ -88,9 +111,11 @@ fun KonceptNavHost(
 //            },
         )
         favoriteTopLevelGraph(onNavigate) {
-            breedDetailGraph(it)
+
         }
-        webTopLevelGraph()
+        composable<WebRoute> {
+            WebScreen()
+        }
         composable(
             route = "deeplink/{rawDate}",
             arguments = listOf(
@@ -110,13 +135,5 @@ fun KonceptNavHost(
         ) {
             DeeplinkSample()
         }
-    }
-}
-
-fun NavGraphBuilder.webTopLevelGraph() = navigation(navRoute = WebRoute) {
-    konceptComposable(
-        navRoute = WebRoute,
-    ) {
-        WebScreen()
     }
 }

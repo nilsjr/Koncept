@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
+import de.nilsdruyen.koncept.dogs.ui.favorites.components.DogFavoriteItem
 
 @Composable
 fun Favorites(

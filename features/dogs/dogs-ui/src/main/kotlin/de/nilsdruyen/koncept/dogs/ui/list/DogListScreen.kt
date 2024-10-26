@@ -54,6 +54,8 @@ import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
+import de.nilsdruyen.koncept.dogs.ui.list.components.DogItem
+import de.nilsdruyen.koncept.dogs.ui.list.components.DogListItem
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable

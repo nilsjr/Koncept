@@ -1,9 +1,9 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.common.ui.ImmutableList
-import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
@@ -14,118 +14,84 @@ import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DogListViewModel @Inject constructor(
-    private val getDogListUseCase: GetDogListUseCase,
-) : MviViewModel<DogListState, DogListIntent>(DogListState(isLoading = true)) {
+    getDogListUseCase: GetDogListUseCase,
+) : ViewModel() {
 
     private val sortTypeState = MutableStateFlow(BreedSortType.Name)
 
-    override fun initialize() {
-        loadList()
-    }
+    private val _state = MutableStateFlow(DogListState())
 
-    override suspend fun onIntent(intent: DogListIntent) {
+    val state = combine(
+        _state,
+        getDogListUseCase.execute(),
+        sortTypeState,
+    ) { state, dogList, sortType ->
+        val sortedList = dogList.map {
+            when (sortType) {
+                BreedSortType.Name -> it.sortedBy { dog -> dog.name }
+                BreedSortType.LifeSpan -> it.sortedBy { dog -> dog.lifeSpan.last }
+                BreedSortType.Weight -> it.sortedBy { dog -> dog.weight.last }
+                BreedSortType.Height -> it.sortedBy { dog -> dog.height.last }
+            }
+        }
+        state.copy(list = sortedList.getOrNull().orEmpty().toImmutable())
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = DogListState(isLoading = true),
+    )
+
+    fun sendIntent(intent: DogListIntent) {
         when (intent) {
             is DogListIntent.ShowDetailAndSaveListPosition -> navigateToDetail(intent.id)
             is DogListIntent.SortTypeChanged -> {
                 sortTypeState.value = intent.type
-                updateState {
-                    copy(selectedType = intent.type)
-                }
+                _state.update { it.copy(selectedType = intent.type) }
             }
 
             DogListIntent.Reload -> {
                 viewModelScope.launch {
                     // implement reload data
-                    updateState { copy(isLoading = true) }
+                    _state.update { it.copy(isLoading = true) }
                     delay(2000L)
-                    updateState { copy(isLoading = false) }
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
 
-            DogListIntent.NavigationConsumed -> updateState {
-                copy(navigateTo = null)
-            }
+            DogListIntent.NavigationConsumed -> _state.update { it.copy(navigateTo = null) }
 
             DogListIntent.BackFromSearch -> {
-                updateState { copy(activeSearch = false, input = "") }
+                _state.update { it.copy(activeSearch = false, input = "") }
             }
 
             DogListIntent.Search -> {
-                val result = currentState.list.items.filter {
-                    it.name.contains(currentState.input)
+                val result = _state.value.list.items.filter {
+                    it.name.contains(_state.value.input)
                 }
-                updateState {
-                    copy(activeSearch = true, searchResult = result)
-                }
+                _state.update { it.copy(activeSearch = true, searchResult = result) }
             }
 
             is DogListIntent.InputChange -> {
-                val result = currentState.list.items.filter {
-                    it.name.contains(currentState.input)
+                val result = _state.value.list.items.filter {
+                    it.name.contains(_state.value.input)
                 }
-                updateState { copy(input = intent.input, searchResult = result) }
+                _state.update { it.copy(input = intent.input, searchResult = result) }
             }
         }
     }
-
-    private fun loadList() {
-        launchOnUi {
-            getDogListUseCase.execute().combine(sortTypeState) { result, sortType ->
-                log("sorted by $sortType")
-                result.map {
-                    when (sortType) {
-                        BreedSortType.Name -> it.sortedBy { dog -> dog.name }
-                        BreedSortType.LifeSpan -> it.sortedBy { dog -> dog.lifeSpan.last }
-                        BreedSortType.Weight -> it.sortedBy { dog -> dog.weight.last }
-                        BreedSortType.Height -> it.sortedBy { dog -> dog.height.last }
-                    }
-                }
-            }.map {
-                it
-//                it.map { list ->
-//                    list.groupBy { dog -> dog.name.first() }
-//                }.map { dogMap ->
-//                    dogMap.map { entry -> DogGroup(entry.key.toString(), entry.value) }
-//                }
-            }.collect { result ->
-                result
-                    .onLeft {
-                        handleError(it)
-                    }
-                    .onRight {
-                        log("set list ${it.size}")
-                        println("set list ${it.size}")
-                        updateState {
-                            copy(isLoading = false, list = it.toImmutable())
-                        }
-                    }
-            }
-        }
-    }
-
-//    private fun startTask() {
-//        launchDistinct(JobKey.LONG_TASK) {
-//            flow {
-//                repeat(40) {
-//                    delay(500)
-//                    emit(it)
-//                }
-//            }.collect {
-//                log("collect $it")
-//            }
-//        }
-//    }
 
     private fun navigateToDetail(id: BreedId) {
-        updateState {
-            copy(navigateTo = id)
+        _state.update {
+            it.copy(navigateTo = id)
         }
     }
 
@@ -135,19 +101,16 @@ class DogListViewModel @Inject constructor(
 }
 
 data class DogListState(
+    val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val list: ImmutableList<Dog> = emptyImmutableList(),
 //    val list: ImmutableList<DogGroup> = emptyImmutableList(),
-    val isLoading: Boolean = false,
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
     val navigateTo: BreedId? = null,
     val input: String = "",
     val activeSearch: Boolean = false,
     val searchResult: List<Dog>? = null,
-) {
-    override fun toString(): String {
-        return "DogListState(${list.size}, isLoading=$isLoading, input=$input, activeSearch=$activeSearch)"
-    }
-}
+)
 
 sealed interface DogListIntent {
     data class ShowDetailAndSaveListPosition(val id: BreedId) : DogListIntent

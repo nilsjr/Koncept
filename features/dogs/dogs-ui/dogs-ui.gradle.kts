@@ -1,9 +1,10 @@
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
-    id(libs.plugins.google.ksp.get().pluginId)
-    id(libs.plugins.paparazzi.get().pluginId)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.paparazzi)
     alias(libs.plugins.compose.compiler.report)
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 android {
     namespace = "de.nilsdruyen.koncept.dogs.ui"
@@ -38,6 +39,8 @@ dependencies {
     implementation(libs.lottie.compose)
 
     implementation(libs.androidx.palette.ktx)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
     // testing
     testImplementation(projects.common.commonTest)

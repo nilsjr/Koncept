@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui.detail.image
+package de.nilsdruyen.koncept.dogs.ui.image
 
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
@@ -17,13 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -36,7 +36,6 @@ import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import de.nilsdruyen.koncept.design.system.KonceptTheme
 import de.nilsdruyen.koncept.design.system.annotations.PreviewKoncept
-import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import kotlinx.coroutines.delay
 
 private val targets = listOf(
@@ -48,14 +47,18 @@ private val targets = listOf(
     Target.DARK_MUTED,
 )
 
-fun Int.hex() = String.format("#%06X", (0xFFFFFF.and(this)))
+//fun Int.hex() = String.format("#%06X", (0xFFFFFF.and(this)))
 
 const val duration = 1200L
 
 @Composable
-fun ImageDetail(id: String, modifier: Modifier = Modifier) {
+fun ImageDetailScreen(
+    id: String,
+    modifier: Modifier = Modifier,
+    imageModifier: Modifier = Modifier,
+) {
     var palette: Palette? by remember { mutableStateOf(null) }
-    var index by remember { mutableStateOf(0) }
+    var index by remember { mutableIntStateOf(0) }
     var bgColor by remember { mutableStateOf(Color.White) }
     val colors: List<Color> by remember(palette) {
         derivedStateOf {
@@ -86,10 +89,6 @@ fun ImageDetail(id: String, modifier: Modifier = Modifier) {
         }
     }
 
-    LaunchedEffect(colors) {
-        log("image success ${colors.map { it.toArgb().hex() }}")
-    }
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -106,7 +105,7 @@ fun ImageDetail(id: String, modifier: Modifier = Modifier) {
                     .transformations(RoundedCornersTransformation(pxValue))
                     .build(),
                 contentDescription = null,
-                modifier = Modifier
+                modifier = imageModifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
                     .padding(8.dp)
@@ -147,7 +146,7 @@ fun ImageDetail(id: String, modifier: Modifier = Modifier) {
 @Composable
 private fun PreviewEmptyImageDetail() {
     KonceptTheme {
-        ImageDetail(id = "")
+        ImageDetailScreen(id = "")
     }
 }
 
@@ -155,6 +154,6 @@ private fun PreviewEmptyImageDetail() {
 @Composable
 private fun PreviewImageDetail() {
     KonceptTheme {
-        ImageDetail(id = "123")
+        ImageDetailScreen(id = "123")
     }
 }

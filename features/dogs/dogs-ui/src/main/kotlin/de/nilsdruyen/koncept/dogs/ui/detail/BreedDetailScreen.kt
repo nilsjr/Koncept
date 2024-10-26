@@ -1,6 +1,11 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package de.nilsdruyen.koncept.dogs.ui.detail
 
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -9,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -51,9 +56,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BreedDetail(
+fun BreedDetailScreen(
     showImageDetail: (id: String) -> Unit,
     viewModel: BreedDetailViewModel = hiltViewModel(),
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
 ) {
     val composeScope = rememberCoroutineScope()
     val scrollState = rememberTopAppBarState()
@@ -94,14 +101,22 @@ fun BreedDetail(
                 onImageClick = showImageDetail,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(it.dropBottomPadding())
+                    .padding(it.dropBottomPadding()),
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
             )
         }
     )
 }
 
 @Composable
-fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Unit, modifier: Modifier = Modifier) {
+private fun BreedDetailContainer(
+    uiState: BreedDetailState,
+    onImageClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+) {
     Crossfade(targetState = uiState) {
         when {
             it.isLoading -> {
@@ -132,27 +147,43 @@ fun BreedDetailContainer(uiState: BreedDetailState, onImageClick: (String) -> Un
                 }
             }
 
-            else -> BreedImageList(list = it.images, onImageClick, modifier)
+            else -> BreedImageList(
+                list = it.images,
+                onImageClick,
+                modifier,
+                sharedTransitionScope,
+                animatedContentScope
+            )
         }
     }
 }
 
 @Composable
-fun BreedImageList(list: ImmutableList<BreedImage>, onImageClick: (String) -> Unit, modifier: Modifier = Modifier) {
+private fun BreedImageList(
+    list: ImmutableList<BreedImage>,
+    onImageClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
-        items(list.items) {
-            BreedImage(
-                url = it.url,
-                onImageClick = {
-                    onImageClick(it.id)
-                }
-            )
+        itemsIndexed(list.items) { index, item ->
+            with(sharedTransitionScope) {
+                BreedImage(
+                    url = item.url,
+                    onImageClick = { onImageClick(item.id) },
+                    modifier = Modifier.sharedElement(
+                        sharedTransitionScope.rememberSharedContentState(key = "image-${item.id}"),
+                        animatedVisibilityScope = animatedContentScope
+                    )
+                )
+            }
         }
     })
 }
 
 @Composable
-fun BreedImage(url: String, onImageClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun BreedImage(url: String, onImageClick: () -> Unit, modifier: Modifier = Modifier) {
     val pxValue = with(LocalDensity.current) { 16.dp.toPx() }
 
     SubcomposeAsyncImage(

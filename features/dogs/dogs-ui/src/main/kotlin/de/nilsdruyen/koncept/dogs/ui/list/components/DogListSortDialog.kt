@@ -1,4 +1,4 @@
-package de.nilsdruyen.koncept.dogs.ui.list
+package de.nilsdruyen.koncept.dogs.ui.list.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

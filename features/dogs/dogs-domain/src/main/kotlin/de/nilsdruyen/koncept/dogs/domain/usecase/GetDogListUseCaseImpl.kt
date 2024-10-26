@@ -11,5 +11,5 @@ internal class GetDogListUseCaseImpl @Inject constructor(
     private val dogsRepository: DogsRepository
 ) : GetDogListUseCase {
 
-    override suspend fun execute(): Flow<Either<DataSourceError, List<Dog>>> = dogsRepository.getList()
+    override fun execute(): Flow<Either<DataSourceError, List<Dog>>> = dogsRepository.getList()
 }
