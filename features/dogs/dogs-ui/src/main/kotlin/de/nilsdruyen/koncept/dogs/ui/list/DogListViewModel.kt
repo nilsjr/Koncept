@@ -26,9 +26,8 @@ class DogListViewModel @Inject constructor(
     getDogListUseCase: GetDogListUseCase,
 ) : ViewModel() {
 
-    private val sortTypeState = MutableStateFlow(BreedSortType.Name)
-
     private val _state = MutableStateFlow(DogListState())
+    private val sortTypeState = MutableStateFlow(BreedSortType.Name)
 
     val state = combine(
         _state,

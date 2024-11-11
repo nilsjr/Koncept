@@ -18,7 +18,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 
-@ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
+@ExtendWith(CoroutinesTestExtension::class, MockitoExtension::class)
 internal class BreedDetailViewModelTest {
 
     @Mock

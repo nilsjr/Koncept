@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 
-@ExtendWith(MockitoExtension::class, CoroutinesTestExtension::class)
+@ExtendWith(CoroutinesTestExtension::class, MockitoExtension::class)
 internal class DogsRepositoryImplTest {
 
     @Mock
