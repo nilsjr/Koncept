@@ -3,9 +3,8 @@ name: Check code & test
 on:
   push:
     branches:
-      - main
       - develop
-      - renovate/**
+      - main
   pull_request:
 
 concurrency:

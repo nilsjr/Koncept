@@ -110,9 +110,7 @@ fun KonceptNavHost(
 //                onBackClick()
 //            },
         )
-        favoriteTopLevelGraph(onNavigate) {
-
-        }
+        favoriteTopLevelGraph(onNavigate) {}
         composable<WebRoute> {
             WebScreen()
         }
