@@ -21,7 +21,6 @@ import de.nilsdruyen.koncept.dogs.ui.list.DogGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.breedTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.graph.favoriteTopLevelGraph
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
-import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
 import de.nilsdruyen.koncept.ui.DeeplinkSample
 import de.nilsdruyen.koncept.ui.WebScreen
 
@@ -65,24 +64,6 @@ fun RootNavHost(
                 )
             }
         }
-//        composable(
-//            route = "image?imageId={imageId}",
-//            arguments = listOf(
-//                navArgument(ImageDetailRoute.imageIdArg) {
-//                    type = NavType.StringType
-//                }
-//            ),
-//        ) { backStackEntry ->
-//            with(sharedTransitionScope) {
-//                ImageDetailScreen(
-//                    id = ImageDetailRoute.fromBackStackEntry(backStackEntry).imageId,
-//                    imageModifier = Modifier.sharedElement(
-//                        sharedTransitionScope.rememberSharedContentState(key = "image-$id"),
-//                        animatedVisibilityScope = animatedContentScope
-//                    )
-//                )
-//            }
-//        }
     }
 }
 
@@ -90,10 +71,7 @@ fun RootNavHost(
 fun KonceptNavHost(
     navController: NavHostController,
     onNavigate: NavigateTo,
-//    onBackClick: () -> Unit,
-    sharedTransitionScope: SharedTransitionScope,
     modifier: Modifier = Modifier,
-    startDestination: String = BreedListRoute.getGraphRoute(),
 ) {
     NavHost(
         navController = navController,
@@ -102,13 +80,6 @@ fun KonceptNavHost(
     ) {
         breedTopLevelGraph(
             onNavigate = onNavigate,
-//            setSortResult = {
-//                navController.previousBackStackEntry?.savedStateHandle?.set(
-//                    BreedListRoute.sortTypeResult,
-//                    it.ordinal
-//                )
-//                onBackClick()
-//            },
         )
         favoriteTopLevelGraph(onNavigate) {}
         composable<WebRoute> {

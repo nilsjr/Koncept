@@ -95,7 +95,6 @@ fun MainBottomBarScreen(
                     state.navigate(it)
                 }
             },
-            sharedTransitionScope = sharedTransitionScope,
             modifier = Modifier
                 .padding(padding)
                 .consumeWindowInsets(padding),

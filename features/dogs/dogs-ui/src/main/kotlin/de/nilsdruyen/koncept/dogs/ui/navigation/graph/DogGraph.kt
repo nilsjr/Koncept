@@ -31,22 +31,6 @@ fun NavGraphBuilder.breedTopLevelGraph(
                 }
             )
         }
-//        breedDetailGraph(BreedListRoute)
-//        addBreedSortBottomSheet(BreedListRoute, setSortResult)
         nestedGraphs(BreedListRoute)
     }
 }
-
-//fun NavGraphBuilder.breedDetailGraph(base: KonceptNavRoute.GraphNavRoute) { //    addBreedDetail(base, onNavigate,
-//slideDistance)
-//    addImageDetail(base)
-//}
-//
-//fun NavGraphBuilder.addImageDetail(base: KonceptNavRoute.GraphNavRoute) {
-//    konceptComposable(
-//        navRoute = ImageDetailRoute,
-//        graphRoute = base,
-//    ) { backStackEntry ->
-//        ImageDetailScreen(ImageDetailRoute.fromBackStackEntry(backStackEntry).imageId)
-//    }
-//}

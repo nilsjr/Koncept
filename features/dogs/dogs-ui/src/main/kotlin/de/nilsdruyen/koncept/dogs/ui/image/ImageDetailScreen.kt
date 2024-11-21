@@ -47,8 +47,6 @@ private val targets = listOf(
     Target.DARK_MUTED,
 )
 
-//fun Int.hex() = String.format("#%06X", (0xFFFFFF.and(this)))
-
 const val duration = 1200L
 
 @Composable
