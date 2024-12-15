@@ -18,14 +18,14 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.list.components.DogListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DogFavoriteItem(
-    dog: Dog,
+    breed: Breed,
     modifier: Modifier = Modifier,
     showBreed: (BreedId) -> Unit = {},
 ) {
@@ -54,8 +54,8 @@ fun DogFavoriteItem(
         }
     ) {
         DogListItem(
-            dog = dog,
-            onClick = { showBreed(dog.id) },
+            breed = breed,
+            onClick = { showBreed(breed.id) },
             modifier = Modifier.testTag("dog_favorite_name"),
         )
     }
@@ -65,6 +65,6 @@ fun DogFavoriteItem(
 @Composable
 private fun PreviewDogFavoriteItem() {
     KonceptTheme {
-        DogFavoriteItem(dog = Dog(BreedId(1), "Nils", false))
+        DogFavoriteItem(breed = Breed(BreedId(1), "Nils", false))
     }
 }

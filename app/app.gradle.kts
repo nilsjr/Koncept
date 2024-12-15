@@ -2,13 +2,12 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 import de.nilsdruyen.app.ProjectConfig
 import de.nilsdruyen.app.utils.CiUtils
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.application")
     id(libs.plugins.google.ksp.get().pluginId)
     id(libs.plugins.hilt.android.get().pluginId)
     alias(libs.plugins.androidx.baselineprofile)
-    id("org.jetbrains.kotlin.plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 android {
     namespace = "de.nilsdruyen.koncept"
@@ -127,6 +126,7 @@ dependencies {
     implementation(projects.features.dogs.dogsUi)
 
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.serial)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity)
@@ -148,6 +148,10 @@ dependencies {
 
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTooling)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
+    implementation(libs.coil.network.cache)
 
     coreLibraryDesugaring(libs.android.desugar)
 
@@ -179,8 +183,6 @@ dependencies {
 
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)
-
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
     // testing
 

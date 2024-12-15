@@ -4,14 +4,12 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class DogWebEntity(
+data class BreedWebEntity(
     val id: Int,
     val name: String,
     val temperament: String?, // "Stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
     @Json(name = "life_span")
     val lifeSpan: String?,
-    @Json(name = "reference_image_id")
-    val imageId: String?,
     @Json(name = "breed_group")
     val group: String?,
     val weight: MeasureWebEntity?,
@@ -22,6 +20,16 @@ data class DogWebEntity(
     val description: String?,
     @Json(name = "country_code")
     val countryCode: String?,
+    @Json(name = "image")
+    val image: ImageWebEntity?
+)
+
+@JsonClass(generateAdapter = true)
+data class ImageWebEntity(
+    @Json(name = "id")
+    val id: String,
+    @Json(name = "url")
+    val url: String,
 )
 
 @JsonClass(generateAdapter = true)

@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import arrow.core.Either
 import arrow.core.right
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
-import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
@@ -42,7 +42,9 @@ internal class DogsRepositoryImplTest {
             // given
             val remote = Either.Right(List(2) { DogFactory.build() })
 
-            whenever(dogsCacheDataSource.getDogList()) doReturn flowOf(emptyList<Dog>().right()) doReturn flowOf(remote)
+            whenever(dogsCacheDataSource.getDogList()) doReturn flowOf(emptyList<Breed>().right()) doReturn flowOf(
+                remote
+            )
             whenever(dogsRemoteDataSource.getList()) doReturn remote
 
             // when

@@ -1,14 +1,14 @@
 package de.nilsdruyen.koncept.dogs.remote
 
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
-import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
+import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.dogs.remote.entities.MeasureWebEntity
 
-fun DogWebEntity.toModel(): Dog {
-    return Dog(
+fun BreedWebEntity.toModel(): Breed {
+    return Breed(
         id = BreedId(id),
         name = name,
         isFavorite = false,
@@ -19,6 +19,7 @@ fun DogWebEntity.toModel(): Dog {
         bredFor = bredFor.orEmpty(),
         origin = origin?.split(",")?.map { it.trim() }.orEmpty(),
         group = group.orEmpty(),
+        imageUrl = image?.url,
     )
 }
 

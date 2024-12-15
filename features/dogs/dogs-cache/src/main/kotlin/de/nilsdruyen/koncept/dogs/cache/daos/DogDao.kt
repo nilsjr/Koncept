@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
 import de.nilsdruyen.koncept.dogs.cache.entities.MinimalDogCacheEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -15,25 +15,25 @@ import kotlinx.coroutines.flow.Flow
 interface DogDao {
 
     @Query("SELECT * from dog_table")
-    fun getAll(): Flow<List<DogCacheEntity>>
+    fun getAll(): Flow<List<BreedCacheEntity>>
 
     @Query("SELECT * from dog_table WHERE id=:id")
-    fun getDogById(id: Int): Flow<DogCacheEntity>
+    fun getDogById(id: Int): Flow<BreedCacheEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addList(list: List<DogCacheEntity>): List<Long>
+    suspend fun addList(list: List<BreedCacheEntity>): List<Long>
 
-    @Insert(entity = DogCacheEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    @Insert(entity = BreedCacheEntity::class, onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMinimalList(list: List<MinimalDogCacheEntity>): List<Long>
 
     @Update
-    suspend fun updateList(list: List<DogCacheEntity>)
+    suspend fun updateList(list: List<BreedCacheEntity>)
 
-    @Update(entity = DogCacheEntity::class)
+    @Update(entity = BreedCacheEntity::class)
     suspend fun updateMinimalList(list: List<MinimalDogCacheEntity>)
 
     @Query("SELECT * from dog_table WHERE isFavorite = 1")
-    fun getAllFavorites(): Flow<List<DogCacheEntity>>
+    fun getAllFavorites(): Flow<List<BreedCacheEntity>>
 
     @Query("UPDATE dog_table SET isFavorite = 1 WHERE id = :breedId")
     suspend fun setFavorite(breedId: Int)
@@ -55,7 +55,7 @@ interface DogDao {
     }
 
     @Transaction
-    suspend fun upsertList(list: List<DogCacheEntity>) {
+    suspend fun upsertList(list: List<BreedCacheEntity>) {
         val results = addList(list)
         val updateList = results.mapIndexedNotNull { index, result ->
             if (result == -1L) {

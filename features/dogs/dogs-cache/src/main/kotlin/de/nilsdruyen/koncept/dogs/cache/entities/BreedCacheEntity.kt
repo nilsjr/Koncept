@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "dog_table")
-data class DogCacheEntity(
+data class BreedCacheEntity(
     @PrimaryKey
     val id: Int,
     @ColumnInfo(name = "name")
@@ -26,4 +26,6 @@ data class DogCacheEntity(
     val bredFor: String,
     @ColumnInfo(name = "group", defaultValue = "0")
     val group: String,
+    @ColumnInfo(name = "imageUrl", defaultValue = "")
+    val imageUrl: String?,
 )

@@ -1,7 +1,7 @@
 package de.nilsdruyen.koncept.dogs.ui.list
 
 import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
-import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
 import de.nilsdruyen.koncept.dogs.cache.entities.MinimalDogCacheEntity
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.Flow
@@ -29,9 +29,9 @@ class DogIntTest {
 }
 
 class FakeDao : DogDao {
-    override fun getAll(): Flow<List<DogCacheEntity>> {
+    override fun getAll(): Flow<List<BreedCacheEntity>> {
         val dogCacheEntityList = listOf(
-            DogCacheEntity(
+            BreedCacheEntity(
                 id = 1,
                 name = "Dog 1",
                 isFavorite = false,
@@ -47,11 +47,11 @@ class FakeDao : DogDao {
         return flowOf(dogCacheEntityList)
     }
 
-    override fun getDogById(id: Int): Flow<DogCacheEntity> {
+    override fun getDogById(id: Int): Flow<BreedCacheEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun addList(list: List<DogCacheEntity>): List<Long> {
+    override suspend fun addList(list: List<BreedCacheEntity>): List<Long> {
         TODO("Not yet implemented")
     }
 
@@ -59,7 +59,7 @@ class FakeDao : DogDao {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateList(list: List<DogCacheEntity>) {
+    override suspend fun updateList(list: List<BreedCacheEntity>) {
         TODO("Not yet implemented")
     }
 
@@ -67,7 +67,7 @@ class FakeDao : DogDao {
         TODO("Not yet implemented")
     }
 
-    override fun getAllFavorites(): Flow<List<DogCacheEntity>> {
+    override fun getAllFavorites(): Flow<List<BreedCacheEntity>> {
         TODO("Not yet implemented")
     }
 

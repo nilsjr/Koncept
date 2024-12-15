@@ -2,7 +2,7 @@ package de.nilsdruyen.koncept.dogs.remote
 
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
-import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
+import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,10 +11,10 @@ import retrofit2.http.Query
 interface DogsApi {
 
     @GET("breeds")
-    suspend fun getBreeds(): Either<DataSourceError, List<DogWebEntity>>
+    suspend fun getBreeds(): Either<DataSourceError, List<BreedWebEntity>>
 
     @GET("breeds/search")
-    suspend fun searchBreed(@Query("q") input: String): Either<DataSourceError, List<DogWebEntity>>
+    suspend fun searchBreed(@Query("q") input: String): Either<DataSourceError, List<BreedWebEntity>>
 
     @GET("images/search")
     suspend fun searchImages(

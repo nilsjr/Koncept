@@ -50,11 +50,11 @@ import de.nilsdruyen.koncept.common.ui.isEmpty
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptIcons
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.components.Loading
-import de.nilsdruyen.koncept.dogs.ui.list.components.DogItem
+import de.nilsdruyen.koncept.dogs.ui.list.components.BreedItem
 import de.nilsdruyen.koncept.dogs.ui.list.components.DogListItem
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
@@ -118,7 +118,7 @@ fun DogListScreen(
 @Composable
 fun DogListScreen(
     state: DogListState,
-    showDog: (Dog) -> Unit = {},
+    showDog: (Breed) -> Unit = {},
     showSortDialog: () -> Unit = {},
     reloadList: () -> Unit = {},
     inputChange: (String) -> Unit = {},
@@ -225,7 +225,7 @@ fun DogListScreen(
 @Composable
 private fun DogList(
     state: DogListState,
-    showDog: (Dog) -> Unit,
+    showDog: (Breed) -> Unit,
 ) {
     LazyColumn(
         state = rememberLazyListState(),
@@ -237,8 +237,8 @@ private fun DogList(
     ) {
         item { Spacer(modifier = Modifier.height(64.dp)) }
         items(state.list.items, key = { it.id.value }) { dog ->
-            DogItem(
-                dog = dog,
+            BreedItem(
+                breed = dog,
                 modifier = Modifier.animateItem(),
                 showDog = showDog,
             )
@@ -249,8 +249,8 @@ private fun DogList(
 
 @Composable
 fun SearchResult(
-    searchResult: List<Dog>,
-    onClick: (Dog) -> Unit,
+    searchResult: List<Breed>,
+    onClick: (Breed) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -259,7 +259,7 @@ fun SearchResult(
     ) {
         items(searchResult) {
             DogListItem(
-                dog = it,
+                breed = it,
                 onClick = {
                     onClick(it)
                 }
@@ -283,7 +283,7 @@ class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
         DogListState(),
         DogListState(
             list = List(6) {
-                Dog(BreedId(it), "Breed $it")
+                Breed(BreedId(it), "Breed $it")
             }.toImmutable()
         )
     )

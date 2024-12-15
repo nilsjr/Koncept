@@ -2,9 +2,9 @@ package de.nilsdruyen.koncept.dogs.cache
 
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
-import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
 import de.nilsdruyen.koncept.dogs.data.DogsCacheDataSource
-import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
 import de.nilsdruyen.koncept.domain.toDataSourceError
@@ -21,17 +21,17 @@ class DogsCacheDataSourceImpl @Inject constructor(
     private val dogDao: DogDao,
 ) : DogsCacheDataSource {
 
-    override fun getDogList(): Flow<Either<DataSourceError, List<Dog>>> {
+    override fun getDogList(): Flow<Either<DataSourceError, List<Breed>>> {
         return dogDao.getAll()
-            .map { Either.Right(it.map(DogCacheEntity::toModel)) }
+            .map { Either.Right(it.map(BreedCacheEntity::toModel)) }
             .catch { throwable ->
                 Either.Left(throwable.toDataSourceError())
             }.flowOn(ioDispatcher)
     }
 
-    override suspend fun setDogList(list: List<Dog>) = withContext(ioDispatcher) {
+    override suspend fun setDogList(list: List<Breed>) = withContext(ioDispatcher) {
 //        dogDao.upsertMinimalList(list.map(Dog::toMinimalEntity))
-        dogDao.upsertList(list.map(Dog::toEntity))
+        dogDao.upsertList(list.map(Breed::toEntity))
     }
 
     override suspend fun setFavorite(breedId: Int) {
@@ -46,9 +46,9 @@ class DogsCacheDataSourceImpl @Inject constructor(
         return dogDao.getDogById(breedId).map { it.isFavorite }
     }
 
-    override fun getFavorites(): Flow<Either<DataSourceError, List<Dog>>> {
+    override fun getFavorites(): Flow<Either<DataSourceError, List<Breed>>> {
         return dogDao.getAllFavorites()
-            .map { Either.Right(it.map(DogCacheEntity::toModel)) }
+            .map { Either.Right(it.map(BreedCacheEntity::toModel)) }
             .catch { throwable ->
                 Either.Left(throwable.toDataSourceError())
             }.flowOn(ioDispatcher)

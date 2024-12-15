@@ -5,7 +5,7 @@ import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.base.MviViewModel
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetFavoritesUseCase
-import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import javax.inject.Inject
@@ -50,7 +50,7 @@ class FavoritesViewModel @Inject constructor(
 
 data class FavoritesState(
     val isLoading: Boolean = false,
-    val list: ImmutableList<Dog> = emptyImmutableList(),
+    val list: ImmutableList<Breed> = emptyImmutableList(),
     val showBreed: Int? = null,
 )
 

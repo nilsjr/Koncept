@@ -3,7 +3,7 @@ package de.nilsdruyen.koncept.dogs.data
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.domain.BreedImages
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
-import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.domain.DataSourceError
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -18,7 +18,7 @@ class DogsRepositoryImpl @Inject constructor(
     private val dogsCacheDataSource: DogsCacheDataSource,
 ) : DogsRepository {
 
-    override fun getList(): Flow<Either<DataSourceError, List<Dog>>> {
+    override fun getList(): Flow<Either<DataSourceError, List<Breed>>> {
         return flow {
             val cache = dogsCacheDataSource.getDogList().firstOrNull()
             if (cache != null) emit(cache)
@@ -38,7 +38,7 @@ class DogsRepositoryImpl @Inject constructor(
         return dogsRemoteDataSource.getImagesForBreed(breedId)
     }
 
-    override fun getFavoriteList(): Flow<Either<DataSourceError, List<Dog>>> {
+    override fun getFavoriteList(): Flow<Either<DataSourceError, List<Breed>>> {
         return dogsCacheDataSource.getFavorites()
     }
 

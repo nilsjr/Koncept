@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.paparazzi)
     alias(libs.plugins.compose.compiler.report)
-    id("org.jetbrains.kotlin.plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 android {
     namespace = "de.nilsdruyen.koncept.dogs.ui"
@@ -30,7 +30,7 @@ dependencies {
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.constraintlayout.compose)
 
-    implementation(libs.coilCompose)
+    implementation(libs.coil.compose)
     implementation(libs.accompanist.placeholder)
 
     implementation(platform(libs.arrow.bom))

@@ -3,10 +3,10 @@ package de.nilsdruyen.koncept.dogs.ui.list
 import androidx.compose.foundation.layout.Column
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.ui.favorites.components.DogFavoriteItem
-import de.nilsdruyen.koncept.dogs.ui.list.components.DogItem
+import de.nilsdruyen.koncept.dogs.ui.list.components.BreedItem
 import de.nilsdruyen.koncept.dogs.ui.utils.PaparazziTest
 import org.junit.Ignore
 import org.junit.Test
@@ -19,8 +19,8 @@ internal class DogListScreenKtTest : PaparazziTest() {
         paparazziRule.snapshot {
             KonceptTheme {
                 Column {
-                    DogItem(
-                        Dog(
+                    BreedItem(
+                        Breed(
                             id = BreedId(value = 0),
                             name = "Nils",
                             isFavorite = false,
@@ -44,7 +44,7 @@ internal class DogListScreenKtTest : PaparazziTest() {
         paparazziRule.snapshot {
             KonceptTheme {
                 Column {
-                    DogFavoriteItem(dog = Dog(BreedId(1), "Nils", false))
+                    DogFavoriteItem(breed = Breed(BreedId(1), "Nils", false))
                 }
             }
         }
@@ -55,7 +55,7 @@ internal class DogListScreenKtTest : PaparazziTest() {
     fun dogListSnapshot() {
         val state = DogListState(
             list = List(6) {
-                Dog(BreedId(it), "Breed $it")
+                Breed(BreedId(it), "Breed $it")
             }.toImmutable()
         )
 

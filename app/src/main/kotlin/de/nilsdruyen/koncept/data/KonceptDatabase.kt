@@ -10,11 +10,11 @@ import com.squareup.moshi.Moshi
 import de.nilsdruyen.koncept.data.converters.IntRangeConverter
 import de.nilsdruyen.koncept.data.converters.StringListConverter
 import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
-import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
 
 @Database(
-    entities = [DogCacheEntity::class],
-    version = 3,
+    entities = [BreedCacheEntity::class],
+    version = 4,
     autoMigrations = [
         AutoMigration(from = 1, to = 3)
     ],

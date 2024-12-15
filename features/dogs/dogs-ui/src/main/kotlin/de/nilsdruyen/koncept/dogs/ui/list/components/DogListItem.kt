@@ -13,29 +13,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 
 @Composable
-fun DogListItem(dog: Dog, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun DogListItem(breed: Breed, onClick: () -> Unit, modifier: Modifier = Modifier) {
     ListItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() },
-        headlineContent = { Text(dog.name) },
-        overlineContent = dog.bredFor.takeIf { it.isNotEmpty() }?.run {
+        headlineContent = { Text(breed.name) },
+        overlineContent = breed.bredFor.takeIf { it.isNotEmpty() }?.run {
             {
-                Text(dog.bredFor, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(breed.bredFor, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         },
-        supportingContent = dog.group.takeIf { it.isNotEmpty() }?.run {
+        supportingContent = breed.group.takeIf { it.isNotEmpty() }?.run {
             {
-                Text(dog.group)
+                Text(breed.group)
             }
         },
         trailingContent = {
             Icon(
-                imageVector = if (dog.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                imageVector = if (breed.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = "Set Favorite"
             )
         }
@@ -47,7 +47,7 @@ fun DogListItem(dog: Dog, onClick: () -> Unit, modifier: Modifier = Modifier) {
 private fun DogListItemPreview() {
     KonceptTheme {
         DogListItem(
-            dog = Dog(
+            breed = Breed(
                 id = BreedId(value = 8899),
                 name = "Sara Rich",
                 isFavorite = false,

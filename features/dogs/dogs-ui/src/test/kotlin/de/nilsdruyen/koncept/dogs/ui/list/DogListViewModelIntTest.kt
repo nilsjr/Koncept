@@ -13,7 +13,7 @@ import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import de.nilsdruyen.koncept.RemoteModule
 import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
-import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
 import de.nilsdruyen.koncept.dogs.cache.entities.MinimalDogCacheEntity
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
 import de.nilsdruyen.koncept.dogs.remote.DogsApi
@@ -98,7 +98,7 @@ class DogListViewModelIntTest {
 object TestCacheModule {
 
     private val cache = listOf(
-        DogCacheEntity(
+        BreedCacheEntity(
             id = 1,
             name = "Dog 1",
             isFavorite = false,
@@ -113,7 +113,7 @@ object TestCacheModule {
     )
 
     private val cache2 = listOf(
-        DogCacheEntity(
+        BreedCacheEntity(
             id = 1,
             name = "Dog 1",
             isFavorite = false,
@@ -125,7 +125,7 @@ object TestCacheModule {
             bredFor = "",
             group = ""
         ),
-        DogCacheEntity(
+        BreedCacheEntity(
             id = 2,
             name = "Dog 2",
             isFavorite = false,
@@ -144,15 +144,15 @@ object TestCacheModule {
     @Provides
     fun provideoDao(): DogDao = object : DogDao {
 
-        override fun getAll(): Flow<List<DogCacheEntity>> {
+        override fun getAll(): Flow<List<BreedCacheEntity>> {
             return dbState
         }
 
-        override fun getDogById(id: Int): Flow<DogCacheEntity> {
+        override fun getDogById(id: Int): Flow<BreedCacheEntity> {
             return emptyFlow()
         }
 
-        override suspend fun addList(list: List<DogCacheEntity>): List<Long> {
+        override suspend fun addList(list: List<BreedCacheEntity>): List<Long> {
             return List(list.size) { 1L }
         }
 
@@ -160,7 +160,7 @@ object TestCacheModule {
             return emptyList()
         }
 
-        override suspend fun updateList(list: List<DogCacheEntity>) {
+        override suspend fun updateList(list: List<BreedCacheEntity>) {
             dbState.value = cache2
         }
 
@@ -168,7 +168,7 @@ object TestCacheModule {
             // do nothing
         }
 
-        override fun getAllFavorites(): Flow<List<DogCacheEntity>> {
+        override fun getAllFavorites(): Flow<List<BreedCacheEntity>> {
             return emptyFlow()
         }
 

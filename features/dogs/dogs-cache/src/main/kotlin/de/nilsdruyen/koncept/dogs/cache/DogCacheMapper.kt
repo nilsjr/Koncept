@@ -1,11 +1,11 @@
 package de.nilsdruyen.koncept.dogs.cache
 
-import de.nilsdruyen.koncept.dogs.cache.entities.DogCacheEntity
+import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
 import de.nilsdruyen.koncept.dogs.cache.entities.MinimalDogCacheEntity
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 
-fun DogCacheEntity.toModel() = Dog(
+fun BreedCacheEntity.toModel() = Breed(
     id = BreedId(id),
     name = name,
     isFavorite = isFavorite,
@@ -15,10 +15,11 @@ fun DogCacheEntity.toModel() = Dog(
     height = height,
     bredFor = bredFor,
     origin = origin,
-    group = group
+    group = group,
+    imageUrl = imageUrl,
 )
 
-fun Dog.toEntity() = DogCacheEntity(
+fun Breed.toEntity() = BreedCacheEntity(
     id = id.value,
     name = name,
     isFavorite = isFavorite,
@@ -28,10 +29,11 @@ fun Dog.toEntity() = DogCacheEntity(
     height = height,
     bredFor = bredFor,
     origin = origin,
-    group = group
+    group = group,
+    imageUrl = imageUrl,
 )
 
-fun Dog.toMinimalEntity() = MinimalDogCacheEntity(
+fun Breed.toMinimalEntity() = MinimalDogCacheEntity(
     id = id.value,
     name = name,
 )

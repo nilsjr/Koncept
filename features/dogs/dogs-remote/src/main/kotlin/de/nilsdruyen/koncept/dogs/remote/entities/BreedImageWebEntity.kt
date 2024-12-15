@@ -8,5 +8,5 @@ data class BreedImageWebEntity(
     val url: String,
     val width: Int,
     val height: Int,
-    val breeds: List<DogWebEntity>,
+    val breeds: List<BreedWebEntity>,
 )

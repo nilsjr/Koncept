@@ -4,18 +4,18 @@ import arrow.core.Either
 import arrow.core.right
 import de.nilsdruyen.koncept.dogs.remote.DogsApi
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
-import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
+import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.test.utils.parseList
 
 class FakeDogsApi : DogsApi {
 
-    override suspend fun getBreeds(): Either<DataSourceError, List<DogWebEntity>> {
-        val dogEntityList = "/json/dog-list.json".parseList(DogWebEntity::class.java).take(25)
+    override suspend fun getBreeds(): Either<DataSourceError, List<BreedWebEntity>> {
+        val dogEntityList = "/json/dog-list.json".parseList(BreedWebEntity::class.java).take(25)
         return dogEntityList.right()
     }
 
-    override suspend fun searchBreed(input: String): Either<DataSourceError, List<DogWebEntity>> {
+    override suspend fun searchBreed(input: String): Either<DataSourceError, List<BreedWebEntity>> {
         TODO("Not yet implemented")
     }
 

@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")

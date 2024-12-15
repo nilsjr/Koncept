@@ -2,10 +2,10 @@ package de.nilsdruyen.koncept.dogs.remote
 
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.data.DogsRemoteDataSource
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
-import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
+import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.annotations.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,9 +17,9 @@ class DogsRemoteDataSourceImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : DogsRemoteDataSource {
 
-    override suspend fun getList(): Either<DataSourceError, List<Dog>> = withContext(ioDispatcher) {
+    override suspend fun getList(): Either<DataSourceError, List<Breed>> = withContext(ioDispatcher) {
         dogsApi.getBreeds().map {
-            it.map(DogWebEntity::toModel)
+            it.map(BreedWebEntity::toModel)
         }
     }
 

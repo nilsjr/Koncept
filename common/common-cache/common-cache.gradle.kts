@@ -1,7 +1,6 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("de.nilsdruyen.plugin.kotlin")
-    id(libs.plugins.google.ksp.get().pluginId)
+    alias(libs.plugins.google.ksp)
 }
 
 dependencies {

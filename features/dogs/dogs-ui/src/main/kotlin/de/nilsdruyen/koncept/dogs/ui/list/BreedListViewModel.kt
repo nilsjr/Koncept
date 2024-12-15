@@ -7,9 +7,9 @@ import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.emptyImmutableList
 import de.nilsdruyen.koncept.common.ui.toImmutable
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCase
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import kotlinx.coroutines.delay
@@ -102,13 +102,13 @@ class DogListViewModel @Inject constructor(
 data class DogListState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
-    val list: ImmutableList<Dog> = emptyImmutableList(),
+    val list: ImmutableList<Breed> = emptyImmutableList(),
 //    val list: ImmutableList<DogGroup> = emptyImmutableList(),
     val selectedType: BreedSortType = BreedSortType.LifeSpan,
     val navigateTo: BreedId? = null,
     val input: String = "",
     val activeSearch: Boolean = false,
-    val searchResult: List<Dog>? = null,
+    val searchResult: List<Breed>? = null,
 )
 
 sealed interface DogListIntent {

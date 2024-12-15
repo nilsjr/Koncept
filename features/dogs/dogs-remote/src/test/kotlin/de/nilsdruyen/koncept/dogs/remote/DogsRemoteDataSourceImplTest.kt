@@ -1,7 +1,7 @@
 package de.nilsdruyen.koncept.dogs.remote
 
 import arrow.core.Either
-import de.nilsdruyen.koncept.dogs.remote.entities.DogWebEntity
+import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.DispatcherProvider
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
@@ -34,8 +34,8 @@ internal class DogsRemoteDataSourceImplTest {
 
     @Test
     fun `Get dog list from remote`() = runTest {
-        val dogEntityList = "/dog-list.json".parseList(DogWebEntity::class.java)
-        val response: Either<DataSourceError, List<DogWebEntity>> = Either.Right(dogEntityList)
+        val dogEntityList = "/dog-list.json".parseList(BreedWebEntity::class.java)
+        val response: Either<DataSourceError, List<BreedWebEntity>> = Either.Right(dogEntityList)
 
         whenever(api.getBreeds()) doReturn response
 

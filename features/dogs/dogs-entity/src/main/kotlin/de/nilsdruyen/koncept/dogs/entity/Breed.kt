@@ -3,7 +3,7 @@ package de.nilsdruyen.koncept.dogs.entity
 import androidx.compose.runtime.Stable
 
 @Stable
-data class Dog(
+data class Breed(
     val id: BreedId,
     val name: String,
     val isFavorite: Boolean = false,
@@ -14,4 +14,5 @@ data class Dog(
     val bredFor: String = "",
     val origin: List<String> = emptyList(),
     val group: String = "",
+    val imageUrl: String? = null,
 )

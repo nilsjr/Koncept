@@ -18,7 +18,7 @@ import de.nilsdruyen.koncept.dogs.data.DogsDataModule
 import de.nilsdruyen.koncept.dogs.domain.BreedImages
 import de.nilsdruyen.koncept.dogs.domain.DogListFlow
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
-import de.nilsdruyen.koncept.dogs.entity.Dog
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.test.DogFactory
 import de.nilsdruyen.koncept.domain.DataSourceError
 import kotlinx.coroutines.flow.Flow
@@ -69,7 +69,7 @@ class MainActivity2Test {
                 TODO("Not yet implemented")
             }
 
-            override fun getFavoriteList(): Flow<Either<DataSourceError, List<Dog>>> {
+            override fun getFavoriteList(): Flow<Either<DataSourceError, List<Breed>>> {
                 TODO("Not yet implemented")
             }
 

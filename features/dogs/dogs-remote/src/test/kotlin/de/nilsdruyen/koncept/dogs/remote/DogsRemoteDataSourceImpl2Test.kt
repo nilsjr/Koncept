@@ -4,8 +4,8 @@ import arrow.core.right
 import com.squareup.moshi.Moshi
 import de.nilsdruyen.koncept.adapters.EitherCallAdapterFactory
 import de.nilsdruyen.koncept.dogs.data.DogsRemoteDataSource
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import de.nilsdruyen.koncept.domain.DispatcherProvider
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import de.nilsdruyen.koncept.test.InjectTestDispatcherProvider
@@ -67,7 +67,7 @@ class DogsRemoteDataSourceImpl2Test {
     @Test
     fun `GIVEN a valid response WHEN getList is called THEN list of dogs is returned`() = runTest {
         val expected = listOf(
-            Dog(
+            Breed(
                 id = BreedId(value = 1),
                 name = "Affenpinscher",
                 isFavorite = false,
@@ -79,7 +79,7 @@ class DogsRemoteDataSourceImpl2Test {
                 origin = listOf("Germany", "France"),
                 group = "Toy"
             ),
-            Dog(
+            Breed(
                 id = BreedId(value = 2),
                 name = "Afghan Hound",
                 isFavorite = false,

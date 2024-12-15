@@ -1,7 +1,7 @@
 package de.nilsdruyen.koncept.dogs.test
 
+import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
-import de.nilsdruyen.koncept.dogs.entity.Dog
 import io.github.serpro69.kfaker.Faker
 
 object DogFactory {
@@ -24,7 +24,7 @@ object DogFactory {
 
         fun buildList(count: Int = 3) = List(count) { build() }
 
-        fun build() = Dog(BreedId(faker.random.nextInt()), faker.dog.name())
+        fun build() = Breed(BreedId(faker.random.nextInt()), faker.dog.name())
     }
 }
 
@@ -35,5 +35,5 @@ class DogBuilder {
     var id: Int = 0
     var name: String = ""
 
-    fun build(): Dog = Dog(BreedId(id), name)
+    fun build(): Breed = Breed(BreedId(id), name)
 }
