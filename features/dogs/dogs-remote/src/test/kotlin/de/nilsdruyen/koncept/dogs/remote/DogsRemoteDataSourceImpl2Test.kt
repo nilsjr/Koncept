@@ -77,7 +77,8 @@ class DogsRemoteDataSourceImpl2Test {
                 height = 23..29,
                 bredFor = "Small rodent hunting, lapdog",
                 origin = listOf("Germany", "France"),
-                group = "Toy"
+                group = "Toy",
+                imageUrl = "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg",
             ),
             Breed(
                 id = BreedId(value = 2),
@@ -89,7 +90,8 @@ class DogsRemoteDataSourceImpl2Test {
                 height = 64..69,
                 bredFor = "Coursing and hunting",
                 origin = "Afghanistan, Iran, Pakistan".split(", "),
-                group = "Hound"
+                group = "Hound",
+                imageUrl = "https://cdn2.thedogapi.com/images/hMyT4CDXR.jpg",
             ),
         )
 

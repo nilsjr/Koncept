@@ -2,7 +2,6 @@ package de.nilsdruyen.koncept.dogs.domain.usecase
 
 import app.cash.turbine.test
 import arrow.core.Either
-import arrow.core.computations.ResultEffect.bind
 import de.nilsdruyen.koncept.dogs.domain.repository.DogsRepository
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
@@ -29,7 +28,7 @@ internal class GetDogListUseCaseImplTest {
         whenever(dogsRepository.getList()) doReturn flowOf(Either.Right(emptyList()))
 
         getDogListUseCaseImpl.execute().test {
-            assert(awaitItem().bind().isEmpty())
+            assert(awaitItem().getOrNull()?.isEmpty() == true)
             awaitComplete()
         }
     }

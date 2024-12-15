@@ -108,7 +108,8 @@ object TestCacheModule {
             temperament = listOf(),
             origin = listOf(),
             bredFor = "",
-            group = ""
+            group = "",
+            imageUrl = null,
         )
     )
 
@@ -123,7 +124,8 @@ object TestCacheModule {
             temperament = listOf(),
             origin = listOf(),
             bredFor = "",
-            group = ""
+            group = "",
+            imageUrl = null,
         ),
         BreedCacheEntity(
             id = 2,
@@ -135,7 +137,8 @@ object TestCacheModule {
             temperament = listOf(),
             origin = listOf(),
             bredFor = "",
-            group = ""
+            group = "",
+            imageUrl = null,
         ),
     )
 

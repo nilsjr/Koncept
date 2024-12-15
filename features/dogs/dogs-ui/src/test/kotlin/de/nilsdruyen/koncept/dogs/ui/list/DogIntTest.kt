@@ -41,7 +41,8 @@ class FakeDao : DogDao {
                 temperament = listOf(),
                 origin = listOf(),
                 bredFor = "",
-                group = ""
+                group = "",
+                imageUrl = null,
             )
         )
         return flowOf(dogCacheEntityList)
