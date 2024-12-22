@@ -70,13 +70,20 @@ fun BreedItem(
             )
             Text(
                 text = breed.name,
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .constrainAs(name) {
                         width = Dimension.fillToConstraints
-                        linkTo(image.end, isFavorite.start, startMargin = 16.dp, bias = 0f)
+                        linkTo(
+                            image.end,
+                            isFavorite.start,
+                            startMargin = 16.dp,
+                            bias = 0f,
+                            endMargin = 8.dp,
+                            endGoneMargin = 16.dp,
+                        )
                         top.linkTo(parent.top, 8.dp)
                     }
             )
@@ -94,8 +101,9 @@ fun BreedItem(
                 modifier = Modifier.constrainAs(lifeSpan) {
                     start.linkTo(name.start)
                     top.linkTo(name.bottom, 8.dp)
-                    bottom.linkTo(parent.bottom, 8.dp)
-                }
+                    bottom.linkTo(parent.bottom, 16.dp)
+                },
+                style = MaterialTheme.typography.labelMedium,
             )
         }
     }
