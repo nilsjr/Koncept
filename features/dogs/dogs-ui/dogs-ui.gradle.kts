@@ -40,7 +40,7 @@ dependencies {
 
     implementation(libs.androidx.palette.ktx)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation(libs.kotlinx.serial)
 
     // testing
     testImplementation(projects.common.commonTest)

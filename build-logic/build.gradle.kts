@@ -1,4 +1,6 @@
-@Suppress("DSL_SCOPE_VIOLATION")
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `kotlin-dsl`
 }
@@ -7,10 +9,10 @@ tasks.withType<JavaCompile>().configureEach {
     sourceCompatibility = JavaVersion.VERSION_17.toString()
     targetCompatibility = JavaVersion.VERSION_17.toString()
 }
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-        freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+        freeCompilerArgs.set(listOf("-Xexplicit-api=strict"))
     }
 }
 
@@ -23,7 +25,6 @@ dependencies {
 }
 
 gradlePlugin {
-    @Suppress("DSL_SCOPE_VIOLATION")
     plugins {
         register("de.nilsdruyen.plugin.root") {
             id = "de.nilsdruyen.plugin.root"
