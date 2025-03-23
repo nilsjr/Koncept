@@ -6,21 +6,19 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal fun Project.configure() {
     tasks.withType<JavaCompile>().configureEach {
-        sourceCompatibility = JavaVersion.VERSION_17.toString()
-        targetCompatibility = JavaVersion.VERSION_17.toString()
+        sourceCompatibility = JavaVersion.VERSION_21.toString()
+        targetCompatibility = JavaVersion.VERSION_21.toString()
     }
     val isEntityModule = name.endsWith("-entity")
     val isUiModule = name.endsWith("-ui")
     val composeCompilerReportEnabled = findProperty("composeCompilerReports") == "true"
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-            languageVersion.set(KotlinVersion.KOTLIN_2_0)
+            jvmTarget.set(JvmTarget.JVM_21)
             progressiveMode.set(true)
             freeCompilerArgs.addAll(
                 listOfNotNull(
@@ -33,9 +31,9 @@ internal fun Project.configure() {
                         addAll(
                             listOf(
                                 "-P",
-                                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${buildDir.absolutePath}/compose_compiler",
+                                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${layout.buildDirectory}/compose_compiler",
                                 "-P",
-                                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${buildDir.absolutePath}/compose_compiler",
+                                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${layout.buildDirectory}/compose_compiler",
                             )
                         )
                     }
@@ -43,7 +41,7 @@ internal fun Project.configure() {
             )
         }
     }
-    tasks.withType<Test> {
+    tasks.withType<Test>().configureEach {
         useJUnitPlatform()
         failFast = true
         testLogging {
