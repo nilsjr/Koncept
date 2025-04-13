@@ -80,7 +80,6 @@
             "fieldPath": "imageUrl",
             "columnName": "imageUrl",
             "affinity": "TEXT",
-            "notNull": false,
             "defaultValue": "''"
           }
         ],
@@ -89,12 +88,9 @@
           "columnNames": [
             "id"
           ]
-        },
-        "indices": [],
-        "foreignKeys": []
+        }
       }
     ],
-    "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
       "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2ba37ccd28129086f9dff94df78ad4b5')"
