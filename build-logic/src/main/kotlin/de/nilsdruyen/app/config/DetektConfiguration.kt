@@ -19,7 +19,7 @@ internal fun Project.applyDetekt() {
 
     configure<DetektExtension> {
         parallel = true
-        config.setFrom(files("$rootDir/config/detekt-config.yml"))
+        config = files("$rootDir/config/detekt-config.yml")
         buildUponDefaultConfig = true
     }
     tasks.withType<Detekt>().configureEach {
@@ -27,7 +27,7 @@ internal fun Project.applyDetekt() {
         reports {
             xml {
                 required.set(true)
-                outputLocation.set(file("${layout.buildDirectory}/reports/detekt/detekt.xml"))
+                outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
             }
             html.required.set(false)
             txt.required.set(false)
@@ -54,7 +54,7 @@ internal fun Project.applyDetektFormatting() {
         reports {
             xml {
                 required.set(true)
-                outputLocation.set(file("${layout.buildDirectory}/reports/detekt/detektFormatting.xml"))
+                outputLocation.set(file("$buildDir/reports/detekt/detektFormatting.xml"))
             }
             html.required.set(false)
             txt.required.set(false)
