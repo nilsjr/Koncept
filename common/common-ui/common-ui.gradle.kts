@@ -12,9 +12,8 @@ dependencies {
 
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material.icons)
-    implementation(libs.androidx.compose.material3)
+    api(libs.androidx.compose.material.icons)
+    api(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.constraintlayout.compose)
 

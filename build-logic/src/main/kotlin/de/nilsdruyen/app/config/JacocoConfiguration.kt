@@ -31,7 +31,7 @@ internal fun Project.configureJacoco() {
 
         doLast {
             println("View code coverage at:")
-            println("file://$buildDir/reports/jacoco/test/html/index.html")
+            println("file://${layout.buildDirectory}/reports/jacoco/test/html/index.html")
         }
     }
 
@@ -135,7 +135,7 @@ internal fun Set<Project>.allExecFiles(): List<String> = this.map { it.execFiles
 }
 
 internal fun Project.classFiles(): ConfigurableFileTree {
-    val item = toType().classDirs(buildDir.toString())
+    val item = toType().classDirs(layout.buildDirectory.toString())
     return fileTree(item.buildDir) {
         include(item.includeDirs)
         exclude(ignoreFiles)
@@ -143,7 +143,7 @@ internal fun Project.classFiles(): ConfigurableFileTree {
 }
 
 internal fun Project.sourceFiles(): List<String> = toType().sourceFiles(projectDir = projectDir.toString())
-internal fun Project.execFiles(): String = toType().execPath(this.buildDir.toString())
+internal fun Project.execFiles(): String = toType().execPath(layout.buildDirectory.toString())
 
 internal data class ProjectClassFiles(
     val buildDir: String,
