@@ -51,7 +51,7 @@ robolectric = "4.14.1"
 roborazzi = "1.43.1"
 serialization = "1.8.1"
 splashscreen = "1.1.0-rc01"
-turbine = "1.2.0"
+turbine = "1.2.1"
 uiautomator = "2.3.0"
 versionCompare = "1.5.0"
 
