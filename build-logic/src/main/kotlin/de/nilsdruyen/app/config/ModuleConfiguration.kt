@@ -11,7 +11,6 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-
 public val modulesWithoutTests: List<String> = listOf("design-system", "base-navigation", "common-ui")
 
 internal fun Project.configure() {
@@ -58,7 +57,6 @@ internal fun Project.configure() {
             add("testRuntimeOnly", libs.findLibrary("junit5.engine").get())
         }
     }
-
 
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
