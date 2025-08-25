@@ -25,5 +25,5 @@ object KonceptIcons {
 
 sealed class Icon {
     data class ImageVectorIcon(val imageVector: ImageVector) : Icon()
-    data class DrawableResourceIcon(@DrawableRes val id: Int) : Icon()
+    data class DrawableResourceIcon(@param:DrawableRes val id: Int) : Icon()
 }

@@ -30,10 +30,6 @@ dependencies {
     testImplementation(libs.bundles.mockito)
     testImplementation(libs.mockito.jupiter)
 
-    testImplementation(platform(libs.junit5.bom))
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
-
     testImplementation(platform(libs.square.okhttp.bom))
     testImplementation(libs.square.okhttp.mockwebserver)
     testImplementation(libs.square.retrofit)

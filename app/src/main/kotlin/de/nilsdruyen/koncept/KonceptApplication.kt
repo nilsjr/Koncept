@@ -13,6 +13,7 @@ import de.nilsdruyen.koncept.domain.Logger.Companion.log
 import de.nilsdruyen.koncept.utils.DebugTree
 import de.nilsdruyen.koncept.utils.LoggerImpl
 import timber.log.Timber
+import kotlin.time.ExperimentalTime
 
 @HiltAndroidApp
 class KonceptApplication : BaseKonceptApplication()
@@ -28,7 +29,7 @@ open class BaseKonceptApplication : Application(), SingletonImageLoader.Factory 
         }
     }
 
-    @OptIn(ExperimentalCoilApi::class)
+    @OptIn(ExperimentalCoilApi::class, ExperimentalTime::class)
     override fun newImageLoader(context: PlatformContext): ImageLoader {
         return ImageLoader.Builder(context)
             .components {

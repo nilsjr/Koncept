@@ -2,11 +2,17 @@ package de.nilsdruyen.app.config
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+
+public val modulesWithoutTests: List<String> = listOf("design-system", "base-navigation", "common-ui")
 
 internal fun Project.configure() {
     tasks.withType<JavaCompile>().configureEach {
@@ -41,6 +47,19 @@ internal fun Project.configure() {
             )
         }
     }
+
+    if (this.name !in modulesWithoutTests) {
+        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+        dependencies {
+            val bom = libs.findLibrary("junit5.bom").get()
+            add("testImplementation", platform(bom))
+            add("testImplementation", libs.findLibrary("junit5.api").get())
+            add("testRuntimeOnly", libs.findLibrary("junit5.platform.launcher").get())
+            add("testRuntimeOnly", libs.findLibrary("junit5.engine").get())
+        }
+    }
+
+
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
         failFast = true

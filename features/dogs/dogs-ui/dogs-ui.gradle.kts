@@ -55,11 +55,8 @@ dependencies {
     testImplementation(libs.bundles.test)
     testImplementation(libs.bundles.mockito)
     testImplementation(libs.mockito.jupiter)
-    testImplementation(libs.junit4)
 
-    testImplementation(platform(libs.junit5.bom))
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
+    testImplementation(libs.junit4)
     testRuntimeOnly(libs.junit5.vintage.engine)
 
     testImplementation(libs.robolectric)

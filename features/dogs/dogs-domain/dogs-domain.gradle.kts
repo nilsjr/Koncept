@@ -20,10 +20,6 @@ dependencies {
     testImplementation(projects.common.commonTest)
     testImplementation(projects.features.dogs.dogsTest)
 
-    testImplementation(platform(libs.junit5.bom))
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
-
     testImplementation(libs.bundles.mockito)
     testImplementation(libs.mockito.jupiter)
 }

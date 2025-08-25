@@ -101,7 +101,7 @@ android {
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
         managedDevices {
-            devices {
+            allDevices {
                 create<ManagedVirtualDevice>("pixel6api33") {
                     device = "Pixel 6"
                     apiLevel = 33
@@ -191,9 +191,6 @@ dependencies {
     testImplementation(libs.bundles.mockito)
 
     testImplementation(libs.junit4)
-    testImplementation(platform(libs.junit5.bom))
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
     testRuntimeOnly(libs.junit5.vintage.engine)
 
     testImplementation(libs.robolectric)
