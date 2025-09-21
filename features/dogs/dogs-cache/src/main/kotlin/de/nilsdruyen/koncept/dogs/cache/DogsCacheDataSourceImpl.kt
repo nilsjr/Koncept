@@ -17,7 +17,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DogsCacheDataSourceImpl @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @param:IoDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
     private val dogDao: DogDao,
 ) : DogsCacheDataSource {
 

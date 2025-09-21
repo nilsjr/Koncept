@@ -27,7 +27,6 @@ internal fun Project.configure() {
             progressiveMode.set(true)
             freeCompilerArgs.addAll(
                 listOfNotNull(
-                    "-Xcontext-receivers",
                     "-opt-in=kotlin.RequiresOptIn",
                     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi".takeIf { !isEntityModule },
                     "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { isUiModule },

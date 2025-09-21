@@ -21,6 +21,7 @@ dependencies {
     implementation(projects.features.dogs.dogsEntity)
 
     implementation(libs.hilt.android)
+    ksp(libs.androidx.hilt.compiler)
     ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.lifecycle.compose)
