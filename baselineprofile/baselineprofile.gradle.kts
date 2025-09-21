@@ -1,5 +1,6 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
 import de.nilsdruyen.app.ProjectConfig
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.androidTest)
@@ -14,10 +15,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21.toString()
     }
 
     defaultConfig {
@@ -35,6 +32,12 @@ android {
             apiLevel = 33
             systemImageSource = "aosp-atd"
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_21
     }
 }
 
