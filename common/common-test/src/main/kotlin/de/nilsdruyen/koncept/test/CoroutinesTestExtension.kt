@@ -19,16 +19,16 @@ class CoroutinesTestExtension(
     val testDispatcher: TestDispatcher = StandardTestDispatcher(testScope.testScheduler)
 ) : BeforeAllCallback, AfterAllCallback, BeforeEachCallback {
 
-    override fun beforeAll(context: ExtensionContext?) {
+    override fun beforeAll(context: ExtensionContext) {
         Dispatchers.setMain(testDispatcher)
     }
 
-    override fun afterAll(context: ExtensionContext?) {
+    override fun afterAll(context: ExtensionContext) {
         Dispatchers.resetMain()
         testDispatcher
     }
 
-    override fun beforeEach(context: ExtensionContext?) {
+    override fun beforeEach(context: ExtensionContext) {
         val testDispatcherProvider = TestDispatcherProvider(testDispatcher)
         val testInstances = context?.requiredTestInstances?.allInstances ?: return
         testInstances.forEach { testInstance ->
