@@ -8,6 +8,7 @@ android {
 dependencies {
     implementation(projects.design.designSystem)
 
-    api(libs.androidx.compose.navigation)
     api(libs.hilt.navigation.compose)
+
+    api(libs.androidx.navigation3.runtime)
 }

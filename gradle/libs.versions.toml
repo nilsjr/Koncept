@@ -19,7 +19,6 @@ composeActivity = "1.11.0"
 composeBom = "2025.11.00"
 composeCompilerReportGenerator = "1.4.2"
 composeConstraintLayout = "1.1.1"
-composeNavigation = "2.9.6"
 coroutines = "1.10.2"
 detekt = "1.23.8"
 detektComposeRules = "0.4.27"
@@ -66,7 +65,6 @@ androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-compose-material-icons = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
-androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 androidx-compose-paging = { module = "androidx.paging:paging-compose" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime" }
 androidx-compose-uiManifestTest = { module = "androidx.compose.ui:ui-test-manifest" }
