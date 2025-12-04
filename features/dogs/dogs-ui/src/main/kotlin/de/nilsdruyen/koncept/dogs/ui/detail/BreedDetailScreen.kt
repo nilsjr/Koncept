@@ -38,7 +38,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImagePainter
 import coil3.compose.SubcomposeAsyncImage
@@ -60,9 +59,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun BreedDetailScreen(
     showImageDetail: (id: String) -> Unit,
-    viewModel: BreedDetailViewModel = hiltViewModel(),
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
+    viewModel: BreedDetailViewModel,
+//    sharedTransitionScope: SharedTransitionScope,
+//    animatedContentScope: AnimatedContentScope,
 ) {
     val composeScope = rememberCoroutineScope()
     val scrollState = rememberTopAppBarState()
@@ -104,8 +103,8 @@ fun BreedDetailScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it.dropBottomPadding()),
-                sharedTransitionScope = sharedTransitionScope,
-                animatedContentScope = animatedContentScope,
+//                sharedTransitionScope = sharedTransitionScope,
+//                animatedContentScope = animatedContentScope,
             )
         }
     )
@@ -116,8 +115,8 @@ private fun BreedDetailContainer(
     uiState: BreedDetailState,
     onImageClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
+//    sharedTransitionScope: SharedTransitionScope,
+//    animatedContentScope: AnimatedContentScope,
 ) {
     Crossfade(targetState = uiState) {
         when {
@@ -153,8 +152,8 @@ private fun BreedDetailContainer(
                 list = it.images,
                 onImageClick,
                 modifier,
-                sharedTransitionScope,
-                animatedContentScope
+//                sharedTransitionScope,
+//                animatedContentScope
             )
         }
     }
@@ -165,21 +164,21 @@ private fun BreedImageList(
     list: ImmutableList<BreedImage>,
     onImageClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
+//    sharedTransitionScope: SharedTransitionScope,
+//    animatedContentScope: AnimatedContentScope,
 ) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
         itemsIndexed(list.items) { index, item ->
-            with(sharedTransitionScope) {
+//            with(sharedTransitionScope) {
                 BreedImage(
                     url = item.url,
                     onImageClick = { onImageClick(item.id) },
-                    modifier = Modifier.sharedElement(
-                        sharedTransitionScope.rememberSharedContentState(key = "image-${item.id}"),
-                        animatedVisibilityScope = animatedContentScope
-                    )
+//                    modifier = Modifier.sharedElement(
+//                        sharedTransitionScope.rememberSharedContentState(key = "image-${item.id}"),
+//                        animatedVisibilityScope = animatedContentScope
+//                    )
                 )
-            }
+//            }
         }
     })
 }

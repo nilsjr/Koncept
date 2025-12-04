@@ -172,8 +172,6 @@ dependencies {
     implementation(libs.square.moshi)
     ksp(libs.square.moshi.codegen)
 
-    implementation(libs.accompanist.nav.material)
-
     implementation(libs.timber)
 
     implementation(platform(libs.arrow.bom))

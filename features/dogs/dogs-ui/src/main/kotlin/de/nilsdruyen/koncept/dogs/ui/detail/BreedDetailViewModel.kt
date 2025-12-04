@@ -1,6 +1,9 @@
 package de.nilsdruyen.koncept.dogs.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.nilsdruyen.koncept.common.ui.ImmutableList
 import de.nilsdruyen.koncept.common.ui.base.MviViewModel
@@ -10,20 +13,25 @@ import de.nilsdruyen.koncept.dogs.domain.usecase.GetBreedImageListUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.UpdateFavoriteBreedUseCase
 import de.nilsdruyen.koncept.dogs.entity.BreedImage
-import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.DogDetailRoute
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
 import javax.inject.Inject
 
-@HiltViewModel
-class BreedDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+@HiltViewModel(assistedFactory = BreedDetailViewModel.Factory::class)
+class BreedDetailViewModel @AssistedInject constructor(
+    @Assisted val route: DogDetailRoute,
     private val getBreedImageListUseCase: GetBreedImageListUseCase,
     private val updateFavoriteBreedUseCase: UpdateFavoriteBreedUseCase,
     private val isFavoriteFlowUseCase: IsFavoriteFlowUseCase,
 ) : MviViewModel<BreedDetailState, BreedDetailIntent>(BreedDetailState(isLoading = true)) {
 
-    private val breedId = BreedDetailsRoute.fromSavedState(savedStateHandle).value
+    private val breedId: Int = route.id
+
+    @AssistedFactory
+    interface Factory {
+        fun create(key: DogDetailRoute): BreedDetailViewModel
+    }
 
     override fun initialize() {
         listenFavorite()

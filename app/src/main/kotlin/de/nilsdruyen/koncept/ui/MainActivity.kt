@@ -18,11 +18,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var navigator: Navigator
+//    @Inject
+//    lateinit var navigator: Navigator
 
-    @Inject
-    lateinit var entryProviderScopes: Set<@JvmSuppressWildcards EntryProviderInstaller>
+//    @Inject
+//    lateinit var entryProviderScopes: Set<@JvmSuppressWildcards EntryProviderInstaller>
 
     private val isDone: MutableState<Boolean> = mutableStateOf(false)
 
@@ -38,10 +38,10 @@ class MainActivity : ComponentActivity() {
             }
 
             KonceptTheme {
-                Navigation3(
-                    navigator = navigator,
-                    entryProviderScopes = entryProviderScopes,
-                )
+                KonceptApp()
+//                    navigator = navigator,
+//                    entryProviderScopes = entryProviderScopes,
+//                )
             }
         }
     }

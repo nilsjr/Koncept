@@ -15,7 +15,7 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.components.SingletonComponent
 import de.nilsdruyen.koncept.MainThreadCheck
 import de.nilsdruyen.koncept.base.navigation.Navigator
-import de.nilsdruyen.koncept.dogs.ui.list.DogListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.DogListRoute
 import javax.inject.Singleton
 
 // At the top level of your kotlin file:
