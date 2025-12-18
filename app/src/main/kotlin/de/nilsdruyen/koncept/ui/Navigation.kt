@@ -4,6 +4,7 @@ package de.nilsdruyen.koncept.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
@@ -25,11 +26,17 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import de.nilsdruyen.koncept.base.navigation.Navigator
 import de.nilsdruyen.koncept.base.navigation.TopLevelRoute
+import de.nilsdruyen.koncept.base.navigation.rememberNavigator
 import de.nilsdruyen.koncept.design.system.Icon
+import de.nilsdruyen.koncept.dogs.ui.favorites.Favorites
+import de.nilsdruyen.koncept.dogs.ui.navigation.DogDetailRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.DogListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.dogRoutes
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
+import de.nilsdruyen.koncept.navigation.WebRoute
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 
 @OptIn(
@@ -37,6 +44,7 @@ import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 )
 @Composable
 fun KonceptApp() {
+    val navigator = rememberNavigator(DogListRoute)
 //    val bottomSheetNavigator = rememberBottomSheetNavigator()
 //    val rootNavController = rememberNavController(bottomSheetNavigator)
 //    val navController = rememberNavController(bottomSheetNavigator)
@@ -49,27 +57,23 @@ fun KonceptApp() {
 //                testTagsAsResourceId = true
 //            }
 //    ) {
-        SharedTransitionLayout {
+    SharedTransitionLayout {
 //            RootNavHost(
 //                navController = rootNavController,
 //                sharedTransitionScope = this,
 //            ) {
 //                MainBottomBarScreen(navController, it, this)
 //            }
-            MainBottomBarScreen(
-
-            )
-        }
+        MainBottomBarScreen(navigator, this)
+    }
 //    }
 }
 
 @Composable
 fun MainBottomBarScreen(
-//    navController: NavHostController,
-//    navigateRoot: (String) -> Unit,
-//    sharedTransitionScope: SharedTransitionScope,
+    navigator: Navigator,
+    sharedTransitionScope: SharedTransitionScope,
 ) {
-    val backStack = rememberNavBackStack(DogListRoute)
     val state = rememberKonceptAppState()
 
     Scaffold(
@@ -79,43 +83,36 @@ fun MainBottomBarScreen(
             KonceptBottomBar(
                 destinations = state.topLevelDestinations,
                 onNavigateToDestination = {
-                    backStack.add(it)
+                    navigator.goTo(it)
                 },
-                currentDestination = backStack.last(),
+                currentDestination = navigator.backStack.last(),
             )
         },
     ) { padding ->
         NavDisplay(
-            backStack = backStack,
+            backStack = navigator.backStack,
             modifier = Modifier
                 .padding(padding)
                 .consumeWindowInsets(padding),
-            onBack = {
-//                navigator.goBack()
-                     },
+            onBack = { navigator.goBack() },
             entryDecorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),
                 rememberViewModelStoreNavEntryDecorator(),
             ),
             entryProvider = entryProvider {
-                dogRoutes()
-//            entryProviderScopes.forEach { builder -> this.builder() }
+                dogRoutes(navigator, sharedTransitionScope)
+                entry<FavoritesRoute> {
+                    Favorites(
+                        showBreed = {
+                            navigator.goTo(DogDetailRoute(it))
+                        }
+                    )
+                }
+                entry<WebRoute> {
+                    WebScreen()
+                }
             }
         )
-//        KonceptNavHost(
-//            navController = navController,
-////            onBackClick = state::onBackClick,
-//            onNavigate = {
-//                if (it is KonceptNavDestination.NestedNavDestination) {
-//                    navigateRoot(it.route)
-//                } else {
-//                    state.navigate(it)
-//                }
-//            },
-//            modifier = Modifier
-//                .padding(padding)
-//                .consumeWindowInsets(padding),
-//        )
     }
 }
 
@@ -125,6 +122,7 @@ private fun KonceptBottomBar(
     onNavigateToDestination: (NavKey) -> Unit,
     currentDestination: NavKey?,
 ) {
+    // TODO: navigation bar logic for current destination missing
     NavigationBar {
 //        val routes = currentDestination?.hierarchy?.mapNotNull { it.route }?.toList() ?: emptyList()
 //        log("nav stack $routes")

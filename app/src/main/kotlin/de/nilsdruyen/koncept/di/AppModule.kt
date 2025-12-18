@@ -37,11 +37,11 @@ object AppStaticModule {
     fun mainThreadCheck() = MainThreadCheck { Looper.myLooper() == Looper.getMainLooper() }
 }
 
-@Module
-@InstallIn(ActivityRetainedComponent::class)
-object AppModule {
-
-    @Provides
-    @ActivityRetainedScoped
-    fun provideNavigator(): Navigator = Navigator(startDestination = DogListRoute)
-}
+//@Module
+//@InstallIn(ActivityRetainedComponent::class)
+//object AppModule {
+//
+//    @Provides
+//    @ActivityRetainedScoped
+//    fun provideNavigator(): Navigator = Navigator(startDestination = DogListRoute)
+//}

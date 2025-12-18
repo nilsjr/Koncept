@@ -1,33 +1,35 @@
 package de.nilsdruyen.koncept.dogs.ui.navigation
 
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import de.nilsdruyen.koncept.base.navigation.Navigator
-import de.nilsdruyen.koncept.base.navigation.Screen
+import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetailScreen
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetailViewModel
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object DogListRoute : Screen
-data object FavoritesRoute : Screen
+data object DogListRoute : NavKey
+data object FavoritesRoute : NavKey
 
 @Serializable
-data class DogDetailRoute(val id: Int) : Screen
+data class DogDetailRoute(val id: Int) : NavKey
 
 fun EntryProviderScope<NavKey>.dogRoutes(
-//    navigator: Navigator,
+    navigator: Navigator,
+    sharedTransitionScope: SharedTransitionScope,
 ) {
     entry<DogListRoute> {
         val sortType = remember { mutableIntStateOf(1) }
         DogListScreen(
             sortTypeState = sortType,
             showDetail = { id ->
-                //                        onNavigate(BreedDetailsRoute.createRoute(BreedListRoute, id))
+                navigator.goTo(DogDetailRoute(id.value))
             },
             showSortDialog = { type ->
                 //                        onNavigate(BreedListSortDialogRoute.createRoute(BreedListRoute, type))
@@ -42,11 +44,10 @@ fun EntryProviderScope<NavKey>.dogRoutes(
         )
         BreedDetailScreen(
             viewModel = viewModel,
+            sharedTransitionScope = sharedTransitionScope,
             showImageDetail = {
 //                navController.navigate(ImageRoute(it))
             },
-//            sharedTransitionScope = sharedTransitionScope,
-//            animatedContentScope = this,
         )
     }
 }

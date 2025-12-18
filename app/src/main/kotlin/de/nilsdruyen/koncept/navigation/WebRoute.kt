@@ -1,10 +1,7 @@
 package de.nilsdruyen.koncept.navigation
 
-import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-object WebRoute : KonceptNavRoute.GraphNavRoute {
-
-    override val route = "web"
-}
+data object WebRoute : NavKey
