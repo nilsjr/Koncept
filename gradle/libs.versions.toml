@@ -2,7 +2,7 @@
 accompanist = "0.36.0"
 androidDesugarJdkLibs = "2.1.5"
 androidOrchestrator = "1.6.1"
-androidPlugin = "8.13.1"
+androidPlugin = "8.13.2"
 androidx-baselineprofile = "1.4.1"
 androidxActivity = "1.12.1"
 androidxCore = "1.17.0"
