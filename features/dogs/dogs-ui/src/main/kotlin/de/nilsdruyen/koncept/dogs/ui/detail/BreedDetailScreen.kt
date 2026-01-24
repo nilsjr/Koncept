@@ -200,8 +200,8 @@ private fun BreedImage(url: String, onImageClick: () -> Unit, modifier: Modifier
             .aspectRatio(1f)
             .padding(8.dp)
     ) {
-        val state = painter.state
-        if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
+        val state = painter.state.collectAsStateWithLifecycle()
+        if (state.value is AsyncImagePainter.State.Loading || state.value is AsyncImagePainter.State.Error) {
             ImagePlaceholder(Modifier.fillMaxSize())
         } else {
             SubcomposeAsyncImageContent(
