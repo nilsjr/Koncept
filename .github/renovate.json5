@@ -20,6 +20,14 @@
         '/^org.jetbrains.kotlin/',
         '/^com.google.devtools.ksp/'
       ]
+    },
+    {
+      description: 'Automerge non-major updates',
+      matchUpdateTypes: [
+        'patch',
+        'minor'
+      ],
+      automerge: true
     }
   ]
 }
