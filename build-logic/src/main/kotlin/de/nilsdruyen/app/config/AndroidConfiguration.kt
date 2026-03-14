@@ -1,17 +1,17 @@
 package de.nilsdruyen.app.config
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.invoke
 
 internal fun Project.configureKotlinAndroid() {
-    configure<BaseExtension> {
-        compileOptions {
+    extensions.configure(CommonExtension::class.java) {
+        compileOptions.apply {
             sourceCompatibility = JavaVersion.VERSION_21
             targetCompatibility = JavaVersion.VERSION_21
         }
-        testOptions {
+        testOptions.apply {
             animationsDisabled = true
             unitTests {
                 isIncludeAndroidResources = true

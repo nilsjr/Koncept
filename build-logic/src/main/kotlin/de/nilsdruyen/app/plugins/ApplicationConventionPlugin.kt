@@ -1,6 +1,6 @@
 package de.nilsdruyen.app.plugins
 
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.api.dsl.ApplicationExtension
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
 import de.nilsdruyen.app.config.configure
@@ -16,10 +16,9 @@ internal class ApplicationConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("com.android.application")
-                apply("org.jetbrains.kotlin.android")
                 apply("org.jetbrains.kotlin.plugin.compose")
             }
-            configure<BaseAppModuleExtension> {
+            configure<ApplicationExtension> {
                 configureKotlinAndroid()
             }
             configure()

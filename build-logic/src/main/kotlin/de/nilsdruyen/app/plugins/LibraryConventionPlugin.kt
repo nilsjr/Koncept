@@ -1,6 +1,6 @@
 package de.nilsdruyen.app.plugins
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
 import de.nilsdruyen.app.config.configure
@@ -17,7 +17,6 @@ internal class LibraryConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("com.android.library")
-                apply("org.jetbrains.kotlin.android")
             }
             configure<LibraryExtension> {
                 configureKotlinAndroid()
