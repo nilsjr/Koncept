@@ -18,13 +18,14 @@ internal fun Project.configureKotlinAndroid() {
                 isReturnDefaultValues = true
                 all {
                     it.maxHeapSize = "1G"
+                    it.failOnNoDiscoveredTests.set(false)
                 }
             }
         }
         sourceSets {
-            getByName("main").java.srcDirs("src/main/kotlin")
-            getByName("test").java.srcDirs("src/test/kotlin")
-            getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
+            getByName("main").java.directories.add("src/main/kotlin")
+            getByName("test").java.directories.add("src/test/kotlin")
+            getByName("androidTest").java.directories.add("src/androidTest/kotlin")
         }
     }
 }

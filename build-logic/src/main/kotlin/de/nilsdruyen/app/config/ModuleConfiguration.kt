@@ -60,6 +60,7 @@ internal fun Project.configure() {
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
         failFast = true
+        failOnNoDiscoveredTests.set(false)
         testLogging {
             events = setOfNotNull(
                 org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
