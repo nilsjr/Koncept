@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.androidTest)
-    alias(libs.plugins.kotlin.androidGradle)
     alias(libs.plugins.androidx.baselineprofile)
 }
 
@@ -26,7 +25,7 @@ android {
 
     targetProjectPath = ":app"
 
-    testOptions.managedDevices.devices {
+    testOptions.managedDevices.allDevices {
         create<ManagedVirtualDevice>("pixel6api33") {
             device = "Pixel 6"
             apiLevel = 33
