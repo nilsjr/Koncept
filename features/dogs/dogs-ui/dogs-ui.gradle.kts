@@ -89,5 +89,4 @@ dependencies {
     debugImplementation(libs.androidx.compose.uiManifestTest)
 
     androidTestImplementation(projects.features.dogs.dogsTest)
-    androidTestImplementation(libs.paparazzi)
 }

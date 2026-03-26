@@ -2,7 +2,7 @@ package de.nilsdruyen.app
 
 public object ProjectConfig {
 
-    public const val minSdkVersion: Int = 24
+    public const val minSdkVersion: Int = 26
     public const val targetSdkVersion: Int = 36
     public const val compileSdkVersion: Int = 36
 

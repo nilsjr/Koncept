@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.androidTest)
-    alias(libs.plugins.kotlin.androidGradle)
     alias(libs.plugins.androidx.baselineprofile)
 }
 
