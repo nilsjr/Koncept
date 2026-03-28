@@ -2,7 +2,7 @@ package de.nilsdruyen.app.plugins
 
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
-import de.nilsdruyen.app.config.configure
+import de.nilsdruyen.app.config.configureModule
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -14,7 +14,8 @@ internal class KotlinConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("kotlin")
             }
-            configure()
+            configureModule()
+
             applyDetekt()
             applyDetektFormatting()
         }

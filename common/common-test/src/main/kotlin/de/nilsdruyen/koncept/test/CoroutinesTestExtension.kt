@@ -30,7 +30,7 @@ class CoroutinesTestExtension(
 
     override fun beforeEach(context: ExtensionContext) {
         val testDispatcherProvider = TestDispatcherProvider(testDispatcher)
-        val testInstances = context?.requiredTestInstances?.allInstances ?: return
+        val testInstances = context.requiredTestInstances.allInstances
         testInstances.forEach { testInstance ->
             testInstance::class.declaredMemberProperties.filterIsInstance<KMutableProperty<*>>().filter {
                 it.javaField?.isAnnotationPresent(InjectTestDispatcherProvider::class.java) == true

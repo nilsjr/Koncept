@@ -172,6 +172,7 @@ android-application = { id = "com.android.application", version.ref = "androidPl
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 androidTest = { id = "com.android.test", version.ref = "androidPlugin" }
 androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
+androidx-room = { id = "androidx.room", version.ref = "androidxRoom" }
 compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }

@@ -1,13 +1,12 @@
 package de.nilsdruyen.app.plugins
 
-import com.android.build.api.dsl.ApplicationExtension
 import de.nilsdruyen.app.config.applyDetekt
 import de.nilsdruyen.app.config.applyDetektFormatting
-import de.nilsdruyen.app.config.configure
-import de.nilsdruyen.app.config.configureKotlinAndroid
+import de.nilsdruyen.app.config.configureAndroidApplication
+import de.nilsdruyen.app.config.configureModule
+import de.nilsdruyen.app.extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 
 @Suppress("unused")
 internal class ApplicationConventionPlugin : Plugin<Project> {
@@ -18,12 +17,13 @@ internal class ApplicationConventionPlugin : Plugin<Project> {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.plugin.compose")
             }
-            configure<ApplicationExtension> {
-                configureKotlinAndroid()
-            }
-            configure()
+            configureAndroidApplication()
+            configureModule()
+
             applyDetekt()
             applyDetektFormatting()
+
+            dependencies.add("coreLibraryDesugaring", libs.findLibrary("android.desugar").get())
         }
     }
 }

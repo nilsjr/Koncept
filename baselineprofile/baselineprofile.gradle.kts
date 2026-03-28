@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
+import com.android.build.api.dsl.TestExtension
 import de.nilsdruyen.app.ProjectConfig
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -7,7 +8,7 @@ plugins {
     alias(libs.plugins.androidx.baselineprofile)
 }
 
-android {
+configure<TestExtension> {
     namespace = "de.nilsdruyen.koncept.baseline"
     compileSdk = ProjectConfig.compileSdkVersion
 

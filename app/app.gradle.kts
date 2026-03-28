@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.ManagedVirtualDevice
 import de.nilsdruyen.app.ProjectConfig
 import de.nilsdruyen.app.utils.CiUtils
@@ -8,8 +9,9 @@ plugins {
     id(libs.plugins.hilt.android.get().pluginId)
     alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.androidx.room)
 }
-android {
+configure<ApplicationExtension> {
     namespace = "de.nilsdruyen.koncept"
     compileSdk = ProjectConfig.compileSdkVersion
     defaultConfig {
@@ -75,17 +77,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
     sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("test").java.srcDirs("src/test/kotlin")
-        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
+        getByName("main").java.directories.add("src/main/kotlin")
+        getByName("test").java.directories.add("src/test/kotlin")
+        getByName("androidTest").java.directories.add("src/androidTest/kotlin")
     }
     buildFeatures {
-        compose = true
         buildConfig = true
-        aidl = false
-        renderScript = false
-        resValues = false
-        shaders = false
+        compose = true
     }
     packaging {
         resources {
@@ -94,9 +92,6 @@ android {
                 "META-INF/LICENSE*"
             )
         }
-    }
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
     }
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
@@ -110,6 +105,10 @@ android {
             }
         }
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
@@ -155,8 +154,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network)
     implementation(libs.coil.network.cache)
-
-    coreLibraryDesugaring(libs.android.desugar)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)

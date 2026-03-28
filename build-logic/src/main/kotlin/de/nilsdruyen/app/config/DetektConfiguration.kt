@@ -23,11 +23,11 @@ internal fun Project.applyDetekt() {
         buildUponDefaultConfig = true
     }
     tasks.withType<Detekt>().configureEach {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
         reports {
             xml {
                 required.set(true)
-                outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
+                outputLocation.set(file("${layout.buildDirectory}/reports/detekt/detekt.xml"))
             }
             html.required.set(false)
             txt.required.set(false)
