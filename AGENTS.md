@@ -56,7 +56,6 @@ layer.
 - **Unit Testing**: JUnit 5 with Mockito and MockK.
 - **Flow Testing**: [Turbine](https://github.com/cashapp/turbine) for testing Coroutine Flows.
 - **Integration Testing**: Robolectric with Hilt.
-- **Screenshot Testing**: Paparazzi and Shot for UI consistency.
 - **Code Coverage**: Kover.
 - **API Simulation**: MockWebServer for network layer tests.
 

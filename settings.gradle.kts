@@ -6,13 +6,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
-    resolutionStrategy {
-        eachPlugin {
-            when (requested.id.id) {
-                "app.cash.paparazzi" -> useModule("app.cash.paparazzi:paparazzi-gradle-plugin:${requested.version}")
-            }
-        }
-    }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
