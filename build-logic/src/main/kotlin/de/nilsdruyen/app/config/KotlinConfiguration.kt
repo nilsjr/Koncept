@@ -13,36 +13,41 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 public val modulesWithoutTests: List<String> = listOf("design-system", "base-navigation", "common-ui")
 
-internal fun Project.configure() {
+internal fun Project.configureModule() {
     tasks.withType<JavaCompile>().configureEach {
         sourceCompatibility = JavaVersion.VERSION_21.toString()
         targetCompatibility = JavaVersion.VERSION_21.toString()
     }
-    val isEntityModule = name.endsWith("-entity")
-    val isUiModule = name.endsWith("-ui")
-    val composeCompilerReportEnabled = findProperty("composeCompilerReports") == "true"
+
+//    val isUiModule = name.endsWith("-ui")
+//    val composeCompilerReportEnabled = findProperty("composeCompilerReports") == "true"
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_21)
             progressiveMode.set(true)
-            freeCompilerArgs.addAll(
+            optIn.addAll(
                 listOfNotNull(
-                    "-opt-in=kotlin.RequiresOptIn",
-                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi".takeIf { !isEntityModule },
-                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { isUiModule },
-                ).toMutableList().apply {
-                    if (isUiModule && composeCompilerReportEnabled) {
-                        addAll(
-                            listOf(
-                                "-P",
-                                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${layout.buildDirectory}/compose_compiler",
-                                "-P",
-                                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${layout.buildDirectory}/compose_compiler",
-                            )
-                        )
-                    }
-                }
+                    "kotlinx.coroutines.ExperimentalCoroutinesApi".takeIf { isModuleUsingCoroutines() }
+                )
             )
+//            freeCompilerArgs.addAll(
+//                listOfNotNull(
+//                    "-opt-in=kotlin.RequiresOptIn",
+//                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi".takeIf { isUiModule },
+//                ).toMutableList().apply {
+//                    if (isUiModule && composeCompilerReportEnabled) {
+//                        addAll(
+//                            listOf(
+//                                "-P",
+//                                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${layout.buildDirectory}/compose_compiler",
+//                                "-P",
+//                                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${layout.buildDirectory}/compose_compiler",
+//                            )
+//                        )
+//                    }
+//                }
+//            )
+            allWarningsAsErrors.set(false)
         }
     }
 
@@ -59,6 +64,7 @@ internal fun Project.configure() {
 
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
+        jvmArgs = listOf("-XX:+EnableDynamicAgentLoading", "-Xshare:off")
         failFast = true
         failOnNoDiscoveredTests.set(false)
         testLogging {
@@ -67,5 +73,19 @@ internal fun Project.configure() {
                 org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
             )
         }
+    }
+
+    configurations.configureEach {
+        resolutionStrategy {
+            failOnNonReproducibleResolution()
+        }
+    }
+}
+
+private fun Project.isModuleUsingCoroutines(): Boolean {
+    return when {
+        listOf("design-system").contains("name") -> false
+        listOf("-entity", "-test").any { name.endsWith(it) } -> name == "common-test"
+        else -> true
     }
 }

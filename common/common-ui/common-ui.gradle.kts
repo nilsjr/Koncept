@@ -1,10 +1,11 @@
-@Suppress("DSL_SCOPE_VIOLATION")
+import com.android.build.api.dsl.LibraryExtension
+
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
     id(libs.plugins.google.ksp.get().pluginId)
 }
-android {
+configure<LibraryExtension> {
     namespace = "de.nilsdruyen.koncept.common.ui"
 }
 dependencies {

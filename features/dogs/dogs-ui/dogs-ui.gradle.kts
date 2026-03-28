@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.LibraryExtension
+
 plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
@@ -6,7 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler.report)
     alias(libs.plugins.kotlin.serialization)
 }
-android {
+configure<LibraryExtension> {
     namespace = "de.nilsdruyen.koncept.dogs.ui"
 }
 dependencies {
