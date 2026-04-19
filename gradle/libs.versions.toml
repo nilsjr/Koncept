@@ -21,8 +21,8 @@ composeCompilerReportGenerator = "1.5.0"
 composeConstraintLayout = "1.1.1"
 composeNavigation = "2.9.7"
 coroutines = "1.10.2"
-detekt = "1.23.8"
-detektComposeRules = "0.5.6"
+detekt = "2.0.0-alpha.2"
+detektComposeRules = "0.5.7"
 espresso = "3.7.0"
 gradleVersionsPlugin = "0.53.0"
 hilt = "2.59.2"
@@ -101,8 +101,8 @@ coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = 
 coil-network-cache = { module = "io.coil-kt.coil3:coil-network-cache-control", version.ref = "coil" }
 compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "composeBom" }
 detekt-composeRules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektComposeRules" }
-detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+detekt-ktlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
+detekt-plugin = { module = "dev.detekt:dev.detekt.gradle.plugin", version.ref = "detekt" }
 faker = "io.github.serpro69:kotlin-faker:1.16.1"
 gradleVersions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -163,7 +163,7 @@ androidTest = { id = "com.android.test", version.ref = "androidPlugin" }
 androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
 androidx-room = { id = "androidx.room", version.ref = "androidxRoom" }
 compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

@@ -1,7 +1,3 @@
-build:
-  maxIssues: 0
-  excludeCorrectable: true
-
 console-reports:
   exclude:
     - 'ProjectStatisticsReport'
