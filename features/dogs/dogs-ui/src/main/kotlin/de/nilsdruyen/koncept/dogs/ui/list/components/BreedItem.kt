@@ -38,11 +38,7 @@ import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
 
 @Composable
-fun BreedItem(
-    breed: Breed,
-    modifier: Modifier = Modifier,
-    showDog: (Breed) -> Unit = {},
-) {
+fun BreedItem(breed: Breed, modifier: Modifier = Modifier, showDog: (Breed) -> Unit = {}) {
     val cornerShape = MaterialTheme.shapes.medium
     Card(
         onClick = { showDog(breed) },
@@ -66,7 +62,7 @@ fun BreedItem(
                         start.linkTo(parent.start)
                         linkTo(parent.top, parent.bottom)
                     }
-                    .clip(cornerShape)
+                    .clip(cornerShape),
             )
             Text(
                 text = breed.name,
@@ -85,7 +81,7 @@ fun BreedItem(
                             endGoneMargin = 16.dp,
                         )
                         top.linkTo(parent.top, 8.dp)
-                    }
+                    },
             )
             Icon(
                 imageVector = Icons.Default.Favorite,
@@ -94,7 +90,7 @@ fun BreedItem(
                     top.linkTo(parent.top, 16.dp)
                     end.linkTo(parent.end, 16.dp)
                     visibility = if (breed.isFavorite) Visibility.Visible else Visibility.Gone
-                }
+                },
             )
             Text(
                 text = "age: ${breed.lifeSpan} years - ${breed.weight.last}/${breed.height.last}",
@@ -120,7 +116,7 @@ private fun PreviewDogItem(@PreviewParameter(DogItemPreviewProvider::class) bree
     }
     KonceptTheme {
         CompositionLocalProvider(
-            LocalAsyncImagePreviewHandler provides previewHandler
+            LocalAsyncImagePreviewHandler provides previewHandler,
         ) {
             BreedItem(breed)
         }
@@ -139,7 +135,7 @@ private class DogItemPreviewProvider : PreviewParameterProvider<Breed> {
             height = 21..25,
             bredFor = "Toy",
             origin = listOf("sport"),
-            group = "smallies"
+            group = "smallies",
         ),
         Breed(BreedId(2), "Raya", isFavorite = true),
         Breed(BreedId(2), "Thea dakad lm lakd alkw lak mldaw", isFavorite = true),

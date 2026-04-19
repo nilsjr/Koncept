@@ -18,7 +18,9 @@ import kotlin.time.ExperimentalTime
 @HiltAndroidApp
 class KonceptApplication : BaseKonceptApplication()
 
-open class BaseKonceptApplication : Application(), SingletonImageLoader.Factory {
+open class BaseKonceptApplication :
+    Application(),
+    SingletonImageLoader.Factory {
 
     override fun onCreate() {
         super.onCreate()
@@ -30,23 +32,16 @@ open class BaseKonceptApplication : Application(), SingletonImageLoader.Factory 
     }
 
     @OptIn(ExperimentalCoilApi::class, ExperimentalTime::class)
-    override fun newImageLoader(context: PlatformContext): ImageLoader {
-        return ImageLoader.Builder(context)
+    override fun newImageLoader(context: PlatformContext): ImageLoader = ImageLoader.Builder(context)
             .components {
                 add(OkHttpNetworkFetcherFactory(cacheStrategy = { CacheControlCacheStrategy() }))
             }
             .logger(object : coil3.util.Logger {
                 override var minLevel = coil3.util.Logger.Level.Verbose
 
-                override fun log(
-                    tag: String,
-                    level: coil3.util.Logger.Level,
-                    message: String?,
-                    throwable: Throwable?
-                ) {
+                override fun log(tag: String, level: coil3.util.Logger.Level, message: String?, throwable: Throwable?) {
                     log(text = message.toString())
                 }
             })
             .build()
-    }
 }

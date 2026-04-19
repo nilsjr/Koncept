@@ -145,11 +145,11 @@ fun DogListScreen(
                         IconButton(onClick = showSortDialog) {
                             Icon(
                                 imageVector = KonceptIcons.FilterList,
-                                contentDescription = "Filter Games"
+                                contentDescription = "Filter Games",
                             )
                         }
                     },
-                    scrollBehavior = scrollBehavior
+                    scrollBehavior = scrollBehavior,
                 )
             }
         },
@@ -164,12 +164,13 @@ fun DogListScreen(
             ) {
                 when {
                     state.isLoading && state.list.isEmpty() -> Loading()
+
                     state.list.isEmpty() -> {
                         Text(
                             text = "No doggos!",
                             modifier = Modifier
                                 .padding(16.dp)
-                                .align(Alignment.Center)
+                                .align(Alignment.Center),
                         )
                     }
 
@@ -197,7 +198,7 @@ fun DogListScreen(
                                     leadingIcon = {
                                         Icon(
                                             imageVector = Icons.Filled.Search,
-                                            contentDescription = "Search breeds"
+                                            contentDescription = "Search breeds",
                                         )
                                     },
                                 )
@@ -218,15 +219,12 @@ fun DogListScreen(
                     }
                 }
             }
-        }
+        },
     )
 }
 
 @Composable
-private fun DogList(
-    state: DogListState,
-    showDog: (Breed) -> Unit,
-) {
+private fun DogList(state: DogListState, showDog: (Breed) -> Unit) {
     LazyColumn(
         state = rememberLazyListState(),
         modifier = Modifier
@@ -248,11 +246,7 @@ private fun DogList(
 }
 
 @Composable
-fun SearchResult(
-    searchResult: List<Breed>,
-    onClick: (Breed) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun SearchResult(searchResult: List<Breed>, onClick: (Breed) -> Unit, modifier: Modifier = Modifier) {
     LazyColumn(
         state = rememberLazyListState(),
         modifier = modifier,
@@ -262,7 +256,7 @@ fun SearchResult(
                 breed = it,
                 onClick = {
                     onClick(it)
-                }
+                },
             )
         }
     }
@@ -284,7 +278,7 @@ class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
         DogListState(
             list = List(6) {
                 Breed(BreedId(it), "Breed $it")
-            }.toImmutable()
-        )
+            }.toImmutable(),
+        ),
     )
 }

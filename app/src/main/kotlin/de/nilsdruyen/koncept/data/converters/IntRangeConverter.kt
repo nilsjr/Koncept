@@ -7,9 +7,7 @@ import androidx.room.TypeConverter
 class IntRangeConverter {
 
     @TypeConverter
-    fun rangeToString(value: IntRange): String {
-        return "${value.first};${value.last}"
-    }
+    fun rangeToString(value: IntRange): String = "${value.first};${value.last}"
 
     @TypeConverter
     fun stringToRange(value: String): IntRange {

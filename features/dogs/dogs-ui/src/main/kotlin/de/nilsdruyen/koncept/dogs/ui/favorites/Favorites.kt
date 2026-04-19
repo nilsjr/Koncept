@@ -30,10 +30,7 @@ import de.nilsdruyen.koncept.dogs.ui.components.Loading
 import de.nilsdruyen.koncept.dogs.ui.favorites.components.DogFavoriteItem
 
 @Composable
-fun Favorites(
-    showBreed: (Int) -> Unit,
-    viewModel: FavoritesViewModel = hiltViewModel(),
-) {
+fun Favorites(showBreed: (Int) -> Unit, viewModel: FavoritesViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.showBreed) {
@@ -47,17 +44,13 @@ fun Favorites(
         state = state,
         showBreed = {
             viewModel.sendIntent(FavoritesIntent.ShowBreed(it.value))
-        }
+        },
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Favorites(
-    state: FavoritesState,
-    showBreed: (BreedId) -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun Favorites(state: FavoritesState, showBreed: (BreedId) -> Unit, modifier: Modifier = Modifier) {
     val scrollState = rememberLazyListState()
     val appBarScrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(appBarScrollState)
@@ -72,27 +65,28 @@ fun Favorites(
                 modifier = Modifier
                     .statusBarsPadding()
                     .testTag("fav_appbar"),
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
             )
-        }
+        },
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(it),
         ) {
             when {
                 state.isLoading -> Loading()
+
                 state.list.items.isEmpty() -> {
                     Box(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxSize(),
                     ) {
                         Text(
                             text = "No favorites!",
                             modifier = Modifier
                                 .padding(16.dp)
-                                .align(Alignment.Center)
+                                .align(Alignment.Center),
                         )
                     }
                 }
@@ -101,7 +95,7 @@ fun Favorites(
                     LazyColumn(
                         contentPadding = PaddingValues(),
                         state = scrollState,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     ) {
                         items(state.list.items) { dog ->
                             DogFavoriteItem(dog, Modifier.fillMaxWidth(), showBreed)

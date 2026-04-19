@@ -6,7 +6,5 @@ import javax.inject.Inject
 
 class IsFavoriteFlowUseCaseImpl @Inject constructor(val dogsRepository: DogsRepository) : IsFavoriteFlowUseCase {
 
-    override fun execute(breedId: Int): Flow<Boolean> {
-        return dogsRepository.isFavoriteFlow(breedId)
-    }
+    override fun execute(breedId: Int): Flow<Boolean> = dogsRepository.isFavoriteFlow(breedId)
 }

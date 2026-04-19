@@ -12,7 +12,7 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.routes.FavoritesRoute
 
 fun NavGraphBuilder.favoriteTopLevelGraph(
     onNavigate: NavigateTo,
-    nestedGraph: (base: KonceptNavRoute.GraphNavRoute) -> Unit
+    nestedGraph: (base: KonceptNavRoute.GraphNavRoute) -> Unit,
 ) = navigation(navRoute = FavoritesRoute) {
     konceptComposable(
         navRoute = FavoritesRoute,

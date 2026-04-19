@@ -46,12 +46,13 @@ internal fun Project.applyDetektFormatting() {
     //
     fun Detekt.configure(enableAutoCorrect: Boolean) {
         description = "Run detekt ktlint wrapper"
-//        parallel.set(true)
-//        setSource(files(projectDir))
-//        config.setFrom(files("$rootDir/config/detekt-formatting.yml"))
-//        buildUponDefaultConfig.set(true)
-//        disableDefaultRuleSets.set(true)
+        parallel.set(true)
+        setSource(layout.projectDirectory)
+        config.setFrom(files("$rootDir/config/detekt/detekt-formatting.yml"))
+        buildUponDefaultConfig.set(true)
+        disableDefaultRuleSets.set(true)
         autoCorrect.set(enableAutoCorrect)
+        include("*.kts", "src/*/kotlin/**/*.kt")
 //        reports {
 //            checkstyle {
 //                required.set(true)
@@ -68,10 +69,6 @@ internal fun Project.applyDetektFormatting() {
 //        } else {
 //            include(listOf("src/*/kotlin/**/*.kt", "*.kts"))
 //            exclude("build/")
-//        }
-//        dependencies {
-////            add("detektPlugins", libs.findLibrary("detekt.composeRules").get())
-//            add("detektPlugins", libs.findLibrary("detekt.ktlintWrapper").get())
 //        }
         dependencies.add("detektPlugins", libs.findLibrary("detekt.composeRules").get())
         dependencies.add("detektPlugins", libs.findLibrary("detekt.ktlintWrapper").get())

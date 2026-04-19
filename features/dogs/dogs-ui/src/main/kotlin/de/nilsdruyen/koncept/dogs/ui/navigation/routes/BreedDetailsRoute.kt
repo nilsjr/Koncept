@@ -17,7 +17,7 @@ object BreedDetailsRoute : KonceptNavRoute.NestedNavRoute {
     override fun pathParameters(): List<NamedNavArgument> = listOf(
         navArgument(breedIdArg) {
             type = NavType.IntType
-        }
+        },
     )
 
     fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: BreedId): KonceptNavDestination.NestedNavDestination {

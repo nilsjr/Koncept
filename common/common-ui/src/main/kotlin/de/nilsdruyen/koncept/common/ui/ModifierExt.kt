@@ -14,6 +14,6 @@ fun PaddingValues.dropBottomPadding(): PaddingValues {
         start = calculateStartPadding(layoutDirection),
         top = calculateTopPadding(),
         bottom = 0.dp,
-        end = calculateEndPadding(layoutDirection)
+        end = calculateEndPadding(layoutDirection),
     )
 }

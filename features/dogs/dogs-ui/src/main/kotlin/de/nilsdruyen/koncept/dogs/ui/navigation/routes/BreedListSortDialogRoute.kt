@@ -17,15 +17,14 @@ object BreedListSortDialogRoute : KonceptNavRoute.NestedNavRoute {
     override fun pathParameters(): List<NamedNavArgument> = listOf(
         navArgument(selectedTypeArg) {
             type = NavType.IntType
-        }
+        },
     )
 
     fun createRoute(
         graph: KonceptNavRoute.GraphNavRoute,
-        type: BreedSortType
+        type: BreedSortType,
     ): KonceptNavDestination.NestedNavDestination = buildRoute(graph, type.ordinal.toString())
 
-    fun fromNavBackStackEntry(entry: NavBackStackEntry): BreedSortType {
-        return BreedSortType.values()[entry.arguments?.getInt(selectedTypeArg) ?: 0]
-    }
+    fun fromNavBackStackEntry(entry: NavBackStackEntry): BreedSortType =
+        BreedSortType.values()[entry.arguments?.getInt(selectedTypeArg) ?: 0]
 }

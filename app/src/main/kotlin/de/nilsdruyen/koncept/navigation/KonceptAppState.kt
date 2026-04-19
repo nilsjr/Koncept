@@ -20,9 +20,7 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.routes.FavoritesRoute
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable
-fun rememberKonceptAppState(
-    navController: NavHostController = rememberNavController()
-): KonceptAppState {
+fun rememberKonceptAppState(navController: NavHostController = rememberNavController()): KonceptAppState {
     NavigationTrackingSideEffect(navController)
     return remember(navController) {
         KonceptAppState(navController)
@@ -44,19 +42,19 @@ class KonceptAppState(private val navController: NavHostController) {
             route = BreedListRoute.getGraphRoute(),
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedList),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedListFilled),
-            iconTextId = R.string.breed_list_title
+            iconTextId = R.string.breed_list_title,
         ),
         TopLevelRoute(
             route = FavoritesRoute.getGraphRoute(),
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Favorites),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.FavoritesFilled),
-            iconTextId = R.string.favorites_title
+            iconTextId = R.string.favorites_title,
         ),
         TopLevelRoute(
             route = WebRoute.getGraphRoute(),
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Web),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.WebFilled),
-            iconTextId = R.string.web_title
+            iconTextId = R.string.web_title,
         ),
     )
 
@@ -78,8 +76,11 @@ class KonceptAppState(private val navController: NavHostController) {
                     // same top level destination do nothing
                 }
             }
+
             is KonceptNavDestination.GraphDestination -> navController.navigate(destination.route)
+
             is KonceptNavDestination.NestedGraphDestination -> navController.navigate(destination.route)
+
             is KonceptNavDestination.NestedNavDestination -> navController.navigate(destination.route)
         }
     }

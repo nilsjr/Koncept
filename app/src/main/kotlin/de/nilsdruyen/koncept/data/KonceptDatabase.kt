@@ -14,7 +14,7 @@ import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
     entities = [BreedCacheEntity::class],
     version = 4,
     autoMigrations = [
-        AutoMigration(from = 1, to = 3)
+        AutoMigration(from = 1, to = 3),
     ],
 )
 @TypeConverters(IntRangeConverter::class, StringListConverter::class)

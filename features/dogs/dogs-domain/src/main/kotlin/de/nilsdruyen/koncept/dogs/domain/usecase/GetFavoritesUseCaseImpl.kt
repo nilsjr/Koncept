@@ -7,11 +7,7 @@ import de.nilsdruyen.koncept.domain.DataSourceError
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetFavoritesUseCaseImpl @Inject constructor(
-    val dogsRepository: DogsRepository,
-) : GetFavoritesUseCase {
+class GetFavoritesUseCaseImpl @Inject constructor(val dogsRepository: DogsRepository) : GetFavoritesUseCase {
 
-    override fun execute(): Flow<Either<DataSourceError, List<Breed>>> {
-        return dogsRepository.getFavoriteList()
-    }
+    override fun execute(): Flow<Either<DataSourceError, List<Breed>>> = dogsRepository.getFavoriteList()
 }

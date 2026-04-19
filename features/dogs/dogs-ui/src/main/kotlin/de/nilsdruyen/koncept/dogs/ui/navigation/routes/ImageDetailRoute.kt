@@ -16,16 +16,14 @@ object ImageDetailRoute : KonceptNavRoute.NestedNavRoute {
     override fun pathParameters(): List<NamedNavArgument> = listOf(
         navArgument(imageIdArg) {
             type = NavType.StringType
-        }
+        },
     )
 
-    fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: String): KonceptNavDestination.NestedNavDestination {
-        return buildRoute(graph, id)
-    }
+    fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: String): KonceptNavDestination.NestedNavDestination =
+        buildRoute(graph, id)
 
-    fun fromBackStackEntry(backStackEntry: NavBackStackEntry): ImageDetailArgs {
-        return ImageDetailArgs(backStackEntry.arguments?.getString(imageIdArg) ?: "")
-    }
+    fun fromBackStackEntry(backStackEntry: NavBackStackEntry): ImageDetailArgs =
+        ImageDetailArgs(backStackEntry.arguments?.getString(imageIdArg) ?: "")
 }
 
 data class ImageDetailArgs(val imageId: String)

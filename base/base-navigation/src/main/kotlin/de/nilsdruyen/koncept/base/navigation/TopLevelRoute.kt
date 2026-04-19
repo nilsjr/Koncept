@@ -6,5 +6,5 @@ data class TopLevelRoute(
     override val route: String,
     val selectedIcon: Icon,
     val unselectedIcon: Icon,
-    val iconTextId: Int
+    val iconTextId: Int,
 ) : KonceptNavRoute.GraphNavRoute

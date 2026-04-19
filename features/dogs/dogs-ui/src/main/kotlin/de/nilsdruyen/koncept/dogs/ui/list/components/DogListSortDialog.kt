@@ -12,10 +12,7 @@ import androidx.compose.ui.unit.dp
 import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 
 @Composable
-fun DogListSortDialog(
-    selectedType: BreedSortType,
-    setResult: (BreedSortType) -> Unit,
-) {
+fun DogListSortDialog(selectedType: BreedSortType, setResult: (BreedSortType) -> Unit) {
     Column(modifier = Modifier.navigationBarsPadding()) {
         BreedSortType.values().forEach {
             val isSelected = selectedType == it
@@ -26,7 +23,7 @@ fun DogListSortDialog(
                     .clickable {
                         setResult(it)
                     }
-                    .padding(16.dp)
+                    .padding(16.dp),
             )
         }
     }

@@ -54,7 +54,7 @@ fun KonceptApp() {
             .fillMaxSize()
             .semantics {
                 testTagsAsResourceId = true
-            }
+            },
     ) {
         SharedTransitionLayout {
             RootNavHost(
@@ -120,12 +120,12 @@ private fun KonceptBottomBar(
                     when (val icon = if (isSelected) item.selectedIcon else item.unselectedIcon) {
                         is Icon.ImageVectorIcon -> Icon(
                             imageVector = icon.imageVector,
-                            contentDescription = null
+                            contentDescription = null,
                         )
 
                         is Icon.DrawableResourceIcon -> Icon(
                             painter = painterResource(id = icon.id),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 },
@@ -133,7 +133,7 @@ private fun KonceptBottomBar(
                 label = {
                     Text(text = stringResource(id = item.iconTextId))
                 },
-                modifier = Modifier.testTag(item.route)
+                modifier = Modifier.testTag(item.route),
             )
         }
     }

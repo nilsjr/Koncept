@@ -7,8 +7,7 @@ import de.nilsdruyen.koncept.dogs.remote.entities.BreedImageWebEntity
 import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.dogs.remote.entities.MeasureWebEntity
 
-fun BreedWebEntity.toModel(): Breed {
-    return Breed(
+fun BreedWebEntity.toModel(): Breed = Breed(
         id = BreedId(id),
         name = name,
         isFavorite = false,
@@ -21,7 +20,6 @@ fun BreedWebEntity.toModel(): Breed {
         group = group.orEmpty(),
         imageUrl = image?.url,
     )
-}
 
 fun BreedImageWebEntity.toModel(): BreedImage {
     val breed = breeds.first()

@@ -11,9 +11,8 @@ import de.nilsdruyen.koncept.domain.Logger
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(
-    private val getFavoritesUseCase: GetFavoritesUseCase,
-) : MviViewModel<FavoritesState, FavoritesIntent>(FavoritesState(true)) {
+class FavoritesViewModel @Inject constructor(private val getFavoritesUseCase: GetFavoritesUseCase) :
+    MviViewModel<FavoritesState, FavoritesIntent>(FavoritesState(true)) {
 
     override fun initialize() {
         loadFavorites()
@@ -22,9 +21,11 @@ class FavoritesViewModel @Inject constructor(
     override suspend fun onIntent(intent: FavoritesIntent) {
         when (intent) {
             is FavoritesIntent.Remove -> {}
+
             FavoritesIntent.NavigationConsumed -> updateState {
                 copy(showBreed = null)
             }
+
             is FavoritesIntent.ShowBreed -> updateState {
                 copy(showBreed = intent.id)
             }

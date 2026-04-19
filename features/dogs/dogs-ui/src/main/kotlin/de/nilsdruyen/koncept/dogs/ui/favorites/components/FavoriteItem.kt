@@ -24,14 +24,10 @@ import de.nilsdruyen.koncept.dogs.ui.list.components.DogListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DogFavoriteItem(
-    breed: Breed,
-    modifier: Modifier = Modifier,
-    showBreed: (BreedId) -> Unit = {},
-) {
+fun DogFavoriteItem(breed: Breed, modifier: Modifier = Modifier, showBreed: (BreedId) -> Unit = {}) {
     val threshold = LocalConfiguration.current.screenWidthDp * LocalDensity.current.density / 2
     val dismissState = rememberSwipeToDismissBoxState(
-        positionalThreshold = { threshold }
+        positionalThreshold = { threshold },
     )
 
     SwipeToDismissBox(
@@ -41,7 +37,7 @@ fun DogFavoriteItem(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Red)
+                    .background(Color.Red),
             ) {
                 Text(
                     text = "Delete",
@@ -51,7 +47,7 @@ fun DogFavoriteItem(
                     color = Color.White,
                 )
             }
-        }
+        },
     ) {
         DogListItem(
             breed = breed,

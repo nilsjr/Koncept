@@ -91,10 +91,10 @@ fun BreedDetailScreen(
                             } else {
                                 Icons.Default.FavoriteBorder
                             },
-                            contentDescription = "Set Favorite"
+                            contentDescription = "Set Favorite",
                         )
                     }
-                }
+                },
             )
         },
         content = {
@@ -107,7 +107,7 @@ fun BreedDetailScreen(
                 sharedTransitionScope = sharedTransitionScope,
                 animatedContentScope = animatedContentScope,
             )
-        }
+        },
     )
 }
 
@@ -131,10 +131,10 @@ private fun BreedDetailContainer(
                                 Modifier
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
-                                    .padding(8.dp)
+                                    .padding(8.dp),
                             )
                         }
-                    }
+                    },
                 )
             }
 
@@ -144,7 +144,7 @@ private fun BreedDetailContainer(
                         text = "No doggo images!",
                         modifier = Modifier
                             .padding(16.dp)
-                            .align(Alignment.Center)
+                            .align(Alignment.Center),
                     )
                 }
             }
@@ -154,7 +154,7 @@ private fun BreedDetailContainer(
                 onImageClick,
                 modifier,
                 sharedTransitionScope,
-                animatedContentScope
+                animatedContentScope,
             )
         }
     }
@@ -176,8 +176,8 @@ private fun BreedImageList(
                     onImageClick = { onImageClick(item.id) },
                     modifier = Modifier.sharedElement(
                         sharedTransitionScope.rememberSharedContentState(key = "image-${item.id}"),
-                        animatedVisibilityScope = animatedContentScope
-                    )
+                        animatedVisibilityScope = animatedContentScope,
+                    ),
                 )
             }
         }
@@ -198,14 +198,14 @@ private fun BreedImage(url: String, onImageClick: () -> Unit, modifier: Modifier
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(1f)
-            .padding(8.dp)
+            .padding(8.dp),
     ) {
         val state = painter.state.collectAsStateWithLifecycle()
         if (state.value is AsyncImagePainter.State.Loading || state.value is AsyncImagePainter.State.Error) {
             ImagePlaceholder(Modifier.fillMaxSize())
         } else {
             SubcomposeAsyncImageContent(
-                modifier = Modifier.clickable { onImageClick() }
+                modifier = Modifier.clickable { onImageClick() },
             )
         }
     }
@@ -220,6 +220,6 @@ private fun ImagePlaceholder(modifier: Modifier = Modifier) {
                 visible = true,
                 color = Color.LightGray,
                 highlight = PlaceholderHighlight.shimmer(highlightColor = Color.White),
-            )
+            ),
     )
 }

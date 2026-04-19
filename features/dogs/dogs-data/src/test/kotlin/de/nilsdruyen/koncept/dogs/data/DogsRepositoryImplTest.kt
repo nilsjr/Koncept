@@ -43,7 +43,7 @@ internal class DogsRepositoryImplTest {
             val remote = Either.Right(List(2) { DogFactory.build() })
 
             whenever(dogsCacheDataSource.getDogList()) doReturn flowOf(emptyList<Breed>().right()) doReturn flowOf(
-                remote
+                remote,
             )
             whenever(dogsRemoteDataSource.getList()) doReturn remote
 

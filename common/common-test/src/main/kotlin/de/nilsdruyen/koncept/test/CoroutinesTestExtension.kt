@@ -16,8 +16,10 @@ import kotlin.reflect.jvm.javaField
 
 class CoroutinesTestExtension(
     val testScope: TestScope = TestScope(),
-    val testDispatcher: TestDispatcher = StandardTestDispatcher(testScope.testScheduler)
-) : BeforeAllCallback, AfterAllCallback, BeforeEachCallback {
+    val testDispatcher: TestDispatcher = StandardTestDispatcher(testScope.testScheduler),
+) : BeforeAllCallback,
+    AfterAllCallback,
+    BeforeEachCallback {
 
     override fun beforeAll(context: ExtensionContext) {
         Dispatchers.setMain(testDispatcher)

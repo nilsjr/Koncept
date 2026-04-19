@@ -43,7 +43,7 @@ class FakeDao : DogDao {
                 bredFor = "",
                 group = "",
                 imageUrl = null,
-            )
+            ),
         )
         return flowOf(dogCacheEntityList)
     }

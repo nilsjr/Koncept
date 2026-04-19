@@ -18,29 +18,23 @@ class DogsRepositoryImpl @Inject constructor(
     private val dogsCacheDataSource: DogsCacheDataSource,
 ) : DogsRepository {
 
-    override fun getList(): Flow<Either<DataSourceError, List<Breed>>> {
-        return flow {
+    override fun getList(): Flow<Either<DataSourceError, List<Breed>>> = flow {
             val cache = dogsCacheDataSource.getDogList().firstOrNull()
             if (cache != null) emit(cache)
             emit(
                 dogsRemoteDataSource.getList().onRight {
                     dogsCacheDataSource.setDogList(it)
-                }
+                },
             )
             emitAll(dogsCacheDataSource.getDogList())
         }.map {
             println("emit $it")
             it
         }.distinctUntilChanged()
-    }
 
-    override suspend fun getImagesForBreed(breedId: Int): BreedImages {
-        return dogsRemoteDataSource.getImagesForBreed(breedId)
-    }
+    override suspend fun getImagesForBreed(breedId: Int): BreedImages = dogsRemoteDataSource.getImagesForBreed(breedId)
 
-    override fun getFavoriteList(): Flow<Either<DataSourceError, List<Breed>>> {
-        return dogsCacheDataSource.getFavorites()
-    }
+    override fun getFavoriteList(): Flow<Either<DataSourceError, List<Breed>>> = dogsCacheDataSource.getFavorites()
 
     override suspend fun setFavorite(breedId: Int) {
         dogsCacheDataSource.setFavorite(breedId)
@@ -50,7 +44,5 @@ class DogsRepositoryImpl @Inject constructor(
         dogsCacheDataSource.removeFavorite(breedId)
     }
 
-    override fun isFavoriteFlow(breedId: Int): Flow<Boolean> {
-        return dogsCacheDataSource.isFavoriteFlow(breedId)
-    }
+    override fun isFavoriteFlow(breedId: Int): Flow<Boolean> = dogsCacheDataSource.isFavoriteFlow(breedId)
 }

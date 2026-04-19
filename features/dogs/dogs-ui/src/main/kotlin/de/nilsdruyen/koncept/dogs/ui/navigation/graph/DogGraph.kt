@@ -13,10 +13,7 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedDetailsRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.routes.BreedListSortDialogRoute
 
-fun NavGraphBuilder.breedTopLevelGraph(
-    onNavigate: NavigateTo,
-    nestedGraphs: NestedGraph = {},
-) {
+fun NavGraphBuilder.breedTopLevelGraph(onNavigate: NavigateTo, nestedGraphs: NestedGraph = {}) {
     navigation<DogGraph>(startDestination = DogListRoute) {
         composable<DogListRoute> {
             val sortTypeState =
@@ -28,7 +25,7 @@ fun NavGraphBuilder.breedTopLevelGraph(
                 },
                 showSortDialog = { type ->
                     onNavigate(BreedListSortDialogRoute.createRoute(BreedListRoute, type))
-                }
+                },
             )
         }
         nestedGraphs(BreedListRoute)

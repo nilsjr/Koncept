@@ -7,7 +7,7 @@ console-reports:
     - 'FileBasedFindingsReport'
     - 'LiteFindingsReport'
 
-formatting:
+ktlint:
   ArgumentListWrapping:
     active: false
   Filename:
