@@ -9,12 +9,12 @@ import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
 
 object ImageDetailRoute : KonceptNavRoute.NestedNavRoute {
 
-    const val imageIdArg = "imageId"
+    const val IMAGE_ID_ARG = "imageId"
 
     override val route: String = "image"
 
     override fun pathParameters(): List<NamedNavArgument> = listOf(
-        navArgument(imageIdArg) {
+        navArgument(IMAGE_ID_ARG) {
             type = NavType.StringType
         },
     )
@@ -23,7 +23,7 @@ object ImageDetailRoute : KonceptNavRoute.NestedNavRoute {
         buildRoute(graph, id)
 
     fun fromBackStackEntry(backStackEntry: NavBackStackEntry): ImageDetailArgs =
-        ImageDetailArgs(backStackEntry.arguments?.getString(imageIdArg) ?: "")
+        ImageDetailArgs(backStackEntry.arguments?.getString(IMAGE_ID_ARG) ?: "")
 }
 
 data class ImageDetailArgs(val imageId: String)

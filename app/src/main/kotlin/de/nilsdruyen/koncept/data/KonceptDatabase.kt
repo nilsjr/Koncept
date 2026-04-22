@@ -10,9 +10,11 @@ import de.nilsdruyen.koncept.dogs.cache.daos.DogDao
 import de.nilsdruyen.koncept.dogs.cache.daos.DummyDao
 import de.nilsdruyen.koncept.dogs.cache.entities.BreedCacheEntity
 
+const val DB_VERSION = 4
+
 @Database(
     entities = [BreedCacheEntity::class],
-    version = 4,
+    version = DB_VERSION,
     autoMigrations = [
         AutoMigration(from = 1, to = 3),
     ],

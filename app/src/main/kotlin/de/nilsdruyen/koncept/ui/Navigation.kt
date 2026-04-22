@@ -4,7 +4,6 @@ package de.nilsdruyen.koncept.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -61,18 +60,14 @@ fun KonceptApp() {
                 navController = rootNavController,
                 sharedTransitionScope = this,
             ) {
-                MainBottomBarScreen(navController, it, this)
+                MainBottomBarScreen(navController, it)
             }
         }
     }
 }
 
 @Composable
-fun MainBottomBarScreen(
-    navController: NavHostController,
-    navigateRoot: (String) -> Unit,
-    sharedTransitionScope: SharedTransitionScope,
-) {
+fun MainBottomBarScreen(navController: NavHostController, navigateRoot: (String) -> Unit) {
     val state = rememberKonceptAppState(navController)
     Scaffold(
         modifier = Modifier,

@@ -10,12 +10,12 @@ import de.nilsdruyen.koncept.dogs.entity.BreedSortType
 
 object BreedListSortDialogRoute : KonceptNavRoute.NestedNavRoute {
 
-    private const val selectedTypeArg = "ordinal"
+    private const val SELECTED_TYPE_ARG = "ordinal"
 
     override val route = "breed_list_sort"
 
     override fun pathParameters(): List<NamedNavArgument> = listOf(
-        navArgument(selectedTypeArg) {
+        navArgument(SELECTED_TYPE_ARG) {
             type = NavType.IntType
         },
     )
@@ -26,5 +26,5 @@ object BreedListSortDialogRoute : KonceptNavRoute.NestedNavRoute {
     ): KonceptNavDestination.NestedNavDestination = buildRoute(graph, type.ordinal.toString())
 
     fun fromNavBackStackEntry(entry: NavBackStackEntry): BreedSortType =
-        BreedSortType.values()[entry.arguments?.getInt(selectedTypeArg) ?: 0]
+        BreedSortType.values()[entry.arguments?.getInt(SELECTED_TYPE_ARG) ?: 0]
 }

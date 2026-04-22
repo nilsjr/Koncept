@@ -96,9 +96,9 @@ fun DogListScreen(
         inputChange = {
             viewModel.sendIntent(DogListIntent.InputChange(it))
         },
-        searchForQuery = {
-            viewModel.sendIntent(DogListIntent.Search)
-        },
+//        searchForQuery = {
+//            viewModel.sendIntent(DogListIntent.Search)
+//        },
     ) {
         BackHandler {
             viewModel.sendIntent(DogListIntent.BackFromSearch)
@@ -122,7 +122,6 @@ fun DogListScreen(
     showSortDialog: () -> Unit = {},
     reloadList: () -> Unit = {},
     inputChange: (String) -> Unit = {},
-    searchForQuery: () -> Unit = {},
     searchResult: @Composable () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())

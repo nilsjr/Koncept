@@ -49,7 +49,7 @@ private val targets = listOf(
     Target.DARK_MUTED,
 )
 
-const val duration = 1200L
+const val DURATION = 1200L
 
 @Composable
 fun ImageDetailScreen(id: String, modifier: Modifier = Modifier, imageModifier: Modifier = Modifier) {
@@ -70,12 +70,12 @@ fun ImageDetailScreen(id: String, modifier: Modifier = Modifier, imageModifier: 
     }
     val animatedColor = animateColorAsState(
         targetValue = bgColor,
-        animationSpec = tween(duration.toInt()),
+        animationSpec = tween(DURATION.toInt()),
     )
 
     LaunchedEffect(colors, bgColor) {
         if (colors.isNotEmpty()) {
-            delay(duration)
+            delay(DURATION)
             if (index == colors.lastIndex) {
                 index = 0
             } else {

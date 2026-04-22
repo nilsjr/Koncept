@@ -17,7 +17,7 @@ fun NavGraphBuilder.favoriteTopLevelGraph(
     konceptComposable(
         navRoute = FavoritesRoute,
     ) {
-        Favorites(showBreed = { onNavigate(BreedDetailsRoute.createRoute(FavoritesRoute, BreedId(it))) })
+        Favorites(showBreed = { onNavigate(BreedDetailsRoute.createRoute(BreedId(it))) })
     }
     nestedGraph(FavoritesRoute)
 }

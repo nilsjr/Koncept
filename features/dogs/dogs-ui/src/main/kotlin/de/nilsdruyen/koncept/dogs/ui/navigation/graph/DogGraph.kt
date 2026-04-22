@@ -17,11 +17,11 @@ fun NavGraphBuilder.breedTopLevelGraph(onNavigate: NavigateTo, nestedGraphs: Nes
     navigation<DogGraph>(startDestination = DogListRoute) {
         composable<DogListRoute> {
             val sortTypeState =
-                it.savedStateHandle.getStateFlow(BreedListRoute.sortTypeResult, 0).collectAsStateWithLifecycle()
+                it.savedStateHandle.getStateFlow(BreedListRoute.SORT_TYPE_RESULT, 0).collectAsStateWithLifecycle()
             DogListScreen(
                 sortTypeState = sortTypeState,
                 showDetail = { id ->
-                    onNavigate(BreedDetailsRoute.createRoute(BreedListRoute, id))
+                    onNavigate(BreedDetailsRoute.createRoute(id))
                 },
                 showSortDialog = { type ->
                     onNavigate(BreedListSortDialogRoute.createRoute(BreedListRoute, type))

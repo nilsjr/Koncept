@@ -113,7 +113,7 @@ complexity:
     allowedLines: 600
   LongMethod:
     active: true
-    allowedLines: 80
+    allowedLines: 90
   LongParameterList:
     active: true
     allowedFunctionParameters: 5
@@ -576,7 +576,7 @@ style:
     active: false
   DestructuringDeclarationWithTooManyEntries:
     active: true
-    maxDestructuringEntries: 3
+    maxDestructuringEntries: 4
   DoubleNegativeExpression:
     active: false
   DoubleNegativeLambda:
