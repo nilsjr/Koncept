@@ -28,25 +28,25 @@ object RemoteModule {
     @Provides
     @ApiKey
     fun provideHeaderInterceptor(): Interceptor = Interceptor { chain ->
-            chain.run {
-                proceed(
-                    request()
-                        .newBuilder()
-                        .addHeader("x-api-key", BuildConfig.DOG_API_KEY)
-                        .build(),
-                )
-            }
+        chain.run {
+            proceed(
+                request()
+                    .newBuilder()
+                    .addHeader("x-api-key", BuildConfig.DOG_API_KEY)
+                    .build(),
+            )
         }
+    }
 
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor {
-            Timber.tag("OkHttp")
-            Timber.d(it)
-        }.apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
+        Timber.tag("OkHttp")
+        Timber.d(it)
+    }.apply {
+        level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
         }
+    }
 }

@@ -19,18 +19,18 @@ class DogsRepositoryImpl @Inject constructor(
 ) : DogsRepository {
 
     override fun getList(): Flow<Either<DataSourceError, List<Breed>>> = flow {
-            val cache = dogsCacheDataSource.getDogList().firstOrNull()
-            if (cache != null) emit(cache)
-            emit(
-                dogsRemoteDataSource.getList().onRight {
-                    dogsCacheDataSource.setDogList(it)
-                },
-            )
-            emitAll(dogsCacheDataSource.getDogList())
-        }.map {
-            println("emit $it")
-            it
-        }.distinctUntilChanged()
+        val cache = dogsCacheDataSource.getDogList().firstOrNull()
+        if (cache != null) emit(cache)
+        emit(
+            dogsRemoteDataSource.getList().onRight {
+                dogsCacheDataSource.setDogList(it)
+            },
+        )
+        emitAll(dogsCacheDataSource.getDogList())
+    }.map {
+        println("emit $it")
+        it
+    }.distinctUntilChanged()
 
     override suspend fun getImagesForBreed(breedId: Int): BreedImages = dogsRemoteDataSource.getImagesForBreed(breedId)
 

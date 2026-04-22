@@ -21,12 +21,12 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(application: Application, moshi: Moshi): KonceptDatabase = Room.databaseBuilder(
-            application,
+        application,
         KonceptDatabase::class.java, "koncept",
-        )
-            .addTypeConverter(IntRangeConverter())
-            .addTypeConverter(StringListConverter(moshi))
-            .build()
+    )
+        .addTypeConverter(IntRangeConverter())
+        .addTypeConverter(StringListConverter(moshi))
+        .build()
 }
 
 @Module

@@ -3,6 +3,7 @@
 This is an sample project to experiment with architectures, modules structures, frameworks etc.
 
 # links
+
 [Sonarcloud](https://sonarcloud.io/project/overview?id=koncept)
 
 # Usage
@@ -35,6 +36,7 @@ Build release apk
 ## Used APIs
 
 Consuming following api: https://www.thedogapi.com/
+
 - [The Dog API docs](https://docs.thedogapi.com/)
 
 ## Android Jetpack
@@ -93,6 +95,7 @@ gradle debugExecuteScreenshotTests -Precord
 gradle debugExecuteScreenshotTests
 
 # ToDos
+
 - test pyramid implementation
 - offline first poc
 - kover usage

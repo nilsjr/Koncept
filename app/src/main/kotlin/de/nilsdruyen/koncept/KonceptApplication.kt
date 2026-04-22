@@ -33,15 +33,15 @@ open class BaseKonceptApplication :
 
     @OptIn(ExperimentalCoilApi::class, ExperimentalTime::class)
     override fun newImageLoader(context: PlatformContext): ImageLoader = ImageLoader.Builder(context)
-            .components {
-                add(OkHttpNetworkFetcherFactory(cacheStrategy = { CacheControlCacheStrategy() }))
-            }
-            .logger(object : coil3.util.Logger {
-                override var minLevel = coil3.util.Logger.Level.Verbose
+        .components {
+            add(OkHttpNetworkFetcherFactory(cacheStrategy = { CacheControlCacheStrategy() }))
+        }
+        .logger(object : coil3.util.Logger {
+            override var minLevel = coil3.util.Logger.Level.Verbose
 
-                override fun log(tag: String, level: coil3.util.Logger.Level, message: String?, throwable: Throwable?) {
-                    log(text = message.toString())
-                }
-            })
-            .build()
+            override fun log(tag: String, level: coil3.util.Logger.Level, message: String?, throwable: Throwable?) {
+                log(text = message.toString())
+            }
+        })
+        .build()
 }

@@ -8,18 +8,18 @@ import de.nilsdruyen.koncept.dogs.remote.entities.BreedWebEntity
 import de.nilsdruyen.koncept.dogs.remote.entities.MeasureWebEntity
 
 fun BreedWebEntity.toModel(): Breed = Breed(
-        id = BreedId(id),
-        name = name,
-        isFavorite = false,
-        temperament = temperament?.split(",")?.map { it.trim() }.orEmpty(),
-        lifeSpan = IntRange.EMPTY,
-        weight = weight?.parseMeasureValue() ?: IntRange.EMPTY,
-        height = height?.parseMeasureValue() ?: IntRange.EMPTY,
-        bredFor = bredFor.orEmpty(),
-        origin = origin?.split(",")?.map { it.trim() }.orEmpty(),
-        group = group.orEmpty(),
-        imageUrl = image?.url,
-    )
+    id = BreedId(id),
+    name = name,
+    isFavorite = false,
+    temperament = temperament?.split(",")?.map { it.trim() }.orEmpty(),
+    lifeSpan = IntRange.EMPTY,
+    weight = weight?.parseMeasureValue() ?: IntRange.EMPTY,
+    height = height?.parseMeasureValue() ?: IntRange.EMPTY,
+    bredFor = bredFor.orEmpty(),
+    origin = origin?.split(",")?.map { it.trim() }.orEmpty(),
+    group = group.orEmpty(),
+    imageUrl = image?.url,
+)
 
 fun BreedImageWebEntity.toModel(): BreedImage {
     val breed = breeds.first()

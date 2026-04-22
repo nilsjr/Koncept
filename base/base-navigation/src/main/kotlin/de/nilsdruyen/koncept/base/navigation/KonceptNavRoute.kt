@@ -50,12 +50,12 @@ sealed interface KonceptNavDestination {
 }
 
 fun KonceptNavRoute.appendParams(): String = buildString {
-        pathParameters().map { it.name }.forEach { append("/{$it}") }
-        val queryParameters = queryParameters().map { it.name }
-        if (queryParameters.isNotEmpty()) {
-            append("?")
-            queryParameters.forEach { paramName ->
-                append("$paramName={$paramName}")
-            }
+    pathParameters().map { it.name }.forEach { append("/{$it}") }
+    val queryParameters = queryParameters().map { it.name }
+    if (queryParameters.isNotEmpty()) {
+        append("?")
+        queryParameters.forEach { paramName ->
+            append("$paramName={$paramName}")
         }
     }
+}
