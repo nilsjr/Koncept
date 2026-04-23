@@ -7,9 +7,8 @@ import de.nilsdruyen.koncept.domain.DataSourceError
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-internal class GetDogListUseCaseImpl @Inject constructor(
-    private val dogsRepository: DogsRepository
-) : GetDogListUseCase {
+internal class GetDogListUseCaseImpl @Inject constructor(private val dogsRepository: DogsRepository) :
+    GetDogListUseCase {
 
     override fun execute(): Flow<Either<DataSourceError, List<Breed>>> = dogsRepository.getList()
 }

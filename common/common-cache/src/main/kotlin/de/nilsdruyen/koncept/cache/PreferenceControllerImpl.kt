@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class PreferenceControllerImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
-) : PreferenceController {
+class PreferenceControllerImpl @Inject constructor(private val dataStore: DataStore<Preferences>) :
+    PreferenceController {
 
     override suspend fun get(key: String, default: String): String = getFlow(key, default).first()
 
@@ -19,7 +18,7 @@ class PreferenceControllerImpl @Inject constructor(
         dataStore.edit { set(key, value) }
     }
 
-    override suspend fun getFlow(key: String, default: String): Flow<String> {
-        return dataStore.data.map { it[stringPreferencesKey(key)] ?: default }
+    override suspend fun getFlow(key: String, default: String): Flow<String> = dataStore.data.map {
+        it[stringPreferencesKey(key)] ?: default
     }
 }

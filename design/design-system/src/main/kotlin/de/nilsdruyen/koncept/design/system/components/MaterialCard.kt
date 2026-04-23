@@ -25,7 +25,7 @@ fun MaterialCard(
     contentColor: Color = contentColorFor(backgroundColor),
     border: BorderStroke? = null,
     elevation: Dp = 1.dp,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Surface(
         modifier = modifier,
@@ -35,6 +35,6 @@ fun MaterialCard(
         tonalElevation = elevation,
         shadowElevation = elevation,
         border = border,
-        content = content
+        content = content,
     )
 }

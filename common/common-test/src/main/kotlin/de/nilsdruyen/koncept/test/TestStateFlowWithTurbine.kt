@@ -18,10 +18,7 @@ import kotlinx.coroutines.test.runTest
  *  @param testScope [TestScope] e.g. from your [runTest] block.
  *  @param validate your validation logic using [ReceiveTurbine]
  */
-suspend fun <T> StateFlow<T>.testStateFlow(
-    testScope: TestScope,
-    validate: suspend ReceiveTurbine<T>.() -> Unit
-) {
+suspend fun <T> StateFlow<T>.testStateFlow(testScope: TestScope, validate: suspend ReceiveTurbine<T>.() -> Unit) {
     val results = Channel<T>(Channel.UNLIMITED)
     val job = testScope.launch(UnconfinedTestDispatcher(testScope.testScheduler)) {
         collect { results.send(it) }

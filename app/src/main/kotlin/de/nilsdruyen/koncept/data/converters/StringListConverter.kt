@@ -10,7 +10,7 @@ import com.squareup.moshi.Types
 class StringListConverter(moshi: Moshi) {
 
     private val adapter: JsonAdapter<List<String>> = moshi.adapter(
-        Types.newParameterizedType(List::class.java, String::class.java)
+        Types.newParameterizedType(List::class.java, String::class.java),
     )
 
     @TypeConverter

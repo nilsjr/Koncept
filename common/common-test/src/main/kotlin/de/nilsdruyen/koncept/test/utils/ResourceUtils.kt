@@ -14,7 +14,6 @@ fun String.asResource(): String = try {
 
 fun <T> String.parse(type: Class<T>): T? = moshi.adapter(type).fromJson(asResource())
 
-fun <T> String.parseList(type: Class<T>): List<T> {
-    return moshi.adapter<List<T>>(Types.newParameterizedType(List::class.java, type))
+fun <T> String.parseList(type: Class<T>): List<T> =
+    moshi.adapter<List<T>>(Types.newParameterizedType(List::class.java, type))
         .fromJson(asResource()) ?: emptyList()
-}

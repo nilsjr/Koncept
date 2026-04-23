@@ -5,7 +5,5 @@ import javax.inject.Inject
 
 class PropertyProviderImpl @Inject constructor(private val savedStateHandle: SavedStateHandle) : PropertyProvider {
 
-    override fun <T> get(key: String, default: () -> T): T {
-        return savedStateHandle.get<T>(key) ?: default()
-    }
+    override fun <T> get(key: String, default: () -> T): T = savedStateHandle.get<T>(key) ?: default()
 }

@@ -31,7 +31,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,14 +59,14 @@ import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable
 fun DogListScreen(
-    sortTypeState: State<Int>,
+    sortTypeState: Int,
     showDetail: (BreedId) -> Unit,
     showSortDialog: (BreedSortType) -> Unit,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state.navigateTo) {
+    LaunchedEffect(state.navigateTo, showDetail) {
         val id = state.navigateTo
         if (id != null) {
             viewModel.sendIntent(DogListIntent.NavigationConsumed)
@@ -80,8 +79,8 @@ fun DogListScreen(
         onStopOrDispose { }
     }
 
-    LaunchedEffect(sortTypeState.value) {
-        viewModel.sendIntent(DogListIntent.SortTypeChanged(BreedSortType.entries[sortTypeState.value]))
+    LaunchedEffect(sortTypeState) {
+        viewModel.sendIntent(DogListIntent.SortTypeChanged(BreedSortType.entries[sortTypeState]))
     }
 
     DogListScreen(
@@ -96,9 +95,9 @@ fun DogListScreen(
         inputChange = {
             viewModel.sendIntent(DogListIntent.InputChange(it))
         },
-        searchForQuery = {
-            viewModel.sendIntent(DogListIntent.Search)
-        },
+//        searchForQuery = {
+//            viewModel.sendIntent(DogListIntent.Search)
+//        },
     ) {
         BackHandler {
             viewModel.sendIntent(DogListIntent.BackFromSearch)
@@ -122,7 +121,6 @@ fun DogListScreen(
     showSortDialog: () -> Unit = {},
     reloadList: () -> Unit = {},
     inputChange: (String) -> Unit = {},
-    searchForQuery: () -> Unit = {},
     searchResult: @Composable () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
@@ -145,11 +143,11 @@ fun DogListScreen(
                         IconButton(onClick = showSortDialog) {
                             Icon(
                                 imageVector = KonceptIcons.FilterList,
-                                contentDescription = "Filter Games"
+                                contentDescription = "Filter Games",
                             )
                         }
                     },
-                    scrollBehavior = scrollBehavior
+                    scrollBehavior = scrollBehavior,
                 )
             }
         },
@@ -164,12 +162,13 @@ fun DogListScreen(
             ) {
                 when {
                     state.isLoading && state.list.isEmpty() -> Loading()
+
                     state.list.isEmpty() -> {
                         Text(
                             text = "No doggos!",
                             modifier = Modifier
                                 .padding(16.dp)
-                                .align(Alignment.Center)
+                                .align(Alignment.Center),
                         )
                     }
 
@@ -197,7 +196,7 @@ fun DogListScreen(
                                     leadingIcon = {
                                         Icon(
                                             imageVector = Icons.Filled.Search,
-                                            contentDescription = "Search breeds"
+                                            contentDescription = "Search breeds",
                                         )
                                     },
                                 )
@@ -218,15 +217,12 @@ fun DogListScreen(
                     }
                 }
             }
-        }
+        },
     )
 }
 
 @Composable
-private fun DogList(
-    state: DogListState,
-    showDog: (Breed) -> Unit,
-) {
+private fun DogList(state: DogListState, showDog: (Breed) -> Unit) {
     LazyColumn(
         state = rememberLazyListState(),
         modifier = Modifier
@@ -248,11 +244,7 @@ private fun DogList(
 }
 
 @Composable
-fun SearchResult(
-    searchResult: List<Breed>,
-    onClick: (Breed) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun SearchResult(searchResult: List<Breed>, onClick: (Breed) -> Unit, modifier: Modifier = Modifier) {
     LazyColumn(
         state = rememberLazyListState(),
         modifier = modifier,
@@ -262,7 +254,7 @@ fun SearchResult(
                 breed = it,
                 onClick = {
                     onClick(it)
-                }
+                },
             )
         }
     }
@@ -284,7 +276,7 @@ class DogListPreviewProvider : PreviewParameterProvider<DogListState> {
         DogListState(
             list = List(6) {
                 Breed(BreedId(it), "Breed $it")
-            }.toImmutable()
-        )
+            }.toImmutable(),
+        ),
     )
 }

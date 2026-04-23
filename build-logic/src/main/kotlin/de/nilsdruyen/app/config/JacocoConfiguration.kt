@@ -172,10 +172,12 @@ internal fun ProjectType.classDirs(buildDir: String): ProjectClassFiles {
             "**/intermediates/javac/devDebug/classes/**",
             "**/tmp/kotlin-classes/devDebug/**",
         )
+
         ProjectType.LIB -> listOf(
             "**/intermediates/javac/debug/classes/**",
             "**/tmp/kotlin-classes/debug/**",
         )
+
         ProjectType.KOTLIN -> listOf(
             "**/classes/java/main/**",
             "**/classes/kotlin/main/**",
@@ -190,10 +192,12 @@ internal fun ProjectType.sourceFiles(projectDir: String): List<String> = when (t
         "$projectDir/src/debug/kotlin",
         "$projectDir/src/dev/kotlin",
     )
+
     ProjectType.LIB -> listOf(
         "$projectDir/src/main/kotlin",
         "$projectDir/src/debug/kotlin",
     )
+
     ProjectType.KOTLIN -> listOf("$projectDir/src/main/kotlin")
 }
 

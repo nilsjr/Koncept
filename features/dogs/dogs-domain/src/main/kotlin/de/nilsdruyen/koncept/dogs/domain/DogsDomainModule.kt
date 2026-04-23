@@ -24,12 +24,12 @@ internal interface DogsDomainModule {
 
     @Binds
     fun bindGetBreedImageListUseCase(
-        getBreedImageListUseCaseImpl: GetBreedImageListUseCaseImpl
+        getBreedImageListUseCaseImpl: GetBreedImageListUseCaseImpl,
     ): GetBreedImageListUseCase
 
     @Binds
     fun bindUpdateFavoriteBreedUseCase(
-        updateFavoriteBreedUseCaseImpl: UpdateFavoriteBreedUseCaseImpl
+        updateFavoriteBreedUseCaseImpl: UpdateFavoriteBreedUseCaseImpl,
     ): UpdateFavoriteBreedUseCase
 
     @Binds

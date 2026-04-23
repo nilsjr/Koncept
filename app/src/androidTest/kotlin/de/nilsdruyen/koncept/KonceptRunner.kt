@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.test.runner.AndroidJUnitRunner
+import kotlin.jvm.java
 
 @Suppress("Unused")
 class KonceptRunner : AndroidJUnitRunner() {
@@ -22,11 +23,6 @@ class KonceptRunner : AndroidJUnitRunner() {
         isRobolectricRun = false
     }
 
-    override fun newApplication(
-        cl: ClassLoader?,
-        className: String?,
-        context: Context?
-    ): Application {
-        return super.newApplication(cl, KonceptTestApplication_Application::class.java.canonicalName, context)
-    }
+    override fun newApplication(cl: ClassLoader?, className: String?, context: Context?): Application =
+        super.newApplication(cl, KonceptTestApplication_Application::class.java.canonicalName, context)
 }

@@ -2,7 +2,7 @@
 accompanist = "0.36.0"
 androidDesugarJdkLibs = "2.1.5"
 androidOrchestrator = "1.6.1"
-androidPlugin = "9.1.0"
+androidPlugin = "9.1.1"
 androidx-baselineprofile = "1.4.1"
 androidxActivity = "1.13.0"
 androidxCore = "1.18.0"
@@ -16,13 +16,13 @@ assertJ = "3.27.7"
 benchmark-macro-junit4 = "1.4.1"
 coil = "3.4.0"
 composeActivity = "1.13.0"
-composeBom = "2026.03.01"
+composeBom = "2026.04.01"
 composeCompilerReportGenerator = "1.5.0"
 composeConstraintLayout = "1.1.1"
 composeNavigation = "2.9.7"
 coroutines = "1.10.2"
-detekt = "1.23.8"
-detektComposeRules = "0.5.6"
+detekt = "2.0.0-alpha.2"
+detektComposeRules = "0.5.7"
 espresso = "3.7.0"
 gradleVersionsPlugin = "0.53.0"
 hilt = "2.59.2"
@@ -42,11 +42,9 @@ mockk = "1.14.9"
 moshi = "1.15.2"
 okhttp = "5.3.2"
 paletteKtx = "1.0.0"
-paparazzi = "1.3.5"
 retrofit = "3.0.0"
 robolectric = "4.16.1"
-roborazzi = "1.59.0"
-serialization = "1.10.0"
+serialization = "1.11.0"
 splashscreen = "1.2.0"
 turbine = "1.2.1"
 uiautomator = "2.3.0"
@@ -104,8 +102,8 @@ coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = 
 coil-network-cache = { module = "io.coil-kt.coil3:coil-network-cache-control", version.ref = "coil" }
 compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "composeBom" }
 detekt-composeRules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektComposeRules" }
-detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+detekt-ktlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
+detekt-plugin = { module = "dev.detekt:dev.detekt.gradle.plugin", version.ref = "detekt" }
 faker = "io.github.serpro69:kotlin-faker:1.16.1"
 gradleVersions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -136,11 +134,8 @@ mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito
 mockito-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk = { module = "io.mockk:mockk-android", version.ref = "mockk" }
-paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-annotations = { module = "org.robolectric:annotations", version.ref = "robolectric" }
-roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
-roborazzi-rule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
 square-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 square-moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
 square-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
@@ -174,7 +169,7 @@ androidTest = { id = "com.android.test", version.ref = "androidPlugin" }
 androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
 androidx-room = { id = "androidx.room", version.ref = "androidxRoom" }
 compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -183,5 +178,3 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
-paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
-roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }

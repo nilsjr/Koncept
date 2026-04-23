@@ -11,10 +11,8 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.androidx.baselineprofile) apply false
 
-    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.detekt)
     alias(libs.plugins.gradleVersions)
-    alias(libs.plugins.paparazzi) apply false
-    alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.compose.compiler.report) apply false
 
     id("de.nilsdruyen.plugin.root")

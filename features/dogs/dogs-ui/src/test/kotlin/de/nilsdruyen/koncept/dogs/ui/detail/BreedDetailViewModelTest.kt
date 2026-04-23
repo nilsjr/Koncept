@@ -38,7 +38,7 @@ internal class BreedDetailViewModelTest {
             savedStateHandle = SavedStateHandle(mapOf("breedId" to 1)),
             getBreedImageListUseCase = getBreedImageListUseCase,
             updateFavoriteBreedUseCase = updateFavoriteBreedUseCase,
-            isFavoriteFlowUseCase = isFavoriteFlowUseCase
+            isFavoriteFlowUseCase = isFavoriteFlowUseCase,
         )
     }
 

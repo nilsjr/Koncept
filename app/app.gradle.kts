@@ -29,7 +29,7 @@ configure<ApplicationExtension> {
         buildConfigField(
             "String",
             "DOG_API_KEY",
-            "\"${findStringProperty("dogApiKey", "DOG_API_KEY")}\""
+            "\"${findStringProperty("dogApiKey", "DOG_API_KEY")}\"",
         )
     }
     signingConfigs {
@@ -54,7 +54,7 @@ configure<ApplicationExtension> {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         debug {
@@ -62,7 +62,7 @@ configure<ApplicationExtension> {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         all {
@@ -89,7 +89,7 @@ configure<ApplicationExtension> {
         resources {
             excludes += setOf(
                 "/META-INF/{AL2.0,LGPL2.1}",
-                "META-INF/LICENSE*"
+                "META-INF/LICENSE*",
             )
         }
     }
@@ -234,8 +234,8 @@ dependencies {
     androidTestImplementation(libs.robolectric.annotations)
 }
 
-fun Project.findStringProperty(propertyName: String, ciPropertyName: String = propertyName): String? {
-    return if (CiUtils.isCI) {
+fun Project.findStringProperty(propertyName: String, ciPropertyName: String = propertyName): String? =
+    if (CiUtils.isCI) {
         System.getenv(ciPropertyName)
     } else {
         findProperty(propertyName) as String? ?: run {
@@ -243,4 +243,3 @@ fun Project.findStringProperty(propertyName: String, ciPropertyName: String = pr
             null
         }
     }
-}

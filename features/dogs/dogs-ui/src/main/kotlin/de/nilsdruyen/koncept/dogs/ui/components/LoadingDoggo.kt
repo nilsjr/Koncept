@@ -20,7 +20,7 @@ fun BoxScope.Loading() {
         Modifier
             .fillMaxSize(fraction = 0.5f)
             .align(Alignment.Center)
-            .testTag("loading")
+            .testTag("loading"),
     )
 }
 
@@ -29,7 +29,7 @@ private fun LoadingDoggo(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.dog_walking))
     val progress by animateLottieCompositionAsState(
         composition = composition,
-        iterations = LottieConstants.IterateForever
+        iterations = LottieConstants.IterateForever,
     )
     LottieAnimation(
         composition = composition,

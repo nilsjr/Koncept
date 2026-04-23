@@ -4,7 +4,6 @@ plugins {
     id("de.nilsdruyen.plugin.android.library")
     id("de.nilsdruyen.plugin.android.library.compose")
     alias(libs.plugins.google.ksp)
-    alias(libs.plugins.paparazzi)
     alias(libs.plugins.compose.compiler.report)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -70,8 +69,6 @@ dependencies {
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.androidx.compose.uiTest)
     testImplementation(libs.androidx.compose.uiManifestTest)
-    testImplementation(libs.roborazzi)
-    testImplementation(libs.roborazzi.rule)
 
     testImplementation(libs.square.retrofit)
     testImplementation(platform(libs.square.okhttp.bom))

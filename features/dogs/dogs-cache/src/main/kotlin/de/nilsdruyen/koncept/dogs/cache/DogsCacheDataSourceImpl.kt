@@ -22,13 +22,11 @@ class DogsCacheDataSourceImpl @Inject constructor(
     private val dogDao: DogDao,
 ) : DogsCacheDataSource {
 
-    override fun getDogList(): Flow<Either<DataSourceError, List<Breed>>> {
-        return dogDao.getAll()
-            .map { Either.Right(it.map(BreedCacheEntity::toModel)) }
-            .catch { throwable ->
-                Either.Left(throwable.toDataSourceError())
-            }.flowOn(ioDispatcher)
-    }
+    override fun getDogList(): Flow<Either<DataSourceError, List<Breed>>> = dogDao.getAll()
+        .map { Either.Right(it.map(BreedCacheEntity::toModel)) }
+        .catch { throwable ->
+            Either.Left(throwable.toDataSourceError())
+        }.flowOn(ioDispatcher)
 
     override suspend fun setDogList(list: List<Breed>) = withContext(ioDispatcher) {
 //        dogDao.upsertMinimalList(list.map(Dog::toMinimalEntity))
@@ -43,15 +41,11 @@ class DogsCacheDataSourceImpl @Inject constructor(
         dogDao.removeFavorite(breedId)
     }
 
-    override fun isFavoriteFlow(breedId: Int): Flow<Boolean> {
-        return dogDao.getDogById(breedId).map { it.isFavorite }
-    }
+    override fun isFavoriteFlow(breedId: Int): Flow<Boolean> = dogDao.getDogById(breedId).map { it.isFavorite }
 
-    override fun getFavorites(): Flow<Either<DataSourceError, List<Breed>>> {
-        return dogDao.getAllFavorites()
-            .map { Either.Right(it.map(BreedCacheEntity::toModel)) }
-            .catch { throwable ->
-                Either.Left(throwable.toDataSourceError())
-            }.flowOn(ioDispatcher)
-    }
+    override fun getFavorites(): Flow<Either<DataSourceError, List<Breed>>> = dogDao.getAllFavorites()
+        .map { Either.Right(it.map(BreedCacheEntity::toModel)) }
+        .catch { throwable ->
+            Either.Left(throwable.toDataSourceError())
+        }.flowOn(ioDispatcher)
 }

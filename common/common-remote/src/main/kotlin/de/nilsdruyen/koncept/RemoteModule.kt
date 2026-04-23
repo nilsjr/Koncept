@@ -43,12 +43,10 @@ object RemoteModule {
     }
 
     @Provides
-    fun provideBaseRetrofit(client: Lazy<OkHttpClient>, moshi: Moshi): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://api.thedogapi.com/v1/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(EitherCallAdapterFactory())
-            .callFactory { client.get().newCall(it) }
-            .build()
-    }
+    fun provideBaseRetrofit(client: Lazy<OkHttpClient>, moshi: Moshi): Retrofit = Retrofit.Builder()
+        .baseUrl("https://api.thedogapi.com/v1/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(EitherCallAdapterFactory())
+        .callFactory { client.get().newCall(it) }
+        .build()
 }

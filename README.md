@@ -3,6 +3,7 @@
 This is an sample project to experiment with architectures, modules structures, frameworks etc.
 
 # links
+
 [Sonarcloud](https://sonarcloud.io/project/overview?id=koncept)
 
 # Usage
@@ -35,6 +36,7 @@ Build release apk
 ## Used APIs
 
 Consuming following api: https://www.thedogapi.com/
+
 - [The Dog API docs](https://docs.thedogapi.com/)
 
 ## Android Jetpack
@@ -80,10 +82,6 @@ Here what is interesting:
 2. Robolectric for integration tests with hilt
 3. Shot for compose screenshot testing
 
-## ui tests
-with paparazzi: [https://github.com/cashapp/paparazzi](https://github.com/cashapp/paparazzi)
-with shot: [https://github.com/pedrovgs/Shot](https://github.com/pedrovgs/Shot)
-
 For android 10 or higher
 
 - adb shell settings put global hidden_api_policy 1
@@ -97,6 +95,7 @@ gradle debugExecuteScreenshotTests -Precord
 gradle debugExecuteScreenshotTests
 
 # ToDos
+
 - test pyramid implementation
 - offline first poc
 - kover usage

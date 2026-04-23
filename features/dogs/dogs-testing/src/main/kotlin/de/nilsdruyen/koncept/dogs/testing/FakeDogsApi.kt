@@ -22,7 +22,7 @@ class FakeDogsApi : DogsApi {
     override suspend fun searchImages(
         limit: Int,
         page: Int,
-        order: String
+        order: String,
     ): Either<DataSourceError, List<BreedImageWebEntity>> {
         TODO("Not yet implemented")
     }
@@ -30,7 +30,7 @@ class FakeDogsApi : DogsApi {
     override suspend fun searchImagesForBreed(
         limit: Int,
         breedId: Int,
-        size: String
+        size: String,
     ): Either<DataSourceError, List<BreedImageWebEntity>> {
         TODO("Not yet implemented")
     }
