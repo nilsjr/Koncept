@@ -59,8 +59,8 @@ fun RootNavHost(
                     id = imageRoute.id,
                     imageModifier = Modifier.sharedElement(
                         sharedTransitionScope.rememberSharedContentState(key = "image-$id"),
-                        animatedVisibilityScope = this@composable
-                    )
+                        animatedVisibilityScope = this@composable,
+                    ),
                 )
             }
         }
@@ -68,11 +68,7 @@ fun RootNavHost(
 }
 
 @Composable
-fun KonceptNavHost(
-    navController: NavHostController,
-    onNavigate: NavigateTo,
-    modifier: Modifier = Modifier,
-) {
+fun KonceptNavHost(navController: NavHostController, onNavigate: NavigateTo, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = DogGraph,
@@ -94,13 +90,13 @@ fun KonceptNavHost(
                 navArgument("rawDate2") {
                     type = NavType.StringType
                     defaultValue = ""
-                }
+                },
             ),
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "koncept://deeplink/{rawDate}?rawDate2={rawDate2}"
-                }
-            )
+                },
+            ),
         ) {
             DeeplinkSample()
         }

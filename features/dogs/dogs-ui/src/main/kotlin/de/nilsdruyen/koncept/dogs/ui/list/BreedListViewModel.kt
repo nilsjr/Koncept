@@ -22,9 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DogListViewModel @Inject constructor(
-    getDogListUseCase: GetDogListUseCase,
-) : ViewModel() {
+class DogListViewModel @Inject constructor(getDogListUseCase: GetDogListUseCase) : ViewModel() {
 
     private val _state = MutableStateFlow(DogListState())
     private val sortTypeState = MutableStateFlow(BreedSortType.Name)
@@ -52,6 +50,7 @@ class DogListViewModel @Inject constructor(
     fun sendIntent(intent: DogListIntent) {
         when (intent) {
             is DogListIntent.ShowDetailAndSaveListPosition -> navigateToDetail(intent.id)
+
             is DogListIntent.SortTypeChanged -> {
                 sortTypeState.value = intent.type
                 _state.update { it.copy(selectedType = intent.type) }

@@ -36,9 +36,9 @@ fun DogListItem(breed: Breed, onClick: () -> Unit, modifier: Modifier = Modifier
         trailingContent = {
             Icon(
                 imageVector = if (breed.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                contentDescription = "Set Favorite"
+                contentDescription = "Set Favorite",
             )
-        }
+        },
     )
 }
 
@@ -57,9 +57,9 @@ private fun DogListItemPreview() {
                 height = 20..20,
                 bredFor = "awdh",
                 origin = listOf(),
-                group = ""
+                group = "",
             ),
-            {}
+            {},
         )
     }
 }

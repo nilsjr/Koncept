@@ -4,7 +4,7 @@ import de.nilsdruyen.koncept.base.navigation.KonceptNavRoute
 
 object BreedListRoute : KonceptNavRoute.GraphNavRoute {
 
-    const val sortTypeResult = "sortType"
+    const val SORT_TYPE_RESULT = "sortType"
 
     override val route = "breed_list"
 }

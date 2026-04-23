@@ -110,7 +110,7 @@ object TestCacheModule {
             bredFor = "",
             group = "",
             imageUrl = null,
-        )
+        ),
     )
 
     private val cache2 = listOf(
@@ -147,21 +147,13 @@ object TestCacheModule {
     @Provides
     fun provideoDao(): DogDao = object : DogDao {
 
-        override fun getAll(): Flow<List<BreedCacheEntity>> {
-            return dbState
-        }
+        override fun getAll(): Flow<List<BreedCacheEntity>> = dbState
 
-        override fun getDogById(id: Int): Flow<BreedCacheEntity> {
-            return emptyFlow()
-        }
+        override fun getDogById(id: Int): Flow<BreedCacheEntity> = emptyFlow()
 
-        override suspend fun addList(list: List<BreedCacheEntity>): List<Long> {
-            return List(list.size) { 1L }
-        }
+        override suspend fun addList(list: List<BreedCacheEntity>): List<Long> = List(list.size) { 1L }
 
-        override suspend fun addMinimalList(list: List<MinimalDogCacheEntity>): List<Long> {
-            return emptyList()
-        }
+        override suspend fun addMinimalList(list: List<MinimalDogCacheEntity>): List<Long> = emptyList()
 
         override suspend fun updateList(list: List<BreedCacheEntity>) {
             dbState.value = cache2
@@ -171,9 +163,7 @@ object TestCacheModule {
             // do nothing
         }
 
-        override fun getAllFavorites(): Flow<List<BreedCacheEntity>> {
-            return emptyFlow()
-        }
+        override fun getAllFavorites(): Flow<List<BreedCacheEntity>> = emptyFlow()
 
         override suspend fun setFavorite(breedId: Int) {
             // do nothing

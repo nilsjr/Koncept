@@ -1,7 +1,3 @@
-build:
-  maxIssues: 0
-  excludeCorrectable: true
-
 console-reports:
   exclude:
     - 'ProjectStatisticsReport'
@@ -11,7 +7,7 @@ console-reports:
     - 'FileBasedFindingsReport'
     - 'LiteFindingsReport'
 
-formatting:
+ktlint:
   ArgumentListWrapping:
     active: false
   Filename:

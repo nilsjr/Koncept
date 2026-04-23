@@ -14,21 +14,16 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-private class EitherCallAdapter<R>(
-    private val responseType: Type
-) : CallAdapter<R, Call<Either<DataSourceError, R>>> {
+private class EitherCallAdapter<R>(private val responseType: Type) : CallAdapter<R, Call<Either<DataSourceError, R>>> {
 
-    override fun adapt(call: Call<R>): Call<Either<DataSourceError, R>> =
-        EitherCall(call, responseType)
+    override fun adapt(call: Call<R>): Call<Either<DataSourceError, R>> = EitherCall(call, responseType)
 
     override fun responseType(): Type = responseType
 }
 
 @Suppress("ReturnCount")
-private class EitherCall<R>(
-    private val delegate: Call<R>,
-    private val successType: Type
-) : Call<Either<DataSourceError, R>> {
+private class EitherCall<R>(private val delegate: Call<R>, private val successType: Type) :
+    Call<Either<DataSourceError, R>> {
 
     override fun enqueue(callback: Callback<Either<DataSourceError, R>>) = delegate.enqueue(
         object : Callback<R> {
@@ -42,14 +37,16 @@ private class EitherCall<R>(
                     is HttpException -> DataSourceError.ApiError(
                         throwable.code(),
                         throwable.response()?.errorBody().toString(),
-                        throwable
+                        throwable,
                     )
+
                     is IOException -> DataSourceError.NetworkError(throwable)
+
                     else -> DataSourceError.UnknownError(throwable)
                 }
                 callback.onResponse(this@EitherCall, Response.success(Either.Left(error)))
             }
-        }
+        },
     )
 
     private fun Response<R>.toEither(): Either<DataSourceError, R> {
@@ -73,15 +70,11 @@ private class EitherCall<R>(
         }
     }
 
-    override fun clone(): Call<Either<DataSourceError, R>> =
-        EitherCall(delegate = delegate.clone(), successType)
+    override fun clone(): Call<Either<DataSourceError, R>> = EitherCall(delegate = delegate.clone(), successType)
 
-    override fun execute(): Response<Either<DataSourceError, R>> =
-        Response.success(delegate.execute().toEither())
+    override fun execute(): Response<Either<DataSourceError, R>> = Response.success(delegate.execute().toEither())
 
-    override fun isExecuted(): Boolean {
-        return delegate.isExecuted
-    }
+    override fun isExecuted(): Boolean = delegate.isExecuted
 
     override fun cancel() {
         delegate.cancel()
@@ -97,11 +90,7 @@ private class EitherCall<R>(
 @Suppress("ReturnCount")
 class EitherCallAdapterFactory : CallAdapter.Factory() {
 
-    override fun get(
-        returnType: Type,
-        annotations: Array<Annotation>,
-        retrofit: Retrofit
-    ): CallAdapter<*, *>? {
+    override fun get(returnType: Type, annotations: Array<Annotation>, retrofit: Retrofit): CallAdapter<*, *>? {
         if (getRawType(returnType) != Call::class.java) return null
         check(returnType is ParameterizedType) { "Return type must be a parameterized type." }
 

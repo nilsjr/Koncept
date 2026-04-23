@@ -49,14 +49,10 @@ private val targets = listOf(
     Target.DARK_MUTED,
 )
 
-const val duration = 1200L
+const val DURATION = 1200L
 
 @Composable
-fun ImageDetailScreen(
-    id: String,
-    modifier: Modifier = Modifier,
-    imageModifier: Modifier = Modifier,
-) {
+fun ImageDetailScreen(id: String, modifier: Modifier = Modifier, imageModifier: Modifier = Modifier) {
     var palette: Palette? by remember { mutableStateOf(null) }
     var index by remember { mutableIntStateOf(0) }
     var bgColor by remember { mutableStateOf(Color.White) }
@@ -74,12 +70,12 @@ fun ImageDetailScreen(
     }
     val animatedColor = animateColorAsState(
         targetValue = bgColor,
-        animationSpec = tween(duration.toInt())
+        animationSpec = tween(DURATION.toInt()),
     )
 
     LaunchedEffect(colors, bgColor) {
         if (colors.isNotEmpty()) {
-            delay(duration)
+            delay(DURATION)
             if (index == colors.lastIndex) {
                 index = 0
             } else {
@@ -92,7 +88,7 @@ fun ImageDetailScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(animatedColor.value)
+            .background(animatedColor.value),
     ) {
         if (id.isNotEmpty()) {
             val pxValue = with(LocalDensity.current) { 16.dp.toPx() }
@@ -121,7 +117,7 @@ fun ImageDetailScreen(
                             // do nothing
                         }
                     }
-                }
+                },
             )
         } else {
             Text(text = "no image available", modifier = Modifier.align(Alignment.Center))
@@ -129,13 +125,13 @@ fun ImageDetailScreen(
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .align(Alignment.BottomCenter)
+                .align(Alignment.BottomCenter),
         ) {
             colors.forEach {
                 Box(
                     modifier = Modifier
                         .size(30.dp)
-                        .background(it)
+                        .background(it),
                 )
             }
         }

@@ -10,20 +10,20 @@ import de.nilsdruyen.koncept.dogs.entity.BreedId
 
 object BreedDetailsRoute : KonceptNavRoute.NestedNavRoute {
 
-    private const val breedIdArg = "breedId"
+    private const val BREED_ID_ARG = "breedId"
 
     override val route: String = "breed_detail"
 
     override fun pathParameters(): List<NamedNavArgument> = listOf(
-        navArgument(breedIdArg) {
+        navArgument(BREED_ID_ARG) {
             type = NavType.IntType
-        }
+        },
     )
 
-    fun createRoute(graph: KonceptNavRoute.GraphNavRoute, id: BreedId): KonceptNavDestination.NestedNavDestination {
+    fun createRoute(id: BreedId): KonceptNavDestination.NestedNavDestination {
 //        return KonceptNavDestination.NestedNavDestination("${graph.route}/$route/${id.value}")
         return KonceptNavDestination.NestedNavDestination("$route/${id.value}")
     }
 
-    fun fromSavedState(savedStateHandle: SavedStateHandle): BreedId = BreedId(savedStateHandle[breedIdArg] ?: -1)
+    fun fromSavedState(savedStateHandle: SavedStateHandle): BreedId = BreedId(savedStateHandle[BREED_ID_ARG] ?: -1)
 }

@@ -21,7 +21,7 @@ data class BreedWebEntity(
     @Json(name = "country_code")
     val countryCode: String?,
     @Json(name = "image")
-    val image: ImageWebEntity?
+    val image: ImageWebEntity?,
 )
 
 @JsonClass(generateAdapter = true)

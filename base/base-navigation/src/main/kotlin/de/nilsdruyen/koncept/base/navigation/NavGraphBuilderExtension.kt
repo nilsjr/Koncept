@@ -14,10 +14,7 @@ import androidx.navigation.navigation
 
 const val FULLSCREEN_NAVIGATION_KEY = "FULLSCREEN"
 
-fun NavGraphBuilder.navigation(
-    navRoute: KonceptNavRoute.GraphNavRoute,
-    builder: NavGraphBuilder.() -> Unit,
-) {
+fun NavGraphBuilder.navigation(navRoute: KonceptNavRoute.GraphNavRoute, builder: NavGraphBuilder.() -> Unit) {
     navigation(
         route = navRoute.getGraphRoute(),
         startDestination = navRoute.getStartDestination(),
@@ -39,7 +36,7 @@ fun NavGraphBuilder.konceptComposable(
             navArgument(FULLSCREEN_NAVIGATION_KEY) {
                 type = NavType.BoolType
                 defaultValue = true
-            }
+            },
         ),
         deepLinks = navRoute.deepLinks(),
         enterTransition = enterTransition,
@@ -65,7 +62,7 @@ fun NavGraphBuilder.konceptComposable(
             navArgument(FULLSCREEN_NAVIGATION_KEY) {
                 type = NavType.BoolType
                 defaultValue = true
-            }
+            },
         ),
         deepLinks = navRoute.deepLinks(),
         enterTransition = enterTransition,

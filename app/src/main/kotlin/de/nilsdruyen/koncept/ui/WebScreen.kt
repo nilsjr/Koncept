@@ -26,12 +26,12 @@ fun OwnWebView(modifier: Modifier = Modifier) {
             WebView(context).apply {
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                 )
                 webViewClient = WebViewClient()
                 settings.javaScriptEnabled = true
             }
         },
-        update = { webView -> webView.loadUrl("file:///android_asset/index.html") }
+        update = { webView -> webView.loadUrl("file:///android_asset/index.html") },
     )
 }

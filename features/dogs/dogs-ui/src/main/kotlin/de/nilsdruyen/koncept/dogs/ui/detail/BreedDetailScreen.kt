@@ -60,9 +60,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun BreedDetailScreen(
     showImageDetail: (id: String) -> Unit,
-    viewModel: BreedDetailViewModel = hiltViewModel(),
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
+    viewModel: BreedDetailViewModel = hiltViewModel(),
 ) {
     val composeScope = rememberCoroutineScope()
     val scrollState = rememberTopAppBarState()
@@ -91,10 +91,10 @@ fun BreedDetailScreen(
                             } else {
                                 Icons.Default.FavoriteBorder
                             },
-                            contentDescription = "Set Favorite"
+                            contentDescription = "Set Favorite",
                         )
                     }
-                }
+                },
             )
         },
         content = {
@@ -107,7 +107,7 @@ fun BreedDetailScreen(
                 sharedTransitionScope = sharedTransitionScope,
                 animatedContentScope = animatedContentScope,
             )
-        }
+        },
     )
 }
 
@@ -115,9 +115,9 @@ fun BreedDetailScreen(
 private fun BreedDetailContainer(
     uiState: BreedDetailState,
     onImageClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
+    modifier: Modifier = Modifier,
 ) {
     Crossfade(targetState = uiState) {
         when {
@@ -131,10 +131,10 @@ private fun BreedDetailContainer(
                                 Modifier
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
-                                    .padding(8.dp)
+                                    .padding(8.dp),
                             )
                         }
-                    }
+                    },
                 )
             }
 
@@ -144,17 +144,17 @@ private fun BreedDetailContainer(
                         text = "No doggo images!",
                         modifier = Modifier
                             .padding(16.dp)
-                            .align(Alignment.Center)
+                            .align(Alignment.Center),
                     )
                 }
             }
 
             else -> BreedImageList(
                 list = it.images,
-                onImageClick,
-                modifier,
-                sharedTransitionScope,
-                animatedContentScope
+                onImageClick = onImageClick,
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
+                modifier = modifier,
             )
         }
     }
@@ -164,9 +164,9 @@ private fun BreedDetailContainer(
 private fun BreedImageList(
     list: ImmutableList<BreedImage>,
     onImageClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
+    modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
         itemsIndexed(list.items) { index, item ->
@@ -176,8 +176,8 @@ private fun BreedImageList(
                     onImageClick = { onImageClick(item.id) },
                     modifier = Modifier.sharedElement(
                         sharedTransitionScope.rememberSharedContentState(key = "image-${item.id}"),
-                        animatedVisibilityScope = animatedContentScope
-                    )
+                        animatedVisibilityScope = animatedContentScope,
+                    ),
                 )
             }
         }
@@ -198,14 +198,14 @@ private fun BreedImage(url: String, onImageClick: () -> Unit, modifier: Modifier
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(1f)
-            .padding(8.dp)
+            .padding(8.dp),
     ) {
         val state = painter.state.collectAsStateWithLifecycle()
         if (state.value is AsyncImagePainter.State.Loading || state.value is AsyncImagePainter.State.Error) {
             ImagePlaceholder(Modifier.fillMaxSize())
         } else {
             SubcomposeAsyncImageContent(
-                modifier = Modifier.clickable { onImageClick() }
+                modifier = Modifier.clickable { onImageClick() },
             )
         }
     }
@@ -220,6 +220,6 @@ private fun ImagePlaceholder(modifier: Modifier = Modifier) {
                 visible = true,
                 color = Color.LightGray,
                 highlight = PlaceholderHighlight.shimmer(highlightColor = Color.White),
-            )
+            ),
     )
 }
