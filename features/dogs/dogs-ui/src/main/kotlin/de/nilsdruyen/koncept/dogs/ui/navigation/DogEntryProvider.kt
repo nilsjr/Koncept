@@ -7,7 +7,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import de.nilsdruyen.koncept.base.navigation.Navigator
-import de.nilsdruyen.koncept.dogs.entity.BreedId
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetailScreen
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetailViewModel
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
@@ -27,7 +26,7 @@ fun EntryProviderScope<NavKey>.dogRoutes(
     entry<DogListRoute> {
         val sortType = remember { mutableIntStateOf(1) }
         DogListScreen(
-            sortTypeState = sortType,
+            sortTypeState = sortType.intValue,
             showDetail = { id ->
                 navigator.goTo(DogDetailRoute(id.value))
             },
