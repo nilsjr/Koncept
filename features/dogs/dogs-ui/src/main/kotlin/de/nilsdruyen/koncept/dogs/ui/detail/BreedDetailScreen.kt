@@ -151,10 +151,10 @@ private fun BreedDetailContainer(
 
             else -> BreedImageList(
                 list = it.images,
-                onImageClick,
-                modifier,
-                sharedTransitionScope,
-                animatedContentScope,
+                onImageClick = onImageClick,
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
+                modifier = modifier,
             )
         }
     }
