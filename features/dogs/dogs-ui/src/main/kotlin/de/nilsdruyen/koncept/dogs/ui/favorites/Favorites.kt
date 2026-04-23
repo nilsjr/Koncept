@@ -33,7 +33,7 @@ import de.nilsdruyen.koncept.dogs.ui.favorites.components.DogFavoriteItem
 fun Favorites(showBreed: (Int) -> Unit, viewModel: FavoritesViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state.showBreed) {
+    LaunchedEffect(state.showBreed, showBreed) {
         state.showBreed?.let {
             showBreed(it)
             viewModel.sendIntent(FavoritesIntent.NavigationConsumed)

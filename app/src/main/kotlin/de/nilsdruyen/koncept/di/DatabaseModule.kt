@@ -22,7 +22,8 @@ object DatabaseModule {
     @Singleton
     fun provideAppDatabase(application: Application, moshi: Moshi): KonceptDatabase = Room.databaseBuilder(
         application,
-        KonceptDatabase::class.java, "koncept",
+        KonceptDatabase::class.java,
+        "koncept",
     )
         .addTypeConverter(IntRangeConverter())
         .addTypeConverter(StringListConverter(moshi))

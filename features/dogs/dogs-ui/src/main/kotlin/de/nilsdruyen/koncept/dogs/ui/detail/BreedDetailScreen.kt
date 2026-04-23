@@ -60,9 +60,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun BreedDetailScreen(
     showImageDetail: (id: String) -> Unit,
-    viewModel: BreedDetailViewModel = hiltViewModel(),
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
+    viewModel: BreedDetailViewModel = hiltViewModel(),
 ) {
     val composeScope = rememberCoroutineScope()
     val scrollState = rememberTopAppBarState()
@@ -115,9 +115,9 @@ fun BreedDetailScreen(
 private fun BreedDetailContainer(
     uiState: BreedDetailState,
     onImageClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
+    modifier: Modifier = Modifier,
 ) {
     Crossfade(targetState = uiState) {
         when {
@@ -164,9 +164,9 @@ private fun BreedDetailContainer(
 private fun BreedImageList(
     list: ImmutableList<BreedImage>,
     onImageClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
+    modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
         itemsIndexed(list.items) { index, item ->

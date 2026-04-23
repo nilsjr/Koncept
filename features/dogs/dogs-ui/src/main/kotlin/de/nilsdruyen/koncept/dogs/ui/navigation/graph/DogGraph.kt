@@ -19,7 +19,7 @@ fun NavGraphBuilder.breedTopLevelGraph(onNavigate: NavigateTo, nestedGraphs: Nes
             val sortTypeState =
                 it.savedStateHandle.getStateFlow(BreedListRoute.SORT_TYPE_RESULT, 0).collectAsStateWithLifecycle()
             DogListScreen(
-                sortTypeState = sortTypeState,
+                sortTypeState = sortTypeState.value,
                 showDetail = { id ->
                     onNavigate(BreedDetailsRoute.createRoute(id))
                 },

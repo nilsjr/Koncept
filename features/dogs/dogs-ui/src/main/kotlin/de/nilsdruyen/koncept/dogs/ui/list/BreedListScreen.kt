@@ -31,7 +31,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,14 +59,14 @@ import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable
 fun DogListScreen(
-    sortTypeState: State<Int>,
+    sortTypeState: Int,
     showDetail: (BreedId) -> Unit,
     showSortDialog: (BreedSortType) -> Unit,
     viewModel: DogListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state.navigateTo) {
+    LaunchedEffect(state.navigateTo, showDetail) {
         val id = state.navigateTo
         if (id != null) {
             viewModel.sendIntent(DogListIntent.NavigationConsumed)
@@ -80,8 +79,8 @@ fun DogListScreen(
         onStopOrDispose { }
     }
 
-    LaunchedEffect(sortTypeState.value) {
-        viewModel.sendIntent(DogListIntent.SortTypeChanged(BreedSortType.entries[sortTypeState.value]))
+    LaunchedEffect(sortTypeState) {
+        viewModel.sendIntent(DogListIntent.SortTypeChanged(BreedSortType.entries[sortTypeState]))
     }
 
     DogListScreen(
