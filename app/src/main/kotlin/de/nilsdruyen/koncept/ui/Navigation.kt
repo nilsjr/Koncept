@@ -30,13 +30,8 @@ import de.nilsdruyen.koncept.base.navigation.Navigator
 import de.nilsdruyen.koncept.base.navigation.TopLevelRoute
 import de.nilsdruyen.koncept.base.navigation.rememberNavigator
 import de.nilsdruyen.koncept.design.system.Icon
-import de.nilsdruyen.koncept.dogs.ui.favorites.Favorites
-import de.nilsdruyen.koncept.dogs.ui.navigation.DogDetailRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.DogListRoute
-import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.dogRoutes
-import de.nilsdruyen.koncept.domain.Logger.Companion.log
-import de.nilsdruyen.koncept.navigation.WebRoute
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 
 @OptIn(
@@ -101,16 +96,6 @@ fun MainBottomBarScreen(
             ),
             entryProvider = entryProvider {
                 dogRoutes(navigator, sharedTransitionScope)
-                entry<FavoritesRoute> {
-                    Favorites(
-                        showBreed = {
-                            navigator.goTo(DogDetailRoute(it))
-                        }
-                    )
-                }
-                entry<WebRoute> {
-                    WebScreen()
-                }
             }
         )
     }

@@ -9,15 +9,22 @@ import androidx.navigation3.runtime.NavKey
 import de.nilsdruyen.koncept.base.navigation.Navigator
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetailScreen
 import de.nilsdruyen.koncept.dogs.ui.detail.BreedDetailViewModel
+import de.nilsdruyen.koncept.dogs.ui.favorites.Favorites
+import de.nilsdruyen.koncept.dogs.ui.image.ImageDetailScreen
 import de.nilsdruyen.koncept.dogs.ui.list.DogListScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
 data object DogListRoute : NavKey
+
+@Serializable
 data object FavoritesRoute : NavKey
 
 @Serializable
 data class DogDetailRoute(val id: Int) : NavKey
+
+@Serializable
+data class ImageRoute(val id: String) : NavKey
 
 fun EntryProviderScope<NavKey>.dogRoutes(
     navigator: Navigator,
@@ -45,8 +52,18 @@ fun EntryProviderScope<NavKey>.dogRoutes(
             viewModel = viewModel,
             sharedTransitionScope = sharedTransitionScope,
             showImageDetail = {
-//                navController.navigate(ImageRoute(it))
+                navigator.goTo(ImageRoute(it))
             },
+        )
+    }
+    entry<ImageRoute> { key ->
+        ImageDetailScreen(id = key.id)
+    }
+    entry<FavoritesRoute> {
+        Favorites(
+            showBreed = {
+                navigator.goTo(DogDetailRoute(it))
+            }
         )
     }
 }

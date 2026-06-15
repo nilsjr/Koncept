@@ -1,11 +1,11 @@
 package de.nilsdruyen.koncept.dogs.ui.detail
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import arrow.core.Either
 import de.nilsdruyen.koncept.dogs.domain.usecase.GetBreedImageListUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.IsFavoriteFlowUseCase
 import de.nilsdruyen.koncept.dogs.domain.usecase.UpdateFavoriteBreedUseCase
+import de.nilsdruyen.koncept.dogs.ui.navigation.DogDetailRoute
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -35,7 +35,7 @@ internal class BreedDetailViewModelTest {
     @BeforeEach
     fun setup() {
         viewModel = BreedDetailViewModel(
-            savedStateHandle = SavedStateHandle(mapOf("breedId" to 1)),
+            route = DogDetailRoute(1),
             getBreedImageListUseCase = getBreedImageListUseCase,
             updateFavoriteBreedUseCase = updateFavoriteBreedUseCase,
             isFavoriteFlowUseCase = isFavoriteFlowUseCase,
