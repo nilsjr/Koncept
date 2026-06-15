@@ -1,6 +1,5 @@
 package de.nilsdruyen.koncept.dogs.ui.detail
 
-import androidx.lifecycle.SavedStateHandle
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,7 +15,6 @@ import de.nilsdruyen.koncept.dogs.entity.BreedImage
 import de.nilsdruyen.koncept.dogs.ui.navigation.DogDetailRoute
 import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.Logger
-import javax.inject.Inject
 
 @HiltViewModel(assistedFactory = BreedDetailViewModel.Factory::class)
 class BreedDetailViewModel @AssistedInject constructor(

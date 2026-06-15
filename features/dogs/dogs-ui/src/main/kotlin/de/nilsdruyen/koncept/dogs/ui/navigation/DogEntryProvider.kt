@@ -26,10 +26,7 @@ data class DogDetailRoute(val id: Int) : NavKey
 @Serializable
 data class ImageRoute(val id: String) : NavKey
 
-fun EntryProviderScope<NavKey>.dogRoutes(
-    navigator: Navigator,
-    sharedTransitionScope: SharedTransitionScope,
-) {
+fun EntryProviderScope<NavKey>.dogRoutes(navigator: Navigator, sharedTransitionScope: SharedTransitionScope) {
     entry<DogListRoute> {
         val sortType = remember { mutableIntStateOf(1) }
         DogListScreen(
@@ -39,14 +36,14 @@ fun EntryProviderScope<NavKey>.dogRoutes(
             },
             showSortDialog = { type ->
                 //                        onNavigate(BreedListSortDialogRoute.createRoute(BreedListRoute, type))
-            }
+            },
         )
     }
     entry<DogDetailRoute> { key ->
         val viewModel = hiltViewModel<BreedDetailViewModel, BreedDetailViewModel.Factory>(
             creationCallback = { factory ->
                 factory.create(key)
-            }
+            },
         )
         BreedDetailScreen(
             viewModel = viewModel,
@@ -63,7 +60,7 @@ fun EntryProviderScope<NavKey>.dogRoutes(
         Favorites(
             showBreed = {
                 navigator.goTo(DogDetailRoute(it))
-            }
+            },
         )
     }
 }

@@ -15,21 +15,10 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.FavoritesRoute
 import de.nilsdruyen.koncept.domain.Logger.Companion.log
 
 @Composable
-fun rememberKonceptAppState(
-//    navController: NavHostController = rememberNavController()
-): KonceptAppState {
-//    NavigationTrackingSideEffect(navController)
-    return remember {
-        KonceptAppState()
-    }
-}
+fun rememberKonceptAppState(): KonceptAppState = remember { KonceptAppState() }
 
 @Stable
-class KonceptAppState() {
-
-//    val currentDestination: NavDestination?
-//        @Composable get() = navController
-//            .currentBackStackEntryAsState().value?.destination
+class KonceptAppState {
 
     /**
      * Top level destinations to be used in the BottomBar and NavRail
@@ -39,49 +28,15 @@ class KonceptAppState() {
             route = DogListRoute,
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedList),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.BreedListFilled),
-            iconTextId = R.string.breed_list_title
+            iconTextId = R.string.breed_list_title,
         ),
         TopLevelRoute(
             route = FavoritesRoute,
             selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Favorites),
             unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.FavoritesFilled),
-            iconTextId = R.string.favorites_title
+            iconTextId = R.string.favorites_title,
         ),
-//        TopLevelRoute(
-//            route = WebRoute.getGraphRoute(),
-//            selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Web),
-//            unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.WebFilled),
-//            iconTextId = R.string.web_title
-//        ),
     )
-
-//    fun navigate(destination: KonceptNavDestination) {
-//        when (destination) {
-//            is KonceptNavDestination.TopLevelGraphDestination -> {
-//                if (destination.route != navController.currentDestination?.route) {
-//                    navController.navigate(destination.route) {
-//                        popUpTo(navController.graph.findStartDestination().id) {
-//                            saveState = true
-//                        }
-//                        // Avoid multiple copies of the same destination when
-//                        // reselecting the same item
-//                        launchSingleTop = true
-//                        // Restore state when reselecting a previously selected item
-//                        restoreState = true
-//                    }
-//                } else {
-//                    // same top level destination do nothing
-//                }
-//            }
-//            is KonceptNavDestination.GraphDestination -> navController.navigate(destination.route)
-//            is KonceptNavDestination.NestedGraphDestination -> navController.navigate(destination.route)
-//            is KonceptNavDestination.NestedNavDestination -> navController.navigate(destination.route)
-//        }
-//    }
-//
-//    fun onBackClick() {
-//        navController.popBackStack()
-//    }
 }
 
 @Composable
