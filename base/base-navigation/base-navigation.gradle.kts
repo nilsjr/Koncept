@@ -10,7 +10,7 @@ configure<LibraryExtension> {
 dependencies {
     implementation(projects.design.designSystem)
 
-    api(libs.hilt.navigation.compose)
+    api(libs.hilt.lifecycle.viewmodel.compose)
 
     api(libs.androidx.navigation3.runtime)
     api(libs.androidx.navigation3.ui)
