@@ -29,11 +29,13 @@ import de.nilsdruyen.koncept.base.navigation.rememberNavigator
 import de.nilsdruyen.koncept.design.system.Icon
 import de.nilsdruyen.koncept.dogs.ui.navigation.DogListRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.dogRoutes
+import de.nilsdruyen.koncept.navigation.DeeplinkRoute
+import de.nilsdruyen.koncept.navigation.WebRoute
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 
 @Composable
-fun KonceptApp() {
-    val navigator = rememberNavigator(DogListRoute)
+fun KonceptApp(deeplink: NavKey? = null) {
+    val navigator = rememberNavigator(DogListRoute, extraDestinations = listOfNotNull(deeplink))
     SharedTransitionLayout {
         MainBottomBarScreen(navigator, this)
     }
@@ -71,6 +73,12 @@ fun MainBottomBarScreen(navigator: Navigator, sharedTransitionScope: SharedTrans
             ),
             entryProvider = entryProvider {
                 dogRoutes(navigator, sharedTransitionScope)
+                entry<WebRoute> {
+                    WebScreen()
+                }
+                entry<DeeplinkRoute> { key ->
+                    DeeplinkSample(route = key)
+                }
             },
         )
     }

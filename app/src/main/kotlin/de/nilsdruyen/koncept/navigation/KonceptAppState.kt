@@ -34,5 +34,12 @@ class KonceptAppState {
             iconTextId = R.string.favorites_title,
             testTag = "favorites_graph",
         ),
+        TopLevelRoute(
+            route = WebRoute,
+            selectedIcon = Icon.ImageVectorIcon(KonceptIcons.Web),
+            unselectedIcon = Icon.ImageVectorIcon(KonceptIcons.WebFilled),
+            iconTextId = R.string.web_title,
+            testTag = "web_graph",
+        ),
     )
 }
