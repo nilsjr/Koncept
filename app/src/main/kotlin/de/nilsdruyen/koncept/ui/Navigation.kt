@@ -14,7 +14,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -32,9 +31,6 @@ import de.nilsdruyen.koncept.dogs.ui.navigation.DogListRoute
 import de.nilsdruyen.koncept.dogs.ui.navigation.dogRoutes
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-)
 @Composable
 fun KonceptApp() {
     val navigator = rememberNavigator(DogListRoute)
@@ -46,18 +42,21 @@ fun KonceptApp() {
 @Composable
 fun MainBottomBarScreen(navigator: Navigator, sharedTransitionScope: SharedTransitionScope) {
     val state = rememberKonceptAppState()
+    val currentDestination = navigator.backStack.last()
+    val isTopLevelDestination = state.topLevelDestinations.any { it.route == currentDestination }
 
     Scaffold(
-        modifier = Modifier,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
-            KonceptBottomBar(
-                destinations = state.topLevelDestinations,
-                onNavigateToDestination = {
-                    navigator.goTo(it)
-                },
-                currentDestination = navigator.backStack.last(),
-            )
+            if (isTopLevelDestination) {
+                KonceptBottomBar(
+                    destinations = state.topLevelDestinations,
+                    onNavigateToDestination = {
+                        navigator.goToTopLevel(it)
+                    },
+                    currentDestination = currentDestination,
+                )
+            }
         },
     ) { padding ->
         NavDisplay(
@@ -81,7 +80,7 @@ fun MainBottomBarScreen(navigator: Navigator, sharedTransitionScope: SharedTrans
 private fun KonceptBottomBar(
     destinations: List<TopLevelRoute>,
     onNavigateToDestination: (NavKey) -> Unit,
-    currentDestination: NavKey?,
+    currentDestination: NavKey,
 ) {
     NavigationBar {
         destinations.forEach { item ->
@@ -107,7 +106,7 @@ private fun KonceptBottomBar(
                 label = {
                     Text(text = stringResource(id = item.iconTextId))
                 },
-                modifier = Modifier.testTag(item.route.toString()),
+                modifier = Modifier.testTag(item.testTag),
             )
         }
     }
