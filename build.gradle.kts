@@ -18,6 +18,16 @@ plugins {
     id("de.nilsdruyen.plugin.root")
 }
 
+// Hilt's bundled kotlin-metadata-jvm only supports up to 2.3.0; force the version
+// that matches the Kotlin compiler so KAPT annotation processing doesn't fail.
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains.kotlin:kotlin-metadata-jvm:${libs.versions.kotlin.get()}")
+        }
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(layout.buildDirectory)
 }

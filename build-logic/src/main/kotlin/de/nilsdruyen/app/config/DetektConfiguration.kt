@@ -21,6 +21,7 @@ internal fun Project.applyDetekt() {
         config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
         buildUponDefaultConfig.set(true)
     }
+    dependencies.add("detektPlugins", libs.findLibrary("detekt.composeRules").get())
 }
 
 internal fun Project.applyDetektFormatting() {
