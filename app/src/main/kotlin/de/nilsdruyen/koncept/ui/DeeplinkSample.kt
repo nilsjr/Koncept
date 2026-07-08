@@ -7,17 +7,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.nilsdruyen.koncept.navigation.DeeplinkRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
 
 /**
  * Deeplink sample
@@ -28,7 +30,14 @@ import javax.inject.Inject
  */
 
 @Composable
-fun DeeplinkSample(viewModel: DeeplinkViewModel = hiltViewModel()) {
+fun DeeplinkSample(
+    route: DeeplinkRoute,
+    viewModel: DeeplinkViewModel = hiltViewModel<DeeplinkViewModel, DeeplinkViewModel.Factory>(
+        creationCallback = { factory ->
+            factory.create(route)
+        },
+    ),
+) {
     val date = viewModel.dateState.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -39,21 +48,28 @@ fun DeeplinkSample(viewModel: DeeplinkViewModel = hiltViewModel()) {
 private const val INPUT_DATE = "uuuu-MM-dd'T'HH:mm:ss[.SSSX][Z][ZZZZZ]"
 internal val inputFormatter = DateTimeFormatter.ofPattern(INPUT_DATE)
 
-@HiltViewModel
-class DeeplinkViewModel @Inject constructor(savedStateHandle: SavedStateHandle) : ViewModel() {
+@HiltViewModel(assistedFactory = DeeplinkViewModel.Factory::class)
+class DeeplinkViewModel @AssistedInject constructor(@Assisted route: DeeplinkRoute) : ViewModel() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(route: DeeplinkRoute): DeeplinkViewModel
+    }
 
     val dateState = MutableStateFlow("")
 
     init {
-        val rawDate = savedStateHandle.get<String>("rawDate") ?: "empty"
-        val rawDate2 = savedStateHandle.get<String>("rawDate2") ?: "empty"
+        val rawDate = route.rawDate.ifEmpty { "empty" }
+        val rawDate2 = route.rawDate2.ifEmpty { "empty" }
 
         dateState.value = "$rawDate - $rawDate2"
 
-        viewModelScope.launch {
-            delay(2000)
-            val date = OffsetDateTime.parse(rawDate2, inputFormatter)
-            dateState.value = "$rawDate - ${date.month.name}"
+        if (route.rawDate2.isNotEmpty()) {
+            viewModelScope.launch {
+                delay(2000)
+                val date = OffsetDateTime.parse(route.rawDate2, inputFormatter)
+                dateState.value = "$rawDate - ${date.month.name}"
+            }
         }
     }
 }
