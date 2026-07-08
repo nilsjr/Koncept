@@ -7,5 +7,6 @@ data class TopLevelRoute(
     val route: NavKey,
     val selectedIcon: Icon,
     val unselectedIcon: Icon,
-    val iconTextId: Int
+    val iconTextId: Int,
+    val testTag: String,
 )
