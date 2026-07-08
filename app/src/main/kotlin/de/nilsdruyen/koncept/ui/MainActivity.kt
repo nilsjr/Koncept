@@ -40,7 +40,8 @@ class MainActivity : ComponentActivity() {
 
 private fun Uri.toDeeplinkRoute(): DeeplinkRoute? {
     if (scheme != "koncept" || host != "deeplink") return null
-    val rawDate = pathSegments.firstOrNull() ?: return null
 
-    return DeeplinkRoute(rawDate = rawDate, rawDate2 = getQueryParameter("rawDate2").orEmpty())
+    return pathSegments.firstOrNull()?.let { rawDate ->
+        DeeplinkRoute(rawDate = rawDate, rawDate2 = getQueryParameter("rawDate2").orEmpty())
+    }
 }

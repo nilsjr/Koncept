@@ -30,12 +30,14 @@ import java.time.format.DateTimeFormatter
  */
 
 @Composable
-fun DeeplinkSample(route: DeeplinkRoute) {
-    val viewModel = hiltViewModel<DeeplinkViewModel, DeeplinkViewModel.Factory>(
+fun DeeplinkSample(
+    route: DeeplinkRoute,
+    viewModel: DeeplinkViewModel = hiltViewModel<DeeplinkViewModel, DeeplinkViewModel.Factory>(
         creationCallback = { factory ->
             factory.create(route)
         },
-    )
+    ),
+) {
     val date = viewModel.dateState.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize()) {
