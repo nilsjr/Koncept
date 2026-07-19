@@ -23,10 +23,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
  * keep their `ViewModel`s and `rememberSaveable` state alive, so returning to a tab restores exactly
  * where the user left it (including any screens they had navigated to within that tab).
  */
-class Navigator(
-    val backStack: NavBackStack<NavKey>,
-    private val topLevelStackSizes: MutableList<Int>,
-) {
+class Navigator(val backStack: NavBackStack<NavKey>, private val topLevelStackSizes: MutableList<Int>) {
 
     /** Navigates within the current top level tab. */
     fun goTo(destination: NavKey) {
@@ -41,15 +38,16 @@ class Navigator(
      */
     fun goToTopLevel(destination: NavKey) {
         val currentIndex = topLevelStackSizes.lastIndex
-        val existingIndex = topLevelIndexOf(destination)
-        when (existingIndex) {
+        when (val existingIndex = topLevelIndexOf(destination)) {
             currentIndex -> return
-            -1 -> {
-                backStack.add(destination)
-                topLevelStackSizes.add(1)
-            }
+            -1 -> startTopLevel(destination)
             else -> moveTopLevelToEnd(existingIndex)
         }
+    }
+
+    private fun startTopLevel(destination: NavKey) {
+        backStack.add(destination)
+        topLevelStackSizes.add(1)
     }
 
     /** Pops the visible entry. Guards against emptying the stack, which `NavDisplay` forbids. */
