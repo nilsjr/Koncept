@@ -1,73 +1,121 @@
-# Project Overview: Koncept
+# AGENTS.md
 
-This project is an Android "playground" application focused on dog breeds. It serves as a showcase
-for modern Android development patterns, architectural styles, and tool integrations.
+Guidance for AI agents (Claude Code, Gemini, Copilot, etc.) working with the Koncept codebase.
 
-## 🏗 Architecture
+## Project Overview
 
-The project follows **Clean Architecture** principles and is heavily **modularized** by feature and
-layer.
+Koncept is an Android "playground" application focused on dog breeds. It serves as a showcase for
+modern Android development patterns, architectural styles, and tool integrations.
 
-- **Pattern**: MVI (Model-View-Intent) implemented with **Jetpack Compose**.
-- **Module Structure**:
-    - `:app`: The main entry point and DI container.
-    - `:features:dogs:*`: Feature-specific modules split into:
-        - `dogs-domain`: Business logic and UseCases.
-        - `dogs-entity`: Domain models.
-        - `dogs-data`: Repository implementations.
-        - `dogs-cache`: Local storage (Room).
-        - `dogs-remote`: API integration (Retrofit).
-        - `dogs-ui`: Compose screens and ViewModels.
-    - `:common:*`: Shared logic for remote, cache, UI, and testing.
-    - `:design:design-system`: Reusable UI components and theme.
-    - `:base:base-navigation`: Centralized navigation logic.
-- **Dependency Injection**: [Hilt](https://dagger.dev/hilt/) for dependency management across
-  modules.
+## Setup
 
-### 🧭 Navigation
+Add your Dog API key to `local.properties` (not version controlled):
 
-Uses **Navigation 3** (`androidx.navigation3`). Screens are typed `NavKey` routes (e.g.
-`DogListRoute`, `DogDetailRoute`) registered as entries through an `EntryProviderScope` (see
-`features/dogs/dogs-ui/.../navigation/DogEntryProvider.kt`). The `:base:base-navigation` `Navigator`
-keeps a per-tab back stack — each top-level tab retains its own stack so its state survives tab
-switches — rendered by `NavDisplay`. This supersedes the earlier `KonceptNavRoute` +
-`NavGraphBuilder` graph approach, which was removed during the Navigation 3 migration.
+```
+dogApiKey=YOUR_KEY_HERE
+```
 
-## 🛠 Tech Stack
+Get a free key at https://www.thedogapi.com/ (the app consumes [thedogapi.com](https://www.thedogapi.com/) for dog breed data).
+
+## Build & Common Tasks
+
+```bash
+# Build
+./gradlew build
+gradle :app:assembleRelease -PenableReleaseSigning=true
+
+# Unit tests (all modules)
+./gradlew test
+
+# Run a single test class
+./gradlew :features:dogs:dogs-domain:test --tests "de.nilsdruyen.koncept.dogs.domain.usecase.GetDogListUseCaseImplTest"
+
+# Instrumented / UI tests
+./gradlew connectedDebugAndroidTest
+
+# Screenshot tests
+gradle debugExecuteScreenshotTests          # verify against recorded screenshots
+gradle debugExecuteScreenshotTests -Precord # record new baseline
+
+# Static analysis
+./gradlew detekt          # Kotlin linting
+./gradlew ktlintCheck     # formatting check
+./gradlew ktlintFormat    # auto-format
+
+# Dependency updates
+./gradlew dependencyUpdates
+
+# Compose compiler metrics (output in build/compose_compiler/)
+gradle dogs-ui:compileReleaseKotlin -PcomposeCompilerReports=true -Pandroidx.enableComposeCompilerReports=true -Pandroidx.enableComposeCompilerMetrics=true --rerun-tasks
+```
+
+## Tech Stack
 
 - **Language**: Kotlin
-- **UI Framework**: Jetpack Compose (with Material 3)
+- **UI Framework**: Jetpack Compose (Material 3)
 - **Asynchronous Programming**: Kotlin Coroutines & Flow
 - **Networking**: Retrofit & OkHttp
 - **Serialization**: Moshi
 - **Local Database**: Room
 - **Image Loading**: Coil
-- **Functional Programming**: Arrow (core & retrofit integration)
+- **Functional Programming**: Arrow (core & Retrofit integration)
 - **Data Storage**: DataStore (Preferences)
+- **Dependency Injection**: Hilt
 - **Logging**: Timber
 - **Animations**: Lottie
 
-## ⚙️ Build Configuration
+## Architecture
 
-- **Gradle Build System**: Kotlin DSL (`.gradle.kts` files).
-- **Dependency Management**: Centralized via `libs.versions.toml` (Version Catalog).
-- **Custom Logic**: Uses a `build-logic` composite build to share common build configurations across
-  modules.
-- **Static Analysis**:
-    - [Detekt](https://detekt.dev/) for Kotlin linting.
-- **Performance**:
-    - [Baseline Profiles](https://developer.android.com/topic/performance/baselineprofiles) for
-      startup optimization.
-    - Compose Compiler metrics and reports enabled.
+**Pattern**: Clean Architecture + MVI, all UI in Jetpack Compose. The project is heavily
+modularized by feature and layer.
 
-## 🧪 Testing Strategy
+**Dependency direction**: `dogs-ui` → `dogs-domain` ← `dogs-data` → `dogs-remote` / `dogs-cache`
 
-- **Unit Testing**: JUnit 5 with Mockito and MockK.
-- **Flow Testing**: [Turbine](https://github.com/cashapp/turbine) for testing Coroutine Flows.
-- **Integration Testing**: Robolectric with Hilt.
-- **Code Coverage**: Kover.
-- **API Simulation**: MockWebServer for network layer tests.
+### Module structure
 
-## 🔌 External APIs
+- `:app` — Application class, Room database wiring, top-level Hilt modules (`AppModule`, `DatabaseModule`, `RemoteModule`), and the root `KonceptApp` composable hosting the Navigation 3 `NavDisplay`
+- `:features:dogs:dogs-entity` — Pure domain models (`Breed`, `BreedImage`, `BreedId`, etc.), no Android dependencies
+- `:features:dogs:dogs-domain` — Use case interfaces + implementations, `DogsRepository` interface; uses `Arrow Either<DataSourceError, T>` for results
+- `:features:dogs:dogs-data` — `DogsRepositoryImpl`; orchestrates `DogsRemoteDataSource` and `DogsCacheDataSource`
+- `:features:dogs:dogs-remote` — Retrofit `DogsApi`, `DogsRemoteDataSourceImpl`, Moshi web entities, `DogMapper`
+- `:features:dogs:dogs-cache` — Room DAOs, `DogsCacheDataSourceImpl`, cache entities and mappers
+- `:features:dogs:dogs-ui` — Compose screens, `ViewModel`s (one per screen), navigation entry providers; MVI state as `data class`, intents as `sealed interface`
+- `:features:dogs:dogs-test` / `:features:dogs:dogs-testing` — Shared test factories (`DogFactory`) and fakes for feature tests
+- `:common:common-domain` — `DataSourceError` sealed class, `DispatcherProvider`, `Logger`
+- `:common:common-remote` — `EitherCallAdapterFactory` (Arrow + Retrofit integration), shared OkHttp setup
+- `:common:common-cache` — `PreferenceController` (DataStore)
+- `:common:common-ui` — `ImmutableList` wrapper and Compose utilities
+- `:common:common-test` — `CoroutinesTestExtension` (JUnit 5), `CoroutineTestRule` (JUnit 4), `TestDispatcherProvider`
+- `:design:design-system` — Material 3 theme, reusable Compose components
+- `:base:base-navigation` — Navigation 3 `Navigator` (per-tab back stack), `TopLevelRoute`, and `NavKey`-based routing
 
-- **The Dog API**: Consumes [thedogapi.com](https://www.thedogapi.com/) for dog breed data.
+### Key patterns
+
+**Error handling**: All data-layer results are `Either<DataSourceError, T>` (Arrow). Use cases expose `Flow<Either<DataSourceError, T>>`. ViewModels call `.getOrNull()` to unwrap.
+
+**MVI in `dogs-ui`**: Each screen has a `State` data class, `Intent` sealed interface, and a `ViewModel` with a single `state: StateFlow<State>` and `sendIntent(intent)` method. State is composed via `combine(...)`.
+
+**Navigation**: Uses **Navigation 3** (`androidx.navigation3`). Screens are typed `NavKey` routes registered as entries through an `EntryProviderScope` (e.g. `dogRoutes` in `dogs-ui/.../navigation/DogEntryProvider.kt`). The `:base:base-navigation` `Navigator` keeps a per-tab back stack — each top-level tab retains its own stack so its state survives tab switches — rendered by `NavDisplay` in the app's root `KonceptApp`.
+
+**DI**: Hilt throughout. Each module exposes a `@Module` / `@InstallIn` object (e.g., `DogsDomainModule`, `DogsRemoteModule`). The `:app` module is the Hilt root.
+
+### Build logic
+
+- **Gradle Build System**: Kotlin DSL (`.gradle.kts` files); all versions managed centrally in `gradle/libs.versions.toml` (Version Catalog).
+- Convention plugins live in `build-logic/` (composite build). Apply them in module `build.gradle.kts` files:
+    - `de.nilsdruyen.plugin.library` — standard Android library
+    - `de.nilsdruyen.plugin.library.compose` — library + Compose
+    - `de.nilsdruyen.plugin.application` — application module
+- Detekt config is at `config/detekt/detekt.yml` and `config/detekt/detekt-formatting.yml`.
+- SDK versions (defined in `build-logic/.../ProjectConfig.kt`): minSdk 26, compileSdk / targetSdk 37.
+- **Performance**: [Baseline Profiles](https://developer.android.com/topic/performance/baselineprofiles) for startup optimization; Compose Compiler metrics and reports enabled.
+
+## Testing conventions
+
+- Unit tests use **JUnit 5** + `@ExtendWith(CoroutinesTestExtension::class, MockitoExtension::class)`
+- Flow assertions use **Turbine** (`flow.test { awaitItem(); awaitComplete() }`)
+- MockK or Mockito for mocking; both are present in the project
+- Integration tests use **Robolectric** + **Hilt**; test runner configured with `KonceptRunner`
+- **MockWebServer** for network-layer tests
+- Code coverage via **Kover**
+- Android 10+: run `adb shell settings put global hidden_api_policy 1` if Robolectric tests fail on hidden API access

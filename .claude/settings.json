@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/warm_gradle.sh",
+            "shell": "bash",
+            "async": true,
+            "timeout": 600,
+            "statusMessage": "Warming Gradle dependencies..."
+          }
+        ]
+      }
+    ]
+  }
+}
