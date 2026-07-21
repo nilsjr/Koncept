@@ -67,8 +67,9 @@ class DeeplinkViewModel @AssistedInject constructor(@Assisted route: DeeplinkRou
         if (route.rawDate2.isNotEmpty()) {
             viewModelScope.launch {
                 delay(2000)
-                val date = OffsetDateTime.parse(route.rawDate2, inputFormatter)
-                dateState.value = "$rawDate - ${date.month.name}"
+                runCatching { OffsetDateTime.parse(route.rawDate2, inputFormatter) }
+                    .onSuccess { date -> dateState.value = "$rawDate - ${date.month.name}" }
+                    .onFailure { dateState.value = "$rawDate - invalid" }
             }
         }
     }
