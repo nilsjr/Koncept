@@ -24,6 +24,15 @@ layer.
 - **Dependency Injection**: [Hilt](https://dagger.dev/hilt/) for dependency management across
   modules.
 
+### 🧭 Navigation
+
+Uses **Navigation 3** (`androidx.navigation3`). Screens are typed `NavKey` routes (e.g.
+`DogListRoute`, `DogDetailRoute`) registered as entries through an `EntryProviderScope` (see
+`features/dogs/dogs-ui/.../navigation/DogEntryProvider.kt`). The `:base:base-navigation` `Navigator`
+keeps a per-tab back stack — each top-level tab retains its own stack so its state survives tab
+switches — rendered by `NavDisplay`. This supersedes the earlier `KonceptNavRoute` +
+`NavGraphBuilder` graph approach, which was removed during the Navigation 3 migration.
+
 ## 🛠 Tech Stack
 
 - **Language**: Kotlin
