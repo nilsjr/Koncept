@@ -100,7 +100,7 @@ PY
   # Clear any aborted partial download from a prior session.
   rm -f "$dist_dir/$zip_name.part" "$dist_dir/$zip_name.lck"
 
-  if ! curl -fsSL -o "$dist_dir/$zip_name" "$url"; then
+  if ! curl -fsSL --connect-timeout 15 --max-time 300 -o "$dist_dir/$zip_name" "$url"; then
     echo "WARN: could not download $url" >&2
     echo "      The network policy must allow the services.gradle.org ->" >&2
     echo "      github.com release-asset redirect during env setup." >&2
@@ -108,7 +108,11 @@ PY
     return 0
   fi
 
-  unzip -q -o "$dist_dir/$zip_name" -d "$dist_dir"
+  if ! unzip -q -o "$dist_dir/$zip_name" -d "$dist_dir"; then
+    echo "WARN: failed to unzip $zip_name; leaving unprovisioned for retry" >&2
+    rm -f "$dist_dir/$zip_name"
+    return 0
+  fi
   touch "$marker"
   echo "Gradle wrapper ready: $(ls -d "$dist_dir"/*/ 2>/dev/null | head -1)"
 }

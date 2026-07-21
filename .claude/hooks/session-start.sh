@@ -23,7 +23,7 @@ if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
 fi
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || { echo "session-start: could not cd to $PROJECT_DIR" >&2; exit 1; }
 
 # --- 1. Android SDK (idempotent; container state is cached after the hook) ---
 export ANDROID_HOME="${ANDROID_HOME:-$HOME/android-sdk}"
