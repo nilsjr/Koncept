@@ -6,7 +6,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.toMutableStateList
-import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 
@@ -23,7 +22,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
  * keep their `ViewModel`s and `rememberSaveable` state alive, so returning to a tab restores exactly
  * where the user left it (including any screens they had navigated to within that tab).
  */
-class Navigator(val backStack: NavBackStack<NavKey>, private val topLevelStackSizes: MutableList<Int>) {
+class Navigator(val backStack: MutableList<NavKey>, private val topLevelStackSizes: MutableList<Int>) {
 
     /** Navigates within the current top level tab. */
     fun goTo(destination: NavKey) {
