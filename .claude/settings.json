@@ -5,11 +5,10 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/warm_gradle.sh",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh",
             "shell": "bash",
-            "async": true,
-            "timeout": 600,
-            "statusMessage": "Warming Gradle dependencies..."
+            "timeout": 1200,
+            "statusMessage": "Installing Android SDK & warming Gradle..."
           }
         ]
       }

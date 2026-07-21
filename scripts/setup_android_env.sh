@@ -7,7 +7,8 @@ set -euo pipefail
 
 ANDROID_HOME="${ANDROID_HOME:-$HOME/android-sdk}"
 CMDLINE_TOOLS_VERSION="13114758"
-PLATFORM_API="37"
+# compileSdk 37 (ProjectConfig.kt); platform packages are minor-versioned now
+PLATFORM_PACKAGE="platforms;android-37.0"
 
 echo "Installing Android SDK to $ANDROID_HOME"
 mkdir -p "$ANDROID_HOME/cmdline-tools"
@@ -21,10 +22,14 @@ if [ ! -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" ]; then
 fi
 
 SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+# "yes" exits 141 (SIGPIPE) when sdkmanager closes its stdin, which pipefail
+# would treat as a failure - judge the pipeline by sdkmanager's status only.
+set +o pipefail
 yes | "$SDKMANAGER" --licenses > /dev/null
+set -o pipefail
 "$SDKMANAGER" --install \
   "platform-tools" \
-  "platforms;android-${PLATFORM_API}"
+  "$PLATFORM_PACKAGE"
 
 # Persist environment variables for all later shells in the session.
 PROFILE="$HOME/.bashrc"
