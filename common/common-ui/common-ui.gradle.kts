@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     api(libs.androidx.compose.material.icons)
     api(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.hilt.android)

@@ -4,9 +4,9 @@ package de.nilsdruyen.koncept.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -14,85 +14,72 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import de.nilsdruyen.koncept.base.navigation.KonceptNavDestination
-import de.nilsdruyen.koncept.base.navigation.NavigateTo
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
+import de.nilsdruyen.koncept.base.navigation.Navigator
 import de.nilsdruyen.koncept.base.navigation.TopLevelRoute
+import de.nilsdruyen.koncept.base.navigation.rememberNavigator
 import de.nilsdruyen.koncept.design.system.Icon
-import de.nilsdruyen.koncept.domain.Logger.Companion.log
-import de.nilsdruyen.koncept.navigation.KonceptNavHost
-import de.nilsdruyen.koncept.navigation.RootNavHost
+import de.nilsdruyen.koncept.dogs.ui.navigation.DogListRoute
+import de.nilsdruyen.koncept.dogs.ui.navigation.dogRoutes
+import de.nilsdruyen.koncept.navigation.DeeplinkRoute
+import de.nilsdruyen.koncept.navigation.WebRoute
 import de.nilsdruyen.koncept.navigation.rememberKonceptAppState
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalMaterialNavigationApi::class,
-)
 @Composable
-fun KonceptApp() {
-    val bottomSheetNavigator = rememberBottomSheetNavigator()
-    val rootNavController = rememberNavController(bottomSheetNavigator)
-    val navController = rememberNavController(bottomSheetNavigator)
-
-    ModalBottomSheetLayout(
-        bottomSheetNavigator = bottomSheetNavigator,
-        modifier = Modifier
-            .fillMaxSize()
-            .semantics {
-                testTagsAsResourceId = true
-            },
-    ) {
-        SharedTransitionLayout {
-            RootNavHost(
-                navController = rootNavController,
-                sharedTransitionScope = this,
-            ) {
-                MainBottomBarScreen(navController, it)
-            }
-        }
+fun KonceptApp(deeplink: NavKey? = null) {
+    val navigator = rememberNavigator(DogListRoute, extraDestinations = listOfNotNull(deeplink))
+    SharedTransitionLayout {
+        MainBottomBarScreen(navigator, this)
     }
 }
 
 @Composable
-fun MainBottomBarScreen(navController: NavHostController, navigateRoot: (String) -> Unit) {
-    val state = rememberKonceptAppState(navController)
+fun MainBottomBarScreen(navigator: Navigator, sharedTransitionScope: SharedTransitionScope) {
+    val state = rememberKonceptAppState()
+    val currentDestination = navigator.backStack.last()
+    val isTopLevelDestination = state.topLevelDestinations.any { it.route == currentDestination }
+
     Scaffold(
-        modifier = Modifier,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
-            KonceptBottomBar(
-                destinations = state.topLevelDestinations,
-                onNavigateToDestination = state::navigate,
-                currentDestination = state.currentDestination,
-            )
+            if (isTopLevelDestination) {
+                KonceptBottomBar(
+                    destinations = state.topLevelDestinations,
+                    onNavigateToDestination = {
+                        navigator.goToTopLevel(it)
+                    },
+                    currentDestination = currentDestination,
+                )
+            }
         },
     ) { padding ->
-        KonceptNavHost(
-            navController = navController,
-//            onBackClick = state::onBackClick,
-            onNavigate = {
-                if (it is KonceptNavDestination.NestedNavDestination) {
-                    navigateRoot(it.route)
-                } else {
-                    state.navigate(it)
-                }
-            },
+        NavDisplay(
+            backStack = navigator.backStack,
             modifier = Modifier
                 .padding(padding)
                 .consumeWindowInsets(padding),
+            onBack = { navigator.goBack() },
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator(),
+            ),
+            entryProvider = entryProvider {
+                dogRoutes(navigator, sharedTransitionScope)
+                entry<WebRoute> {
+                    WebScreen()
+                }
+                entry<DeeplinkRoute> { key ->
+                    DeeplinkSample(route = key)
+                }
+            },
         )
     }
 }
@@ -100,19 +87,18 @@ fun MainBottomBarScreen(navController: NavHostController, navigateRoot: (String)
 @Composable
 private fun KonceptBottomBar(
     destinations: List<TopLevelRoute>,
-    onNavigateToDestination: NavigateTo,
-    currentDestination: NavDestination?,
+    onNavigateToDestination: (NavKey) -> Unit,
+    currentDestination: NavKey,
 ) {
     NavigationBar {
-        val routes = currentDestination?.hierarchy?.mapNotNull { it.route }?.toList() ?: emptyList()
-        log("nav stack $routes")
         destinations.forEach { item ->
-            val isSelected = routes.any { it == item.route }
             NavigationBarItem(
-                selected = isSelected,
-                onClick = { onNavigateToDestination(item.navigate()) },
+                selected = currentDestination == item.route,
+                onClick = { onNavigateToDestination(item.route) },
                 icon = {
-                    when (val icon = if (isSelected) item.selectedIcon else item.unselectedIcon) {
+                    val isSelected = currentDestination == item.route
+                    val icon = if (isSelected) item.selectedIcon else item.unselectedIcon
+                    when (icon) {
                         is Icon.ImageVectorIcon -> Icon(
                             imageVector = icon.imageVector,
                             contentDescription = null,
@@ -128,7 +114,7 @@ private fun KonceptBottomBar(
                 label = {
                     Text(text = stringResource(id = item.iconTextId))
                 },
-                modifier = Modifier.testTag(item.route),
+                modifier = Modifier.testTag(item.testTag),
             )
         }
     }

@@ -2,7 +2,6 @@
 
 package de.nilsdruyen.koncept.dogs.ui.detail
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -38,8 +37,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import coil3.compose.AsyncImagePainter
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
@@ -60,9 +59,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun BreedDetailScreen(
     showImageDetail: (id: String) -> Unit,
+    viewModel: BreedDetailViewModel,
     sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
-    viewModel: BreedDetailViewModel = hiltViewModel(),
 ) {
     val composeScope = rememberCoroutineScope()
     val scrollState = rememberTopAppBarState()
@@ -101,11 +99,10 @@ fun BreedDetailScreen(
             BreedDetailContainer(
                 uiState = state.value,
                 onImageClick = showImageDetail,
+                sharedTransitionScope = sharedTransitionScope,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it.dropBottomPadding()),
-                sharedTransitionScope = sharedTransitionScope,
-                animatedContentScope = animatedContentScope,
             )
         },
     )
@@ -116,10 +113,9 @@ private fun BreedDetailContainer(
     uiState: BreedDetailState,
     onImageClick: (String) -> Unit,
     sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
-    Crossfade(targetState = uiState) {
+    Crossfade(targetState = uiState, label = "detail-state") {
         when {
             it.isLoading -> {
                 LazyVerticalGrid(
@@ -153,7 +149,6 @@ private fun BreedDetailContainer(
                 list = it.images,
                 onImageClick = onImageClick,
                 sharedTransitionScope = sharedTransitionScope,
-                animatedContentScope = animatedContentScope,
                 modifier = modifier,
             )
         }
@@ -165,18 +160,17 @@ private fun BreedImageList(
     list: ImmutableList<BreedImage>,
     onImageClick: (String) -> Unit,
     sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier, content = {
-        itemsIndexed(list.items) { index, item ->
+        itemsIndexed(list.items) { _, item ->
             with(sharedTransitionScope) {
                 BreedImage(
                     url = item.url,
                     onImageClick = { onImageClick(item.id) },
                     modifier = Modifier.sharedElement(
                         sharedTransitionScope.rememberSharedContentState(key = "image-${item.id}"),
-                        animatedVisibilityScope = animatedContentScope,
+                        animatedVisibilityScope = LocalNavAnimatedContentScope.current,
                     ),
                 )
             }
