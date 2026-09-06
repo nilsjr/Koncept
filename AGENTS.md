@@ -73,13 +73,13 @@ modularized by feature and layer.
 
 ### Module structure
 
-- `:app` — Application class, Room database wiring, top-level Hilt modules (`AppModule`, `DatabaseModule`, `RemoteModule`), `KonceptNavHost` (root nav graph)
+- `:app` — Application class, Room database wiring, top-level Hilt modules (`AppModule`, `DatabaseModule`, `RemoteModule`), and the root `KonceptApp` composable hosting the Navigation 3 `NavDisplay`
 - `:features:dogs:dogs-entity` — Pure domain models (`Breed`, `BreedImage`, `BreedId`, etc.), no Android dependencies
 - `:features:dogs:dogs-domain` — Use case interfaces + implementations, `DogsRepository` interface; uses `Arrow Either<DataSourceError, T>` for results
 - `:features:dogs:dogs-data` — `DogsRepositoryImpl`; orchestrates `DogsRemoteDataSource` and `DogsCacheDataSource`
 - `:features:dogs:dogs-remote` — Retrofit `DogsApi`, `DogsRemoteDataSourceImpl`, Moshi web entities, `DogMapper`
 - `:features:dogs:dogs-cache` — Room DAOs, `DogsCacheDataSourceImpl`, cache entities and mappers
-- `:features:dogs:dogs-ui` — Compose screens, `ViewModel`s (one per screen), navigation graphs; MVI state as `data class`, intents as `sealed interface`
+- `:features:dogs:dogs-ui` — Compose screens, `ViewModel`s (one per screen), navigation entry providers; MVI state as `data class`, intents as `sealed interface`
 - `:features:dogs:dogs-test` / `:features:dogs:dogs-testing` — Shared test factories (`DogFactory`) and fakes for feature tests
 - `:common:common-domain` — `DataSourceError` sealed class, `DispatcherProvider`, `Logger`
 - `:common:common-remote` — `EitherCallAdapterFactory` (Arrow + Retrofit integration), shared OkHttp setup
@@ -87,7 +87,7 @@ modularized by feature and layer.
 - `:common:common-ui` — `ImmutableList` wrapper and Compose utilities
 - `:common:common-test` — `CoroutinesTestExtension` (JUnit 5), `CoroutineTestRule` (JUnit 4), `TestDispatcherProvider`
 - `:design:design-system` — Material 3 theme, reusable Compose components
-- `:base:base-navigation` — `KonceptNavRoute`, `TopLevelRoute`, nav graph builder extensions
+- `:base:base-navigation` — Navigation 3 `Navigator` (per-tab back stack), `TopLevelRoute`, and `NavKey`-based routing
 
 ### Key patterns
 
@@ -95,7 +95,7 @@ modularized by feature and layer.
 
 **MVI in `dogs-ui`**: Each screen has a `State` data class, `Intent` sealed interface, and a `ViewModel` with a single `state: StateFlow<State>` and `sendIntent(intent)` method. State is composed via `combine(...)`.
 
-**Navigation**: Feature nav graphs (`DogGraph`, `FavoriteGraph`) are defined in `dogs-ui/navigation/graph/` and registered into the root `KonceptNavHost`. Routes are typed objects implementing `KonceptNavRoute`.
+**Navigation**: Uses **Navigation 3** (`androidx.navigation3`). Screens are typed `NavKey` routes registered as entries through an `EntryProviderScope` (e.g. `dogRoutes` in `dogs-ui/.../navigation/DogEntryProvider.kt`). The `:base:base-navigation` `Navigator` keeps a per-tab back stack — each top-level tab retains its own stack so its state survives tab switches — rendered by `NavDisplay` in the app's root `KonceptApp`.
 
 **DI**: Hilt throughout. Each module exposes a `@Module` / `@InstallIn` object (e.g., `DogsDomainModule`, `DogsRemoteModule`). The `:app` module is the Hilt root.
 

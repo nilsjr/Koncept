@@ -4,4 +4,4 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object WebRoute : NavKey
+data class DeeplinkRoute(val rawDate: String, val rawDate2: String) : NavKey

@@ -1,5 +1,6 @@
 package de.nilsdruyen.koncept.ui
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import de.nilsdruyen.koncept.design.system.KonceptTheme
+import de.nilsdruyen.koncept.navigation.DeeplinkRoute
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -21,6 +23,8 @@ class MainActivity : ComponentActivity() {
         installSplashScreen().setKeepOnScreenCondition { !isDone.value }
         super.onCreate(savedInstanceState)
 
+        val deeplink = intent?.data?.toDeeplinkRoute()
+
         setContent {
             LaunchedEffect(Unit) {
                 // sync some stuff that is needed
@@ -28,8 +32,16 @@ class MainActivity : ComponentActivity() {
             }
 
             KonceptTheme {
-                KonceptApp()
+                KonceptApp(deeplink = deeplink)
             }
         }
+    }
+}
+
+private fun Uri.toDeeplinkRoute(): DeeplinkRoute? {
+    if (scheme != "koncept" || host != "deeplink") return null
+
+    return pathSegments.firstOrNull()?.let { rawDate ->
+        DeeplinkRoute(rawDate = rawDate, rawDate2 = getQueryParameter("rawDate2").orEmpty())
     }
 }
