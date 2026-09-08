@@ -23,7 +23,7 @@ coroutines = "1.11.0"
 detekt = "2.0.0-alpha.6"
 detektComposeRules = "0.6.6"
 espresso = "3.7.0"
-gradleVersionsPlugin = "0.54.0"
+gradleVersionsPlugin = "0.61.0"
 hilt = "2.60.1"
 hiltCompiler = "1.4.0"
 hiltLifecycleViewmodelCompose = "1.4.0"
@@ -103,7 +103,7 @@ detekt-composeRules = { module = "io.nlopez.compose.rules:detekt", version.ref =
 detekt-ktlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
 detekt-plugin = { module = "dev.detekt:dev.detekt.gradle.plugin", version.ref = "detekt" }
 faker = "io.github.serpro69:kotlin-faker:1.16.2"
-gradleVersions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
+gradleVersions-plugin = { module = "io.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-android-test = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
@@ -167,7 +167,7 @@ androidx-room = { id = "androidx.room", version.ref = "androidxRoom" }
 compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "composeCompilerReportGenerator" }
 detekt = { id = "dev.detekt", version.ref = "detekt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
-gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
+gradleVersions = { id = "io.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
