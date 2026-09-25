@@ -47,7 +47,6 @@ serialization = "1.11.0"
 splashscreen = "1.2.0"
 turbine = "1.2.1"
 uiautomator = "2.4.0"
-versionCompare = "1.5.0"
 navigation3 = "1.1.7"
 lifecycleViewmodelNav3 = "2.11.0"
 
@@ -61,7 +60,6 @@ androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-compose-material-icons = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
-androidx-compose-paging = { module = "androidx.paging:paging-compose" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime" }
 androidx-compose-uiManifestTest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-compose-uiTest = { module = "androidx.compose.ui:ui-test-junit4" }
@@ -116,25 +114,21 @@ junit5-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit5-bom = { module = "org.junit:junit-bom", version.ref = "junit5" }
 junit5-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 junit5-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
-junit5-params = { module = "org.junit.jupiter:junit-jupiter-params" }
 junit5-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine" }
 kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-kotlinx-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-kover-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "koverPlugin" }
 kotlinx-serial = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
-mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
 mockito-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-annotations = { module = "org.robolectric:annotations", version.ref = "robolectric" }
 square-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
-square-moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
 square-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 square-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 square-okhttp = { module = "com.squareup.okhttp3:okhttp" }
@@ -146,7 +140,6 @@ square-retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", ver
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
-versionCompare = { module = "io.github.g00fy2:versioncompare", version.ref = "versionCompare" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
@@ -171,6 +164,5 @@ gradleVersions = { id = "io.github.ben-manes.versions", version.ref = "gradleVer
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-androidGradle = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "koverPlugin" }
