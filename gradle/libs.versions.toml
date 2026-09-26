@@ -47,7 +47,7 @@ serialization = "1.11.0"
 splashscreen = "1.2.0"
 turbine = "1.2.1"
 uiautomator = "2.4.0"
-navigation3 = "1.1.7"
+navigation3 = "1.2.0"
 lifecycleViewmodelNav3 = "2.11.0"
 
 [libraries]
