@@ -107,7 +107,7 @@ modularized by feature and layer.
     - `de.nilsdruyen.plugin.library.compose` — library + Compose
     - `de.nilsdruyen.plugin.application` — application module
 - Detekt config is at `config/detekt/detekt.yml` and `config/detekt/detekt-formatting.yml`.
-- SDK versions (defined in `build-logic/.../ProjectConfig.kt`): minSdk 26, compileSdk / targetSdk 37.
+- SDK versions (defined in `build-logic/.../ProjectConfig.kt`): minSdk 26, compileSdk 37.1, targetSdk 37.
 - **Performance**: [Baseline Profiles](https://developer.android.com/topic/performance/baselineprofiles) for startup optimization; Compose Compiler metrics and reports enabled.
 
 ## Testing conventions

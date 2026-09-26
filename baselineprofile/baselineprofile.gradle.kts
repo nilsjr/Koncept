@@ -10,7 +10,11 @@ plugins {
 
 configure<TestExtension> {
     namespace = "de.nilsdruyen.koncept.baseline"
-    compileSdk = ProjectConfig.compileSdkVersion
+    compileSdk {
+        version = release(ProjectConfig.compileSdkVersion) {
+            minorApiLevel = ProjectConfig.compileSdkMinorVersion
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21

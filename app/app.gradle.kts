@@ -13,7 +13,11 @@ plugins {
 }
 configure<ApplicationExtension> {
     namespace = "de.nilsdruyen.koncept"
-    compileSdk = ProjectConfig.compileSdkVersion
+    compileSdk {
+        version = release(ProjectConfig.compileSdkVersion) {
+            minorApiLevel = ProjectConfig.compileSdkMinorVersion
+        }
+    }
     defaultConfig {
         applicationId = "de.nilsdruyen.koncept"
 

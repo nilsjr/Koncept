@@ -26,7 +26,11 @@ internal fun Project.configureAndroidApplication() {
 internal fun Project.configureAndroidLibrary() {
     val hasTests = hasTests()
     extensions.configure(LibraryExtension::class.java) {
-        compileSdk = ProjectConfig.compileSdkVersion
+        compileSdk {
+            version = release(ProjectConfig.compileSdkVersion) {
+                minorApiLevel = ProjectConfig.compileSdkMinorVersion
+            }
+        }
         defaultConfig {
             minSdk = ProjectConfig.minSdkVersion
         }
