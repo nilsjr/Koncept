@@ -163,6 +163,8 @@ object TestCacheModule {
             // do nothing
         }
 
+        override suspend fun getFavoriteIds(): List<Int> = emptyList()
+
         override fun getAllFavorites(): Flow<List<BreedCacheEntity>> = emptyFlow()
 
         override suspend fun setFavorite(breedId: Int) {

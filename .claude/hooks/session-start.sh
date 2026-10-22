@@ -3,7 +3,8 @@
 #
 # Provisions everything an agent session needs to build & test this Android
 # project:
-#   1. Android SDK (cmdline-tools, platform-tools, platform android-37)
+#   1. Android SDK (cmdline-tools, platform-tools, platform android-37) and the
+#      Maven Central mirror init script (both via scripts/setup_android_env.sh)
 #   2. ANDROID_HOME/PATH exported for the session (via $CLAUDE_ENV_FILE)
 #   3. local.properties with sdk.dir
 #   4. dogApiKey in ~/.gradle/gradle.properties (from $DOG_API_KEY, falling
@@ -15,7 +16,8 @@
 #   - services.gradle.org                (wrapper metadata)            [required]
 #   - github.com HTTPS file downloads    (wrapper zip redirect target) [required]
 #   - androidx.dev                       (compose-compiler repo)       [required]
-#   - repo.maven.apache.org, plugins.gradle.org                        [required]
+#   - plugins.gradle.org                                               [required]
+#   - maven-central.storage-download.googleapis.com (Central mirror)   [required]
 set -uo pipefail
 
 if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then

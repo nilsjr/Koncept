@@ -65,8 +65,7 @@ private class EitherCall<R>(private val delegate: Call<R>, private val successTy
             @Suppress("UNCHECKED_CAST")
             Either.Right(Unit) as Either<DataSourceError, R>
         } else {
-            @Suppress("UNCHECKED_CAST")
-            Either.Left(UnknownError("Response body was null")) as Either<DataSourceError, R>
+            Either.Left(DataSourceError.UnknownError(IllegalStateException("Response body was null")))
         }
     }
 

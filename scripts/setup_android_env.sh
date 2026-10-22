@@ -1,8 +1,9 @@
 #!/bin/bash
 # Setup script for the "android-kotlin" Claude Code cloud environment.
 # Configure it as the environment's setup script so every session can build
-# Android projects. Requires network access to dl.google.com and
-# services.gradle.org (plus its GitHub release redirect) in the network policy.
+# Android projects. Requires network access to dl.google.com,
+# services.gradle.org (plus its GitHub release redirect) and
+# maven-central.storage-download.googleapis.com in the network policy.
 set -euo pipefail
 
 ANDROID_HOME="${ANDROID_HOME:-$HOME/android-sdk}"
@@ -46,6 +47,54 @@ if [ -n "${CLAUDE_PROJECT_DIR:-}" ] && [ ! -f "$CLAUDE_PROJECT_DIR/local.propert
 fi
 
 echo "Android SDK ready: $("$SDKMANAGER" --version)"
+
+# ---------------------------------------------------------------------------
+# Maven Central mirror. repo.maven.apache.org answers HTTP 429 to the shared
+# cloud egress, and the Gradle Plugin Portal redirects most artifacts there.
+# This user-level init script applies to every Gradle project in the session.
+# Requires maven-central.storage-download.googleapis.com in the network policy.
+# ---------------------------------------------------------------------------
+GRADLE_INIT_DIR="${GRADLE_USER_HOME:-$HOME/.gradle}/init.d"
+mkdir -p "$GRADLE_INIT_DIR"
+cat > "$GRADLE_INIT_DIR/central-mirror.gradle" <<'GRADLE'
+//
+// Maven Central (repo.maven.apache.org) rate-limits the shared egress of cloud sessions with
+// HTTP 429, and the Gradle Plugin Portal redirects most artifacts to Central as well. This
+// resolves Central artifacts from Google's official mirror of Maven Central instead.
+def mirror = 'https://maven-central.storage-download.googleapis.com/maven2/'
+
+def useMirror = { RepositoryHandler repos ->
+    repos.withType(MavenArtifactRepository).configureEach { repo ->
+        if (repo.url.toString().startsWith('https://repo.maven.apache.org/maven2')) {
+            repo.url = mirror
+        }
+    }
+}
+
+beforeSettings { settings ->
+    // Repositories added here come before the ones declared in settings.gradle.kts, so the
+    // mirror is asked before the Plugin Portal (which would redirect to Central).
+    useMirror(settings.pluginManagement.repositories)
+    settings.pluginManagement.repositories {
+        google()
+        maven { url mirror }
+        gradlePluginPortal()
+    }
+    useMirror(settings.dependencyResolutionManagement.repositories)
+    settings.dependencyResolutionManagement.repositories {
+        google()
+        maven { url mirror }
+    }
+}
+
+// Robolectric downloads its android-all jars from Central at test runtime.
+allprojects {
+    tasks.withType(Test).configureEach {
+        systemProperty 'robolectric.dependency.repo.url', mirror
+    }
+}
+GRADLE
+echo "Maven Central mirror installed: $GRADLE_INIT_DIR/central-mirror.gradle"
 
 # ---------------------------------------------------------------------------
 # Pre-provision the Gradle wrapper distribution into the shared wrapper cache.

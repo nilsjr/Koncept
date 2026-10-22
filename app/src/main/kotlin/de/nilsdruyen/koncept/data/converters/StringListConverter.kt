@@ -17,5 +17,10 @@ class StringListConverter(moshi: Moshi) {
     fun listToJson(value: List<String>): String = adapter.toJson(value)
 
     @TypeConverter
-    fun jsonToList(value: String): List<String> = adapter.fromJson(value) ?: emptyList()
+    fun jsonToList(value: String): List<String> = if (value.isBlank()) {
+        // rows migrated from older schemas carry the column default ''
+        emptyList()
+    } else {
+        adapter.fromJson(value) ?: emptyList()
+    }
 }
