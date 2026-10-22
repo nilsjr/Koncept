@@ -3,13 +3,13 @@
 #
 # Provisions everything an agent session needs to build & test this Android
 # project:
-#   1. Android SDK (cmdline-tools, platform-tools, platform android-37)
+#   1. Android SDK (cmdline-tools, platform-tools, platform android-37) and the
+#      Maven Central mirror init script (both via scripts/setup_android_env.sh)
 #   2. ANDROID_HOME/PATH exported for the session (via $CLAUDE_ENV_FILE)
 #   3. local.properties with sdk.dir
 #   4. dogApiKey in ~/.gradle/gradle.properties (from $DOG_API_KEY, falling
 #      back to config/develop.properties)
-#   5. Gradle init script resolving Maven Central from Google's mirror
-#   6. Best-effort Gradle wrapper + dependency warm-up
+#   5. Best-effort Gradle wrapper + dependency warm-up
 #
 # Network policy requirements (session environment settings):
 #   - dl.google.com                      (Android SDK + Google Maven)  [required]
@@ -62,11 +62,7 @@ if ! grep -q "^dogApiKey=" "$HOME/.gradle/gradle.properties" 2>/dev/null; then
   fi
 fi
 
-# --- 5. Maven Central mirror (Central answers 429 to cloud session egress) ---
-mkdir -p "$HOME/.gradle/init.d"
-cp scripts/central-mirror.init.gradle "$HOME/.gradle/init.d/central-mirror.gradle"
-
-# --- 6. Warm Gradle (best-effort: do not fail the session if the network ---
+# --- 5. Warm Gradle (best-effort: do not fail the session if the network ---
 # --- policy still blocks the wrapper distribution download)              ---
 if bash scripts/warm_gradle.sh; then
   echo "session-start: Gradle warmed successfully."
