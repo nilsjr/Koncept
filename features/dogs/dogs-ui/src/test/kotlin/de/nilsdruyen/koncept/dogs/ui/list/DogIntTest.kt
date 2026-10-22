@@ -68,6 +68,10 @@ class FakeDao : DogDao {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getFavoriteIds(): List<Int> {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllFavorites(): Flow<List<BreedCacheEntity>> {
         TODO("Not yet implemented")
     }

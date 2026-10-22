@@ -32,6 +32,9 @@ interface DogDao {
     @Update(entity = BreedCacheEntity::class)
     suspend fun updateMinimalList(list: List<MinimalDogCacheEntity>)
 
+    @Query("SELECT id from dog_table WHERE isFavorite = 1")
+    suspend fun getFavoriteIds(): List<Int>
+
     @Query("SELECT * from dog_table WHERE isFavorite = 1")
     fun getAllFavorites(): Flow<List<BreedCacheEntity>>
 
@@ -64,6 +67,8 @@ interface DogDao {
                 null
             }
         }
-        updateList(updateList)
+        // favorites are local-only state, keep them when refreshing existing rows
+        val favoriteIds = getFavoriteIds().toSet()
+        updateList(updateList.map { it.copy(isFavorite = it.id in favoriteIds) })
     }
 }
