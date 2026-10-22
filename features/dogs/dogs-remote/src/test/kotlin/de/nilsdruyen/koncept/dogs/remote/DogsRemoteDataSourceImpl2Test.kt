@@ -6,6 +6,7 @@ import de.nilsdruyen.koncept.adapters.EitherCallAdapterFactory
 import de.nilsdruyen.koncept.dogs.data.DogsRemoteDataSource
 import de.nilsdruyen.koncept.dogs.entity.Breed
 import de.nilsdruyen.koncept.dogs.entity.BreedId
+import de.nilsdruyen.koncept.domain.DataSourceError
 import de.nilsdruyen.koncept.domain.DispatcherProvider
 import de.nilsdruyen.koncept.test.CoroutinesTestExtension
 import de.nilsdruyen.koncept.test.InjectTestDispatcherProvider
@@ -100,5 +101,14 @@ class DogsRemoteDataSourceImpl2Test {
         val result = tested.getList()
 
         assertThat(result).isEqualTo(expected.right())
+    }
+
+    @Test
+    fun `GIVEN a null response body WHEN getList is called THEN an UnknownError is returned`() = runTest {
+        mockWebServer.enqueue(MockResponse().setResponseCode(200).setBody("null"))
+
+        val error = tested.getList().leftOrNull()
+
+        assertThat(error).isInstanceOf(DataSourceError.UnknownError::class.java)
     }
 }
