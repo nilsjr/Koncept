@@ -17,6 +17,8 @@ const val DB_VERSION = 4
     version = DB_VERSION,
     autoMigrations = [
         AutoMigration(from = 1, to = 3),
+        AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4),
     ],
 )
 @TypeConverters(IntRangeConverter::class, StringListConverter::class)
