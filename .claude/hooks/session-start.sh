@@ -8,14 +8,16 @@
 #   3. local.properties with sdk.dir
 #   4. dogApiKey in ~/.gradle/gradle.properties (from $DOG_API_KEY, falling
 #      back to config/develop.properties)
-#   5. Best-effort Gradle wrapper + dependency warm-up
+#   5. Gradle init script resolving Maven Central from Google's mirror
+#   6. Best-effort Gradle wrapper + dependency warm-up
 #
 # Network policy requirements (session environment settings):
 #   - dl.google.com                      (Android SDK + Google Maven)  [required]
 #   - services.gradle.org                (wrapper metadata)            [required]
 #   - github.com HTTPS file downloads    (wrapper zip redirect target) [required]
 #   - androidx.dev                       (compose-compiler repo)       [required]
-#   - repo.maven.apache.org, plugins.gradle.org                        [required]
+#   - plugins.gradle.org                                               [required]
+#   - maven-central.storage-download.googleapis.com (Central mirror)   [required]
 set -uo pipefail
 
 if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
@@ -60,7 +62,11 @@ if ! grep -q "^dogApiKey=" "$HOME/.gradle/gradle.properties" 2>/dev/null; then
   fi
 fi
 
-# --- 5. Warm Gradle (best-effort: do not fail the session if the network ---
+# --- 5. Maven Central mirror (Central answers 429 to cloud session egress) ---
+mkdir -p "$HOME/.gradle/init.d"
+cp scripts/central-mirror.init.gradle "$HOME/.gradle/init.d/central-mirror.gradle"
+
+# --- 6. Warm Gradle (best-effort: do not fail the session if the network ---
 # --- policy still blocks the wrapper distribution download)              ---
 if bash scripts/warm_gradle.sh; then
   echo "session-start: Gradle warmed successfully."
