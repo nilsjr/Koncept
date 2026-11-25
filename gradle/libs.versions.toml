@@ -48,7 +48,7 @@ splashscreen = "1.2.0"
 turbine = "1.2.1"
 uiautomator = "2.4.1"
 navigation3 = "1.2.1"
-lifecycleViewmodelNav3 = "2.11.0"
+lifecycleViewmodelNav3 = "2.11.1"
 
 [libraries]
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
